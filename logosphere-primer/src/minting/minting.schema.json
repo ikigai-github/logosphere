@@ -1,0 +1,58 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "minting",
+    "type": "object",
+    "$defs": {
+        "artwork": {
+            "isActivated": true,
+            "type": "object",
+            "properties": {
+                "title": {
+                    "isActivated": true,
+                    "type": "string"
+                },
+                "description": {
+                    "isActivated": true,
+                    "type": "string"
+                },
+                "author": {
+                    "$ref": "../user/user.hck.json#/definitions/properties/user",
+                    "isActivated": true
+                },
+                "ipfsCid": {
+                    "isActivated": true,
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false
+        }
+    },
+    "properties": {
+        "artwork": {
+            "$ref": "#/$defs/artwork",
+            "isActivated": true
+        },
+        "nft": {
+            "isActivated": true,
+            "type": "object",
+            "properties": {
+                "artwork": {
+                    "$ref": "#/$defs/artwork",
+                    "isActivated": true
+                },
+                "policy": {
+                    "isActivated": true
+                },
+                "owner": {
+                    "$ref": "../user/user.hck.json#/definitions/properties/user",
+                    "isActivated": true
+                },
+                "minter": {
+                    "$ref": "../user/user.hck.json#/definitions/properties/user",
+                    "isActivated": true
+                }
+            },
+            "additionalProperties": false
+        }
+    }
+}

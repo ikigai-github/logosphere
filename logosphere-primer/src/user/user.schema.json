@@ -1,0 +1,88 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "user",
+    "type": "object",
+    "$defs": {
+        "user": {
+            "isActivated": true,
+            "type": "object",
+            "properties": {
+                "username": {
+                    "isActivated": true,
+                    "type": "string"
+                },
+                "handle": {
+                    "isActivated": true,
+                    "type": "string"
+                },
+                "wallets": {
+                    "isActivated": true,
+                    "type": "array",
+                    "items": {
+                        "isActivated": true,
+                        "displayName": "wallet",
+                        "default": "$ref/user/wallet"
+                    }
+                },
+                "nfts": {
+                    "isActivated": true,
+                    "type": "array",
+                    "items": {
+                        "isActivated": true,
+                        "default": "$ref/minting/nft",
+                        "displayName": "nft"
+                    }
+                },
+                "artworks": {
+                    "isActivated": true,
+                    "type": "array",
+                    "items": {
+                        "isActivated": true,
+                        "displayName": "artwork",
+                        "default": "$ref/minting/artwork"
+                    }
+                },
+                "listings": {
+                    "isActivated": true,
+                    "type": "array",
+                    "items": {
+                        "isActivated": true,
+                        "displayName": "listing",
+                        "default": "$ref/auction/listing"
+                    }
+                },
+                "bids": {
+                    "isActivated": true,
+                    "type": "array",
+                    "items": {
+                        "isActivated": true,
+                        "displayName": "bid",
+                        "default": "$ref/auction/bid"
+                    }
+                }
+            },
+            "additionalProperties": false
+        }
+    },
+    "properties": {
+        "user": {
+            "$ref": "#/$defs/user",
+            "isActivated": true
+        },
+        "wallet": {
+            "isActivated": true,
+            "type": "object",
+            "properties": {
+                "address": {
+                    "isActivated": true,
+                    "type": "string"
+                },
+                "owner": {
+                    "$ref": "#/$defs/user",
+                    "isActivated": true
+                }
+            },
+            "additionalProperties": false
+        }
+    }
+}
