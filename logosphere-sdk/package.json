@@ -4,9 +4,14 @@
   "description": "TypeScript SDK for logosphere.io - Cardano L2 metadata sidechain",
   "main": "index.ts",
   "scripts": {
-    "test": "test",
     "build": "tsc -p tsconfig.json",
-    "dev": "ts-node $npm_config_file"
+    "dev": "ts-node $npm_config_file",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "repository": {
     "type": "git",
@@ -24,13 +29,39 @@
     "url": "https://github.com/ikigai-github/logosphere/issues"
   },
   "dependencies": {
-    
+    "graphql": "^15"
   },
   "devDependencies": {
     "@types/chai": "4.2.19",
     "@types/chai-as-promised": "7.1.4",
-    "@types/mocha": "8.2.2",
-    "@types/node": "15.14.9"
+    "@types/jest": "27.0.2",
+    "@types/node": "15.14.9",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "^8.0.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "jest": "^27.2.5",
+    "prettier": "^2.3.2",
+    "ts-jest": "^27.0.3",
+    "typescript": "^4.3.5"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "collectCoverageFrom": [
+      "**/*.(t|j)s"
+    ],
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
   },
   "homepage": "https://github.com/ikigai-github/logosphere#readme"
 }
