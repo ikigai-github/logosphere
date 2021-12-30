@@ -28,8 +28,8 @@ export interface IProperty {
 
 export interface IDefinition {
   name: string;
-  type: string;
-  props: IProperty[];
+  type: DefinitionType;
+  props: Partial<IProperty>[];
 }
 
 export interface ICanonicalSchema {

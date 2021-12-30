@@ -1,7 +1,11 @@
 import { DefinitionType } from "../canonical.schema";
-import { PropParser } from "../prop.parser";
+import { PropParser } from "../prop-parser";
 import { constants as c } from "./json-schema.constants";
+import { hasKey } from "../util";
 
+/***
+ * Converts JSON Schema to Canonical Schema
+ */
 export class JsonSchemaPropParser extends PropParser {
   private _required: string[];
   private _defSchema: any;
@@ -11,16 +15,6 @@ export class JsonSchemaPropParser extends PropParser {
     this._required = required;
     this._defSchema = defSchema;
   }
-
-  #hasKey = <T>(obj: any, key: keyof T, type: string): obj is T => {
-    const castObj = obj as T;
-
-    if (castObj[key] !== undefined && typeof castObj[key] === type) {
-      return true;
-    }
-
-    return false;
-  };
 
   #extractKey = <U>(propSchema: any, fn: (propSchema: any) => U) => {
     return (): U => {
@@ -38,18 +32,18 @@ export class JsonSchemaPropParser extends PropParser {
   };
 
   #stripRef = (ref: string) => {
-    return ref.split("/").pop()
+    return ref.split("/").pop();
   };
 
   #isEnum = (propSchema: any) => {
     return (
-      this.#hasKey(propSchema, c.REF, c.STRING) &&
-      this.#hasKey(
+      hasKey(propSchema, c.REF, c.STRING) &&
+      hasKey(
         this._defSchema,
         this.#stripRef(propSchema[c.REF] as string),
         c.OBJECT
       ) &&
-      this.#hasKey(
+      hasKey(
         this._defSchema[this.#stripRef(propSchema[c.REF] as string)],
         c.ENUM,
         c.OBJECT
@@ -59,15 +53,15 @@ export class JsonSchemaPropParser extends PropParser {
 
   #isArray = (propSchema: any) => {
     return (
-      this.#hasKey(propSchema, c.TYPE, c.STRING) &&
+      hasKey(propSchema, c.TYPE, c.STRING) &&
       propSchema[c.TYPE] === c.ARRAY &&
-      this.#hasKey(propSchema, c.ITEMS, c.OBJECT)
+      hasKey(propSchema, c.ITEMS, c.OBJECT)
     );
   };
 
   #isDefinition = (propSchema: any) => {
     return (
-      this.#hasKey(propSchema, c.REF, c.STRING) && 
+      hasKey(propSchema, c.REF, c.STRING) &&
       !this.#isEnum(propSchema) &&
       !this.#isLinked(propSchema)
     );
@@ -75,15 +69,15 @@ export class JsonSchemaPropParser extends PropParser {
 
   #isLinked = (propSchema: any) => {
     return (
-      this.#hasKey(propSchema, c.REF, c.STRING) && 
-      (propSchema[c.REF] as string).includes('.json')
+      hasKey(propSchema, c.REF, c.STRING) &&
+      (propSchema[c.REF] as string).includes(".json")
     );
   };
 
   protected defType(propSchema: any): DefinitionType {
     if (this.#isEnum(propSchema)) {
       return DefinitionType.Enum;
-    } else if ( this.#isLinked(propSchema)) {
+    } else if (this.#isLinked(propSchema)) {
       return DefinitionType.LinkedDef;
     } else if (this.#isDefinition(propSchema)) {
       return DefinitionType.Definition;
@@ -91,8 +85,9 @@ export class JsonSchemaPropParser extends PropParser {
       return DefinitionType.EnumArray;
     } else if (
       this.#isArray(propSchema) &&
-      this.#isLinked(propSchema[c.ITEMS])) {
-      return DefinitionType.LinkedDefArray
+      this.#isLinked(propSchema[c.ITEMS])
+    ) {
+      return DefinitionType.LinkedDefArray;
     } else if (
       this.#isArray(propSchema) &&
       this.#isDefinition(propSchema[c.ITEMS])
