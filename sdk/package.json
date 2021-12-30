@@ -1,0 +1,36 @@
+{
+  "name": "@logosphere/typescript-sdk",
+  "version": "0.0.1",
+  "description": "TypeScript SDK for logosphere.io - Cardano L2 metadata sidechain",
+  "main": "index.ts",
+  "scripts": {
+    "test": "test",
+    "build": "tsc -p tsconfig.json",
+    "dev": "ts-node $npm_config_file"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ikigai-github/logosphere.git"
+  },
+  "keywords": [
+    "metadata",
+    "l2",
+    "sidechain",
+    "cardano"
+  ],
+  "author": "Ikigai Technologies",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ikigai-github/logosphere/issues"
+  },
+  "dependencies": {
+    
+  },
+  "devDependencies": {
+    "@types/chai": "4.2.19",
+    "@types/chai-as-promised": "7.1.4",
+    "@types/mocha": "8.2.2",
+    "@types/node": "15.14.9"
+  },
+  "homepage": "https://github.com/ikigai-github/logosphere#readme"
+}
