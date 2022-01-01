@@ -1,12 +1,12 @@
 export enum DefinitionType {
-  Scalar = "Scalar",
-  Enum = "Enum",
-  Definition = "Definition",
-  ScalarArray = "ScalarArray",
-  EnumArray = "EnumArray",
-  DefArray = "DefArray",
-  LinkedDef = "LinkedDef",
-  LinkedDefArray = "LinkedDefArray",
+  Scalar = 'Scalar',
+  Enum = 'Enum',
+  Definition = 'Definition',
+  ScalarArray = 'ScalarArray',
+  EnumArray = 'EnumArray',
+  DefArray = 'DefArray',
+  LinkedDef = 'LinkedDef',
+  LinkedDefArray = 'LinkedDefArray',
 }
 
 export interface IProperty {

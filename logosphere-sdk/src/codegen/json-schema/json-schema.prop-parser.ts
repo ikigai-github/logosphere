@@ -1,7 +1,7 @@
-import { DefinitionType } from "../canonical.schema";
-import { PropParser } from "../prop-parser";
-import { constants as c } from "./json-schema.constants";
-import { hasKey } from "../util";
+import { DefinitionType } from '../canonical.schema';
+import { PropParser } from '../prop-parser';
+import { constants as c } from './json-schema.constants';
+import { hasKey } from '../converters/util';
 
 /***
  * Converts JSON Schema to Canonical Schema
@@ -32,7 +32,7 @@ export class JsonSchemaPropParser extends PropParser {
   };
 
   #stripRef = (ref: string) => {
-    return ref.split("/").pop();
+    return ref.split('/').pop();
   };
 
   #isEnum = (propSchema: any) => {
@@ -70,7 +70,7 @@ export class JsonSchemaPropParser extends PropParser {
   #isLinked = (propSchema: any) => {
     return (
       hasKey(propSchema, c.REF, c.STRING) &&
-      (propSchema[c.REF] as string).includes(".json")
+      (propSchema[c.REF] as string).includes('.json')
     );
   };
 

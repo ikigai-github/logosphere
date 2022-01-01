@@ -29,7 +29,8 @@
     "url": "https://github.com/ikigai-github/logosphere/issues"
   },
   "dependencies": {
-    "graphql": "15.8.0"
+    "graphql": "15.8.0",
+    "pascal-case": "3.1.2"
   },
   "devDependencies": {
     "@types/chai": "4.2.19",
@@ -62,6 +63,9 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
+  },
+  "prettier": {
+    "singleQuote": true
   },
   "homepage": "https://github.com/ikigai-github/logosphere#readme"
 }

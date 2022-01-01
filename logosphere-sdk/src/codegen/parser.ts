@@ -1,4 +1,4 @@
-import { IDefinition, ICanonicalSchema } from "./canonical.schema";
+import { IDefinition, ICanonicalSchema } from './canonical.schema';
 
 export abstract class Parser {
   protected abstract getDefs(schema: any): IDefinition[];

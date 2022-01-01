@@ -18,6 +18,6 @@ export class CatsService {
   }
 
   findOneById(id: number): Cat {
-    return this.cats.find(cat => cat.id === id);
+    return this.cats.find((cat) => cat.id === id);
   }
 }

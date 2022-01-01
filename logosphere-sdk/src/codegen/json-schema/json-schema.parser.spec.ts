@@ -1,8 +1,8 @@
-import * as f from "./json-schema.fixture.json";
-import { IDefinition } from "../canonical.schema";
-import { JsonSchemaParser } from "./json-schema.parser";
-describe("test JsonSchemaParser", () => {
-  it("parse defs schema", () => {
+import * as f from './json-schema.fixture.json';
+import { IDefinition } from '../canonical.schema';
+import { JsonSchemaParser } from './json-schema.parser';
+describe('test JsonSchemaParser', () => {
+  it('parse defs schema', () => {
     const propParser = new JsonSchemaParser();
     const defs = propParser.parse(f.$defs);
     expect(defs).toBeDefined();

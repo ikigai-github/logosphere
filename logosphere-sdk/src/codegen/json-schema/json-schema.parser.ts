@@ -1,8 +1,8 @@
-import { DefinitionType, IDefinition, IProperty } from "../canonical.schema";
-import { Parser } from "../parser";
-import { JsonSchemaPropParser } from "./json-schema.prop-parser";
-import { constants as c } from "./json-schema.constants";
-import { hasKey } from "../util";
+import { DefinitionType, IDefinition, IProperty } from '../canonical.schema';
+import { Parser } from '../parser';
+import { JsonSchemaPropParser } from './json-schema.prop-parser';
+import { constants as c } from './json-schema.constants';
+import { hasKey } from '../converters/util';
 
 export class JsonSchemaParser extends Parser {
   #isEnum = (schema: any): boolean => {
