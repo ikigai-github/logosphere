@@ -1,6 +1,6 @@
 import { pascalCase } from 'pascal-case';
 import { IDefinition, IProperty } from '../canonical.schema';
-import { Generator } from '../generator';
+import { Generator } from '../generator.abstract';
 import { GqlPropGenerator } from './gql.prop-generator';
 
 export class GqlGenerator extends Generator {

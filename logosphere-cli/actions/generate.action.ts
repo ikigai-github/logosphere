@@ -1,22 +1,22 @@
 import * as chalk from 'chalk';
-import { Answers } from 'inquirer';
+import { Answers, Question, createPromptModule } from 'inquirer';
+
 import { Input } from '@nestjs/cli/commands';
 import { getValueOrDefault } from '@nestjs/cli/lib/compiler/helpers/get-value-or-default';
 import {
   Collection,
   CollectionFactory,
 } from '../lib/schematics';
+import { MESSAGES } from '../lib/ui';
+import { SchemaType } from '@logosphere/sdk/lib/codegen/schema-type';
 import {  
   AbstractCollection,  
   SchematicOption, } from '@nestjs/cli/lib/schematics';
-import { MESSAGES } from '@nestjs/cli/lib/ui';
-import { loadConfiguration } from '@nestjs/cli/lib/utils/load-configuration';
-import {
-  askForProjectName,
-  moveDefaultProjectToStart,
-  shouldAskForProject,
-  shouldGenerateSpec,
-} from '@nestjs/cli/lib/utils/project-utils';
+import { generateSelect } from '@nestjs/cli/lib/questions/questions';
+import { ModuleConfiguration } from '../lib/configuration';
+import { loadConfiguration as loadNestConfiguration } from '@nestjs/cli/lib/utils/load-configuration';
+import { loadConfiguration as loadLogosphereConfiguration } from '../lib/utils/load-configuration';
+import { shouldGenerateSpec } from '@nestjs/cli/lib/utils/project-utils';
 import { AbstractAction } from '@nestjs/cli/actions';
 
 export class GenerateAction extends AbstractAction {
@@ -26,7 +26,11 @@ export class GenerateAction extends AbstractAction {
 }
 
 const generateFiles = async (inputs: Input[]) => {
-  const configuration = await loadConfiguration();
+  const nestConfig = await loadNestConfiguration();
+  const lgsConfig = await loadLogosphereConfiguration();
+  console.log(lgsConfig);
+  
+
   const collectionOption = inputs.find(
     (option) => option.name === 'collection',
   )!.value as string;
@@ -37,70 +41,26 @@ const generateFiles = async (inputs: Input[]) => {
   const spec = inputs.find((option) => option.name === 'spec');
 
   const collection: AbstractCollection = CollectionFactory.create(
-    collectionOption || configuration.collection || Collection.LOGOSPHERE,
+    collectionOption || nestConfig.collection || Collection.LOGOSPHERE,
   );
   const schematicOptions: SchematicOption[] = mapSchematicOptions(inputs);
   schematicOptions.push(
-    new SchematicOption('language', configuration.language),
+    new SchematicOption('language', nestConfig.language),
   );
-  const configurationProjects = configuration.projects;
 
   let sourceRoot = appName
-    ? getValueOrDefault(configuration, 'sourceRoot', appName)
-    : configuration.sourceRoot;
+    ? getValueOrDefault(nestConfig, 'sourceRoot', appName)
+    : nestConfig.sourceRoot;
 
   const specValue = spec!.value as boolean;
   const specOptions = spec!.options as any;
   let generateSpec = shouldGenerateSpec(
-    configuration,
+    nestConfig,
     schematic,
     appName,
     specValue,
     specOptions.passedAsInput,
   );
-
-  // If you only add a `lib` we actually don't have monorepo: true BUT we do have "projects"
-  // Ensure we don't run for new app/libs schematics
-  if (shouldAskForProject(schematic, configurationProjects, appName)) {
-    const defaultLabel = ' [ Default ]';
-    let defaultProjectName: string = configuration.sourceRoot + defaultLabel;
-
-    for (const property in configurationProjects) {
-      if (
-        configurationProjects[property].sourceRoot === configuration.sourceRoot
-      ) {
-        defaultProjectName = property + defaultLabel;
-        break;
-      }
-    }
-
-    const projects = moveDefaultProjectToStart(
-      configuration,
-      defaultProjectName,
-      defaultLabel,
-    );
-
-    const answers: Answers = await askForProjectName(
-      MESSAGES.PROJECT_SELECTION_QUESTION,
-      projects,
-    );
-
-    const project: string = answers.appName.replace(defaultLabel, '');
-    if (project !== configuration.sourceRoot) {
-      sourceRoot = configurationProjects[project].sourceRoot;
-    }
-
-    if (answers.appName !== defaultProjectName) {
-      // Only overwrite if the appName is not the default- as it has already been loaded above
-      generateSpec = shouldGenerateSpec(
-        configuration,
-        schematic,
-        answers.appName,
-        specValue,
-        specOptions.passedAsInput,
-      );
-    }
-  }
 
   schematicOptions.push(new SchematicOption('sourceRoot', sourceRoot));
   schematicOptions.push(new SchematicOption('spec', generateSpec));
@@ -109,7 +69,16 @@ const generateFiles = async (inputs: Input[]) => {
     if (!schematicInput) {
       throw new Error('Unable to find a schematic for this configuration');
     }
+    if (schematicInput.value === 'sch') {
+      const schemaType = await selectSchemaType();
+      schematicOptions.push(new SchematicOption('schemaType', schemaType))
+    }
+    const module = await selectModule(lgsConfig.modules);
+    schematicOptions.push(new SchematicOption('module', module.name));
+    schematicOptions.push(new SchematicOption('hackoladeSchemaFile', module.hackoladeSchemaFile));
+    schematicOptions.push(new SchematicOption('jsonSchemaFile', module.jsonSchemaFile));
     await collection.execute(schematicInput.value as string, schematicOptions);
+    
   } catch (error) {
     if (error && error.message) {
       console.error(chalk.red(error.message));
@@ -126,4 +95,36 @@ const mapSchematicOptions = (inputs: Input[]): SchematicOption[] => {
     }
   });
   return options;
+};
+
+const selectModule = async (modules: ModuleConfiguration[]): Promise<ModuleConfiguration> => {
+  const answers: Answers = await askForModule(modules);
+  return modules.find((m: ModuleConfiguration) => m.name === answers['module']);
+};
+
+const askForModule = async (modules: ModuleConfiguration[]): Promise<Answers> => {
+  const questions: Question[] = [
+    generateSelect('module')(MESSAGES.GENERATE_ITEM_MODULE_QUESTION)(
+      modules.map((module: ModuleConfiguration) => { return module.name })
+    ),
+  ];
+  const prompt = createPromptModule();
+  return await prompt(questions);
+};
+
+const selectSchemaType = async (): Promise<SchemaType> => {
+  const answers: Answers = await askForSchemaType();
+  return answers['schemaType'];
+};
+
+const askForSchemaType = async (): Promise<Answers> => {
+  const questions: Question[] = [
+    generateSelect('schemaType')(MESSAGES.GENERATE_SCHEMA_TYPE_QUESTION)([
+      SchemaType.GQL,
+      SchemaType.FLUREE,
+      SchemaType.CANONICAL
+    ]),
+  ];
+  const prompt = createPromptModule();
+  return await prompt(questions);
 };

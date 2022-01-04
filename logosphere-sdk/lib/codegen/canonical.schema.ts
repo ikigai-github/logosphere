@@ -24,6 +24,7 @@ export interface IProperty {
   minLength: number;
   maxLength: number;
   comment: string;
+  linkedModule: string;
 }
 
 export interface IDefinition {

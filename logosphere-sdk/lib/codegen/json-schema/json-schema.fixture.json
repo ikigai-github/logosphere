@@ -154,6 +154,15 @@
                         "isActivated": true,
                         "displayName": "address"
                     }
+                },
+                "artworks": {
+                    "isActivated": true,
+                    "type": "array",
+                    "items": {
+                        "isActivated": true,
+                        "displayName": "artwork",
+                        "default": "minting.hck.json#artwork"
+                    }
                 }
             },
             "isActivated": true,
@@ -1089,9 +1098,9 @@
                     "type": "array",
                     "isActivated": true,
                     "items": {
-                        "$ref": "../minting/minting.hck.json#/definitions/properties/imageVariant",
                         "isActivated": true,
-                        "displayName": "imageVariant"
+                        "displayName": "imageVariant",
+                        "default": "minting.hck.json#imageVariant"
                     }
                 },
                 "listings": {

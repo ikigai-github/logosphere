@@ -1,4 +1,4 @@
-import { Converter } from '../../converter';
+import { Converter } from '../../converter.abstract';
 import { JsonSchemaParser } from '../../json-schema/json-schema.parser';
 import { GqlGenerator } from '../../gql/gql.generator';
 export class JsonSchemaToGqlConverter extends Converter {

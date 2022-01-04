@@ -236,7 +236,7 @@
                                 "parentRelationship": "",
                                 "childRelationships": [],
                                 "displayName": "wallet",
-                                "default": "$ref/user/wallet"
+                                "default": "user.hck.json#wallet"
                             }
                         ],
                         "additionalItems": true,

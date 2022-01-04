@@ -303,7 +303,7 @@
                                                 "parentRelationship": "",
                                                 "childRelationships": [],
                                                 "displayName": "wallet",
-                                                "default": "$ref/user/wallet"
+                                                "default": "user.hck.json#wallet"
                                             }
                                         ],
                                         "additionalItems": true,
@@ -398,7 +398,7 @@
                                         "parentRelationship": "",
                                         "childRelationships": [],
                                         "displayName": "wallet",
-                                        "default": "$ref/user/wallet"
+                                        "default": "user.hck.json#wallet"
                                     }
                                 ],
                                 "additionalItems": true,
@@ -464,7 +464,7 @@
                                         "parentRelationship": "",
                                         "childRelationships": [],
                                         "displayName": "wallet",
-                                        "default": "$ref/user/wallet"
+                                        "default": "user.hck.json#wallet"
                                     }
                                 ],
                                 "additionalItems": true,
@@ -545,7 +545,7 @@
                                 "parentRelationship": "",
                                 "childRelationships": [],
                                 "displayName": "wallet",
-                                "default": "$ref/user/wallet"
+                                "default": "user.hck.json#wallet"
                             }
                         ],
                         "additionalItems": true,
@@ -569,7 +569,7 @@
                                 "GUID": "0aee46e0-65fa-11ec-bb96-bff80ff94019",
                                 "arrayItem": true,
                                 "arrayParentType": "array",
-                                "default": "$ref/minting/nft",
+                                "default": "minting.hck.json#nft",
                                 "displayName": "nft",
                                 "error": {}
                             }
@@ -596,7 +596,7 @@
                                 "arrayItem": true,
                                 "arrayParentType": "array",
                                 "displayName": "artwork",
-                                "default": "$ref/minting/artwork"
+                                "default": "minting.hck.json#artwork"
                             }
                         ],
                         "additionalItems": true,

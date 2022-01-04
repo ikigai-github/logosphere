@@ -1,5 +1,5 @@
 import { DefinitionType, IDefinition, IProperty } from '../canonical.schema';
-import { Parser } from '../parser';
+import { Parser } from '../parser.abstract';
 import { JsonSchemaPropParser } from './json-schema.prop-parser';
 import { constants as c } from './json-schema.constants';
 import { hasKey } from '../converters/util';

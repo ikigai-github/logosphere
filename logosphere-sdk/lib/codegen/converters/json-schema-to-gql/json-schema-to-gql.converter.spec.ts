@@ -7,7 +7,8 @@ describe('JSON schema to canonical format converter test ', () => {
     const gqlSchema = converter.convert(f.$defs);
     //console.log(canonicalSchema);
     expect(gqlSchema).toBeDefined();
-    console.log(gqlSchema);
+    expect((gqlSchema as string).length > 0).toBeTruthy();
+    console.log(`GQL: ${gqlSchema}`);
 
     //fs.writeFileSync('./gql.schema.json', gqlSchema);
   });

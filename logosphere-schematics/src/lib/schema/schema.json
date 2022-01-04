@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "SchematicsLogosphereSchema",
+  "title": "Logosphere Schema Options Schema",
+  "type": "object",
+  "properties": {
+    "schemaType": {
+      "type": "string",
+      "description": "Type of the schema to generate."
+    },
+    "module": {
+      "type": "string",
+      "description": "Name of the module to generate the schema for"
+    },
+    "hackoladeSchemaFile": {
+      "type": "string",
+      "description": "Schema file in Hackolade internal format"
+    },
+    "jsonSchemaFile": {
+      "type": "string",
+      "description": "Schema file in JSON Schema standard format"
+    },
+    "inputDirectory": {
+      "type": "string",
+      "description": "Input directory with domain JSON schemas"
+    },
+    "outputDirectory": {
+      "type": "string",
+      "description": "Output directory for the target schema"
+    }
+  },
+  "required": []
+}

@@ -14,6 +14,11 @@ export class LogosphereCollection extends AbstractCollection {
       name: 'application',
       alias: 'application',
       description: 'Generate a new application workspace',
+    },
+    {
+      name: 'schema',
+      alias: 'sch',
+      description: 'Generate Logosphere schemas',
     }
   ];
 

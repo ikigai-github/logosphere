@@ -1,6 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
+  '@angular-devkit/core': 13.1.1
   '@nestjs/cli': ^8.0.0
   '@nestjs/common': ^8.0.0
   '@nestjs/core': ^8.0.0
@@ -37,6 +38,7 @@ specifiers:
   webpack: 5.65.0
 
 dependencies:
+  '@angular-devkit/core': 13.1.1
   '@nestjs/cli': 8.1.6_eslint@8.6.0
   '@nestjs/common': 8.2.4_9f57286931b2466c141900a3e4022d81
   '@nestjs/core': 8.2.4_377811f682cc86e04c85c183a4c9aaaa
@@ -105,6 +107,23 @@ packages:
       ajv: 8.6.3
       ajv-formats: 2.1.1
       chokidar: 3.5.2
+      fast-json-stable-stringify: 2.1.0
+      magic-string: 0.25.7
+      rxjs: 6.6.7
+      source-map: 0.7.3
+    dev: false
+
+  /@angular-devkit/core/13.1.1:
+    resolution: {integrity: sha512-tpOOzdrbrXG+BiJ/iKUX5VU5vBXN/n+H1EMThTwjgT11mqw2uvMj4sSRPvHUrrfxbLE9deuCDQEzmci71enn2w==}
+    engines: {node: ^12.20.0 || ^14.15.0 || >=16.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
+    peerDependencies:
+      chokidar: ^3.5.2
+    peerDependenciesMeta:
+      chokidar:
+        optional: true
+    dependencies:
+      ajv: 8.8.2
+      ajv-formats: 2.1.1
       fast-json-stable-stringify: 2.1.0
       magic-string: 0.25.7
       rxjs: 6.6.7

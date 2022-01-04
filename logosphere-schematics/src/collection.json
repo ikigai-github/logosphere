@@ -3,8 +3,13 @@
   "schematics": {
     "application": {
       "factory": "./lib/application/application.factory#main",
-      "description": "Create a Nest application.",
+      "description": "Create a Logosphere application.",
       "schema": "./lib/application/schema.json"
+    },
+    "schema": {
+      "factory": "./lib/schema/schema.factory#main",
+      "description": "Generate Logosphere schemas",
+      "schema": "./lib/schema/schema.json"
     }
   }
 }

@@ -12,3 +12,6 @@ export const PROJECT_TYPE = {
   LIBRARY: 'library',
   APPLICATION: 'application',
 };
+export const DEFAULT_SCHEMA_TYPE = 'gql';
+export const DEFAULT_SCHEMA_INPUT_DIRECTORY = 'input-schemas';
+export const DEFAULT_SCHEMA_OUTPUT_DIRECTORY = 'output-schemas';

@@ -153,6 +153,7 @@ describe('test JsonSchemaPropParser', () => {
     const prop = propParser.parse(propSchema);
     //console.log(JSON.stringify(prop));
     expect(prop.defType).toBe(DefinitionType.LinkedDef);
+    expect(prop.linkedModule).toBe('user');
     expect(prop.name).toBe(name);
     expect(prop.type).toBe('user');
     expect(prop.isEnabled).toBe(true);
@@ -176,6 +177,7 @@ describe('test JsonSchemaPropParser', () => {
     const prop = propParser.parse(propSchema);
     //console.log(JSON.stringify(prop));
     expect(prop.defType).toBe(DefinitionType.LinkedDefArray);
+    expect(prop.linkedModule).toBe('minting');
     expect(prop.name).toBe(name);
     expect(prop.type).toBe('imageVariant');
     expect(prop.isEnabled).toBe(true);

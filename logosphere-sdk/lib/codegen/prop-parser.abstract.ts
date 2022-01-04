@@ -16,27 +16,29 @@ export abstract class PropParser {
   protected abstract minLength(schema: any): number;
   protected abstract maxLength(schema: any): number;
   protected abstract comment(schema: any): string;
+  protected abstract linkedModule(schema: any): string;
 
   constructor(name: string) {
     this._name = name;
   }
 
-  parse(schema: any): Partial<IProperty> {
+  parse(propSchema: any): Partial<IProperty> {
     return {
       name: this._name,
-      type: this.type(schema),
-      isEnabled: this.isEnabled(schema),
-      isRequired: this.isRequired(schema),
-      isPK: this.isPK(schema),
-      isReadOnly: this.isReadonly(schema),
-      isWriteOnly: this.isWriteOnly(schema),
-      defType: this.defType(schema),
-      examples: this.examples(schema),
-      pattern: this.pattern(schema),
-      description: this.description(schema),
-      minLength: this.minLength(schema),
-      maxLength: this.maxLength(schema),
-      comment: this.comment(schema),
+      type: this.type(propSchema),
+      isEnabled: this.isEnabled(propSchema),
+      isRequired: this.isRequired(propSchema),
+      isPK: this.isPK(propSchema),
+      isReadOnly: this.isReadonly(propSchema),
+      isWriteOnly: this.isWriteOnly(propSchema),
+      defType: this.defType(propSchema),
+      examples: this.examples(propSchema),
+      pattern: this.pattern(propSchema),
+      description: this.description(propSchema),
+      minLength: this.minLength(propSchema),
+      maxLength: this.maxLength(propSchema),
+      comment: this.comment(propSchema),
+      linkedModule: this.linkedModule(propSchema),
     };
   }
 }

@@ -1,5 +1,5 @@
 import { DefinitionType } from '../canonical.schema';
-import { PropParser } from '../prop-parser';
+import { PropParser } from '../prop-parser.abstract';
 import { constants as c } from './json-schema.constants';
 import { hasKey } from '../converters/util';
 
@@ -7,6 +7,7 @@ import { hasKey } from '../converters/util';
  * Converts JSON Schema to Canonical Schema
  */
 export class JsonSchemaPropParser extends PropParser {
+  
   private _required: string[];
   private _defSchema: any;
 
@@ -69,10 +70,22 @@ export class JsonSchemaPropParser extends PropParser {
 
   #isLinked = (propSchema: any) => {
     return (
-      hasKey(propSchema, c.REF, c.STRING) &&
-      (propSchema[c.REF] as string).includes('.json')
-    );
+       hasKey(propSchema, c.REF, c.STRING) && 
+       (propSchema[c.REF] as string).includes(c.JSON_EXTENSION)) ||
+       // we put circular reference in default to avoid 
+       // circular references bloating issue in Hackolade
+       (hasKey(propSchema, c.DEFAULT, c.STRING) && 
+       (propSchema[c.DEFAULT] as string).includes(c.JSON_EXTENSION))
   };
+ 
+  #getLinkedModule = (value: string) => {
+    return value.split('#')[0].split('/').pop().replace(c.LINKED_FILE_EXTENSION, '');
+  }
+
+  #getLinkedType = (value: string) => {
+    return value.split('#').pop();
+  }
+  
 
   protected defType(propSchema: any): DefinitionType {
     if (this.#isEnum(propSchema)) {
@@ -104,10 +117,12 @@ export class JsonSchemaPropParser extends PropParser {
     return this.#extractKey(propSchema, (propSchema: any) => {
       if (
         this.defType(propSchema) === DefinitionType.Definition ||
-        this.defType(propSchema) === DefinitionType.Enum ||
-        this.defType(propSchema) === DefinitionType.LinkedDef
+        this.defType(propSchema) === DefinitionType.Enum
       ) {
         return this.#stripRef(propSchema[c.REF]);
+      } else if (this.defType(propSchema) === DefinitionType.LinkedDef) {
+        return hasKey(propSchema, c.REF, c.STRING) ? this.#stripRef(propSchema[c.REF] as string) 
+          : hasKey(propSchema, c.DEFAULT, c.STRING) ? this.#getLinkedType(propSchema[c.DEFAULT] as string) : undefined;
       } else {
         return propSchema[c.TYPE];
       }
@@ -178,4 +193,18 @@ export class JsonSchemaPropParser extends PropParser {
       return propSchema[c.COMMENT];
     })();
   }
+
+  protected linkedModule(propSchema: any): string {
+    return this.#extractKey(propSchema, (propSchema: any) => {
+      if (hasKey(propSchema, c.REF, c.STRING)) {
+        return this.#getLinkedModule(propSchema[c.REF] as string);
+      } else if (hasKey(propSchema, c.DEFAULT, c.STRING)) {
+        return this.#getLinkedModule(propSchema[c.DEFAULT] as string);
+      } else {
+        return undefined;
+      }
+    })();
+    
+  }
+
 }
