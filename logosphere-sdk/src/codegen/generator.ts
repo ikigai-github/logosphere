@@ -15,6 +15,9 @@ export abstract class Generator {
           break;
         case DefinitionType.Definition:
           output += this.genDef(def);
+          break;
+        default:
+          break;
       }
     });
     return output;
