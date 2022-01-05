@@ -7,7 +7,8 @@ import { AuctionModule } from './auction/auction.module';
 
 @Module({
   imports: [
-    CatsModule,
+    //TODO: Cats module only needed for testing the endpoint and should be deleted once the primer modules (User, Minting and Auction) are fully operational
+    CatsModule, 
     GraphQLModule.forRoot({
       typePaths: ['./**/*.graphql'],
       installSubscriptionHandlers: true,
