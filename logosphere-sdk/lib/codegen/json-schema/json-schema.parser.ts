@@ -15,17 +15,35 @@ export class JsonSchemaParser extends Parser {
 
   protected getDefs(schema: any): IDefinition[] {
     const defs: IDefinition[] = [];
+    // definitions in JSON schema can be in $defs and in properties
+    // properties have the full list, but some of them refer to $defs
+    // like this: 
+    // "person": {
+    //    "$ref": "#/$defs/person",
+    //    "isActivated": true
+    // },
+    // so we need to grab the full definition from $defs in this case
+    
+    // let's grab everything from properties that is not a reference and bring them to $defs
+    const resolved = Object.assign(schema[c.DEFS]);
+
+    Object.keys(schema[c.PROPERTIES])
+      .filter((propKey: string) => { return !hasKey(schema[c.PROPERTIES][propKey], c.REF, c.STRING)})
+      .forEach((propKey: string) => {
+        resolved[propKey] = schema[c.PROPERTIES][propKey]
+      }
+    );
 
     // parse enums
-    Object.keys(schema)
+    Object.keys(resolved)
       .filter((defKey: string) => {
-        return this.#isEnum(schema[defKey]);
+        return this.#isEnum(resolved[defKey]);
       })
-      .map((defKey: string) => {
+      .forEach((defKey: string) => {
         const props: Partial<IProperty>[] = [];
-        Object.keys(schema[defKey][c.ENUM]).map((propKey: string) => {
+        Object.keys(resolved[defKey][c.ENUM]).map((propKey: string) => {
           props.push({
-            name: schema[defKey][c.ENUM][propKey],
+            name: resolved[defKey][c.ENUM][propKey],
             type: c.STRING,
           });
         });
@@ -37,19 +55,19 @@ export class JsonSchemaParser extends Parser {
       });
 
     // parse object definitions
-    Object.keys(schema)
+    Object.keys(resolved)
       .filter((defKey: string) => {
-        return this.#isDef(schema[defKey]);
+        return this.#isDef(resolved[defKey]);
       })
-      .map((defKey: string) => {
+      .forEach((defKey: string) => {
         const props: Partial<IProperty>[] = [];
-        Object.keys(schema[defKey][c.PROPERTIES]).map((propKey: string) => {
+        Object.keys(resolved[defKey][c.PROPERTIES]).map((propKey: string) => {
           const propParser = new JsonSchemaPropParser(
             propKey,
-            schema[defKey][c.REQUIRED],
-            schema
+            resolved[defKey][c.REQUIRED],
+            resolved
           );
-          props.push(propParser.parse(schema[defKey][c.PROPERTIES][propKey]));
+          props.push(propParser.parse(resolved[defKey][c.PROPERTIES][propKey]));
         });
 
         defs.push({

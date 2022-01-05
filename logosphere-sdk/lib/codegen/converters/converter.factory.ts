@@ -3,7 +3,6 @@ import { Converter } from '../converter.abstract';
 import { JsonSchemaToGqlConverter } from './json-schema-to-gql/json-schema-to-gql.converter';
 export class ConverterFactory {
   static getConverter(sourceSchemaType: SchemaType, targetSchemaType: SchemaType): Converter {
-    console.log('inside factory');
     switch (sourceSchemaType) {
       case SchemaType.JSON:
         switch (targetSchemaType) {

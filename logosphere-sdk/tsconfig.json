@@ -19,7 +19,5 @@
     "noFallthroughCasesInSwitch": false,
     "resolveJsonModule": true,
     "sourceRoot": "lib"
-  },
-  "include": ["actions", "bin", "commands", "lib"],
-  "exclude": ["node_modules", "e2e"]
+  }
 }

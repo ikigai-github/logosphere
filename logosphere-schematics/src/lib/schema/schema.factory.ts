@@ -40,7 +40,7 @@ function generate(options: SchemaOptions, path: string): Source {
 
   const jsonSchema = loadJson(options.jsonSchemaFile);
   const converter = ConverterFactory.getConverter(SchemaType.JSON, options.schemaType as SchemaType);
-  const targetSchema = converter.convert(jsonSchema.$defs);
+  const targetSchema = converter.convert(jsonSchema);
   console.log(`GQL: ${targetSchema}`);
   
 
