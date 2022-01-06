@@ -28,7 +28,7 @@ export class GenerateAction extends AbstractAction {
 const generateFiles = async (inputs: Input[]) => {
   const nestConfig = await loadNestConfiguration();
   const lgsConfig = await loadLogosphereConfiguration();
-  console.log(lgsConfig);
+  //console.log(lgsConfig);
   
 
   const collectionOption = inputs.find(
