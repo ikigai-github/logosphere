@@ -1,0 +1,688 @@
+{
+    "modelName": "auction",
+    "collections": [],
+    "buckets": [],
+    "views": [],
+    "relationships": [],
+    "users": [],
+    "diagramViews": [],
+    "idToNameHashTable": {
+        "86b68260-65fa-11ec-9d85-c74b04a86aba": "listing",
+        "b2f19950-65fa-11ec-9d85-c74b04a86aba": "nft",
+        "b2f20e80-65fa-11ec-9d85-c74b04a86aba": "nft",
+        "92c8e9c0-65fb-11ec-9d85-c74b04a86aba": "minimumPrice",
+        "9ab89ef0-65fb-11ec-9d85-c74b04a86aba": "buyNowPrice",
+        "a1929e60-65fb-11ec-9d85-c74b04a86aba": "startTime",
+        "da2865c0-65fb-11ec-9d85-c74b04a86aba": "endTime",
+        "012fda40-65fc-11ec-9d85-c74b04a86aba": "bid",
+        "0ef2a630-65fc-11ec-9d85-c74b04a86aba": "user",
+        "0ef34270-65fc-11ec-9d85-c74b04a86aba": "bidder",
+        "1dbb2250-65fc-11ec-9d85-c74b04a86aba": "listing",
+        "2e9a9790-65fc-11ec-9d85-c74b04a86aba": "bidPrice",
+        "521059d0-65fc-11ec-9d85-c74b04a86aba": "currentBid"
+    },
+    "definitions": {
+        "type": "definitions",
+        "properties": [
+            {
+                "name": "listing",
+                "hackoladeMeta": {},
+                "isActivated": true,
+                "type": "document",
+                "properties": [
+                    {
+                        "GUID": "b2f20e80-65fa-11ec-9d85-c74b04a86aba",
+                        "name": "nft",
+                        "type": "reference",
+                        "$ref": "#external/definitions/nft",
+                        "refType": "external",
+                        "ref": "b2f19950-65fa-11ec-9d85-c74b04a86aba",
+                        "refIdPath": [
+                            "7d322370-65fa-11ec-9d85-c74b04a86aba",
+                            "7d322372-65fa-11ec-9d85-c74b04a86aba",
+                            "b2f19950-65fa-11ec-9d85-c74b04a86aba"
+                        ],
+                        "isActivated": true,
+                        "error": {
+                            "name": false,
+                            "code": false
+                        }
+                    },
+                    {
+                        "name": "minimumPrice",
+                        "hackoladeMeta": {},
+                        "isActivated": true,
+                        "type": "numeric",
+                        "properties": [],
+                        "GUID": "92c8e9c0-65fb-11ec-9d85-c74b04a86aba",
+                        "error": {
+                            "name": false,
+                            "code": false
+                        }
+                    },
+                    {
+                        "name": "buyNowPrice",
+                        "hackoladeMeta": {},
+                        "isActivated": true,
+                        "type": "numeric",
+                        "properties": [],
+                        "GUID": "9ab89ef0-65fb-11ec-9d85-c74b04a86aba",
+                        "error": {
+                            "name": false,
+                            "code": false
+                        }
+                    },
+                    {
+                        "name": "startTime",
+                        "hackoladeMeta": {},
+                        "isActivated": true,
+                        "type": "integer",
+                        "properties": [],
+                        "GUID": "a1929e60-65fb-11ec-9d85-c74b04a86aba",
+                        "error": {
+                            "name": false,
+                            "code": false
+                        }
+                    },
+                    {
+                        "name": "endTime",
+                        "hackoladeMeta": {},
+                        "isActivated": true,
+                        "type": "integer",
+                        "properties": [],
+                        "GUID": "da2865c0-65fb-11ec-9d85-c74b04a86aba",
+                        "error": {
+                            "name": false,
+                            "code": false
+                        }
+                    },
+                    {
+                        "GUID": "521059d0-65fc-11ec-9d85-c74b04a86aba",
+                        "name": "currentBid",
+                        "type": "reference",
+                        "$ref": "#model/definitions/bid",
+                        "refType": "model",
+                        "ref": "012fda40-65fc-11ec-9d85-c74b04a86aba",
+                        "refIdPath": [
+                            "7d322370-65fa-11ec-9d85-c74b04a86aba",
+                            "7d322371-65fa-11ec-9d85-c74b04a86aba",
+                            "012fda40-65fc-11ec-9d85-c74b04a86aba"
+                        ],
+                        "isActivated": true,
+                        "error": {
+                            "name": false,
+                            "code": false
+                        }
+                    }
+                ],
+                "additionalProperties": false,
+                "GUID": "86b68260-65fa-11ec-9d85-c74b04a86aba",
+                "definitionRefs": [
+                    [
+                        "7d322370-65fa-11ec-9d85-c74b04a86aba",
+                        "7d322371-65fa-11ec-9d85-c74b04a86aba",
+                        "012fda40-65fc-11ec-9d85-c74b04a86aba",
+                        "1dbb2250-65fc-11ec-9d85-c74b04a86aba"
+                    ]
+                ],
+                "error": {
+                    "name": false,
+                    "code": false
+                }
+            },
+            {
+                "name": "bid",
+                "hackoladeMeta": {},
+                "isActivated": true,
+                "type": "document",
+                "properties": [
+                    {
+                        "GUID": "0ef34270-65fc-11ec-9d85-c74b04a86aba",
+                        "name": "bidder",
+                        "type": "reference",
+                        "$ref": "#external/definitions/user",
+                        "refType": "external",
+                        "ref": "0ef2a630-65fc-11ec-9d85-c74b04a86aba",
+                        "refIdPath": [
+                            "7d322370-65fa-11ec-9d85-c74b04a86aba",
+                            "7d322372-65fa-11ec-9d85-c74b04a86aba",
+                            "0ef2a630-65fc-11ec-9d85-c74b04a86aba"
+                        ],
+                        "isActivated": true,
+                        "error": {
+                            "name": false,
+                            "code": false
+                        }
+                    },
+                    {
+                        "GUID": "1dbb2250-65fc-11ec-9d85-c74b04a86aba",
+                        "name": "listing",
+                        "type": "reference",
+                        "$ref": "#model/definitions/listing",
+                        "refType": "model",
+                        "ref": "86b68260-65fa-11ec-9d85-c74b04a86aba",
+                        "refIdPath": [
+                            "7d322370-65fa-11ec-9d85-c74b04a86aba",
+                            "7d322371-65fa-11ec-9d85-c74b04a86aba",
+                            "86b68260-65fa-11ec-9d85-c74b04a86aba"
+                        ],
+                        "isActivated": true,
+                        "error": {
+                            "name": false,
+                            "code": false
+                        }
+                    },
+                    {
+                        "name": "bidPrice",
+                        "hackoladeMeta": {},
+                        "isActivated": true,
+                        "type": "numeric",
+                        "properties": [],
+                        "GUID": "2e9a9790-65fc-11ec-9d85-c74b04a86aba",
+                        "error": {
+                            "name": false,
+                            "code": false
+                        }
+                    }
+                ],
+                "additionalProperties": false,
+                "GUID": "012fda40-65fc-11ec-9d85-c74b04a86aba",
+                "definitionRefs": [
+                    [
+                        "7d322370-65fa-11ec-9d85-c74b04a86aba",
+                        "7d322371-65fa-11ec-9d85-c74b04a86aba",
+                        "86b68260-65fa-11ec-9d85-c74b04a86aba",
+                        "521059d0-65fc-11ec-9d85-c74b04a86aba"
+                    ]
+                ],
+                "error": {
+                    "name": false,
+                    "code": false
+                }
+            }
+        ],
+        "GUID": "7d322371-65fa-11ec-9d85-c74b04a86aba"
+    },
+    "polyglotDefinitions": {
+        "type": "polyglotDefinitions",
+        "properties": [],
+        "GUID": "7d322373-65fa-11ec-9d85-c74b04a86aba"
+    },
+    "externalDefinitions": {
+        "type": "externalDefinitions",
+        "properties": [
+            {
+                "name": "nft",
+                "hackoladeMeta": {},
+                "isActivated": true,
+                "type": "document",
+                "properties": [
+                    {
+                        "GUID": "44dbf290-65f9-11ec-88ec-73d0714b981e",
+                        "name": "artwork",
+                        "type": "document",
+                        "isActivated": true,
+                        "error": {
+                            "name": false,
+                            "code": false
+                        },
+                        "hackoladeMeta": {},
+                        "properties": [
+                            {
+                                "name": "title",
+                                "hackoladeMeta": {},
+                                "isActivated": true,
+                                "type": "string",
+                                "properties": [],
+                                "GUID": "a23df330-65f3-11ec-88ec-73d0714b981e",
+                                "error": {
+                                    "name": false,
+                                    "code": false
+                                }
+                            },
+                            {
+                                "name": "description",
+                                "hackoladeMeta": {},
+                                "isActivated": true,
+                                "type": "string",
+                                "properties": [],
+                                "GUID": "c0ad1670-65f3-11ec-88ec-73d0714b981e",
+                                "error": {
+                                    "name": false,
+                                    "code": false
+                                }
+                            },
+                            {
+                                "GUID": "236aa520-65f4-11ec-88ec-73d0714b981e",
+                                "name": "author",
+                                "type": "document",
+                                "isActivated": true,
+                                "error": {
+                                    "name": false,
+                                    "code": false
+                                },
+                                "hackoladeMeta": {},
+                                "properties": [
+                                    {
+                                        "name": "username",
+                                        "hackoladeMeta": {},
+                                        "isActivated": true,
+                                        "type": "string",
+                                        "properties": [],
+                                        "GUID": "a3bf9180-65f0-11ec-bb96-bff80ff94019",
+                                        "error": {
+                                            "name": false,
+                                            "code": false
+                                        }
+                                    },
+                                    {
+                                        "name": "handle",
+                                        "hackoladeMeta": {},
+                                        "isActivated": true,
+                                        "type": "string",
+                                        "properties": [],
+                                        "GUID": "addf1f00-65f0-11ec-bb96-bff80ff94019",
+                                        "error": {
+                                            "name": false,
+                                            "code": false
+                                        }
+                                    },
+                                    {
+                                        "name": "wallets",
+                                        "hackoladeMeta": {},
+                                        "isActivated": true,
+                                        "type": "array",
+                                        "properties": [
+                                            {
+                                                "hackoladeMeta": {},
+                                                "isActivated": true,
+                                                "type": "any",
+                                                "properties": [],
+                                                "GUID": "1e799be0-65f2-11ec-bb96-bff80ff94019",
+                                                "arrayItem": true,
+                                                "parentRelationship": "",
+                                                "childRelationships": [],
+                                                "displayName": "wallet",
+                                                "default": "$ref/user/wallet"
+                                            }
+                                        ],
+                                        "additionalItems": true,
+                                        "GUID": "06648f20-65f1-11ec-bb96-bff80ff94019",
+                                        "error": {
+                                            "name": false,
+                                            "code": false
+                                        }
+                                    }
+                                ],
+                                "additionalProperties": false,
+                                "parentRelationship": "",
+                                "childRelationships": []
+                            },
+                            {
+                                "name": "ipfsCid",
+                                "hackoladeMeta": {},
+                                "isActivated": true,
+                                "type": "string",
+                                "properties": [],
+                                "GUID": "356eeb50-65f4-11ec-88ec-73d0714b981e",
+                                "error": {
+                                    "name": false,
+                                    "code": false
+                                }
+                            }
+                        ],
+                        "additionalProperties": false,
+                        "parentRelationship": "",
+                        "childRelationships": []
+                    },
+                    {
+                        "name": "policy",
+                        "hackoladeMeta": {},
+                        "isActivated": true,
+                        "type": "any",
+                        "properties": [],
+                        "GUID": "5729c4e0-65f9-11ec-88ec-73d0714b981e",
+                        "error": {
+                            "name": false,
+                            "code": false
+                        }
+                    },
+                    {
+                        "GUID": "7913b701-65f9-11ec-88ec-73d0714b981e",
+                        "name": "owner",
+                        "type": "document",
+                        "isActivated": true,
+                        "error": {
+                            "name": false,
+                            "code": false
+                        },
+                        "hackoladeMeta": {},
+                        "properties": [
+                            {
+                                "name": "username",
+                                "hackoladeMeta": {},
+                                "isActivated": true,
+                                "type": "string",
+                                "properties": [],
+                                "GUID": "a3bf9180-65f0-11ec-bb96-bff80ff94019",
+                                "error": {
+                                    "name": false,
+                                    "code": false
+                                }
+                            },
+                            {
+                                "name": "handle",
+                                "hackoladeMeta": {},
+                                "isActivated": true,
+                                "type": "string",
+                                "properties": [],
+                                "GUID": "addf1f00-65f0-11ec-bb96-bff80ff94019",
+                                "error": {
+                                    "name": false,
+                                    "code": false
+                                }
+                            },
+                            {
+                                "name": "wallets",
+                                "hackoladeMeta": {},
+                                "isActivated": true,
+                                "type": "array",
+                                "properties": [
+                                    {
+                                        "hackoladeMeta": {},
+                                        "isActivated": true,
+                                        "type": "any",
+                                        "properties": [],
+                                        "GUID": "1e799be0-65f2-11ec-bb96-bff80ff94019",
+                                        "arrayItem": true,
+                                        "parentRelationship": "",
+                                        "childRelationships": [],
+                                        "displayName": "wallet",
+                                        "default": "$ref/user/wallet"
+                                    }
+                                ],
+                                "additionalItems": true,
+                                "GUID": "06648f20-65f1-11ec-bb96-bff80ff94019",
+                                "error": {
+                                    "name": false,
+                                    "code": false
+                                }
+                            }
+                        ],
+                        "additionalProperties": false,
+                        "parentRelationship": "",
+                        "childRelationships": []
+                    },
+                    {
+                        "GUID": "af1a20f0-65f9-11ec-88ec-73d0714b981e",
+                        "name": "minter",
+                        "type": "document",
+                        "isActivated": true,
+                        "error": {
+                            "name": false,
+                            "code": false
+                        },
+                        "hackoladeMeta": {},
+                        "properties": [
+                            {
+                                "name": "username",
+                                "hackoladeMeta": {},
+                                "isActivated": true,
+                                "type": "string",
+                                "properties": [],
+                                "GUID": "a3bf9180-65f0-11ec-bb96-bff80ff94019",
+                                "error": {
+                                    "name": false,
+                                    "code": false
+                                }
+                            },
+                            {
+                                "name": "handle",
+                                "hackoladeMeta": {},
+                                "isActivated": true,
+                                "type": "string",
+                                "properties": [],
+                                "GUID": "addf1f00-65f0-11ec-bb96-bff80ff94019",
+                                "error": {
+                                    "name": false,
+                                    "code": false
+                                }
+                            },
+                            {
+                                "name": "wallets",
+                                "hackoladeMeta": {},
+                                "isActivated": true,
+                                "type": "array",
+                                "properties": [
+                                    {
+                                        "hackoladeMeta": {},
+                                        "isActivated": true,
+                                        "type": "any",
+                                        "properties": [],
+                                        "GUID": "1e799be0-65f2-11ec-bb96-bff80ff94019",
+                                        "arrayItem": true,
+                                        "parentRelationship": "",
+                                        "childRelationships": [],
+                                        "displayName": "wallet",
+                                        "default": "$ref/user/wallet"
+                                    }
+                                ],
+                                "additionalItems": true,
+                                "GUID": "06648f20-65f1-11ec-bb96-bff80ff94019",
+                                "error": {
+                                    "name": false,
+                                    "code": false
+                                }
+                            }
+                        ],
+                        "additionalProperties": false,
+                        "parentRelationship": "",
+                        "childRelationships": []
+                    }
+                ],
+                "additionalProperties": false,
+                "GUID": "b2f19950-65fa-11ec-9d85-c74b04a86aba",
+                "definitionRefs": [
+                    [
+                        "7d322370-65fa-11ec-9d85-c74b04a86aba",
+                        "7d322371-65fa-11ec-9d85-c74b04a86aba",
+                        "86b68260-65fa-11ec-9d85-c74b04a86aba",
+                        "b2f20e80-65fa-11ec-9d85-c74b04a86aba"
+                    ]
+                ],
+                "error": {
+                    "name": false,
+                    "code": false
+                },
+                "link": "../minting/minting.hck.json",
+                "fieldRelativePath": "#/definitions/properties/nft",
+                "kind": "relativePath",
+                "fileType": "hackoladeSchema"
+            },
+            {
+                "name": "user",
+                "hackoladeMeta": {},
+                "isActivated": true,
+                "type": "document",
+                "properties": [
+                    {
+                        "name": "username",
+                        "hackoladeMeta": {},
+                        "isActivated": true,
+                        "type": "string",
+                        "properties": [],
+                        "GUID": "a3bf9180-65f0-11ec-bb96-bff80ff94019",
+                        "error": {
+                            "name": false,
+                            "code": false
+                        }
+                    },
+                    {
+                        "name": "handle",
+                        "hackoladeMeta": {},
+                        "isActivated": true,
+                        "type": "string",
+                        "properties": [],
+                        "GUID": "addf1f00-65f0-11ec-bb96-bff80ff94019",
+                        "error": {
+                            "name": false,
+                            "code": false
+                        }
+                    },
+                    {
+                        "name": "wallets",
+                        "hackoladeMeta": {},
+                        "isActivated": true,
+                        "type": "array",
+                        "properties": [
+                            {
+                                "hackoladeMeta": {},
+                                "isActivated": true,
+                                "type": "any",
+                                "properties": [],
+                                "GUID": "1e799be0-65f2-11ec-bb96-bff80ff94019",
+                                "arrayItem": true,
+                                "parentRelationship": "",
+                                "childRelationships": [],
+                                "displayName": "wallet",
+                                "default": "$ref/user/wallet"
+                            }
+                        ],
+                        "additionalItems": true,
+                        "GUID": "06648f20-65f1-11ec-bb96-bff80ff94019",
+                        "error": {
+                            "name": false,
+                            "code": false
+                        }
+                    },
+                    {
+                        "name": "nfts",
+                        "hackoladeMeta": {},
+                        "isActivated": true,
+                        "type": "array",
+                        "properties": [
+                            {
+                                "hackoladeMeta": {},
+                                "isActivated": true,
+                                "type": "any",
+                                "properties": [],
+                                "GUID": "0aee46e0-65fa-11ec-bb96-bff80ff94019",
+                                "arrayItem": true,
+                                "arrayParentType": "array",
+                                "default": "$ref/minting/nft",
+                                "displayName": "nft",
+                                "error": {}
+                            }
+                        ],
+                        "additionalItems": true,
+                        "GUID": "0ae7b730-65fa-11ec-bb96-bff80ff94019",
+                        "error": {
+                            "name": false,
+                            "code": false
+                        }
+                    },
+                    {
+                        "name": "artworks",
+                        "hackoladeMeta": {},
+                        "isActivated": true,
+                        "type": "array",
+                        "properties": [
+                            {
+                                "hackoladeMeta": {},
+                                "isActivated": true,
+                                "type": "any",
+                                "properties": [],
+                                "GUID": "480d66f0-65fa-11ec-bb96-bff80ff94019",
+                                "arrayItem": true,
+                                "arrayParentType": "array",
+                                "displayName": "artwork",
+                                "default": "$ref/minting/artwork"
+                            }
+                        ],
+                        "additionalItems": true,
+                        "GUID": "4806b030-65fa-11ec-bb96-bff80ff94019",
+                        "error": {
+                            "name": false,
+                            "code": false
+                        }
+                    }
+                ],
+                "additionalProperties": false,
+                "GUID": "0ef2a630-65fc-11ec-9d85-c74b04a86aba",
+                "definitionRefs": [
+                    [
+                        "7d322370-65fa-11ec-9d85-c74b04a86aba",
+                        "7d322371-65fa-11ec-9d85-c74b04a86aba",
+                        "012fda40-65fc-11ec-9d85-c74b04a86aba",
+                        "0ef34270-65fc-11ec-9d85-c74b04a86aba"
+                    ]
+                ],
+                "error": {
+                    "name": false,
+                    "code": false
+                },
+                "link": "../user/user.hck.json",
+                "fieldRelativePath": "#/definitions/properties/user",
+                "kind": "relativePath",
+                "fileType": "hackoladeSchema"
+            }
+        ],
+        "GUID": "7d322372-65fa-11ec-9d85-c74b04a86aba"
+    },
+    "sources": [],
+    "decorativeSymbols": [],
+    "dbVendor": "JSON",
+    "dbVersion": "2020-12",
+    "appTarget": "JSON",
+    "creationTS": "2021-12-26T03:18:25.831Z",
+    "GUID": "7d322370-65fa-11ec-9d85-c74b04a86aba",
+    "isLineageEnabled": false,
+    "hackoladeMeta": {
+        "validationErrors": {
+            "modelName": false
+        },
+        "customPropertiesUpdated": true
+    },
+    "lastModifTS": "2021-12-26T03:31:54.376Z",
+    "persistenceSchemaVersion": "5",
+    "isCreatedByPlugin": true,
+    "pluginInformation": {
+        "pluginEngineVersion": "1.0.0"
+    },
+    "applicationInformation": {
+        "version": "5.3.0"
+    },
+    "settings": {
+        "centralPane": {
+            "dbLevel": {
+                "erd": [],
+                "buckets": [],
+                "collapsedNodes": [],
+                "activeRelationship": "",
+                "activeRelationshipFields": {
+                    "childField": [],
+                    "parentField": []
+                },
+                "selectedCollections": [],
+                "displayColorPicker": false,
+                "graphView": {
+                    "erd": [],
+                    "buckets": [],
+                    "decorativeSymbols": [],
+                    "forceLayout": true,
+                    "defaultLinkLength": 300
+                },
+                "diagramViews": [],
+                "decorativeSymbols": [],
+                "nestedCollectionsLayout": "horizontal",
+                "options": []
+            },
+            "collectionLevel": {},
+            "changed": false
+        },
+        "dtDiagram": {
+            "collapsedNodes": [],
+            "shouldDistributeCollections": false
+        }
+    }
+}
