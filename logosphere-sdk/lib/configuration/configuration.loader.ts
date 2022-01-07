@@ -1,4 +1,4 @@
-import { Reader } from '@nestjs/cli/lib/readers';
+import { Reader } from '../readers';
 import { Configuration } from './configuration';
 import { LOGOSPHERE_CONFIG_FILE } from './defaults';
 

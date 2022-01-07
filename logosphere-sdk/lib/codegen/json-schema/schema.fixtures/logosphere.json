@@ -1,0 +1,16 @@
+{
+  "modules": [
+    {
+      "name": "user",
+      "jsonSchemaFile": "user.schema.json"
+    },
+    {
+      "name": "minting",
+      "jsonSchemaFile": "minting.schema.json"
+    },
+    {
+      "name": "auction",
+      "jsonSchemaFile": "auction.schema.json"
+    }
+  ]
+}

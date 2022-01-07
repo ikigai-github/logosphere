@@ -13,7 +13,7 @@ import {
   AbstractCollection,  
   SchematicOption, } from '@nestjs/cli/lib/schematics';
 import { generateSelect } from '@nestjs/cli/lib/questions/questions';
-import { ModuleConfiguration } from '../lib/configuration';
+import { ModuleConfiguration } from '@logosphere/sdk/dist/lib/configuration';
 import { loadConfiguration as loadNestConfiguration } from '@nestjs/cli/lib/utils/load-configuration';
 import { loadConfiguration as loadLogosphereConfiguration } from '../lib/utils/load-configuration';
 import { shouldGenerateSpec } from '@nestjs/cli/lib/utils/project-utils';
