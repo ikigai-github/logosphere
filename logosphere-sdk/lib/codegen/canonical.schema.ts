@@ -30,9 +30,13 @@ export interface Property {
 export interface Definition {
   name: string;
   type: DefinitionType;
+  module?: string;
   props: Partial<Property>[];
 }
 
 export interface CanonicalSchema {
   definitions: Definition[];
 }
+
+
+
