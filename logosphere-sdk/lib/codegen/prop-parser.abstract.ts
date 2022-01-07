@@ -1,4 +1,4 @@
-import { IProperty, DefinitionType } from './canonical.schema';
+import { Property, DefinitionType } from './canonical.schema';
 
 export abstract class PropParser {
   protected _name: string;
@@ -22,7 +22,7 @@ export abstract class PropParser {
     this._name = name;
   }
 
-  parse(propSchema: any): Partial<IProperty> {
+  parse(propSchema: any): Partial<Property> {
     return {
       name: this._name,
       type: this.type(propSchema),

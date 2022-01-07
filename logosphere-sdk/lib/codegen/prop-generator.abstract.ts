@@ -1,14 +1,14 @@
-import { DefinitionType, IProperty } from './canonical.schema';
+import { DefinitionType, Property } from './canonical.schema';
 export abstract class PropGenerator {
-  protected abstract genEnum(prop: Partial<IProperty>): string;
-  protected abstract genDefinition(prop: Partial<IProperty>): string;
-  protected abstract genScalar(prop: Partial<IProperty>): string;
-  protected abstract genScalarArray(prop: Partial<IProperty>): string;
-  protected abstract genDefArray(prop: Partial<IProperty>): string;
-  protected abstract genEnumArray(prop: Partial<IProperty>): string;
-  protected abstract genLinkedDef(prop: Partial<IProperty>): string;
-  protected abstract genLinkedDefArray(prop: Partial<IProperty>): string;
-  generate(prop: Partial<IProperty>): string {
+  protected abstract genEnum(prop: Partial<Property>): string;
+  protected abstract genDefinition(prop: Partial<Property>): string;
+  protected abstract genScalar(prop: Partial<Property>): string;
+  protected abstract genScalarArray(prop: Partial<Property>): string;
+  protected abstract genDefArray(prop: Partial<Property>): string;
+  protected abstract genEnumArray(prop: Partial<Property>): string;
+  protected abstract genLinkedDef(prop: Partial<Property>): string;
+  protected abstract genLinkedDefArray(prop: Partial<Property>): string;
+  generate(prop: Partial<Property>): string {
     switch (prop.defType) {
       case DefinitionType.Enum:
         return this.genEnum(prop);

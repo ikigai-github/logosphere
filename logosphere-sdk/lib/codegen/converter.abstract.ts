@@ -1,6 +1,6 @@
 import { Parser } from './parser.abstract';
 import { Generator } from './generator.abstract';
-import { ICanonicalSchema } from './canonical.schema';
+import { CanonicalSchema } from './canonical.schema';
 
 export abstract class Converter {
   protected abstract getParser(): Parser;
@@ -8,7 +8,7 @@ export abstract class Converter {
   public async convert(schema: any): Promise<any> {
     const parser: Parser = this.getParser();
     const generator: Generator = this.getGenerator();
-    const canonicalSchema: ICanonicalSchema = await parser.parse(schema);
+    const canonicalSchema: CanonicalSchema = await parser.parse(schema);
     return generator.generate(canonicalSchema);
   }
 }

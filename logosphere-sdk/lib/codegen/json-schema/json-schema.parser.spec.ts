@@ -1,5 +1,5 @@
 import * as f from './json-schema.fixture.json';
-import { IDefinition } from '../canonical.schema';
+import { Definition } from '../canonical.schema';
 import { JsonSchemaParser } from './json-schema.parser';
 describe('test JsonSchemaParser', () => {
   it('parse defs schema', async () => {
@@ -8,7 +8,7 @@ describe('test JsonSchemaParser', () => {
     expect(defs).toBeDefined();
     expect(defs.definitions).toBeDefined();
     expect(defs.definitions.length > 0).toBeTruthy();
-    defs.definitions.map((def: IDefinition) => {
+    defs.definitions.map((def: Definition) => {
       expect(def.name).toBeDefined();
       expect(def.type).toBeDefined();
       expect(def.props).toBeDefined();

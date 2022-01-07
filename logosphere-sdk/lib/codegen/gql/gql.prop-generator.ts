@@ -1,5 +1,5 @@
 import { pascalCase } from 'pascal-case';
-import { IProperty } from '../canonical.schema';
+import { Property } from '../canonical.schema';
 import { PropGenerator } from '../prop-generator.abstract';
 
 export class GqlPropGenerator extends PropGenerator {
@@ -12,45 +12,45 @@ export class GqlPropGenerator extends PropGenerator {
     return this._typeMap[key] ? this._typeMap[key] : key;
   }
 
-  protected genScalar(prop: IProperty): string {
+  protected genScalar(prop: Property): string {
     return `\t${prop.name}: ${pascalCase(this.#typeMap(prop.type))}${
       prop.isRequired ? '!' : ''
     }\n`;
   }
-  protected genDefinition(prop: IProperty): string {
+  protected genDefinition(prop: Property): string {
     return `\t${prop.name}: ${pascalCase(prop.type)}${
       prop.isRequired ? '!' : ''
     }\n`;
   }
-  protected genEnum(prop: IProperty): string {
+  protected genEnum(prop: Property): string {
     return `\t${prop.name}: ${pascalCase(prop.type)}${
       prop.isRequired ? '!' : ''
     }\n`;
   }
-  protected genDefArray(prop: IProperty): string {
+  protected genDefArray(prop: Property): string {
     return `\t${prop.name}: [${pascalCase(prop.type)}]${
       prop.isRequired ? '!' : ''
     }\n`;
   }
-  protected genScalarArray(prop: IProperty): string {
+  protected genScalarArray(prop: Property): string {
     return `\t${prop.name}: [${pascalCase(this.#typeMap(prop.type))}]${
       prop.isRequired ? '!' : ''
     }\n`;
   }
 
-  protected genEnumArray(prop: IProperty): string {
+  protected genEnumArray(prop: Property): string {
     return `\t${prop.name}: [${pascalCase(prop.type)}]${
       prop.isRequired ? '!' : ''
     }\n`;
   }
 
-  protected genLinkedDefArray(prop: IProperty): string {
+  protected genLinkedDefArray(prop: Property): string {
     return `\t${prop.name}: [${pascalCase(prop.type)}]${
       prop.isRequired ? '!' : ''
     }\n`;
   }
 
-  protected genLinkedDef(prop: IProperty): string {
+  protected genLinkedDef(prop: Property): string {
     return `\t${prop.name}: ${pascalCase(prop.type)}${
       prop.isRequired ? '!' : ''
     }\n`;

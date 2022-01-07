@@ -1,14 +1,14 @@
 import {
-  ICanonicalSchema,
-  IDefinition,
+  CanonicalSchema,
+  Definition,
   DefinitionType,
 } from './canonical.schema';
 export abstract class Generator {
-  protected abstract genEnum(def: IDefinition): string;
-  protected abstract genDef(def: IDefinition): string;
-  generate(schema: ICanonicalSchema): string {
+  protected abstract genEnum(def: Definition): string;
+  protected abstract genDef(def: Definition): string;
+  generate(schema: CanonicalSchema): string {
     let output = '';
-    schema.definitions.forEach((def: IDefinition) => {
+    schema.definitions.forEach((def: Definition) => {
       switch (def.type) {
         case DefinitionType.Enum:
           output += this.genEnum(def);

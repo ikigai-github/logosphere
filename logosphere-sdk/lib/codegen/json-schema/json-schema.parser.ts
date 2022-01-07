@@ -1,4 +1,4 @@
-import { DefinitionType, IDefinition, IProperty } from '../canonical.schema';
+import { DefinitionType, Definition, Property } from '../canonical.schema';
 import { Parser } from '../parser.abstract';
 import { JsonSchemaPropParser } from './json-schema.prop-parser';
 import { constants as c } from './json-schema.constants';
@@ -13,8 +13,8 @@ export class JsonSchemaParser extends Parser {
     return hasKey(schema, c.PROPERTIES, c.OBJECT);
   };
 
-  protected getDefs(schema: any): IDefinition[] {
-    const defs: IDefinition[] = [];
+  protected getDefs(schema: any): Definition[] {
+    const defs: Definition[] = [];
     // definitions in JSON schema can be in $defs and in properties
     // properties have the full list, but some of them refer to $defs
     // like this: 
@@ -40,7 +40,7 @@ export class JsonSchemaParser extends Parser {
         return this.#isEnum(resolved[defKey]);
       })
       .forEach((defKey: string) => {
-        const props: Partial<IProperty>[] = [];
+        const props: Partial<Property>[] = [];
         Object.keys(resolved[defKey][c.ENUM]).map((propKey: string) => {
           props.push({
             name: resolved[defKey][c.ENUM][propKey],
@@ -60,7 +60,7 @@ export class JsonSchemaParser extends Parser {
         return this.#isDef(resolved[defKey]);
       })
       .forEach((defKey: string) => {
-        const props: Partial<IProperty>[] = [];
+        const props: Partial<Property>[] = [];
         Object.keys(resolved[defKey][c.PROPERTIES]).map((propKey: string) => {
           const propParser = new JsonSchemaPropParser(
             propKey,

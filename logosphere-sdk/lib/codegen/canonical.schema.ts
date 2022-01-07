@@ -9,7 +9,7 @@ export enum DefinitionType {
   LinkedDefArray = 'LinkedDefArray',
 }
 
-export interface IProperty {
+export interface Property {
   name: string;
   type: string;
   isEnabled: boolean;
@@ -27,12 +27,12 @@ export interface IProperty {
   linkedModule: string;
 }
 
-export interface IDefinition {
+export interface Definition {
   name: string;
   type: DefinitionType;
-  props: Partial<IProperty>[];
+  props: Partial<Property>[];
 }
 
-export interface ICanonicalSchema {
-  definitions: IDefinition[];
+export interface CanonicalSchema {
+  definitions: Definition[];
 }
