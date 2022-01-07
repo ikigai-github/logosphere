@@ -5,10 +5,10 @@ import { ICanonicalSchema } from './canonical.schema';
 export abstract class Converter {
   protected abstract getParser(): Parser;
   protected abstract getGenerator(): Generator;
-  public convert(schema: any): any {
+  public async convert(schema: any): Promise<any> {
     const parser: Parser = this.getParser();
     const generator: Generator = this.getGenerator();
-    const canonicalSchema: ICanonicalSchema = parser.parse(schema);
+    const canonicalSchema: ICanonicalSchema = await parser.parse(schema);
     return generator.generate(canonicalSchema);
   }
 }

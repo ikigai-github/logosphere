@@ -1,11 +1,12 @@
 import { IDefinition, ICanonicalSchema } from './canonical.schema';
 
 export abstract class Parser {
-  protected abstract getDefs(schema: any): IDefinition[];
+  protected abstract getDefs(schema: any): IDefinition[] | Promise<IDefinition[]>;
 
-  parse(schema: any): ICanonicalSchema {
+  async parse(schema: any): Promise<ICanonicalSchema>  {
+    const defs = await this.getDefs(schema);
     return {
-      definitions: this.getDefs(schema),
+      definitions: defs,
     };
   }
 }
