@@ -4,15 +4,15 @@ import { JsonSchemaParser } from './json-schema.parser';
 describe('test JsonSchemaParser', () => {
   it('parse defs schema', async () => {
     const propParser = new JsonSchemaParser();
-    const defs = await propParser.parse(f);
-    expect(defs).toBeDefined();
-    expect(defs.definitions).toBeDefined();
-    expect(defs.definitions.length > 0).toBeTruthy();
-    defs.definitions.map((def: Definition) => {
+    const canonical = await propParser.parse(f);
+    expect(canonical).toBeDefined();
+    expect(canonical.definitions).toBeDefined();
+    expect(canonical.definitions.length > 0).toBeTruthy();
+    canonical.definitions.map((def: Definition) => {
       expect(def.name).toBeDefined();
       expect(def.type).toBeDefined();
       expect(def.props).toBeDefined();
     });
-    //console.log(JSON.stringify(defs));
+    console.log(JSON.stringify(canonical));
   });
 });

@@ -13,7 +13,7 @@ describe('Test JSON Schema Federated Parser', () => {
     const config = await configLoader.load('logosphere.json');
     const canonicalSchema = await parser.parse(config);
     expect(canonicalSchema).toBeDefined();
-    console.log(JSON.stringify(canonicalSchema));
+    fs.writeFileSync('canonical-schema.fixture.json', JSON.stringify(canonicalSchema));
 
   });
 

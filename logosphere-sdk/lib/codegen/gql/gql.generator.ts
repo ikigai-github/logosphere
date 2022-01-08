@@ -16,6 +16,7 @@ export class GqlGenerator extends Generator {
     return schemaString;
   }
   protected genDef(def: Definition): string {
+    console.log(`Module: ${def.module}`);
     const propGenerator = new GqlPropGenerator();
 
     let schemaString = `type ${pascalCase(def.name)} {\n`;

@@ -13,6 +13,7 @@ export class GqlPropGenerator extends PropGenerator {
   }
 
   protected genScalar(prop: Property): string {
+    console.log(prop.name);
     return `\t${prop.name}: ${pascalCase(this.#typeMap(prop.type))}${
       prop.isRequired ? '!' : ''
     }\n`;

@@ -1,4 +1,5 @@
 export const constants = {
+  ANY: 'any',
   ARRAY: 'array',
   BOOLEAN: 'boolean',
   COMMENT: '$comment',

@@ -123,8 +123,10 @@ export class JsonSchemaPropParser extends PropParser {
       } else if (this.defType(propSchema) === DefinitionType.LinkedDef) {
         return hasKey(propSchema, c.REF, c.STRING) ? this.#stripRef(propSchema[c.REF] as string) 
           : hasKey(propSchema, c.DEFAULT, c.STRING) ? this.#getLinkedType(propSchema[c.DEFAULT] as string) : undefined;
+      } else if (hasKey(propSchema, c.TYPE, c.STRING)) {
+        return propSchema[c.TYPE] as string;
       } else {
-        return propSchema[c.TYPE];
+        return c.ANY;
       }
     })();
   }
@@ -196,9 +198,11 @@ export class JsonSchemaPropParser extends PropParser {
 
   protected linkedModule(propSchema: any): string {
     return this.#extractKey(propSchema, (propSchema: any) => {
-      if (hasKey(propSchema, c.REF, c.STRING)) {
+      if (hasKey(propSchema, c.REF, c.STRING) && 
+        (propSchema[c.REF] as string).indexOf(c.JSON_EXTENSION) > -1) {
         return this.#getLinkedModule(propSchema[c.REF] as string);
-      } else if (hasKey(propSchema, c.DEFAULT, c.STRING)) {
+      } else if (hasKey(propSchema, c.DEFAULT, c.STRING) && 
+        (propSchema[c.DEFAULT] as string).indexOf(c.JSON_EXTENSION)) {
         return this.#getLinkedModule(propSchema[c.DEFAULT] as string);
       } else {
         return undefined;

@@ -41,7 +41,8 @@
                     "isActivated": true
                 },
                 "policy": {
-                    "isActivated": true
+                    "isActivated": true,
+                    "type": "string"
                 },
                 "owner": {
                     "$ref": "../user/user.hck.json#/definitions/properties/user",
