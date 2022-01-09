@@ -19,9 +19,9 @@
                     "isActivated": true,
                     "type": "array",
                     "items": {
+                        "$ref": "#/$defs/wallet",
                         "isActivated": true,
-                        "displayName": "wallet",
-                        "default": "user.hck.json#wallet"
+                        "displayName": "wallet"
                     }
                 },
                 "nfts": {
@@ -62,12 +62,6 @@
                 }
             },
             "additionalProperties": false
-        }
-    },
-    "properties": {
-        "user": {
-            "$ref": "#/$defs/user",
-            "isActivated": true
         },
         "wallet": {
             "isActivated": true,
@@ -83,6 +77,16 @@
                 }
             },
             "additionalProperties": false
+        }
+    },
+    "properties": {
+        "user": {
+            "$ref": "#/$defs/user",
+            "isActivated": true
+        },
+        "wallet": {
+            "$ref": "#/$defs/wallet",
+            "isActivated": true
         }
     }
 }

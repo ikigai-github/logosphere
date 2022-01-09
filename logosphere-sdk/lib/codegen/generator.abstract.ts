@@ -6,6 +6,7 @@ import {
 export abstract class Generator {
   protected abstract genEnum(def: Definition): string;
   protected abstract genDef(def: Definition): string;
+  protected abstract genLinkedDef(def: Definition): string;
   generate(schema: CanonicalSchema): string {
     let output = '';
     schema.definitions.forEach((def: Definition) => {
@@ -15,6 +16,9 @@ export abstract class Generator {
           break;
         case DefinitionType.Definition:
           output += this.genDef(def);
+          break;
+        case DefinitionType.LinkedDef:
+          output += this.genLinkedDef(def);
           break;
         default:
           break;
