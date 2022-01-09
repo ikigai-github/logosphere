@@ -15,7 +15,7 @@ import {
 import { generateSelect } from '@nestjs/cli/lib/questions/questions';
 import { ModuleConfiguration } from '@logosphere/sdk/dist/lib/configuration';
 import { loadConfiguration as loadNestConfiguration } from '@nestjs/cli/lib/utils/load-configuration';
-import { loadConfiguration as loadLogosphereConfiguration } from '../lib/utils/load-configuration';
+import { loadConfiguration as loadLogosphereConfiguration } from '@logosphere/sdk/dist/lib/configuration';
 import { shouldGenerateSpec } from '@nestjs/cli/lib/utils/project-utils';
 import { AbstractAction } from '@nestjs/cli/actions';
 
@@ -27,8 +27,7 @@ export class GenerateAction extends AbstractAction {
 
 const generateFiles = async (inputs: Input[]) => {
   const nestConfig = await loadNestConfiguration();
-  const lgsConfig = await loadLogosphereConfiguration();
-  //console.log(lgsConfig);
+  const config = await loadLogosphereConfiguration();
   
 
   const collectionOption = inputs.find(
@@ -64,6 +63,7 @@ const generateFiles = async (inputs: Input[]) => {
 
   schematicOptions.push(new SchematicOption('sourceRoot', sourceRoot));
   schematicOptions.push(new SchematicOption('spec', generateSpec));
+  
   try {
     const schematicInput = inputs.find((input) => input.name === 'schematic');
     if (!schematicInput) {
@@ -73,10 +73,10 @@ const generateFiles = async (inputs: Input[]) => {
       const schemaType = await selectSchemaType();
       schematicOptions.push(new SchematicOption('schemaType', schemaType))
     }
-    const module = await selectModule(lgsConfig.modules);
-    schematicOptions.push(new SchematicOption('module', module.name));
-    schematicOptions.push(new SchematicOption('hackoladeSchemaFile', module.hackoladeSchemaFile));
-    schematicOptions.push(new SchematicOption('jsonSchemaFile', module.jsonSchemaFile));
+    //const module = await selectModule(lgsConfig.modules);
+    //schematicOptions.push(new SchematicOption('module', module.name));
+    //schematicOptions.push(new SchematicOption('hackoladeSchemaFile', module.hackoladeSchemaFile));
+    //schematicOptions.push(new SchematicOption('jsonSchemaFile', module.jsonSchemaFile));
     await collection.execute(schematicInput.value as string, schematicOptions);
     
   } catch (error) {
@@ -97,20 +97,20 @@ const mapSchematicOptions = (inputs: Input[]): SchematicOption[] => {
   return options;
 };
 
-const selectModule = async (modules: ModuleConfiguration[]): Promise<ModuleConfiguration> => {
-  const answers: Answers = await askForModule(modules);
-  return modules.find((m: ModuleConfiguration) => m.name === answers['module']);
-};
+// const selectModule = async (modules: ModuleConfiguration[]): Promise<ModuleConfiguration> => {
+//   const answers: Answers = await askForModule(modules);
+//   return modules.find((m: ModuleConfiguration) => m.name === answers['module']);
+// };
 
-const askForModule = async (modules: ModuleConfiguration[]): Promise<Answers> => {
-  const questions: Question[] = [
-    generateSelect('module')(MESSAGES.GENERATE_ITEM_MODULE_QUESTION)(
-      modules.map((module: ModuleConfiguration) => { return module.name })
-    ),
-  ];
-  const prompt = createPromptModule();
-  return await prompt(questions);
-};
+// const askForModule = async (modules: ModuleConfiguration[]): Promise<Answers> => {
+//   const questions: Question[] = [
+//     generateSelect('module')(MESSAGES.GENERATE_ITEM_MODULE_QUESTION)(
+//       modules.map((module: ModuleConfiguration) => { return module.name })
+//     ),
+//   ];
+//   const prompt = createPromptModule();
+//   return await prompt(questions);
+// };
 
 const selectSchemaType = async (): Promise<SchemaType> => {
   const answers: Answers = await askForSchemaType();
@@ -120,9 +120,9 @@ const selectSchemaType = async (): Promise<SchemaType> => {
 const askForSchemaType = async (): Promise<Answers> => {
   const questions: Question[] = [
     generateSelect('schemaType')(MESSAGES.GENERATE_SCHEMA_TYPE_QUESTION)([
-      SchemaType.GQL,
-      SchemaType.FLUREE,
-      SchemaType.CANONICAL
+      SchemaType.GqlFederated,
+      SchemaType.Fluree,
+      SchemaType.Canonical
     ]),
   ];
   const prompt = createPromptModule();

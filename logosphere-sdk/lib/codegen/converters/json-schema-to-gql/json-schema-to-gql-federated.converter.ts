@@ -3,6 +3,7 @@ import { JsonSchemaFederatedParser } from '../../json-schema';
 import { Converter } from '../../converter.abstract';
 import { CanonicalSchema } from '../../canonical.schema';
 import { Definition, Property, DefinitionType } from '../../../codegen';
+import { ModuleConfiguration } from 'lib/configuration';
 
 export class JsonSchemaToGqlFederatedConverter extends Converter {
   protected getParser(): JsonSchemaFederatedParser {
@@ -12,9 +13,9 @@ export class JsonSchemaToGqlFederatedConverter extends Converter {
     return new GqlGenerator();
   }
 
-  convert(schema: any): any {
+  convert(modules: ModuleConfiguration[]): any {
     const parser = this.getParser();
-    const canonical: CanonicalSchema = parser.parse(schema);
+    const canonical: CanonicalSchema = parser.parse(modules);
     
     // transform definitions subset to only have non-linked props
     const defs = canonical.definitions.map((def: Definition) => {
