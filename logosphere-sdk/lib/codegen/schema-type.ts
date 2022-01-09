@@ -1,6 +1,8 @@
 export enum SchemaType {
-  GQL = 'gql',
-  FLUREE = 'fluree',
-  CANONICAL = 'canonical',
-  JSON = 'json'
+  Gql = 'gql',
+  GqlFederated = 'gqlFederated',
+  Fluree = 'fluree',
+  Canonical = 'canonical',
+  Json = 'json',
+  JsonFederated = 'jsonFederated'
 }

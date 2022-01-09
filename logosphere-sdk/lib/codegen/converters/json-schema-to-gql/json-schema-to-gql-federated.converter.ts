@@ -12,9 +12,9 @@ export class JsonSchemaToGqlFederatedConverter extends Converter {
     return new GqlGenerator();
   }
 
-  async convert(schema: any): Promise<any> {
+  convert(schema: any): any {
     const parser = this.getParser();
-    const canonical: CanonicalSchema = await parser.parse(schema);
+    const canonical: CanonicalSchema = parser.parse(schema);
     
     // transform definitions subset to only have non-linked props
     const defs = canonical.definitions.map((def: Definition) => {

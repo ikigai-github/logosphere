@@ -1,4 +1,4 @@
-import * as f from './json-schema.fixture.json';
+import * as f from '../../../test/fixtures/schemas/monolith/json-schema.json';
 import { JsonSchemaPropParser } from './json-schema.prop-parser';
 import { DefinitionType } from '../canonical.schema';
 import { constants as c } from './json-schema.constants';

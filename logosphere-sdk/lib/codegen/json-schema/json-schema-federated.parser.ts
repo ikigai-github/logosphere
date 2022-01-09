@@ -6,20 +6,20 @@ import { JsonSchemaParser } from './json-schema.parser';
 
 
 export class JsonSchemaFederatedParser extends Parser {
-  protected async getDefs(config: Configuration): Promise<Definition[]> {
-    const reader = new FileSystemReader(__dirname);
+  protected getDefs(config: Configuration): Definition[] {
+    const reader = new FileSystemReader(process.cwd());
     const parser = new JsonSchemaParser();
     const defs: Definition[] = [];
-    await Promise.all(
-      config.modules.map(async (module: ModuleConfiguration) => {
-        const schema = JSON.parse(await reader.read(module.jsonSchemaFile));
-        const canonical = await parser.parse(schema);
-        const federatedDefs = canonical.definitions.map(
-          (def: Definition) => {return { ...def, module: module.name } }
-        );
-        defs.push(...federatedDefs);
-      })
-    );
+   
+    config.modules.map((module: ModuleConfiguration) => {
+      const schema = JSON.parse(reader.read(module.jsonSchemaFile));
+      const canonical = parser.parse(schema);
+      const federatedDefs = canonical.definitions.map(
+        (def: Definition) => {return { ...def, module: module.name } }
+      );
+      defs.push(...federatedDefs);
+    })
+
     return defs;
   }
 

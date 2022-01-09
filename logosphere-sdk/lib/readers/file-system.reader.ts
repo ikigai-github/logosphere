@@ -3,33 +3,11 @@ import { Reader } from './reader';
 export class FileSystemReader implements Reader {
   constructor(private readonly directory: string) {}
   
-  public async list(): Promise<string[]> {
-    return new Promise<string[]>((resolve, reject) => {
-      fs.readdir(
-        this.directory,
-        (error: NodeJS.ErrnoException | null, filenames: string[]) => {
-          if (error) {
-            reject(error);
-          } else {
-            resolve(filenames);
-          }
-        },
-      );
-    });
+  public list(): string[] {
+    return fs.readdirSync(this.directory);
   }
 
-  public async read(name: string): Promise<string> {
-    return new Promise<string>((resolve, reject) => {
-      fs.readFile(
-        `${this.directory}/${name}`,
-        (error: NodeJS.ErrnoException | null, data: Buffer) => {
-          if (error) {
-            reject(error);
-          } else {
-            resolve(data.toString());
-          }
-        },
-      );
-    });
+  public read(name: string): string {
+    return fs.readFileSync(`${this.directory}/${name}`, 'utf-8');
   }
 }

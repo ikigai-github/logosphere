@@ -1,14 +1,20 @@
 import { SchemaType } from '../schema-type';
 import { Converter } from '../converter.abstract';
-import { JsonSchemaToGqlConverter } from './json-schema-to-gql/json-schema-to-gql.converter';
+import { JsonSchemaToGqlConverter, JsonSchemaToGqlFederatedConverter } from './json-schema-to-gql';
 export class ConverterFactory {
   static getConverter(sourceSchemaType: SchemaType, targetSchemaType: SchemaType): Converter {
     switch (sourceSchemaType) {
-      case SchemaType.JSON:
+      case SchemaType.Json:
         switch (targetSchemaType) {
-          case SchemaType.GQL:
-            
+          case SchemaType.Gql:     
             return new JsonSchemaToGqlConverter();
+          default:
+            throw new Error(`${sourceSchemaType} to ${targetSchemaType} converter not implemented.`)
+        }
+      case SchemaType.JsonFederated:
+        switch (targetSchemaType) {
+          case SchemaType.GqlFederated:
+            return new JsonSchemaToGqlFederatedConverter();
           default:
             throw new Error(`${sourceSchemaType} to ${targetSchemaType} converter not implemented.`)
         }
