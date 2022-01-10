@@ -9,7 +9,7 @@ export class JsonSchemaParser extends Parser {
     return hasKey(schema, c.ENUM, c.OBJECT);
   };
 
-  #isDef = (schema: any): boolean => {
+  #isEntity = (schema: any): boolean => {
     return hasKey(schema, c.PROPERTIES, c.OBJECT);
   };
 
@@ -57,10 +57,22 @@ export class JsonSchemaParser extends Parser {
     // parse object definitions
     Object.keys(resolved)
       .filter((defKey: string) => {
-        return this.#isDef(resolved[defKey]);
+        return this.#isEntity(resolved[defKey]);
       })
       .forEach((defKey: string) => {
         const props: Partial<Property>[] = [];
+        
+        // add identifier 
+        props.push({
+          name: c.IDENTIFIER,
+          type: c.STRING,
+          defType: DefinitionType.Scalar,
+          isPK: true,
+          isEnabled: true,
+          isReadOnly: true,
+          isRequired: true
+        });
+
         Object.keys(resolved[defKey][c.PROPERTIES]).map((propKey: string) => {
           const propParser = new JsonSchemaPropParser(
             propKey,

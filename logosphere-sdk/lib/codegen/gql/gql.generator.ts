@@ -32,7 +32,7 @@ export class GqlGenerator extends Generator {
 
   protected generateExternalEntity(def: Definition): string {
     const propGenerator = new GqlPropGenerator();
-    let schemaString = `extend type ${pascalCase(def.name)} {\n`;
+    let schemaString = `extend type ${pascalCase(def.name)} @key(fields: "identifier") {\n`;
     def.props.forEach((prop: Property) => {
       if (prop.isEnabled) {
         schemaString += propGenerator.generate(prop);

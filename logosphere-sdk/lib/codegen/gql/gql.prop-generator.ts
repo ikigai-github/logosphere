@@ -13,7 +13,7 @@ export class GqlPropGenerator extends PropGenerator {
   }
 
   protected generateScalar(prop: Property): string {
-    return `\t${prop.name}: ${pascalCase(this.#typeMap(prop.type))}${
+    return `\t${prop.name}: ${prop.isPK ? 'ID' : pascalCase(this.#typeMap(prop.type))}${
       prop.isRequired ? '!' : ''
     }\n`;
   }

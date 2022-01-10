@@ -8,6 +8,7 @@ export const constants = {
   DESCRIPTION: 'description',
   ENUM: 'enum',
   EXAMPLES: 'examples',
+  IDENTIFIER: 'identifier',
   IS_ACTIVATED: 'isActivated',
   ITEMS: 'items',
   JSON_EXTENSION: '.json',

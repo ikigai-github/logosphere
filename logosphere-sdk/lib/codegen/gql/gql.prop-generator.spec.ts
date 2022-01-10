@@ -50,6 +50,19 @@ describe('GQL prop generator', () => {
     expect(output).toBe('\tname: Int\n');
   });
 
+  it('should generate ID', () => {
+    const prop: Partial<Property> = {
+      name: 'identifier',
+      type: 'string',
+      defType: DefinitionType.Scalar,
+      isPK: true,
+      isRequired: true
+    };
+
+    const output = propGen.generate(prop);
+    expect(output).toBe('\tidentifier: ID!\n');
+  });
+
   it('should generate scalar array', () => {
     const prop: Partial<Property> = {
       name: 'name',
