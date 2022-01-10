@@ -27,6 +27,7 @@ describe('Application Factory', () => {
       '/awesome-project/package.json',
       '/awesome-project/tsconfig.build.json',
       '/awesome-project/tsconfig.json',
+      '/awesome-project/docker/local/docker-compose.yaml',
       '/awesome-project/schemas/hackolade/auction.hck.json',
       '/awesome-project/schemas/hackolade/minting.hck.json',
       '/awesome-project/schemas/hackolade/user.hck.json',
