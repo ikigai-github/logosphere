@@ -17,46 +17,46 @@ export class JsonSchemaToGqlFederatedConverter extends Converter {
     const parser = this.getParser();
     const canonical: CanonicalSchema = parser.parse(modules);
     
-    // transform definitions subset to only have non-linked props
+    // transform definitions subset to only have non-external props
     const defs = canonical.definitions.map((def: Definition) => {
       return {
         props: def.props.filter(
-          (prop: Property) => prop.defType !== DefinitionType.LinkedDef && 
-                              prop.defType !== DefinitionType.LinkedDefArray
+          (prop: Property) => prop.defType !== DefinitionType.ExternalEntity && 
+                              prop.defType !== DefinitionType.ExternalEntityArray
           ),
         ...def
       }
     });
     
-    // group linked defs by linked module & type
-    const linkedDefs = canonical.definitions
+    // group external definitions by module & type
+    const externalDefs = canonical.definitions
       .reduce<any>((acc: any, def: Definition) => {
       return def.props
-        .filter((prop: Property) => prop.defType === DefinitionType.LinkedDef || 
-                                    prop.defType === DefinitionType.LinkedDefArray)
+        .filter((prop: Property) => prop.defType === DefinitionType.ExternalEntity || 
+                                    prop.defType === DefinitionType.ExternalEntityArray)
         .reduce<any>((accum: any, prop: Property) => {
-          if (!(prop.linkedModule in accum)) {
-            accum[prop.linkedModule] = {}
+          if (!(prop.externalModule in accum)) {
+            accum[prop.externalModule] = {}
           }
-          if (!(def.name in accum[prop.linkedModule])) {
-            accum[prop.linkedModule][def.name] = {}
+          if (!(def.name in accum[prop.externalModule])) {
+            accum[prop.externalModule][def.name] = {}
           }
-          accum[prop.linkedModule][def.name][prop.name] = prop;
+          accum[prop.externalModule][def.name][prop.name] = prop;
           return accum;
       }, acc)
 
     }, {});
 
     //add to existing defs 
-    Object.keys(linkedDefs).map((module: string) => {
-      Object.keys(linkedDefs[module]).map((defName: string) => {
+    Object.keys(externalDefs).map((module: string) => {
+      Object.keys(externalDefs[module]).map((defName: string) => {
         const props: Property[] = [];
-        Object.keys(linkedDefs[module][defName]).map((propName: string) => {
-          props.push(linkedDefs[module][defName][propName]);
+        Object.keys(externalDefs[module][defName]).map((propName: string) => {
+          props.push(externalDefs[module][defName][propName]);
         })
         defs.push({
           name: defName,
-          type: DefinitionType.LinkedDef,
+          type: DefinitionType.ExternalEntity,
           props,
           module
         });

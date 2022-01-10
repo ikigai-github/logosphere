@@ -72,7 +72,7 @@ export class JsonSchemaParser extends Parser {
 
         defs.push({
           name: defKey,
-          type: DefinitionType.Definition,
+          type: DefinitionType.Entity,
           props,
         });
       });

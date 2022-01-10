@@ -11,7 +11,7 @@ export const constants = {
   IS_ACTIVATED: 'isActivated',
   ITEMS: 'items',
   JSON_EXTENSION: '.json',
-  LINKED_FILE_EXTENSION: '.hck.json',
+  EXTERNAL_FILE_EXTENSION: '.hck.json',
   MAX_LENGTH: 'maxLength',
   MIN_LENGTH: 'minLength',
   NUMBER: 'number',

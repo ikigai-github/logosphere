@@ -4,21 +4,21 @@ import {
   DefinitionType,
 } from './canonical.schema';
 export abstract class Generator {
-  protected abstract genEnum(def: Definition): string;
-  protected abstract genDef(def: Definition): string;
-  protected abstract genLinkedDef(def: Definition): string;
+  protected abstract generateEnum(def: Definition): string;
+  protected abstract generateEntity(def: Definition): string;
+  protected abstract generateExternalEntity(def: Definition): string;
   generate(schema: CanonicalSchema): string {
     let output = '';
     schema.definitions.forEach((def: Definition) => {
       switch (def.type) {
         case DefinitionType.Enum:
-          output += this.genEnum(def);
+          output += this.generateEnum(def);
           break;
-        case DefinitionType.Definition:
-          output += this.genDef(def);
+        case DefinitionType.Entity:
+          output += this.generateEntity(def);
           break;
-        case DefinitionType.LinkedDef:
-          output += this.genLinkedDef(def);
+        case DefinitionType.ExternalEntity:
+          output += this.generateExternalEntity(def);
           break;
         default:
           break;

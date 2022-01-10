@@ -1,12 +1,12 @@
 export enum DefinitionType {
   Scalar = 'Scalar',
   Enum = 'Enum',
-  Definition = 'Definition',
+  Entity = 'Entity',
   ScalarArray = 'ScalarArray',
   EnumArray = 'EnumArray',
-  DefArray = 'DefArray',
-  LinkedDef = 'LinkedDef',
-  LinkedDefArray = 'LinkedDefArray',
+  EntityArray = 'EntityArray',
+  ExternalEntity = 'ExternalEntity',
+  ExternalEntityArray = 'ExternalEntityArray',
 }
 
 export interface Property {
@@ -24,7 +24,7 @@ export interface Property {
   minLength: number;
   maxLength: number;
   comment: string;
-  linkedModule: string;
+  externalModule: string;
 }
 
 export interface Definition {

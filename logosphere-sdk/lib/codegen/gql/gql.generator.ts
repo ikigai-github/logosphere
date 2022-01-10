@@ -4,7 +4,8 @@ import { Generator } from '../generator.abstract';
 import { GqlPropGenerator } from './gql.prop-generator';
 
 export class GqlGenerator extends Generator {
-  protected genEnum(def: Definition): string {
+  
+  protected generateEnum(def: Definition): string {
     let schemaString = `enum ${pascalCase(def.name)} {\n`;
 
     def.props.forEach((prop: Property) => {
@@ -15,7 +16,7 @@ export class GqlGenerator extends Generator {
 
     return schemaString;
   }
-  protected genDef(def: Definition): string {
+  protected generateEntity(def: Definition): string {
     const propGenerator = new GqlPropGenerator();
     let schemaString = `type ${pascalCase(def.name)} {\n`;
     def.props.forEach((prop: Property) => {
@@ -29,7 +30,7 @@ export class GqlGenerator extends Generator {
     return schemaString;
   }
 
-  protected genLinkedDef(def: Definition): string {
+  protected generateExternalEntity(def: Definition): string {
     const propGenerator = new GqlPropGenerator();
     let schemaString = `extend type ${pascalCase(def.name)} {\n`;
     def.props.forEach((prop: Property) => {

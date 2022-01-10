@@ -12,46 +12,50 @@ export class GqlPropGenerator extends PropGenerator {
     return this._typeMap[key] ? this._typeMap[key] : key;
   }
 
-  protected genScalar(prop: Property): string {
+  protected generateScalar(prop: Property): string {
     return `\t${prop.name}: ${pascalCase(this.#typeMap(prop.type))}${
       prop.isRequired ? '!' : ''
     }\n`;
   }
-  protected genDefinition(prop: Property): string {
+
+  protected generateEnum(prop: Property): string {
     return `\t${prop.name}: ${pascalCase(prop.type)}${
       prop.isRequired ? '!' : ''
     }\n`;
   }
-  protected genEnum(prop: Property): string {
+
+  protected generateEntity(prop: Property): string {
     return `\t${prop.name}: ${pascalCase(prop.type)}${
       prop.isRequired ? '!' : ''
     }\n`;
   }
-  protected genDefArray(prop: Property): string {
-    return `\t${prop.name}: [${pascalCase(prop.type)}]${
+
+  protected generateExternalEntity(prop: Property): string {
+    return `\t${prop.name}: ${pascalCase(prop.type)}${
       prop.isRequired ? '!' : ''
     }\n`;
   }
-  protected genScalarArray(prop: Property): string {
+
+  protected generateScalarArray(prop: Property): string {
     return `\t${prop.name}: [${pascalCase(this.#typeMap(prop.type))}]${
       prop.isRequired ? '!' : ''
     }\n`;
   }
 
-  protected genEnumArray(prop: Property): string {
+  protected generateEnumArray(prop: Property): string {
     return `\t${prop.name}: [${pascalCase(prop.type)}]${
       prop.isRequired ? '!' : ''
     }\n`;
   }
 
-  protected genLinkedDefArray(prop: Property): string {
+  protected generateEntityArray(prop: Property): string {
     return `\t${prop.name}: [${pascalCase(prop.type)}]${
       prop.isRequired ? '!' : ''
     }\n`;
   }
 
-  protected genLinkedDef(prop: Property): string {
-    return `\t${prop.name}: ${pascalCase(prop.type)}${
+  protected generateExternalEntityArray(prop: Property): string {
+    return `\t${prop.name}: [${pascalCase(prop.type)}]${
       prop.isRequired ? '!' : ''
     }\n`;
   }

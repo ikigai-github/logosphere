@@ -21,9 +21,9 @@ export class JsonSchemaPropParser extends PropParser {
     return (): U => {
       if (
         this.defType(propSchema) === DefinitionType.ScalarArray ||
-        this.defType(propSchema) === DefinitionType.DefArray ||
-        this.defType(propSchema) === DefinitionType.LinkedDefArray ||
-        this.defType(propSchema) === DefinitionType.EnumArray
+        this.defType(propSchema) === DefinitionType.EnumArray ||
+        this.defType(propSchema) === DefinitionType.EntityArray ||
+        this.defType(propSchema) === DefinitionType.ExternalEntityArray
       ) {
         return fn(propSchema[c.ITEMS]) as U;
       } else {
@@ -64,11 +64,11 @@ export class JsonSchemaPropParser extends PropParser {
     return (
       hasKey(propSchema, c.REF, c.STRING) &&
       !this.#isEnum(propSchema) &&
-      !this.#isLinked(propSchema)
+      !this.#isExternal(propSchema)
     );
   };
 
-  #isLinked = (propSchema: any) => {
+  #isExternal = (propSchema: any) => {
     return (
        hasKey(propSchema, c.REF, c.STRING) && 
        (propSchema[c.REF] as string).includes(c.JSON_EXTENSION)) ||
@@ -78,11 +78,11 @@ export class JsonSchemaPropParser extends PropParser {
        (propSchema[c.DEFAULT] as string).includes(c.JSON_EXTENSION))
   };
  
-  #getLinkedModule = (value: string) => {
-    return value.split('#')[0].split('/').pop().replace(c.LINKED_FILE_EXTENSION, '');
+  #getExternalModule = (value: string) => {
+    return value.split('#')[0].split('/').pop().replace(c.EXTERNAL_FILE_EXTENSION, '');
   }
 
-  #getLinkedType = (value: string) => {
+  #getExternalType = (value: string) => {
     return value.split('#').pop();
   }
   
@@ -90,22 +90,22 @@ export class JsonSchemaPropParser extends PropParser {
   protected defType(propSchema: any): DefinitionType {
     if (this.#isEnum(propSchema)) {
       return DefinitionType.Enum;
-    } else if (this.#isLinked(propSchema)) {
-      return DefinitionType.LinkedDef;
+    } else if (this.#isExternal(propSchema)) {
+      return DefinitionType.ExternalEntity;
     } else if (this.#isDefinition(propSchema)) {
-      return DefinitionType.Definition;
+      return DefinitionType.Entity;
     } else if (this.#isArray(propSchema) && this.#isEnum(propSchema[c.ITEMS])) {
       return DefinitionType.EnumArray;
     } else if (
       this.#isArray(propSchema) &&
-      this.#isLinked(propSchema[c.ITEMS])
+      this.#isExternal(propSchema[c.ITEMS])
     ) {
-      return DefinitionType.LinkedDefArray;
+      return DefinitionType.ExternalEntityArray;
     } else if (
       this.#isArray(propSchema) &&
       this.#isDefinition(propSchema[c.ITEMS])
     ) {
-      return DefinitionType.DefArray;
+      return DefinitionType.EntityArray;
     } else if (this.#isArray(propSchema)) {
       return DefinitionType.ScalarArray;
     } else {
@@ -116,13 +116,13 @@ export class JsonSchemaPropParser extends PropParser {
   protected type(propSchema: any): string {
     return this.#extractKey(propSchema, (propSchema: any) => {
       if (
-        this.defType(propSchema) === DefinitionType.Definition ||
+        this.defType(propSchema) === DefinitionType.Entity ||
         this.defType(propSchema) === DefinitionType.Enum
       ) {
         return this.#stripRef(propSchema[c.REF]);
-      } else if (this.defType(propSchema) === DefinitionType.LinkedDef) {
+      } else if (this.defType(propSchema) === DefinitionType.ExternalEntity) {
         return hasKey(propSchema, c.REF, c.STRING) ? this.#stripRef(propSchema[c.REF] as string) 
-          : hasKey(propSchema, c.DEFAULT, c.STRING) ? this.#getLinkedType(propSchema[c.DEFAULT] as string) : undefined;
+          : hasKey(propSchema, c.DEFAULT, c.STRING) ? this.#getExternalType(propSchema[c.DEFAULT] as string) : undefined;
       } else if (hasKey(propSchema, c.TYPE, c.STRING)) {
         return propSchema[c.TYPE] as string;
       } else {
@@ -196,14 +196,14 @@ export class JsonSchemaPropParser extends PropParser {
     })();
   }
 
-  protected linkedModule(propSchema: any): string {
+  protected externalModule(propSchema: any): string {
     return this.#extractKey(propSchema, (propSchema: any) => {
       if (hasKey(propSchema, c.REF, c.STRING) && 
         (propSchema[c.REF] as string).indexOf(c.JSON_EXTENSION) > -1) {
-        return this.#getLinkedModule(propSchema[c.REF] as string);
+        return this.#getExternalModule(propSchema[c.REF] as string);
       } else if (hasKey(propSchema, c.DEFAULT, c.STRING) && 
         (propSchema[c.DEFAULT] as string).indexOf(c.JSON_EXTENSION)) {
-        return this.#getLinkedModule(propSchema[c.DEFAULT] as string);
+        return this.#getExternalModule(propSchema[c.DEFAULT] as string);
       } else {
         return undefined;
       }

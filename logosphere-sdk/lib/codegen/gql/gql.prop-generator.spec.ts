@@ -21,7 +21,7 @@ describe('GQL prop generator', () => {
       name: 'name',
       type: 'type',
       isRequired: true,
-      defType: DefinitionType.Definition,
+      defType: DefinitionType.Entity,
     };
 
     const output = propGen.generate(prop);
@@ -65,7 +65,7 @@ describe('GQL prop generator', () => {
     const prop: Partial<Property> = {
       name: 'name',
       type: 'type',
-      defType: DefinitionType.DefArray,
+      defType: DefinitionType.EntityArray,
     };
 
     const output = propGen.generate(prop);

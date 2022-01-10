@@ -16,7 +16,7 @@ export abstract class PropParser {
   protected abstract minLength(schema: any): number;
   protected abstract maxLength(schema: any): number;
   protected abstract comment(schema: any): string;
-  protected abstract linkedModule(schema: any): string;
+  protected abstract externalModule(schema: any): string;
 
   constructor(name: string) {
     this._name = name;
@@ -38,7 +38,7 @@ export abstract class PropParser {
       minLength: this.minLength(propSchema),
       maxLength: this.maxLength(propSchema),
       comment: this.comment(propSchema),
-      linkedModule: this.linkedModule(propSchema),
+      externalModule: this.externalModule(propSchema),
     };
   }
 }

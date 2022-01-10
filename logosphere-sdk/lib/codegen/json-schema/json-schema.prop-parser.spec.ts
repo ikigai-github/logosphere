@@ -58,7 +58,7 @@ describe('test JsonSchemaPropParser', () => {
     const propParser = new JsonSchemaPropParser(name, required, f.$defs);
     const prop = propParser.parse(propSchema);
     //console.log(JSON.stringify(prop));
-    expect(prop.defType).toBe(DefinitionType.Definition);
+    expect(prop.defType).toBe(DefinitionType.Entity);
     expect(prop.name).toBe(name);
     expect(prop.type).toBe(name);
     expect(prop.isEnabled).toBe(true);
@@ -81,7 +81,7 @@ describe('test JsonSchemaPropParser', () => {
     const propParser = new JsonSchemaPropParser(name, required, f.$defs);
     const prop = propParser.parse(propSchema);
     //console.log(JSON.stringify(prop));
-    expect(prop.defType).toBe(DefinitionType.DefArray);
+    expect(prop.defType).toBe(DefinitionType.EntityArray);
     expect(prop.name).toBe(name);
     expect(prop.type).toBe('address');
     expect(prop.isEnabled).toBe(true);
@@ -145,15 +145,15 @@ describe('test JsonSchemaPropParser', () => {
     expect(prop.comment).toBeUndefined();
   });
 
-  it('parse linked definition ref', () => {
+  it('parse external definition ref', () => {
     const name = 'author';
     const propSchema = f.$defs.artwork.properties.author;
     const required = f.$defs.artwork.required;
     const propParser = new JsonSchemaPropParser(name, required, f.$defs);
     const prop = propParser.parse(propSchema);
     //console.log(JSON.stringify(prop));
-    expect(prop.defType).toBe(DefinitionType.LinkedDef);
-    expect(prop.linkedModule).toBe('user');
+    expect(prop.defType).toBe(DefinitionType.ExternalEntity);
+    expect(prop.externalModule).toBe('user');
     expect(prop.name).toBe(name);
     expect(prop.type).toBe('user');
     expect(prop.isEnabled).toBe(true);
@@ -169,15 +169,15 @@ describe('test JsonSchemaPropParser', () => {
     expect(prop.comment).toBeUndefined();
   });
 
-  it('parse array of linked def refs', () => {
+  it('parse array of external def refs', () => {
     const name = 'imageVariants';
     const propSchema = f.$defs.artwork.properties.imageVariants;
     const required = f.$defs.artwork.required;
     const propParser = new JsonSchemaPropParser(name, required, f.$defs);
     const prop = propParser.parse(propSchema);
     //console.log(JSON.stringify(prop));
-    expect(prop.defType).toBe(DefinitionType.LinkedDefArray);
-    expect(prop.linkedModule).toBe('minting');
+    expect(prop.defType).toBe(DefinitionType.ExternalEntityArray);
+    expect(prop.externalModule).toBe('minting');
     expect(prop.name).toBe(name);
     expect(prop.type).toBe('imageVariant');
     expect(prop.isEnabled).toBe(true);
