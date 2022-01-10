@@ -3,7 +3,7 @@ import { JsonSchemaFederatedParser } from '../../json-schema';
 import { Converter } from '../../converter.abstract';
 import { CanonicalSchema } from '../../canonical.schema';
 import { Definition, Property, DefinitionType } from '../../../codegen';
-import { ModuleConfiguration } from 'lib/configuration';
+import { ModuleConfiguration } from '../../../configuration';
 
 export class JsonSchemaToGqlFederatedConverter extends Converter {
   protected getParser(): JsonSchemaFederatedParser {

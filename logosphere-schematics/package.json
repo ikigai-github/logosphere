@@ -36,8 +36,8 @@
     "release": "release-it"
   },
   "dependencies": {
-    "@angular-devkit/core": "13.1.1",
-    "@angular-devkit/schematics": "13.1.1",
+    "@angular-devkit/core": "13.0.2",
+    "@angular-devkit/schematics": "13.0.2",
     "@nestjs/schematics": "8.0.5",
     "fs-extra": "10.0.0",
     "jsonc-parser": "3.0.0",

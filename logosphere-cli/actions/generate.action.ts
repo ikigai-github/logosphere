@@ -9,11 +9,12 @@ import {
 } from '../lib/schematics';
 import { MESSAGES } from '../lib/ui';
 import { SchemaType } from '@logosphere/sdk/lib/codegen/schema-type';
+import { ConverterFactory } from '@logosphere/sdk/lib/codegen/converters';
+import { ModuleConfiguration } from '@logosphere/sdk/dist/lib/configuration';
 import {  
   AbstractCollection,  
   SchematicOption, } from '@nestjs/cli/lib/schematics';
 import { generateSelect } from '@nestjs/cli/lib/questions/questions';
-import { ModuleConfiguration } from '@logosphere/sdk/dist/lib/configuration';
 import { loadConfiguration as loadNestConfiguration } from '@nestjs/cli/lib/utils/load-configuration';
 import { loadConfiguration as loadLogosphereConfiguration } from '@logosphere/sdk/dist/lib/configuration';
 import { shouldGenerateSpec } from '@nestjs/cli/lib/utils/project-utils';
@@ -27,7 +28,7 @@ export class GenerateAction extends AbstractAction {
 
 const generateFiles = async (inputs: Input[]) => {
   const nestConfig = await loadNestConfiguration();
-  const config = await loadLogosphereConfiguration();
+  const config = loadLogosphereConfiguration();
   
 
   const collectionOption = inputs.find(
@@ -69,14 +70,24 @@ const generateFiles = async (inputs: Input[]) => {
     if (!schematicInput) {
       throw new Error('Unable to find a schematic for this configuration');
     }
-    if (schematicInput.value === 'sch') {
+    const module = await selectModule(config.modules);
+    schematicOptions.push(new SchematicOption('module', module.name));
+    schematicOptions.push(new SchematicOption('name', module.name));
+
+    if ((schematicInput.value === 'sch' || 
+        schematicInput.value === 'schema')) {
       const schemaType = await selectSchemaType();
-      schematicOptions.push(new SchematicOption('schemaType', schemaType))
+      schematicOptions.push(new SchematicOption('schemaType', schemaType));
+
+      const converter = ConverterFactory.getConverter(SchemaType.Json, schemaType);
+      const targetSchema = converter.convert(config.modules);
+      if (!(module.name in targetSchema)) {
+        throw Error(`No ${schemaType} schema was generated for ${module.name}.`);
+      }
+      
+      schematicOptions.push(new SchematicOption('content', targetSchema[module.name]));
     }
-    //const module = await selectModule(lgsConfig.modules);
-    //schematicOptions.push(new SchematicOption('module', module.name));
-    //schematicOptions.push(new SchematicOption('hackoladeSchemaFile', module.hackoladeSchemaFile));
-    //schematicOptions.push(new SchematicOption('jsonSchemaFile', module.jsonSchemaFile));
+
     await collection.execute(schematicInput.value as string, schematicOptions);
     
   } catch (error) {
@@ -97,20 +108,20 @@ const mapSchematicOptions = (inputs: Input[]): SchematicOption[] => {
   return options;
 };
 
-// const selectModule = async (modules: ModuleConfiguration[]): Promise<ModuleConfiguration> => {
-//   const answers: Answers = await askForModule(modules);
-//   return modules.find((m: ModuleConfiguration) => m.name === answers['module']);
-// };
+const selectModule = async (modules: ModuleConfiguration[]): Promise<ModuleConfiguration> => {
+  const answers: Answers = await askForModule(modules);
+  return modules.find((m: ModuleConfiguration) => m.name === answers['module']);
+};
 
-// const askForModule = async (modules: ModuleConfiguration[]): Promise<Answers> => {
-//   const questions: Question[] = [
-//     generateSelect('module')(MESSAGES.GENERATE_ITEM_MODULE_QUESTION)(
-//       modules.map((module: ModuleConfiguration) => { return module.name })
-//     ),
-//   ];
-//   const prompt = createPromptModule();
-//   return await prompt(questions);
-// };
+const askForModule = async (modules: ModuleConfiguration[]): Promise<Answers> => {
+  const questions: Question[] = [
+    generateSelect('module')(MESSAGES.GENERATE_ITEM_MODULE_QUESTION)(
+      modules.map((module: ModuleConfiguration) => { return module.name })
+    ),
+  ];
+  const prompt = createPromptModule();
+  return await prompt(questions);
+};
 
 const selectSchemaType = async (): Promise<SchemaType> => {
   const answers: Answers = await askForSchemaType();
@@ -120,7 +131,7 @@ const selectSchemaType = async (): Promise<SchemaType> => {
 const askForSchemaType = async (): Promise<Answers> => {
   const questions: Question[] = [
     generateSelect('schemaType')(MESSAGES.GENERATE_SCHEMA_TYPE_QUESTION)([
-      SchemaType.GqlFederated,
+      SchemaType.Gql,
       SchemaType.Fluree,
       SchemaType.Canonical
     ]),

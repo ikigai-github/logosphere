@@ -21,14 +21,12 @@ describe('Application Factory', () => {
       '/project/.gitignore',
       '/project/.prettierrc',
       '/project/README.md',
+      '/project/logosphere.json',
       '/project/nest-cli.json',
       '/project/package.json',
       '/project/tsconfig.build.json',
       '/project/tsconfig.json',
-      '/project/src/app.controller.spec.ts',
-      '/project/src/app.controller.ts',
       '/project/src/app.module.ts',
-      '/project/src/app.service.ts',
       '/project/src/main.ts',
       '/project/test/app.e2e-spec.ts',
       '/project/test/jest-e2e.json',
@@ -45,45 +43,18 @@ describe('Application Factory', () => {
       '/awesome-project/.gitignore',
       '/awesome-project/.prettierrc',
       '/awesome-project/README.md',
+      '/awesome-project/logosphere.json',
       '/awesome-project/nest-cli.json',
       '/awesome-project/package.json',
       '/awesome-project/tsconfig.build.json',
       '/awesome-project/tsconfig.json',
-      '/awesome-project/src/app.controller.spec.ts',
-      '/awesome-project/src/app.controller.ts',
       '/awesome-project/src/app.module.ts',
-      '/awesome-project/src/app.service.ts',
       '/awesome-project/src/main.ts',
       '/awesome-project/test/app.e2e-spec.ts',
       '/awesome-project/test/jest-e2e.json',
     ]);
   });
-  it('should manage javascript files', async () => {
-    const options: ApplicationOptions = {
-      name: 'project',
-      language: 'js',
-    };
-    const tree: UnitTestTree = await runner.runSchematicAsync('application', options).toPromise();
-    const files: string[] = tree.files;
-    expect(files).toEqual([
-      '/project/.babelrc',
-      '/project/.gitignore',
-      '/project/.prettierrc',
-      '/project/README.md',
-      '/project/index.js',
-      '/project/jsconfig.json',
-      '/project/nest-cli.json',
-      '/project/nodemon.json',
-      '/project/package.json',
-      '/project/src/app.controller.js',
-      '/project/src/app.controller.spec.js',
-      '/project/src/app.module.js',
-      '/project/src/app.service.js',
-      '/project/src/main.js',
-      '/project/test/app.e2e-spec.js',
-      '/project/test/jest-e2e.json',
-    ]);
-  });
+  
   it('should manage destination directory', async () => {
     const options: ApplicationOptions = {
       name: '@scope/package',
@@ -96,14 +67,12 @@ describe('Application Factory', () => {
       '/scope-package/.gitignore',
       '/scope-package/.prettierrc',
       '/scope-package/README.md',
+      '/scope-package/logosphere.json',
       '/scope-package/nest-cli.json',
       '/scope-package/package.json',
       '/scope-package/tsconfig.build.json',
       '/scope-package/tsconfig.json',
-      '/scope-package/src/app.controller.spec.ts',
-      '/scope-package/src/app.controller.ts',
       '/scope-package/src/app.module.ts',
-      '/scope-package/src/app.service.ts',
       '/scope-package/src/main.ts',
       '/scope-package/test/app.e2e-spec.ts',
       '/scope-package/test/jest-e2e.json',

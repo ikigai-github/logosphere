@@ -1,8 +1,8 @@
 lockfileVersion: 5.3
 
 specifiers:
-  '@angular-devkit/core': 13.1.1
-  '@angular-devkit/schematics': 13.1.1
+  '@angular-devkit/core': 13.0.2
+  '@angular-devkit/schematics': 13.0.2
   '@commitlint/cli': 16.0.1
   '@commitlint/config-angular': 16.0.0
   '@nestjs/schematics': 8.0.5
@@ -29,8 +29,8 @@ specifiers:
   typescript: 4.5.4
 
 dependencies:
-  '@angular-devkit/core': 13.1.1
-  '@angular-devkit/schematics': 13.1.1
+  '@angular-devkit/core': 13.0.2
+  '@angular-devkit/schematics': 13.0.2
   '@nestjs/schematics': 8.0.5_typescript@4.5.4
   fs-extra: 10.0.0
   jsonc-parser: 3.0.0
@@ -77,41 +77,11 @@ packages:
       source-map: 0.7.3
     dev: false
 
-  /@angular-devkit/core/13.1.1:
-    resolution: {integrity: sha512-tpOOzdrbrXG+BiJ/iKUX5VU5vBXN/n+H1EMThTwjgT11mqw2uvMj4sSRPvHUrrfxbLE9deuCDQEzmci71enn2w==}
-    engines: {node: ^12.20.0 || ^14.15.0 || >=16.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
-    peerDependencies:
-      chokidar: ^3.5.2
-    peerDependenciesMeta:
-      chokidar:
-        optional: true
-    dependencies:
-      ajv: 8.8.2
-      ajv-formats: 2.1.1
-      fast-json-stable-stringify: 2.1.0
-      magic-string: 0.25.7
-      rxjs: 6.6.7
-      source-map: 0.7.3
-    dev: false
-
   /@angular-devkit/schematics/13.0.2:
     resolution: {integrity: sha512-qrTe1teQptgP8gmVy6QX0T4dNfnNipEv+cM2cr7JXOmkPpwF+6oBDrTRIJ55t6rziqrXHJ3rxjKm1aHAxFrIEQ==}
     engines: {node: ^12.20.0 || ^14.15.0 || >=16.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
     dependencies:
       '@angular-devkit/core': 13.0.2
-      jsonc-parser: 3.0.0
-      magic-string: 0.25.7
-      ora: 5.4.1
-      rxjs: 6.6.7
-    transitivePeerDependencies:
-      - chokidar
-    dev: false
-
-  /@angular-devkit/schematics/13.1.1:
-    resolution: {integrity: sha512-uDE0vzjx7MyiJOul91MYMVpRPnAW5/o+pHcINx85wR6t4/RDQSH3UdBCCFxxwv1W9YZSR4kMiwi/sUYqPqbQMw==}
-    engines: {node: ^12.20.0 || ^14.15.0 || >=16.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
-    dependencies:
-      '@angular-devkit/core': 13.1.1
       jsonc-parser: 3.0.0
       magic-string: 0.25.7
       ora: 5.4.1
