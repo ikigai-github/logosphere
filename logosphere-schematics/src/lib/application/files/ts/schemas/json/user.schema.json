@@ -1,0 +1,92 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "user",
+    "type": "object",
+    "$defs": {
+        "user": {
+            "isActivated": true,
+            "type": "object",
+            "properties": {
+                "username": {
+                    "isActivated": true,
+                    "type": "string"
+                },
+                "handle": {
+                    "isActivated": true,
+                    "type": "string"
+                },
+                "wallets": {
+                    "isActivated": true,
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/wallet",
+                        "isActivated": true,
+                        "displayName": "wallet"
+                    }
+                },
+                "nfts": {
+                    "isActivated": true,
+                    "type": "array",
+                    "items": {
+                        "isActivated": true,
+                        "default": "minting.hck.json#nft",
+                        "displayName": "nft"
+                    }
+                },
+                "artworks": {
+                    "isActivated": true,
+                    "type": "array",
+                    "items": {
+                        "isActivated": true,
+                        "displayName": "artwork",
+                        "default": "minting.hck.json#artwork"
+                    }
+                },
+                "listings": {
+                    "isActivated": true,
+                    "type": "array",
+                    "items": {
+                        "isActivated": true,
+                        "displayName": "listing",
+                        "default": "auction.hck.json#listing"
+                    }
+                },
+                "bids": {
+                    "isActivated": true,
+                    "type": "array",
+                    "items": {
+                        "isActivated": true,
+                        "displayName": "bid",
+                        "default": "auction.hck.json#bid"
+                    }
+                }
+            },
+            "additionalProperties": false
+        },
+        "wallet": {
+            "isActivated": true,
+            "type": "object",
+            "properties": {
+                "address": {
+                    "isActivated": true,
+                    "type": "string"
+                },
+                "owner": {
+                    "$ref": "#/$defs/user",
+                    "isActivated": true
+                }
+            },
+            "additionalProperties": false
+        }
+    },
+    "properties": {
+        "user": {
+            "$ref": "#/$defs/user",
+            "isActivated": true
+        },
+        "wallet": {
+            "$ref": "#/$defs/wallet",
+            "isActivated": true
+        }
+    }
+}

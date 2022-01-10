@@ -1,14 +1,16 @@
 {
   "modules": [
     {
-      "name": "m1",
-      "hackoladeSchemaFile": "./m1.hck.json",
-      "jsonSchemaFile": "./m1.schema.json"
+      "name": "user",
+      "jsonSchemaFile": "schemas/json/user.schema.json"
     },
     {
-      "name": "m2",
-      "hackoladeSchemaFile": "./m2.hck.json",
-      "jsonSchemaFile": "./m2.schema.json"
+      "name": "minting",
+      "jsonSchemaFile": "schemas/json/minting.schema.json"
+    },
+    {
+      "name": "auction",
+      "jsonSchemaFile": "schemas/json/auction.schema.json"
     }
   ]
 }

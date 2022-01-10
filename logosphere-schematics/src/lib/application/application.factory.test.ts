@@ -10,29 +10,8 @@ describe('Application Factory', () => {
     '.',
     path.join(process.cwd(), 'src/collection.json'),
   );
-  it('should manage name only', async () => {
-    const options: ApplicationOptions = {
-      name: 'project',
-    };
-    const tree: UnitTestTree = await runner.runSchematicAsync('application', options).toPromise();
-    const files: string[] = tree.files;
-    expect(files).toEqual([
-      '/project/.eslintrc.js',
-      '/project/.gitignore',
-      '/project/.prettierrc',
-      '/project/README.md',
-      '/project/logosphere.json',
-      '/project/nest-cli.json',
-      '/project/package.json',
-      '/project/tsconfig.build.json',
-      '/project/tsconfig.json',
-      '/project/src/app.module.ts',
-      '/project/src/main.ts',
-      '/project/test/app.e2e-spec.ts',
-      '/project/test/jest-e2e.json',
-    ]);
-  });
-  it('should manage name to dasherize', async () => {
+  
+  it('should create files', async () => {
     const options: ApplicationOptions = {
       name: 'awesomeProject',
     };
@@ -48,34 +27,16 @@ describe('Application Factory', () => {
       '/awesome-project/package.json',
       '/awesome-project/tsconfig.build.json',
       '/awesome-project/tsconfig.json',
+      '/awesome-project/schemas/hackolade/auction.hck.json',
+      '/awesome-project/schemas/hackolade/minting.hck.json',
+      '/awesome-project/schemas/hackolade/user.hck.json',
+      '/awesome-project/schemas/json/auction.schema.json',
+      '/awesome-project/schemas/json/minting.schema.json',
+      '/awesome-project/schemas/json/user.schema.json',
       '/awesome-project/src/app.module.ts',
       '/awesome-project/src/main.ts',
       '/awesome-project/test/app.e2e-spec.ts',
       '/awesome-project/test/jest-e2e.json',
-    ]);
-  });
-  
-  it('should manage destination directory', async () => {
-    const options: ApplicationOptions = {
-      name: '@scope/package',
-      directory: 'scope-package',
-    };
-    const tree: UnitTestTree = await runner.runSchematicAsync('application', options).toPromise();
-    const files: string[] = tree.files;
-    expect(files).toEqual([
-      '/scope-package/.eslintrc.js',
-      '/scope-package/.gitignore',
-      '/scope-package/.prettierrc',
-      '/scope-package/README.md',
-      '/scope-package/logosphere.json',
-      '/scope-package/nest-cli.json',
-      '/scope-package/package.json',
-      '/scope-package/tsconfig.build.json',
-      '/scope-package/tsconfig.json',
-      '/scope-package/src/app.module.ts',
-      '/scope-package/src/main.ts',
-      '/scope-package/test/app.e2e-spec.ts',
-      '/scope-package/test/jest-e2e.json',
     ]);
   });
 });
