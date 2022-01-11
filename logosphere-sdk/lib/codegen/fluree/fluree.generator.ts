@@ -1,3 +1,4 @@
+import { isEmpty } from 'lodash';
 import { Definition, DefinitionType } from '../canonical.schema';
 import { Generator } from '../abstract';
 import { FlureePropGenerator } from './fluree.prop-generator';
@@ -14,14 +15,16 @@ export class FlureeGenerator extends Generator {
 
   protected generateEntity(def: Definition): FlureeItem[] {
     const items: FlureeItem[] = [];
-    const propGenerator = new FlureePropGenerator();
+    const propGenerator = new FlureePropGenerator(def.name);
 
+    // create collection
     items.push({
       _id: c.COLLECTION,
       name: def.name,
       doc: def.description
     });
 
+    // create predicates
     def.props.forEach((prop: Property) => {
       if (prop.isEnabled) {
         items.push(propGenerator.generate(prop))
@@ -43,7 +46,6 @@ export class FlureeGenerator extends Generator {
 
       switch (def.type) {
         case DefinitionType.Entity:
-          console.log(def.name);
           flureeItems.push(...this.generateEntity(def));
           break;
         default:
@@ -51,7 +53,11 @@ export class FlureeGenerator extends Generator {
       }
     });
 
-    return JSON.stringify(flureeItems);
+    return JSON.stringify(
+      flureeItems.filter((item: FlureeItem) => !isEmpty(item)),
+      null,
+      2
+    );
 
   }
     

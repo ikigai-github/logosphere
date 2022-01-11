@@ -13,6 +13,6 @@ describe('Fluree Generator', () => {
     const fql = generator.generate(canonical);
     expect(fql).toBeDefined();
     expect(fql.length > 0).toBe(true);
-    console.log(`FQL: ${fql}`);
+    //console.log(`FQL: ${fql}`);
   });
 });

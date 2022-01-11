@@ -29,7 +29,9 @@
     "url": "https://github.com/ikigai-github/logosphere/issues"
   },
   "dependencies": {
+    "@types/lodash": "4.14.178",
     "graphql": "15.8.0",
+    "lodash": "4.17.21",
     "pascal-case": "3.1.2"
   },
   "devDependencies": {

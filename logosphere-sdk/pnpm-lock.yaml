@@ -4,6 +4,7 @@ specifiers:
   '@types/chai': 4.2.19
   '@types/chai-as-promised': 7.1.4
   '@types/jest': 27.0.2
+  '@types/lodash': 4.14.178
   '@types/node': 15.14.9
   '@typescript-eslint/eslint-plugin': 5.0.0
   '@typescript-eslint/parser': 5.0.0
@@ -12,13 +13,16 @@ specifiers:
   eslint-plugin-prettier: 4.0.0
   graphql: 15.8.0
   jest: 27.2.5
+  lodash: 4.17.21
   pascal-case: 3.1.2
   prettier: 2.3.2
   ts-jest: 27.0.3
   typescript: 4.3.5
 
 dependencies:
+  '@types/lodash': 4.14.178
   graphql: 15.8.0
+  lodash: 4.17.21
   pascal-case: 3.1.2
 
 devDependencies:
@@ -709,6 +713,10 @@ packages:
   /@types/json-schema/7.0.9:
     resolution: {integrity: sha512-qcUXuemtEu+E5wZSJHNxUXeCZhAfXKQ41D+duX+VYPde7xyEVZci+/oXKJL13tnRs9lR2pr4fod59GT6/X1/yQ==}
     dev: true
+
+  /@types/lodash/4.14.178:
+    resolution: {integrity: sha512-0d5Wd09ItQWH1qFbEyQ7oTQ3GZrMfth5JkbN3EvTKLXcHLRDSXeLnlvlOn0wvxVIwK5o2M8JzP/OWz7T3NRsbw==}
+    dev: false
 
   /@types/node/15.14.9:
     resolution: {integrity: sha512-qjd88DrCxupx/kJD5yQgZdcYKZKSIGBVDIBE1/LTGcNm3d2Np/jxojkdePDdfnBHJc5W7vSMpbJ1aB7p/Py69A==}
@@ -2505,7 +2513,6 @@ packages:
 
   /lodash/4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
-    dev: true
 
   /lower-case/2.0.2:
     resolution: {integrity: sha512-7fm3l3NAF9WfN6W3JOmf5drwpVqX78JtoGJ3A6W0a6ZnldM41w2fV5D490psKFTpMds8TJse/eHLFFsNHHjHgg==}

@@ -16,7 +16,7 @@ describe('GQL prop generator', () => {
     expect(output).toBe('\tname: Type!\n');
   });
 
-  it('should generate type', () => {
+  it('should generate entity', () => {
     const prop: Partial<Property> = {
       name: 'name',
       type: 'type',
