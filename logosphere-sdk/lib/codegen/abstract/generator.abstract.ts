@@ -2,12 +2,12 @@ import {
   CanonicalSchema,
   Definition,
   DefinitionType,
-} from './canonical.schema';
+} from '../canonical.schema';
 export abstract class Generator {
-  protected abstract generateEnum(def: Definition): string;
-  protected abstract generateEntity(def: Definition): string;
-  protected abstract generateExternalEntity(def: Definition): string;
-  generate(schema: CanonicalSchema): string {
+  protected abstract generateEnum(def: Definition): any;
+  protected abstract generateEntity(def: Definition): any;
+  protected abstract generateExternalEntity(def: Definition): any;
+  generate(schema: CanonicalSchema): any {
     let output = '';
     schema.definitions.forEach((def: Definition) => {
       switch (def.type) {

@@ -56,7 +56,7 @@ describe('GQL prop generator', () => {
       type: 'string',
       defType: DefinitionType.Scalar,
       isPK: true,
-      isRequired: true
+      isRequired: true,
     };
 
     const output = propGen.generate(prop);

@@ -37,6 +37,3 @@ export interface Definition {
 export interface CanonicalSchema {
   definitions: Definition[];
 }
-
-
-

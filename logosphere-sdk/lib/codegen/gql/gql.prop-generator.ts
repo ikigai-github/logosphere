@@ -1,6 +1,6 @@
 import { pascalCase } from 'pascal-case';
 import { Property } from '../canonical.schema';
-import { PropGenerator } from '../prop-generator.abstract';
+import { PropGenerator } from '../abstract/prop-generator.abstract';
 
 export class GqlPropGenerator extends PropGenerator {
   private _typeMap = {
@@ -13,9 +13,9 @@ export class GqlPropGenerator extends PropGenerator {
   }
 
   protected generateScalar(prop: Property): string {
-    return `\t${prop.name}: ${prop.isPK ? 'ID' : pascalCase(this.#typeMap(prop.type))}${
-      prop.isRequired ? '!' : ''
-    }\n`;
+    return `\t${prop.name}: ${
+      prop.isPK ? 'ID' : pascalCase(this.#typeMap(prop.type))
+    }${prop.isRequired ? '!' : ''}\n`;
   }
 
   protected generateEnum(prop: Property): string {

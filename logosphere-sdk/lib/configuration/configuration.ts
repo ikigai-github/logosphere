@@ -1,4 +1,3 @@
-
 export interface ModuleConfiguration {
   name: string;
   hackoladeSchemaFile?: string;

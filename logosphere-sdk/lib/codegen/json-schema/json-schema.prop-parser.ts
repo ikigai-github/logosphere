@@ -1,13 +1,12 @@
 import { DefinitionType } from '../canonical.schema';
-import { PropParser } from '../prop-parser.abstract';
+import { PropParser } from '../abstract/prop-parser.abstract';
 import { constants as c } from './json-schema.constants';
-import { hasKey } from '../converters/util';
+import { hasKey } from './util';
 
 /***
  * Converts JSON Schema to Canonical Schema
  */
 export class JsonSchemaPropParser extends PropParser {
-  
   private _required: string[];
   private _defSchema: any;
 
@@ -70,22 +69,26 @@ export class JsonSchemaPropParser extends PropParser {
 
   #isExternal = (propSchema: any) => {
     return (
-       hasKey(propSchema, c.REF, c.STRING) && 
-       (propSchema[c.REF] as string).includes(c.JSON_EXTENSION)) ||
-       // we put circular reference in default to avoid 
-       // circular references bloating issue in Hackolade
-       (hasKey(propSchema, c.DEFAULT, c.STRING) && 
-       (propSchema[c.DEFAULT] as string).includes(c.JSON_EXTENSION))
+      (hasKey(propSchema, c.REF, c.STRING) &&
+        (propSchema[c.REF] as string).includes(c.JSON_EXTENSION)) ||
+      // we put circular reference in default to avoid
+      // circular references bloating issue in Hackolade
+      (hasKey(propSchema, c.DEFAULT, c.STRING) &&
+        (propSchema[c.DEFAULT] as string).includes(c.JSON_EXTENSION))
+    );
   };
- 
+
   #getExternalModule = (value: string) => {
-    return value.split('#')[0].split('/').pop().replace(c.EXTERNAL_FILE_EXTENSION, '');
-  }
+    return value
+      .split('#')[0]
+      .split('/')
+      .pop()
+      .replace(c.EXTERNAL_FILE_EXTENSION, '');
+  };
 
   #getExternalType = (value: string) => {
     return value.split('#').pop();
-  }
-  
+  };
 
   protected defType(propSchema: any): DefinitionType {
     if (this.#isEnum(propSchema)) {
@@ -121,8 +124,11 @@ export class JsonSchemaPropParser extends PropParser {
       ) {
         return this.#stripRef(propSchema[c.REF]);
       } else if (this.defType(propSchema) === DefinitionType.ExternalEntity) {
-        return hasKey(propSchema, c.REF, c.STRING) ? this.#stripRef(propSchema[c.REF] as string) 
-          : hasKey(propSchema, c.DEFAULT, c.STRING) ? this.#getExternalType(propSchema[c.DEFAULT] as string) : undefined;
+        return hasKey(propSchema, c.REF, c.STRING)
+          ? this.#stripRef(propSchema[c.REF] as string)
+          : hasKey(propSchema, c.DEFAULT, c.STRING)
+          ? this.#getExternalType(propSchema[c.DEFAULT] as string)
+          : undefined;
       } else if (hasKey(propSchema, c.TYPE, c.STRING)) {
         return propSchema[c.TYPE] as string;
       } else {
@@ -198,17 +204,19 @@ export class JsonSchemaPropParser extends PropParser {
 
   protected externalModule(propSchema: any): string {
     return this.#extractKey(propSchema, (propSchema: any) => {
-      if (hasKey(propSchema, c.REF, c.STRING) && 
-        (propSchema[c.REF] as string).indexOf(c.JSON_EXTENSION) > -1) {
+      if (
+        hasKey(propSchema, c.REF, c.STRING) &&
+        (propSchema[c.REF] as string).indexOf(c.JSON_EXTENSION) > -1
+      ) {
         return this.#getExternalModule(propSchema[c.REF] as string);
-      } else if (hasKey(propSchema, c.DEFAULT, c.STRING) && 
-        (propSchema[c.DEFAULT] as string).indexOf(c.JSON_EXTENSION)) {
+      } else if (
+        hasKey(propSchema, c.DEFAULT, c.STRING) &&
+        (propSchema[c.DEFAULT] as string).indexOf(c.JSON_EXTENSION)
+      ) {
         return this.#getExternalModule(propSchema[c.DEFAULT] as string);
       } else {
         return undefined;
       }
     })();
-    
   }
-
 }

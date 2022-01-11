@@ -4,5 +4,5 @@ export enum SchemaType {
   Fluree = 'fluree',
   Canonical = 'canonical',
   Json = 'json',
-  JsonFederated = 'jsonFederated'
+  JsonFederated = 'jsonFederated',
 }

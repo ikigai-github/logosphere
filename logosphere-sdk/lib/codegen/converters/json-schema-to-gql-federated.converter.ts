@@ -1,21 +1,14 @@
-import { GqlGenerator } from '../../gql/gql.generator';
-import { JsonSchemaFederatedParser } from '../../json-schema';
-import { Converter } from '../../converter.abstract';
-import { CanonicalSchema } from '../../canonical.schema';
-import { Definition, Property, DefinitionType } from '../../../codegen';
-import { ModuleConfiguration } from '../../../configuration';
+import { GqlGenerator } from '../gql';
+import { JsonSchemaFederatedParser } from '../json-schema';
+import { Converter } from '../converters';
+import { CanonicalSchema, Definition, Property, DefinitionType } from '../canonical.schema';
+import { ModuleConfiguration } from '../../configuration';
 
 export class JsonSchemaToGqlFederatedConverter extends Converter {
-  protected getParser(): JsonSchemaFederatedParser {
-    return new JsonSchemaFederatedParser();
-  }
-  protected getGenerator(): GqlGenerator {
-    return new GqlGenerator();
-  }
 
   convert(modules: ModuleConfiguration[]): any {
-    const parser = this.getParser();
-    const canonical: CanonicalSchema = parser.parse(modules);
+
+    const canonical: CanonicalSchema = this.parser.parse(modules);
     
     // transform definitions subset to only have non-external props
     const defs = canonical.definitions.map((def: Definition) => {
@@ -72,7 +65,6 @@ export class JsonSchemaToGqlFederatedConverter extends Converter {
       return accum;
     }, {});
 
-    const generator = this.getGenerator();
 
     // generate subgraph schemas
     const gqlFederated = {};
@@ -80,7 +72,7 @@ export class JsonSchemaToGqlFederatedConverter extends Converter {
       const sch: CanonicalSchema = {
         definitions: moduleDefs[module] as Definition[]
       }
-      const gql = generator.generate(sch);
+      const gql = this.generator.generate(sch);
       gqlFederated[module] = gql;
     });
 

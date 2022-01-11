@@ -3,7 +3,7 @@ import { Configuration } from './configuration';
 import { FileSystemReader } from '../readers';
 import { LOGOSPHERE_CONFIG_FILE } from './defaults';
 
-export class ConfigurationLoader  {
+export class ConfigurationLoader {
   constructor(private readonly reader?: Reader) {}
   public load(name?: string): Configuration {
     const content: string = name
@@ -11,17 +11,17 @@ export class ConfigurationLoader  {
       : this.reader.read(LOGOSPHERE_CONFIG_FILE);
 
     if (!content) {
-      throw new Error('Error reading configuration file')
+      throw new Error('Error reading configuration file');
     }
     const fileConfig = JSON.parse(content);
-    
+
     return fileConfig;
   }
 }
 
 export function loadConfiguration(): Configuration {
   const loader: ConfigurationLoader = new ConfigurationLoader(
-    new FileSystemReader(process.cwd()),
+    new FileSystemReader(process.cwd())
   );
   return loader.load();
 }

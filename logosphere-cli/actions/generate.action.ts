@@ -29,8 +29,6 @@ export class GenerateAction extends AbstractAction {
 const generateFiles = async (inputs: Input[]) => {
   const nestConfig = await loadNestConfiguration();
   const config = loadLogosphereConfiguration();
-  
-
   const collectionOption = inputs.find(
     (option) => option.name === 'collection',
   )!.value as string;
@@ -78,9 +76,9 @@ const generateFiles = async (inputs: Input[]) => {
         schematicInput.value === 'schema')) {
       const schemaType = await selectSchemaType();
       schematicOptions.push(new SchematicOption('schemaType', schemaType));
-
       const converter = ConverterFactory.getConverter(SchemaType.Json, schemaType);
       const targetSchema = converter.convert(config.modules);
+      
       if (!(module.name in targetSchema)) {
         throw Error(`No ${schemaType} schema was generated for ${module.name}.`);
       }
