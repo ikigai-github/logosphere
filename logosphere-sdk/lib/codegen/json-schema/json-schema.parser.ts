@@ -69,7 +69,7 @@ export class JsonSchemaParser extends Parser {
           name: c.IDENTIFIER,
           type: c.STRING,
           defType: DefinitionType.Scalar,
-          description: 'Identifier (primary key) of the entity',
+          description: 'Identifier of the entity',
           isPK: true,
           isEnabled: true,
           isReadOnly: true,

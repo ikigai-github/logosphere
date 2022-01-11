@@ -1,7 +1,8 @@
 import { SchemaType } from '../schema-type';
 import { Converter, JsonSchemaToGqlFederatedConverter } from '../converters';
-import { JsonSchemaFederatedParser } from '../json-schema';
+import { JsonSchemaParser, JsonSchemaFederatedParser } from '../json-schema';
 import { GqlGenerator } from '../gql';
+import { FlureeGenerator } from '../fluree';
 
 export class ConverterFactory {
   static getConverter(
@@ -13,6 +14,8 @@ export class ConverterFactory {
         switch (targetSchemaType) {
           case SchemaType.Gql:
             return new JsonSchemaToGqlFederatedConverter(new JsonSchemaFederatedParser(), new GqlGenerator());
+          case SchemaType.Fluree:
+            return new Converter(new JsonSchemaParser(), new FlureeGenerator());
           default:
             throw new Error(
               `${sourceSchemaType} to ${targetSchemaType} converter not implemented.`

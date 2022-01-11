@@ -31,6 +31,10 @@ export class FlureePropGenerator extends PropGenerator {
     }
   }
 
+  #externalDoc(prop: Partial<Property>) {
+    return `${prop.description ? prop.description +', ' : ''}identifier of ${prop.type}`;
+  }
+
   constructor(private readonly collection: string) {
     super();
   }
@@ -55,7 +59,7 @@ export class FlureePropGenerator extends PropGenerator {
     return {
       ...this.#common(prop),
       type: c.STRING,
-      doc: `${prop.description} (identifier of ${prop.type})`
+      doc: this.#externalDoc(prop)
     };
   }
   protected generateScalarArray(prop: Partial<Property>): FlureePredicate {
@@ -80,7 +84,7 @@ export class FlureePropGenerator extends PropGenerator {
     return {
       ...this.#common(prop),
       type: c.STRING,
-      doc: `${prop.description} (identifier of ${prop.type})`,
+      doc: this.#externalDoc(prop),
       multi: true
     };
   }

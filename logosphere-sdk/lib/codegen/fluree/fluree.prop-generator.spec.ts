@@ -117,7 +117,7 @@ describe('Fluree Schema Prop Generator', () => {
       _id: c.PREDICATE,
       name: 'user/artwork',
       type: c.STRING,
-      doc: 'desc (identifier of artwork)',
+      doc: 'desc, identifier of artwork',
       unique: false,
       index: true
     } as FlureePredicate);
@@ -136,7 +136,7 @@ describe('Fluree Schema Prop Generator', () => {
       _id: c.PREDICATE,
       name: 'user/artwork',
       type: c.STRING,
-      doc: 'desc (identifier of artwork)',
+      doc: 'desc, identifier of artwork',
       multi: true,
       unique: false,
       index: true

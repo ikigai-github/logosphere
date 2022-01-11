@@ -17,6 +17,7 @@ import {
 import { generateSelect } from '@nestjs/cli/lib/questions/questions';
 import { loadConfiguration as loadNestConfiguration } from '@nestjs/cli/lib/utils/load-configuration';
 import { loadConfiguration as loadLogosphereConfiguration } from '@logosphere/sdk/dist/lib/configuration';
+import { FileSystemReader } from '@logosphere/sdk/dist/lib/readers';
 import { shouldGenerateSpec } from '@nestjs/cli/lib/utils/project-utils';
 import { AbstractAction } from '@nestjs/cli/actions';
 
@@ -76,14 +77,26 @@ const generateFiles = async (inputs: Input[]) => {
         schematicInput.value === 'schema')) {
       const schemaType = await selectSchemaType();
       schematicOptions.push(new SchematicOption('schemaType', schemaType));
+
       const converter = ConverterFactory.getConverter(SchemaType.Json, schemaType);
-      const targetSchema = converter.convert(config.modules);
-      
-      if (!(module.name in targetSchema)) {
-        throw Error(`No ${schemaType} schema was generated for ${module.name}.`);
+
+      let targetSchema: any;
+      if (schemaType === SchemaType.Gql) {
+        targetSchema = converter.convert(config.modules);
+        if (!(module.name in targetSchema)) {
+          throw Error(`No ${schemaType} schema was generated for ${module.name}.`);
+        }
+        schematicOptions.push(new SchematicOption('content', targetSchema[module.name]));
       }
-      
-      schematicOptions.push(new SchematicOption('content', targetSchema[module.name]));
+      else {
+        const reader = new FileSystemReader(process.cwd());
+        const sourceSchema = JSON.parse(reader.read(module.jsonSchemaFile));
+        targetSchema = converter.convert(sourceSchema);
+        if (!targetSchema || targetSchema.length === 0) {
+          throw Error(`No ${schemaType} schema was generated for ${module.name}.`);
+        }
+        schematicOptions.push(new SchematicOption('content', targetSchema.replace(/\"/gi, '\\"')));
+      }
     }
 
     await collection.execute(schematicInput.value as string, schematicOptions);
