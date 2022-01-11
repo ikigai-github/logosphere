@@ -51,11 +51,12 @@ export class JsonSchemaParser extends Parser {
         defs.push({
           name: defKey,
           type: DefinitionType.Enum,
+          description: resolved[defKey][c.DESCRIPTION],
           props,
         });
       });
 
-    // parse object definitions
+    // parse entities
     Object.keys(resolved)
       .filter((defKey: string) => {
         return this.#isEntity(resolved[defKey]);
@@ -68,6 +69,7 @@ export class JsonSchemaParser extends Parser {
           name: c.IDENTIFIER,
           type: c.STRING,
           defType: DefinitionType.Scalar,
+          description: 'Identifier (primary key) of the entity',
           isPK: true,
           isEnabled: true,
           isReadOnly: true,
@@ -86,6 +88,7 @@ export class JsonSchemaParser extends Parser {
         defs.push({
           name: defKey,
           type: DefinitionType.Entity,
+          description: resolved[defKey][c.DESCRIPTION],
           props,
         });
       });

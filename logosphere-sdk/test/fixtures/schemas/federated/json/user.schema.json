@@ -9,15 +9,18 @@
             "properties": {
                 "username": {
                     "isActivated": true,
-                    "type": "string"
+                    "type": "string",
+                    "description": "Unique username that user can pick for themselves. "
                 },
                 "handle": {
                     "isActivated": true,
-                    "type": "string"
+                    "type": "string",
+                    "description": "Handle, such as from adahandle.io"
                 },
                 "wallets": {
                     "isActivated": true,
                     "type": "array",
+                    "description": "Wallets that belong to the user",
                     "items": {
                         "$ref": "#/$defs/wallet",
                         "isActivated": true,
@@ -27,6 +30,7 @@
                 "nfts": {
                     "isActivated": true,
                     "type": "array",
+                    "description": "NFTs that the user is an owner of",
                     "items": {
                         "isActivated": true,
                         "default": "minting.hck.json#nft",
@@ -36,6 +40,7 @@
                 "artworks": {
                     "isActivated": true,
                     "type": "array",
+                    "description": "Artworks that user is an owner of",
                     "items": {
                         "isActivated": true,
                         "displayName": "artwork",
@@ -45,6 +50,7 @@
                 "listings": {
                     "isActivated": true,
                     "type": "array",
+                    "description": "Auction listings that the user is an owner of",
                     "items": {
                         "isActivated": true,
                         "displayName": "listing",
@@ -54,6 +60,7 @@
                 "bids": {
                     "isActivated": true,
                     "type": "array",
+                    "description": "Active bids that the user placed on an auction",
                     "items": {
                         "isActivated": true,
                         "displayName": "bid",
@@ -61,7 +68,8 @@
                     }
                 }
             },
-            "additionalProperties": false
+            "additionalProperties": false,
+            "description": "User of the NFT marketplace"
         },
         "wallet": {
             "isActivated": true,
@@ -69,14 +77,16 @@
             "properties": {
                 "address": {
                     "isActivated": true,
-                    "type": "string"
+                    "type": "string",
+                    "description": "Address of the wallet"
                 },
                 "owner": {
                     "$ref": "#/$defs/user",
                     "isActivated": true
                 }
             },
-            "additionalProperties": false
+            "additionalProperties": false,
+            "description": "An ADA crypto wallet, custodial or non-custodial"
         }
     },
     "properties": {

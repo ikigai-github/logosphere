@@ -5,6 +5,7 @@
     "$defs": {
         "person": {
             "type": "object",
+            "description": "A person",
             "properties": {
                 "identifier": {
                     "isActivated": true,
@@ -19,6 +20,7 @@
                 "firstName": {
                     "type": "string",
                     "isActivated": true,
+                    "description": "First name of a person",
                     "examples": [
                         "Joshua",
                         "Chris",

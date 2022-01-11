@@ -35,10 +35,7 @@
                         "type": "string",
                         "properties": [],
                         "GUID": "a3bf9180-65f0-11ec-bb96-bff80ff94019",
-                        "error": {
-                            "name": false,
-                            "code": false
-                        }
+                        "description": "Unique username that user can pick for themselves. "
                     },
                     {
                         "name": "handle",
@@ -47,10 +44,7 @@
                         "type": "string",
                         "properties": [],
                         "GUID": "addf1f00-65f0-11ec-bb96-bff80ff94019",
-                        "error": {
-                            "name": false,
-                            "code": false
-                        }
+                        "description": "Handle, such as from adahandle.io"
                     },
                     {
                         "name": "wallets",
@@ -77,10 +71,7 @@
                         ],
                         "additionalItems": true,
                         "GUID": "06648f20-65f1-11ec-bb96-bff80ff94019",
-                        "error": {
-                            "name": false,
-                            "code": false
-                        }
+                        "description": "Wallets that belong to the user"
                     },
                     {
                         "name": "nfts",
@@ -103,10 +94,7 @@
                         ],
                         "additionalItems": true,
                         "GUID": "0ae7b730-65fa-11ec-bb96-bff80ff94019",
-                        "error": {
-                            "name": false,
-                            "code": false
-                        }
+                        "description": "NFTs that the user is an owner of"
                     },
                     {
                         "name": "artworks",
@@ -128,10 +116,7 @@
                         ],
                         "additionalItems": true,
                         "GUID": "4806b030-65fa-11ec-bb96-bff80ff94019",
-                        "error": {
-                            "name": false,
-                            "code": false
-                        }
+                        "description": "Artworks that user is an owner of"
                     },
                     {
                         "name": "listings",
@@ -153,10 +138,7 @@
                         ],
                         "additionalItems": true,
                         "GUID": "932b86b0-65fc-11ec-bb96-bff80ff94019",
-                        "error": {
-                            "name": false,
-                            "code": false
-                        }
+                        "description": "Auction listings that the user is an owner of"
                     },
                     {
                         "name": "bids",
@@ -178,10 +160,7 @@
                         ],
                         "additionalItems": true,
                         "GUID": "b952ad50-65fc-11ec-bb96-bff80ff94019",
-                        "error": {
-                            "name": false,
-                            "code": false
-                        }
+                        "description": "Active bids that the user placed on an auction"
                     }
                 ],
                 "additionalProperties": false,
@@ -202,10 +181,7 @@
                         "408d3611-65f2-11ec-bb96-bff80ff94019"
                     ]
                 ],
-                "error": {
-                    "name": false,
-                    "code": false
-                }
+                "description": "User of the NFT marketplace"
             },
             {
                 "name": "wallet",
@@ -220,10 +196,7 @@
                         "type": "string",
                         "properties": [],
                         "GUID": "ca0367e0-65f0-11ec-bb96-bff80ff94019",
-                        "error": {
-                            "name": false,
-                            "code": false
-                        }
+                        "description": "Address of the wallet"
                     },
                     {
                         "GUID": "d779e890-65f0-11ec-bb96-bff80ff94019",
@@ -254,10 +227,7 @@
                         "c3625e00-710d-11ec-a5b0-db9d7e993846"
                     ]
                 ],
-                "error": {
-                    "name": false,
-                    "code": false
-                }
+                "description": "An ADA crypto wallet, custodial or non-custodial"
             }
         ],
         "GUID": "9087d460-65f0-11ec-bb96-bff80ff94019"
@@ -286,7 +256,7 @@
         },
         "customPropertiesUpdated": true
     },
-    "lastModifTS": "2022-01-09T05:34:21.617Z",
+    "lastModifTS": "2022-01-11T05:33:58.749Z",
     "persistenceSchemaVersion": "5",
     "isCreatedByPlugin": true,
     "pluginInformation": {

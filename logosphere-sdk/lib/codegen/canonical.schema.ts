@@ -31,6 +31,7 @@ export interface Definition {
   name: string;
   type: DefinitionType;
   module?: string;
+  description?: string;
   props: Partial<Property>[];
 }
 

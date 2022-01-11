@@ -1,6 +1,7 @@
 import { Definition, DefinitionType } from '../canonical.schema';
-import { Generator } from '../abstract/generator.abstract';
-import { CanonicalSchema } from '../canonical.schema';
+import { Generator } from '../abstract';
+import { FlureePropGenerator } from './fluree.prop-generator';
+import { CanonicalSchema, Property } from '../canonical.schema';
 import { constants as c } from './fluree.constants';
 
 import { FlureeSchema, FlureeCollection, FlureeItem } from './fluree.schema';
@@ -11,11 +12,23 @@ export class FlureeGenerator extends Generator {
     // then enum values will be recorded as scalar strings
   }
 
-  protected generateEntity(def: Definition): FlureeCollection {
-    return {
+  protected generateEntity(def: Definition): FlureeItem[] {
+    const items: FlureeItem[] = [];
+    const propGenerator = new FlureePropGenerator();
+
+    items.push({
       _id: c.COLLECTION,
       name: def.name,
-    };
+      doc: def.description
+    });
+
+    def.props.forEach((prop: Property) => {
+      if (prop.isEnabled) {
+        items.push(propGenerator.generate(prop))
+      }
+    });
+
+    return items;
   }
 
   protected generateExternalEntity(def: Definition): void {
@@ -31,7 +44,7 @@ export class FlureeGenerator extends Generator {
       switch (def.type) {
         case DefinitionType.Entity:
           console.log(def.name);
-          flureeItems.push(this.generateEntity(def));
+          flureeItems.push(...this.generateEntity(def));
           break;
         default:
           break;

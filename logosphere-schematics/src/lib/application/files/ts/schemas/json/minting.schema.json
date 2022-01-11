@@ -9,22 +9,26 @@
             "properties": {
                 "title": {
                     "isActivated": true,
-                    "type": "string"
+                    "type": "string",
+                    "description": "Title of the artwork"
                 },
                 "description": {
                     "isActivated": true,
-                    "type": "string"
+                    "type": "string",
+                    "description": "Description of the artwork"
                 },
                 "author": {
-                    "$ref": "../user/user.hck.json#/definitions/properties/user",
+                    "$ref": "user.hck.json#/definitions/properties/user",
                     "isActivated": true
                 },
                 "ipfsCid": {
                     "isActivated": true,
-                    "type": "string"
+                    "type": "string",
+                    "description": "Content identifier in IPFS"
                 }
             },
-            "additionalProperties": false
+            "additionalProperties": false,
+            "description": "Artwork, such as digital image or scan of a physical drawing"
         }
     },
     "properties": {
@@ -42,14 +46,15 @@
                 },
                 "policy": {
                     "isActivated": true,
-                    "type": "string"
+                    "type": "string",
+                    "description": "NFT policy"
                 },
                 "owner": {
-                    "$ref": "../user/user.hck.json#/definitions/properties/user",
+                    "$ref": "user.hck.json#/definitions/properties/user",
                     "isActivated": true
                 },
                 "minter": {
-                    "$ref": "../user/user.hck.json#/definitions/properties/user",
+                    "$ref": "user.hck.json#/definitions/properties/user",
                     "isActivated": true
                 }
             },

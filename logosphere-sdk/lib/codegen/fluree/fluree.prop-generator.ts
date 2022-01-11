@@ -1,5 +1,6 @@
 import { Property } from '../canonical.schema';
 import { PropGenerator } from '../abstract/prop-generator.abstract';
+import { FlureePredicate } from '.';
 export class FlureePropGenerator extends PropGenerator {
   protected generateScalar(prop: Partial<Property>): string {
     throw new Error('Method not implemented.');
@@ -24,5 +25,11 @@ export class FlureePropGenerator extends PropGenerator {
   }
   protected generateExternalEntityArray(prop: Partial<Property>): string {
     throw new Error('Method not implemented.');
+  }
+
+  generate(prop: Property): FlureePredicate {
+
+    return 
+
   }
 }

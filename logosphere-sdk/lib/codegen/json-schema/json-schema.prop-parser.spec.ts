@@ -22,7 +22,7 @@ describe('test JsonSchemaPropParser', () => {
     expect(prop.examples).toBeInstanceOf(Array);
     expect(prop.examples).toHaveLength(35);
     expect(prop.pattern).toBeUndefined();
-    expect(prop.description).toBeUndefined();
+    expect(prop.description).toBe('First name of a person');
     expect(prop.minLength).toBe(propSchema.minLength);
     expect(prop.maxLength).toBe(propSchema.maxLength);
     expect(prop.comment).toBeUndefined();
