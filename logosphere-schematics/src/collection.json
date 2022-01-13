@@ -10,6 +10,11 @@
       "factory": "./lib/schema/schema.factory#main",
       "description": "Generate Logosphere schemas",
       "schema": "./lib/schema/schema.json"
+    },
+    "module": {
+      "factory": "./lib/module/module.factory#main",
+      "description": "Generate Logosphere modules",
+      "schema": "./lib/module/schema.json"
     }
   }
 }
