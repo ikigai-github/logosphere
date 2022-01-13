@@ -2,6 +2,8 @@ import { Reader } from '../readers';
 import { Configuration } from './configuration';
 import { FileSystemReader } from '../readers';
 import { LOGOSPHERE_CONFIG_FILE } from './defaults';
+import { constants as c} from './configuration.constants';
+import { ConfigurationError, messages as m } from './configuration.error';
 
 export class ConfigurationLoader {
   constructor(private readonly reader?: Reader) {}
@@ -15,10 +17,12 @@ export class ConfigurationLoader {
     }
     const fileConfig = JSON.parse(content);
 
-    // process defaults
-    
+    if (!(c.CONFIG in fileConfig) ||
+        !(c.MODULES in fileConfig[c.CONFIG])) {
+      throw new ConfigurationError(m.INVALID_FORMAT);
+    }
 
-    return fileConfig;
+    return fileConfig[c.CONFIG];
   }
 }
 

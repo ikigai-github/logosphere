@@ -8,7 +8,7 @@ describe('Test configuration loader', () => {
       new FileSystemReader(__dirname)
     );
     const config: Configuration = configLoader.load(
-      'configuration.fixture.json'
+      '../../test/fixtures/logosphere.json'
     );
     expect(config).toBeDefined();
     expect(config.modules).toBeDefined();
