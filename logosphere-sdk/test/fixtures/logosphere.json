@@ -1,19 +1,36 @@
 {
-  "modules": [
-    {
-      "name": "user",
-      "hackoladeSchemaFile": "test/fixtures/schemas/federated/hackolade/user.hck.json",
-      "jsonSchemaFile": "test/fixtures/schemas/federated/json/user.schema.json"
-    },
-    {
-      "name": "minting",
-      "hackoladeSchemaFile": "test/fixtures/schemas/federated/hackolade/minting.hck.json",
-      "jsonSchemaFile": "test/fixtures/schemas/federated/json/minting.schema.json"
-    },
-    {
-      "name": "auction",
-      "hackoladeSchemaFile": "test/fixtures/schemas/federated/hackolade/auction.hck.json",
-      "jsonSchemaFile": "test/fixtures/schemas/federated/json/auction.schema.json"
-    }
-  ]
+  "config": {
+    "modules": [
+      {
+        "name": "user",
+        "jsonSchemaFile": "test/fixtures/schemas/federated/json/user.schema.json",
+        "fluree": {
+          "ledgerUrl": "http://localhost:8090",
+          "queryUrl": "http://localhost:8090",
+          "network": "local",
+          "db": "user"
+        }
+      },
+      {
+        "name": "minting",
+        "jsonSchemaFile": "test/fixtures/schemas/federated/json/minting.schema.json",
+        "fluree": {
+          "ledgerUrl": "http://localhost:8090",
+          "queryUrl": "http://localhost:8090",
+          "network": "local",
+          "db": "minting"
+        }
+      },
+      {
+        "name": "auction",
+        "jsonSchemaFile": "test/fixtures/schemas/federated/json/auction.schema.json",
+        "fluree": {
+          "ledgerUrl": "http://localhost:8090",
+          "queryUrl": "http://localhost:8090",
+          "network": "local",
+          "db": "auction"
+        }
+      }
+    ]
+  }
 }

@@ -29,12 +29,19 @@
     "url": "https://github.com/ikigai-github/logosphere/issues"
   },
   "dependencies": {
+    "@nestjs/common": "8.2.4",
+    "@nestjs/config": "1.1.6",
+    "@nestjs/core": "8.2.4",
     "@types/lodash": "4.14.178",
+    "axios": "0.24.0",
     "graphql": "15.8.0",
     "lodash": "4.17.21",
-    "pascal-case": "3.1.2"
+    "pascal-case": "3.1.2",
+    "reflect-metadata": "0.1.13",
+    "rxjs": "7.5.2"
   },
   "devDependencies": {
+    "@nestjs/testing": "8.2.4",
     "@types/chai": "4.2.19",
     "@types/chai-as-promised": "7.1.4",
     "@types/jest": "27.0.2",

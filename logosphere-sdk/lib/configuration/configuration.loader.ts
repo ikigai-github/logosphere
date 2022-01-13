@@ -15,13 +15,16 @@ export class ConfigurationLoader {
     }
     const fileConfig = JSON.parse(content);
 
+    // process defaults
+    
+
     return fileConfig;
   }
 }
 
-export function loadConfiguration(): Configuration {
+export function loadConfiguration(path?: string): Configuration {
   const loader: ConfigurationLoader = new ConfigurationLoader(
-    new FileSystemReader(process.cwd())
+    new FileSystemReader(path ? path : process.cwd())
   );
   return loader.load();
 }
