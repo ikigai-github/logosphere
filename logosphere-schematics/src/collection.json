@@ -15,6 +15,11 @@
       "factory": "./lib/module/module.factory#main",
       "description": "Generate Logosphere modules",
       "schema": "./lib/module/schema.json"
+    },
+    "dto": {
+      "factory": "./lib/dto/dto.factory#main",
+      "description": "Generate DTOs (Data Transfer Objects)",
+      "schema": "./lib/dto/schema.json"
     }
   }
 }
