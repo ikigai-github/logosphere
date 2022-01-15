@@ -8,9 +8,7 @@ describe('Test DTO generator', () => {
   const canonical = parser.parse(jsonSchema);
   it('should generate enum', () => {
     const dtos = generator.generate(canonical);
-    console.log(dtos);
-
-
-
+    expect(dtos).toBeDefined();
+    expect(dtos.length > 0).toBe(true);
   });
 });

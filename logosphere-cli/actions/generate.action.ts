@@ -97,6 +97,12 @@ const generateFiles = async (inputs: Input[]) => {
         }
         schematicOptions.push(new SchematicOption('content', targetSchema.replace(/\"/gi, '\\"')));
       }
+    } else if (schematicInput.value === 'dto') {
+      const reader = new FileSystemReader(process.cwd());
+      const sourceSchema = JSON.parse(reader.read(module.jsonSchemaFile));
+      const converter = ConverterFactory.getConverter(SchemaType.Json, SchemaType.Dto);
+      const content = converter.convert(sourceSchema);
+      schematicOptions.push(new SchematicOption('content', content));
     }
 
     await collection.execute(schematicInput.value as string, schematicOptions);

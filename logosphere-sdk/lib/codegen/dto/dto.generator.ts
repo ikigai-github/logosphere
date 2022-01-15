@@ -1,6 +1,7 @@
 import { pascalCase } from 'pascal-case';
 import { Generator } from '../abstract';
 import { Definition, Property } from '../canonical.schema';
+import { DtoPropGenerator } from './dto.prop-generator';
 export class DtoGenerator extends Generator {
   protected generateEnum(def: Definition) {
 
@@ -16,10 +17,21 @@ export class DtoGenerator extends Generator {
   }
 
   protected generateEntity(def: Definition) {
-    return '';
+
+    const propGenerator = new DtoPropGenerator();
+
+    let schemaString =  `export class  ${pascalCase(def.name)} {\n`;
+    schemaString += `\t_id: number | string;\n`;
+    def.props.forEach((prop: Property) => {
+      schemaString += propGenerator.generate(prop);
+    });
+    schemaString += `}\n`
+
+    return schemaString;
+    
   }
   protected generateExternalEntity(def: Definition) {
-    return '';
+    return this.generateEntity(def);
   }
 
 }

@@ -5,4 +5,5 @@ export enum SchemaType {
   Canonical = 'canonical',
   Json = 'json',
   JsonFederated = 'jsonFederated',
+  Dto = 'dto'
 }

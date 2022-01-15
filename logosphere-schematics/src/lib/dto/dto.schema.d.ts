@@ -29,4 +29,8 @@ export interface DtoOptions {
    * Class name to be used internally.
    */
   className?: string;
+  /**
+   * Content of the file 
+   */
+  content?: string;
 }

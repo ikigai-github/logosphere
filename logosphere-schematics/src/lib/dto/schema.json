@@ -15,7 +15,7 @@
     },
     "flat": {
       "type": "boolean",
-      "default": true,
+      "default": false,
       "description": "Flag to indicate if a directory is created."
     },
     "spec": {
@@ -39,6 +39,10 @@
     "className": {
       "type": "string",
       "description": "Class name to be used internally."
+    },
+    "content": {
+      "type": "string",
+      "description": "Generated DTO definitions"
     }
   },
   "required": ["name"]
