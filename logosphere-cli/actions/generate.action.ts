@@ -9,17 +9,18 @@ import {
 } from '../lib/schematics';
 import { MESSAGES } from '../lib/ui';
 import { SchemaType } from '@logosphere/sdk/lib/codegen/schema-type';
-import { ConverterFactory } from '@logosphere/sdk/lib/codegen/converters';
-import { ModuleConfiguration } from '@logosphere/sdk/dist/lib/configuration';
+import { ConverterFactory } from '@logosphere/sdk/lib/codegen';
+import { jsonFederatedSchemaLoader, JsonFederatedSchema } from '@logosphere/sdk/dist/lib/codegen/json-schema';
+import { GqlFederatedSchema } from '@logosphere/sdk/dist/lib/codegen/gql';
 import {  
   AbstractCollection,  
   SchematicOption, } from '@nestjs/cli/lib/schematics';
 import { generateSelect } from '@nestjs/cli/lib/questions/questions';
 import { loadConfiguration as loadNestConfiguration } from '@nestjs/cli/lib/utils/load-configuration';
-import { loadConfiguration as loadLogosphereConfiguration } from '@logosphere/sdk/dist/lib/configuration';
-import { FileSystemReader } from '@logosphere/sdk/dist/lib/readers';
+import { loadConfiguration as loadLogosphereConfiguration, ModuleConfiguration } from '@logosphere/sdk/dist/lib/configuration';
 import { shouldGenerateSpec } from '@nestjs/cli/lib/utils/project-utils';
 import { AbstractAction } from '@nestjs/cli/actions';
+import { ConsoleLogger } from '@nestjs/common';
 
 export class GenerateAction extends AbstractAction {
   public async handle(inputs: Input[], options: Input[]) {
@@ -53,13 +54,13 @@ const generateFiles = async (inputs: Input[]) => {
 
   const specValue = spec!.value as boolean;
   const specOptions = spec!.options as any;
-  let generateSpec = shouldGenerateSpec(
+  const generateSpec = shouldGenerateSpec(
     nestConfig,
     schematic,
     appName,
     specValue,
     specOptions.passedAsInput,
-  );
+  ) || false;
 
   schematicOptions.push(new SchematicOption('sourceRoot', sourceRoot));
   schematicOptions.push(new SchematicOption('spec', generateSpec));
@@ -69,9 +70,11 @@ const generateFiles = async (inputs: Input[]) => {
     if (!schematicInput) {
       throw new Error('Unable to find a schematic for this configuration');
     }
+
     const module = await selectModule(config.modules);
     schematicOptions.push(new SchematicOption('module', module.name));
     schematicOptions.push(new SchematicOption('name', module.name));
+    
 
     if ((schematicInput.value === 'sch' || 
         schematicInput.value === 'schema')) {
@@ -79,19 +82,20 @@ const generateFiles = async (inputs: Input[]) => {
       schematicOptions.push(new SchematicOption('schemaType', schemaType));
 
       const converter = ConverterFactory.getConverter(SchemaType.Json, schemaType);
+      const federatedJsonSchemas: JsonFederatedSchema[] = jsonFederatedSchemaLoader();
 
       let targetSchema: any;
       if (schemaType === SchemaType.Gql) {
-        targetSchema = converter.convert(config.modules);
-        if (!(module.name in targetSchema)) {
+        const federatedGqlSchemas: GqlFederatedSchema[] = converter.convert(federatedJsonSchemas);
+        targetSchema = federatedGqlSchemas.find((schema: GqlFederatedSchema) => schema.module === module.name).schema;
+    
+        if (!targetSchema) {
           throw Error(`No ${schemaType} schema was generated for ${module.name}.`);
         }
-        schematicOptions.push(new SchematicOption('content', targetSchema[module.name]));
+        schematicOptions.push(new SchematicOption('content', targetSchema));
       }
       else {
-        const reader = new FileSystemReader(process.cwd());
-        const sourceSchema = JSON.parse(reader.read(module.jsonSchemaFile));
-        targetSchema = converter.convert(sourceSchema);
+        targetSchema = converter.convert(federatedJsonSchemas.find((schema: JsonFederatedSchema) => schema.module === module.name).schema);
         if (!targetSchema || targetSchema.length === 0) {
           throw Error(`No ${schemaType} schema was generated for ${module.name}.`);
         }
