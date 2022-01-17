@@ -3,13 +3,22 @@ import { Injectable } from '@nestjs/common';
 // import { ConfigModule, ConfigService } from '@nestjs/config';
 import { messages as m, FlureeError} from './fluree.errors';
 import { FlureeResponse } from './fluree-response.interface';
+import { api } from './fluree.api';
 //import { Configuration, ModuleConfiguration } from '../../configuration';
 
-
+/**
+ * Service for interacting with Fluree DB instance
+ */
 @Injectable()
 export class FlureeService {
 
-  #processDuration(duration: string) {
+  /**
+   * Fluree returns duration as string (i.e 15ms)
+   * This converts it to integer number of milliseconds
+   * @param duration : duration in format of 15ms, 15s, 15m, 15h etc
+   * @returns duration as number of milliseconds
+   */
+  #processDuration(duration: string): number {
     if (duration.indexOf('ms') > 0) {
       return +duration.replace('ms', '');
     } else if (duration.indexOf('s') > 0) {
@@ -37,7 +46,7 @@ export class FlureeService {
   async listDBs(endpoint: string): Promise<string[]> {
     //const mod = this._config.modules.find((m: ModuleConfiguration) => m.name === module);
     try {
-      const response = await axios.post(`${endpoint}/fdb/dbs`);
+      const response = await axios.post(api(endpoint).listDbs);
       const dbs: string[][] = response.data;
       return dbs.map((db: string[]) => { return db.join('/')});
     } catch (error: any) {
@@ -58,7 +67,7 @@ export class FlureeService {
     }
 
     try {
-      const response = await axios.post(`${endpoint}/fdb/new-db`, {'db/id': db});
+      const response = await axios.post(api(endpoint).newDb, {'db/id': db});
       return response.data;
     } catch (error: any) {
       throw new FlureeError(m.CREATE_DB_FAILED, error);
@@ -87,7 +96,7 @@ export class FlureeService {
           transact = JSON.parse(transact)
       }
       
-      const response = await axios.post(`${endpoint}/fdb/${db}/transact`, transact);
+      const response = await axios.post(api(endpoint, db).transact, transact);
       
       /*
       */
@@ -118,7 +127,7 @@ export class FlureeService {
 
     try {
 
-      const response =  await axios.post(`${endpoint}/fdb/${db}/query`, query);
+      const response =  await axios.post(api(endpoint, db).query, query);
       return response.data;
   
     } catch(error: any) {

@@ -9,17 +9,20 @@ import {
 } from '../lib/schematics';
 import { MESSAGES } from '../lib/ui';
 import { SchemaType } from '@logosphere/sdk/lib/codegen/schema-type';
-import { ConverterFactory } from '@logosphere/sdk/lib/codegen/converters';
-import { ModuleConfiguration } from '@logosphere/sdk/dist/lib/configuration';
+import { ConverterFactory } from '@logosphere/sdk/lib/codegen';
+import { jsonFederatedSchemaLoader, JsonFederatedSchema } from '@logosphere/sdk/dist/lib/codegen/json-schema';
+import { FileSystemReader } from '@logosphere/sdk/dist/lib/readers';
+import { GqlFederatedSchema } from '@logosphere/sdk/dist/lib/codegen/gql';
 import {  
   AbstractCollection,  
   SchematicOption, } from '@nestjs/cli/lib/schematics';
 import { generateSelect } from '@nestjs/cli/lib/questions/questions';
 import { loadConfiguration as loadNestConfiguration } from '@nestjs/cli/lib/utils/load-configuration';
-import { loadConfiguration as loadLogosphereConfiguration } from '@logosphere/sdk/dist/lib/configuration';
-import { FileSystemReader } from '@logosphere/sdk/dist/lib/readers';
+import { loadConfiguration as loadLogosphereConfiguration, ModuleConfiguration } from '@logosphere/sdk/dist/lib/configuration';
 import { shouldGenerateSpec } from '@nestjs/cli/lib/utils/project-utils';
 import { AbstractAction } from '@nestjs/cli/actions';
+import { ConsoleLogger } from '@nestjs/common';
+import { DtoSchema } from '@logosphere/sdk/lib/codegen/dto/dto.schema';
 
 export class GenerateAction extends AbstractAction {
   public async handle(inputs: Input[], options: Input[]) {
@@ -33,15 +36,84 @@ const generateFiles = async (inputs: Input[]) => {
   const collectionOption = inputs.find(
     (option) => option.name === 'collection',
   )!.value as string;
+  
+
+  const collection: AbstractCollection = CollectionFactory.create(
+    collectionOption || nestConfig.collection || Collection.LOGOSPHERE,
+  );
+  
+  
+  try {
+    const schematicInput = inputs.find((input) => input.name === 'schematic');
+    if (!schematicInput) {
+      throw new Error('Unable to find a schematic for this configuration');
+    }
+
+    const module = await selectModule(config.modules);
+   
+    if ((schematicInput.value === 'sch' || 
+        schematicInput.value === 'schema')) {
+      const schemaType = await selectSchemaType();
+      const schematicOptions = buildSchematicOptions(inputs, nestConfig);
+      schematicOptions.push(new SchematicOption('module', module.name));
+      schematicOptions.push(new SchematicOption('schemaType', schemaType));
+
+      const converter = ConverterFactory.getConverter(SchemaType.Json, schemaType);
+      const federatedJsonSchemas: JsonFederatedSchema[] = jsonFederatedSchemaLoader();
+
+      let targetSchema: any;
+      if (schemaType === SchemaType.Gql) {
+        const federatedGqlSchemas: GqlFederatedSchema[] = converter.convert(federatedJsonSchemas);
+        targetSchema = federatedGqlSchemas.find((schema: GqlFederatedSchema) => schema.module === module.name).schema;
+    
+        if (!targetSchema) {
+          throw Error(`No ${schemaType} schema was generated for ${module.name}.`);
+        }
+        schematicOptions.push(new SchematicOption('name', module.name));
+        schematicOptions.push(new SchematicOption('content', targetSchema));
+        await collection.execute(schematicInput.value as string, schematicOptions);
+      }
+      else {
+        targetSchema = converter.convert(federatedJsonSchemas.find((schema: JsonFederatedSchema) => schema.module === module.name).schema);
+        if (!targetSchema || targetSchema.length === 0) {
+          throw Error(`No ${schemaType} schema was generated for ${module.name}.`);
+        }
+        schematicOptions.push(new SchematicOption('name', module.name));
+        schematicOptions.push(new SchematicOption('content', targetSchema.replace(/\"/gi, '\\"')));
+        await collection.execute(schematicInput.value as string, schematicOptions);
+      }
+    } else if (schematicInput.value === 'dto') {
+     
+      const reader = new FileSystemReader(process.cwd());
+      const sourceSchema = JSON.parse(reader.read(module.jsonSchemaFile));
+      const converter = ConverterFactory.getConverter(SchemaType.Json, SchemaType.Dto);
+      const dtos: DtoSchema[] = converter.convert(sourceSchema);
+
+      dtos.map(async (dto: DtoSchema) => {
+        
+        const schematicOptions = buildSchematicOptions(inputs, nestConfig);
+        schematicOptions.push(new SchematicOption('module', module.name));
+        schematicOptions.push(new SchematicOption('name', `${module.name}/dto/${dto.name}`));
+        schematicOptions.push(new SchematicOption('content', dto.schema));
+        await collection.execute(schematicInput.value as string, schematicOptions);
+
+      });
+    }
+    
+  } catch (error) {
+    if (error && error.message) {
+      console.error(chalk.red(error.message));
+    }
+  }
+};
+
+const buildSchematicOptions = (inputs: Input[], nestConfig): SchematicOption[] => {
   const schematic = inputs.find((option) => option.name === 'schematic')!
     .value as string;
   const appName = inputs.find((option) => option.name === 'project')!
     .value as string;
   const spec = inputs.find((option) => option.name === 'spec');
 
-  const collection: AbstractCollection = CollectionFactory.create(
-    collectionOption || nestConfig.collection || Collection.LOGOSPHERE,
-  );
   const schematicOptions: SchematicOption[] = mapSchematicOptions(inputs);
   schematicOptions.push(
     new SchematicOption('language', nestConfig.language),
@@ -53,65 +125,19 @@ const generateFiles = async (inputs: Input[]) => {
 
   const specValue = spec!.value as boolean;
   const specOptions = spec!.options as any;
-  let generateSpec = shouldGenerateSpec(
+  const generateSpec = shouldGenerateSpec(
     nestConfig,
     schematic,
     appName,
     specValue,
     specOptions.passedAsInput,
-  );
+  ) || false;
 
   schematicOptions.push(new SchematicOption('sourceRoot', sourceRoot));
   schematicOptions.push(new SchematicOption('spec', generateSpec));
-  
-  try {
-    const schematicInput = inputs.find((input) => input.name === 'schematic');
-    if (!schematicInput) {
-      throw new Error('Unable to find a schematic for this configuration');
-    }
-    const module = await selectModule(config.modules);
-    schematicOptions.push(new SchematicOption('module', module.name));
-    schematicOptions.push(new SchematicOption('name', module.name));
 
-    if ((schematicInput.value === 'sch' || 
-        schematicInput.value === 'schema')) {
-      const schemaType = await selectSchemaType();
-      schematicOptions.push(new SchematicOption('schemaType', schemaType));
+  return schematicOptions;
 
-      const converter = ConverterFactory.getConverter(SchemaType.Json, schemaType);
-
-      let targetSchema: any;
-      if (schemaType === SchemaType.Gql) {
-        targetSchema = converter.convert(config.modules);
-        if (!(module.name in targetSchema)) {
-          throw Error(`No ${schemaType} schema was generated for ${module.name}.`);
-        }
-        schematicOptions.push(new SchematicOption('content', targetSchema[module.name]));
-      }
-      else {
-        const reader = new FileSystemReader(process.cwd());
-        const sourceSchema = JSON.parse(reader.read(module.jsonSchemaFile));
-        targetSchema = converter.convert(sourceSchema);
-        if (!targetSchema || targetSchema.length === 0) {
-          throw Error(`No ${schemaType} schema was generated for ${module.name}.`);
-        }
-        schematicOptions.push(new SchematicOption('content', targetSchema.replace(/\"/gi, '\\"')));
-      }
-    } else if (schematicInput.value === 'dto') {
-      const reader = new FileSystemReader(process.cwd());
-      const sourceSchema = JSON.parse(reader.read(module.jsonSchemaFile));
-      const converter = ConverterFactory.getConverter(SchemaType.Json, SchemaType.Dto);
-      const content = converter.convert(sourceSchema);
-      schematicOptions.push(new SchematicOption('content', content));
-    }
-
-    await collection.execute(schematicInput.value as string, schematicOptions);
-    
-  } catch (error) {
-    if (error && error.message) {
-      console.error(chalk.red(error.message));
-    }
-  }
 };
 
 const mapSchematicOptions = (inputs: Input[]): SchematicOption[] => {

@@ -18,12 +18,6 @@ import {
 import { Location, NameParser } from '@nestjs/schematics/dist/utils/name.parser';
 import { mergeSourceRoot } from '@nestjs/schematics/dist/utils/source-root.helpers';
 import { SchemaOptions } from './schema.schema';
-import { ConverterFactory } from '@logosphere/sdk/dist/lib/codegen/converters';
-import { 
-  Configuration, 
-  loadConfiguration 
-} from '@logosphere/sdk/dist/lib/configuration';
-import { SchemaType } from '@logosphere/sdk/dist/lib/codegen';
 
 export function main(options: SchemaOptions): Rule  {
   options = transform(options);
