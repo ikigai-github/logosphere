@@ -1,8 +1,8 @@
 import { ConverterFactory } from './converter.factory';
 import { Converter } from './converter';
-import { SchemaType } from '../schema-type';
+import { SchemaType } from './schema-type';
 describe('Converter factory test', () => {
-  it('should return JsonToGqlFederatedConverter', () => {
+  it('should return converter', () => {
     const converter: Converter = ConverterFactory.getConverter(
       SchemaType.Json,
       SchemaType.Gql

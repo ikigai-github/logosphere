@@ -9,7 +9,6 @@ describe('test JsonSchemaPropParser', () => {
     const required = f.$defs.person.required;
     const propParser = new JsonSchemaPropParser(name, required, f.$defs);
     const prop = propParser.parse(propSchema);
-    //console.log(JSON.stringify(prop));
     expect(prop.defType).toBe(DefinitionType.Scalar);
     expect(prop.name).toBe(name);
     expect(prop.type).toBe(propSchema.type);
@@ -34,7 +33,6 @@ describe('test JsonSchemaPropParser', () => {
     const required = f.$defs.listing.required;
     const propParser = new JsonSchemaPropParser(name, required, f.$defs);
     const prop = propParser.parse(propSchema);
-    //console.log(JSON.stringify(prop));
     expect(prop.defType).toBe(DefinitionType.ScalarArray);
     expect(prop.name).toBe(name);
     expect(prop.type).toBe(c.STRING);
@@ -57,7 +55,6 @@ describe('test JsonSchemaPropParser', () => {
     const required = f.$defs.listing.required;
     const propParser = new JsonSchemaPropParser(name, required, f.$defs);
     const prop = propParser.parse(propSchema);
-    //console.log(JSON.stringify(prop));
     expect(prop.defType).toBe(DefinitionType.Entity);
     expect(prop.name).toBe(name);
     expect(prop.type).toBe(name);
@@ -80,7 +77,6 @@ describe('test JsonSchemaPropParser', () => {
     const required = f.$defs.person.required;
     const propParser = new JsonSchemaPropParser(name, required, f.$defs);
     const prop = propParser.parse(propSchema);
-    //console.log(JSON.stringify(prop));
     expect(prop.defType).toBe(DefinitionType.EntityArray);
     expect(prop.name).toBe(name);
     expect(prop.type).toBe('address');
@@ -103,7 +99,6 @@ describe('test JsonSchemaPropParser', () => {
     const required = f.$defs.socialMedia.required;
     const propParser = new JsonSchemaPropParser(name, required, f.$defs);
     const prop = propParser.parse(propSchema);
-    //console.log(JSON.stringify(prop));
     expect(prop.defType).toBe(DefinitionType.Enum);
     expect(prop.name).toBe(name);
     expect(prop.type).toBe(name);
@@ -127,7 +122,6 @@ describe('test JsonSchemaPropParser', () => {
     const required = f.$defs.user.required;
     const propParser = new JsonSchemaPropParser(name, required, f.$defs);
     const prop = propParser.parse(propSchema);
-    //console.log(JSON.stringify(prop));
     expect(prop.defType).toBe(DefinitionType.EnumArray);
     expect(prop.name).toBe(name);
     expect(prop.type).toBe('socialMediaType');
@@ -151,7 +145,6 @@ describe('test JsonSchemaPropParser', () => {
     const required = f.$defs.artwork.required;
     const propParser = new JsonSchemaPropParser(name, required, f.$defs);
     const prop = propParser.parse(propSchema);
-    //console.log(JSON.stringify(prop));
     expect(prop.defType).toBe(DefinitionType.ExternalEntity);
     expect(prop.externalModule).toBe('user');
     expect(prop.name).toBe(name);
@@ -175,7 +168,6 @@ describe('test JsonSchemaPropParser', () => {
     const required = f.$defs.artwork.required;
     const propParser = new JsonSchemaPropParser(name, required, f.$defs);
     const prop = propParser.parse(propSchema);
-    //console.log(JSON.stringify(prop));
     expect(prop.defType).toBe(DefinitionType.ExternalEntityArray);
     expect(prop.externalModule).toBe('minting');
     expect(prop.name).toBe(name);

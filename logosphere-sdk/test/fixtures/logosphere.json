@@ -3,7 +3,7 @@
     "modules": [
       {
         "name": "user",
-        "jsonSchemaFile": "test/fixtures/schemas/federated/json/user.schema.json",
+        "jsonSchemaFile": "schemas/federated/json/user.schema.json",
         "fluree": {
           "ledgerUrl": "http://localhost:8090",
           "queryUrl": "http://localhost:8090",
@@ -13,7 +13,7 @@
       },
       {
         "name": "minting",
-        "jsonSchemaFile": "test/fixtures/schemas/federated/json/minting.schema.json",
+        "jsonSchemaFile": "schemas/federated/json/minting.schema.json",
         "fluree": {
           "ledgerUrl": "http://localhost:8090",
           "queryUrl": "http://localhost:8090",
@@ -23,7 +23,7 @@
       },
       {
         "name": "auction",
-        "jsonSchemaFile": "test/fixtures/schemas/federated/json/auction.schema.json",
+        "jsonSchemaFile": "schemas/federated/json/auction.schema.json",
         "fluree": {
           "ledgerUrl": "http://localhost:8090",
           "queryUrl": "http://localhost:8090",
