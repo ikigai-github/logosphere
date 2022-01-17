@@ -1,0 +1,18 @@
+{
+  "config": {
+    "modules": [
+      {
+        "name": "user",
+        "jsonSchemaFile": "schemas/federated/json/user.schema.json"
+      },
+      {
+        "name": "minting",
+        "jsonSchemaFile": "schemas/federated/json/minting.schema.json"
+      },
+      {
+        "name": "auction",
+        "jsonSchemaFile": "schemas/federated/json/auction.schema.json"
+      }
+    ]
+  }
+}

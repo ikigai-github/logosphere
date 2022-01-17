@@ -1,0 +1,18 @@
+{
+  "config": {
+    "modules": [
+      {
+        "name": "user",
+        "jsonSchemaFile": "schemas/user.schema.json"
+      },
+      {
+        "name": "minting",
+        "jsonSchemaFile": "schemas/minting.schema.json"
+      },
+      {
+        "name": "auction",
+        "jsonSchemaFile": "schemas/auction.schema.json"
+      }
+    ]
+  }
+}

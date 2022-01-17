@@ -1,0 +1,64 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "minting",
+    "type": "object",
+    "$defs": {
+        "artwork": {
+            "isActivated": true,
+            "type": "object",
+            "properties": {
+                "title": {
+                    "isActivated": true,
+                    "type": "string",
+                    "description": "Title of the artwork"
+                },
+                "description": {
+                    "isActivated": true,
+                    "type": "string",
+                    "description": "Description of the artwork"
+                },
+                "author": {
+                    "$ref": "user.hck.json#/definitions/properties/user",
+                    "isActivated": true
+                },
+                "ipfsCid": {
+                    "isActivated": true,
+                    "type": "string",
+                    "description": "Content identifier in IPFS"
+                }
+            },
+            "additionalProperties": false,
+            "description": "Artwork, such as digital image or scan of a physical drawing"
+        }
+    },
+    "properties": {
+        "artwork": {
+            "$ref": "#/$defs/artwork",
+            "isActivated": true
+        },
+        "nft": {
+            "isActivated": true,
+            "type": "object",
+            "properties": {
+                "artwork": {
+                    "$ref": "#/$defs/artwork",
+                    "isActivated": true
+                },
+                "policy": {
+                    "isActivated": true,
+                    "type": "string",
+                    "description": "NFT policy"
+                },
+                "owner": {
+                    "$ref": "user.hck.json#/definitions/properties/user",
+                    "isActivated": true
+                },
+                "minter": {
+                    "$ref": "user.hck.json#/definitions/properties/user",
+                    "isActivated": true
+                }
+            },
+            "additionalProperties": false
+        }
+    }
+}

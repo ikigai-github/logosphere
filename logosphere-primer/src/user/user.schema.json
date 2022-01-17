@@ -21,7 +21,7 @@
                     "items": {
                         "isActivated": true,
                         "displayName": "wallet",
-                        "default": "$ref/user/wallet"
+                        "default": "user.hck.json#wallet"
                     }
                 },
                 "nfts": {
@@ -29,7 +29,7 @@
                     "type": "array",
                     "items": {
                         "isActivated": true,
-                        "default": "$ref/minting/nft",
+                        "default": "minting.hck.json#nft",
                         "displayName": "nft"
                     }
                 },
@@ -39,7 +39,7 @@
                     "items": {
                         "isActivated": true,
                         "displayName": "artwork",
-                        "default": "$ref/minting/artwork"
+                        "default": "minting.hck.json#artwork"
                     }
                 },
                 "listings": {
@@ -48,7 +48,7 @@
                     "items": {
                         "isActivated": true,
                         "displayName": "listing",
-                        "default": "$ref/auction/listing"
+                        "default": "auction.hck.json#listing"
                     }
                 },
                 "bids": {
@@ -57,7 +57,7 @@
                     "items": {
                         "isActivated": true,
                         "displayName": "bid",
-                        "default": "$ref/auction/bid"
+                        "default": "auction.hck.json#bid"
                     }
                 }
             },
