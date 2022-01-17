@@ -17,7 +17,7 @@ describe('Application Factory', () => {
     };
     const tree: UnitTestTree = await runner.runSchematicAsync('application', options).toPromise();
     const files: string[] = tree.files;
-    expect(files).toEqual([
+    expect(files.sort()).toEqual([
       '/awesome-project/.eslintrc.js',
       '/awesome-project/.gitignore',
       '/awesome-project/.prettierrc',
@@ -38,6 +38,6 @@ describe('Application Factory', () => {
       '/awesome-project/src/main.ts',
       '/awesome-project/test/app.e2e-spec.ts',
       '/awesome-project/test/jest-e2e.json',
-    ]);
+    ].sort());
   });
 });
