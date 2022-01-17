@@ -1,19 +1,18 @@
 {
-  "modules": [
-    {
-      "name": "user",
-      "hackoladeSchemaFile": "test/fixtures/schemas/federated/hackolade/user.hck.json",
-      "jsonSchemaFile": "test/fixtures/schemas/federated/json/user.schema.json"
-    },
-    {
-      "name": "minting",
-      "hackoladeSchemaFile": "test/fixtures/schemas/federated/hackolade/minting.hck.json",
-      "jsonSchemaFile": "test/fixtures/schemas/federated/json/minting.schema.json"
-    },
-    {
-      "name": "auction",
-      "hackoladeSchemaFile": "test/fixtures/schemas/federated/hackolade/auction.hck.json",
-      "jsonSchemaFile": "test/fixtures/schemas/federated/json/auction.schema.json"
-    }
-  ]
+  "config": {
+    "modules": [
+      {
+        "name": "user",
+        "jsonSchemaFile": "schemas/federated/json/user.schema.json"
+      },
+      {
+        "name": "minting",
+        "jsonSchemaFile": "schemas/federated/json/minting.schema.json"
+      },
+      {
+        "name": "auction",
+        "jsonSchemaFile": "schemas/federated/json/auction.schema.json"
+      }
+    ]
+  }
 }

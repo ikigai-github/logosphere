@@ -15,7 +15,7 @@ export class ConfigurationLoader {
     }
     const fileConfig = JSON.parse(content);
 
-    return fileConfig;
+    return fileConfig['config'];
   }
 }
 
