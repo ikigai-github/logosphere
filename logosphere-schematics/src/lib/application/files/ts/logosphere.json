@@ -1,16 +1,36 @@
 {
-  "modules": [
-    {
-      "name": "user",
-      "jsonSchemaFile": "schemas/json/user.schema.json"
-    },
-    {
-      "name": "minting",
-      "jsonSchemaFile": "schemas/json/minting.schema.json"
-    },
-    {
-      "name": "auction",
-      "jsonSchemaFile": "schemas/json/auction.schema.json"
-    }
-  ]
+  "config": {
+    "modules": [
+      {
+        "name": "user",
+        "jsonSchemaFile": "schemas/json/user.schema.json",
+        "fluree": {
+          "ledgerUrl": "http://localhost:8090",
+          "queryUrl": "http://localhost:8090",
+          "network": "local",
+          "db": "user"
+        }
+      },
+      {
+        "name": "minting",
+        "jsonSchemaFile": "schemas/json/minting.schema.json",
+        "fluree": {
+          "ledgerUrl": "http://localhost:8090",
+          "queryUrl": "http://localhost:8090",
+          "network": "local",
+          "db": "user"
+        }
+      },
+      {
+        "name": "auction",
+        "jsonSchemaFile": "schemas/json/auction.schema.json",
+        "fluree": {
+          "ledgerUrl": "http://localhost:8090",
+          "queryUrl": "http://localhost:8090",
+          "network": "local",
+          "db": "user"
+        }
+      }
+    ]
+  }
 }

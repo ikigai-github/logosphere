@@ -3,15 +3,33 @@
     "modules": [
       {
         "name": "user",
-        "jsonSchemaFile": "schemas/federated/json/user.schema.json"
+        "jsonSchemaFile": "schemas/federated/json/user.schema.json",
+        "fluree": {
+          "ledgerUrl": "http://localhost:8090",
+          "queryUrl": "http://localhost:8090",
+          "network": "local",
+          "db": "user"
+        }
       },
       {
         "name": "minting",
-        "jsonSchemaFile": "schemas/federated/json/minting.schema.json"
+        "jsonSchemaFile": "schemas/federated/json/minting.schema.json",
+        "fluree": {
+          "ledgerUrl": "http://localhost:8090",
+          "queryUrl": "http://localhost:8090",
+          "network": "local",
+          "db": "minting"
+        }
       },
       {
         "name": "auction",
-        "jsonSchemaFile": "schemas/federated/json/auction.schema.json"
+        "jsonSchemaFile": "schemas/federated/json/auction.schema.json",
+        "fluree": {
+          "ledgerUrl": "http://localhost:8090",
+          "queryUrl": "http://localhost:8090",
+          "network": "local",
+          "db": "auction"
+        }
       }
     ]
   }
