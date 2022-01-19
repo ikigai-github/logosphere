@@ -1,3 +1,6 @@
+/**
+ * Copied from https://github.com/nestjs/schematics/blob/master/src/lib/module/module.schema.d.ts
+ */
 import { Path } from '@angular-devkit/core';
 
 export interface ModuleOptions {

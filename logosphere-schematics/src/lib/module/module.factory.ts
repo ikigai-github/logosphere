@@ -1,3 +1,6 @@
+/**
+ * Copied from https://github.com/nestjs/schematics/blob/master/src/lib/module/module.factory.ts
+ */
 import { join, Path, strings } from '@angular-devkit/core';
 import {
   apply,
@@ -14,10 +17,10 @@ import {
 import {
   DeclarationOptions,
   ModuleDeclarator,
-} from '../../utils/module.declarator';
-import { ModuleFinder } from '../../utils/module.finder';
-import { Location, NameParser } from '../../utils/name.parser';
-import { mergeSourceRoot } from '../../utils/source-root.helpers';
+} from '@nestjs/schematics/dist/utils/module.declarator';
+import { ModuleFinder } from '@nestjs/schematics/dist/utils/module.finder';
+import { Location, NameParser } from '@nestjs/schematics/dist/utils/name.parser';
+import { mergeSourceRoot } from '@nestjs/schematics/dist/utils/source-root.helpers';
 import { ModuleOptions } from './module.schema';
 
 export function main(options: ModuleOptions): Rule {
