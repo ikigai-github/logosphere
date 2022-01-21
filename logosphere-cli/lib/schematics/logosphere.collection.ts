@@ -19,6 +19,11 @@ export class LogosphereCollection extends AbstractCollection {
       name: 'schema',
       alias: 'sch',
       description: 'Generate Logosphere schemas',
+    },
+    {
+      name: 'module',
+      alias: 'm',
+      description: 'Generate Logosphere module'
     }
   ];
 
