@@ -28,8 +28,12 @@ export class ConfigurationLoader {
 }
 
 export function loadConfiguration(path?: string): Configuration {
+  const configPath = path ? path : process.cwd();
   const loader: ConfigurationLoader = new ConfigurationLoader(
-    new FileSystemReader(path ? path : process.cwd())
+    new FileSystemReader(configPath)
   );
-  return loader.load();
+  const configuration = loader.load();
+  configuration._configPath = configPath;
+  console.log(`Configuration: ${JSON.stringify(configuration)}`)
+  return configuration;
 }
