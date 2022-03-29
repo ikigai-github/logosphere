@@ -13,8 +13,8 @@ import {
   template,
   url,
 } from '@angular-devkit/schematics';
-import { Location, NameParser } from '../../utils/name.parser';
-import { mergeSourceRoot } from '../../utils/source-root.helpers';
+import { Location, NameParser } from '@nestjs/schematics/dist/utils/name.parser';
+import { mergeSourceRoot } from '@nestjs/schematics/dist/utils/source-root.helpers';
 import { DEFAULT_LANGUAGE } from '../defaults';
 import { DtoOptions } from './dto.schema';
 
