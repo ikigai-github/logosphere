@@ -1,3 +1,4 @@
+import { ApolloDriver } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { CatsModule } from './cats/cats.module';
@@ -12,6 +13,8 @@ import { AuctionModule } from './auction/auction.module';
     GraphQLModule.forRoot({
       typePaths: ['./**/*.graphql'],
       installSubscriptionHandlers: true,
+      driver: ApolloDriver
+      
     }),
     UserModule,
     MintingModule,
