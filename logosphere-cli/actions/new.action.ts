@@ -13,12 +13,12 @@ import {
   PackageManager,
   PackageManagerFactory,
 } from '@nestjs/cli/lib/package-managers';
-import { generateInput, generateSelect } from '@nestjs/cli/lib/questions/questions';
-import { GitRunner } from '@nestjs/cli/lib/runners/git.runner';
 import {
-  Collection,
-  CollectionFactory,
-} from '../lib/schematics';
+  generateInput,
+  generateSelect,
+} from '@nestjs/cli/lib/questions/questions';
+import { GitRunner } from '@nestjs/cli/lib/runners/git.runner';
+import { Collection, CollectionFactory } from '../lib/schematics';
 import {
   AbstractCollection,
   SchematicOption,
@@ -44,7 +44,7 @@ export class NewAction extends AbstractAction {
       (option) => option.name === 'skip-git' && option.value === true,
     );
     const projectDirectory = getProjectDirectory(
-      getApplicationNameInput(inputs)!,
+      getApplicationNameInput(inputs),
       directoryOption,
     );
 
@@ -86,7 +86,7 @@ const askForMissingInformation = async (inputs: Input[]) => {
 
   const prompt: inquirer.PromptModule = inquirer.createPromptModule();
   const nameInput = getApplicationNameInput(inputs);
-  if (!nameInput!.value) {
+  if (!nameInput.value) {
     const message = 'What name would you like to use for the new project?';
     const questions = [generateInput('name', message)('logosphere-dapp')];
     const answers: Answers = await prompt(questions as ReadonlyArray<Question>);
@@ -108,7 +108,7 @@ const replaceInputMissingInformation = (
 const generateApplicationFiles = async (args: Input[], options: Input[]) => {
   const collectionName = options.find(
     (option) => option.name === 'collection' && option.value != null,
-  )!.value;
+  ).value;
   const collection: AbstractCollection = CollectionFactory.create(
     (collectionName as Collection) || Collection.LOGOSPHERE,
   );
@@ -141,7 +141,7 @@ const installPackages = async (
 ) => {
   const inputPackageManager: string = options.find(
     (option) => option.name === 'package-manager',
-  )!.value as string;
+  ).value as string;
 
   let packageManager: AbstractPackageManager;
   if (dryRunMode) {
@@ -178,7 +178,7 @@ const askForPackageManager = async (): Promise<Answers> => {
     generateSelect('package-manager')(MESSAGES.PACKAGE_MANAGER_QUESTION)([
       PackageManager.NPM,
       PackageManager.YARN,
-      PackageManager.PNPM
+      PackageManager.PNPM,
     ]),
   ];
   const prompt = inquirer.createPromptModule();
@@ -209,7 +209,6 @@ const createGitIgnoreFile = (dir: string, content?: string) => {
 };
 
 const printCollective = () => {
-  const dim = print('dim');
   const yellow = print('yellow');
   const emptyLine = print();
 
@@ -220,16 +219,18 @@ const printCollective = () => {
   emptyLine();
 };
 
-const print = (color: string | null = null) => (str = '') => {
-  const terminalCols = retrieveCols();
-  const strLength = str.replace(/\u001b\[[0-9]{2}m/g, '').length;
-  const leftPaddingLength = Math.floor((terminalCols - strLength) / 2);
-  const leftPadding = ' '.repeat(Math.max(leftPaddingLength, 0));
-  if (color) {
-    str = (chalk as any)[color](str);
-  }
-  console.log(leftPadding, str);
-};
+const print =
+  (color: string | null = null) =>
+  (str = '') => {
+    const terminalCols = retrieveCols();
+    const strLength = str.replace(/\u001b\[[0-9]{2}m/g, '').length;
+    const leftPaddingLength = Math.floor((terminalCols - strLength) / 2);
+    const leftPadding = ' '.repeat(Math.max(leftPaddingLength, 0));
+    if (color) {
+      str = (chalk as any)[color](str);
+    }
+    console.log(leftPadding, str);
+  };
 
 export const retrieveCols = () => {
   const defaultCols = 80;

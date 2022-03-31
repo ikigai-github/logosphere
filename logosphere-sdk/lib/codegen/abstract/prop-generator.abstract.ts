@@ -7,9 +7,7 @@ export abstract class PropGenerator {
   protected abstract generateScalarArray(prop: Partial<Property>): any;
   protected abstract generateEnumArray(prop: Partial<Property>): any;
   protected abstract generateEntityArray(prop: Partial<Property>): any;
-  protected abstract generateExternalEntityArray(
-    prop: Partial<Property>
-  ): any;
+  protected abstract generateExternalEntityArray(prop: Partial<Property>): any;
   generate(prop: Partial<Property>): any {
     switch (prop.defType) {
       case DefinitionType.Scalar:

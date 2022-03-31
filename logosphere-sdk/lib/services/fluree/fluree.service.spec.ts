@@ -1,8 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { FlureeService } from './fluree.service';
 import { FlureeResponse } from './fluree-response.interface';
-//import { ConfigModule } from '@nestjs/config';
-import { loadConfiguration, Configuration, ModuleConfiguration } from '../../configuration';
 
 describe('FlureeService', () => {
   let fluree: FlureeService;
@@ -17,7 +15,6 @@ describe('FlureeService', () => {
       //   load: [()=>loadConfiguration(`${__dirname}/../../../test/fixtures`)]
       // })]
     }).compile();
-
 
     // const config: Configuration = loadConfiguration(`${__dirname}/../../../test/fixtures`);
     // const userModule: ModuleConfiguration = config.modules['user'];
@@ -34,12 +31,12 @@ describe('FlureeService', () => {
 
   it('should create new db', async () => {
     const dbs = await fluree.listDBs(url);
-    if (! dbs.find((db: string) => db === testDb)) {
+    if (!dbs.find((db: string) => db === testDb)) {
       const id = await fluree.createDB(url, testDb);
       expect(id).toBeDefined();
       expect(id).toHaveLength(64);
     } else {
-      console.log(`DB ${testDb} already created. Skipping`)
+      console.log(`DB ${testDb} already created. Skipping`);
     }
   });
 
@@ -53,10 +50,14 @@ describe('FlureeService', () => {
     const transact = [
       {
         _id: '_collection',
-        name: testCollection
-      }
+        name: testCollection,
+      },
     ];
-    const response: FlureeResponse = await fluree.transact(url, testDb, transact);
+    const response: FlureeResponse = await fluree.transact(
+      url,
+      testDb,
+      transact
+    );
     expect(response).toBeDefined();
     expect(response.status).toBe(200);
     expect(response.transactionId).toBeDefined();
@@ -64,18 +65,17 @@ describe('FlureeService', () => {
     expect(response.blockNumber > 0).toBe(true);
     expect(response.blockHash).toBeDefined();
     expect(response.blockHash).toHaveLength(64);
-    expect(response.duration > -1 ).toBe(true);
-    expect(response.fuel > -1 ).toBe(true);
+    expect(response.duration > -1).toBe(true);
+    expect(response.fuel > -1).toBe(true);
     expect(response.bytes > -1).toBe(true);
     expect(response.flakes > -1).toBe(true);
-    
-    //console.log(response)
 
+    //console.log(response)
   });
 
   it('should query collection', async () => {
-    const query = { select: ["*"], from: "_collection"};
-    
+    const query = { select: ['*'], from: '_collection' };
+
     const response = await fluree.query(url, testDb, query);
     expect(response).toBeDefined();
     expect(response.length > 0).toBe(true);

@@ -6,7 +6,7 @@ export class Converter {
   constructor(
     protected readonly parser: Parser,
     protected readonly generator: Generator
-  ){}
+  ) {}
 
   public convert(schema: any): any {
     const canonicalSchema: CanonicalSchema = this.parser.parse(schema);
