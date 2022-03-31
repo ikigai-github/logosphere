@@ -11,5 +11,5 @@ export const api = (url: string, db?: string): FlureeApi => {
     newDb: `${url}/fdb/new-db`,
     transact: `${url}/fdb/${db}/transact`,
     query: `${url}/fdb/${db}/query`,
-  } 
-}
+  };
+};

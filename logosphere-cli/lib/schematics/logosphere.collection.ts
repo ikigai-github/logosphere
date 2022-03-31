@@ -23,13 +23,13 @@ export class LogosphereCollection extends AbstractCollection {
     {
       name: 'module',
       alias: 'm',
-      description: 'Generate Logosphere module'
+      description: 'Generate Logosphere module',
     },
     {
       name: 'dto',
       alias: 'dto',
-      description: 'Generate DTOs (data transfer objects)'
-    }
+      description: 'Generate DTOs (data transfer objects)',
+    },
   ];
 
   constructor(runner: AbstractRunner) {

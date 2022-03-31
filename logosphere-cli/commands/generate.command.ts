@@ -15,7 +15,6 @@ export class GenerateCommand extends AbstractCommand {
         '-d, --dry-run',
         'Report actions that would be taken without writing out results.',
       )
-      .option('-p, --project [project]', 'Project in which to generate files.')
       .option('--flat', 'Enforce flat structure of generated element.')
       .option(
         '--spec',
@@ -89,10 +88,10 @@ export class GenerateCommand extends AbstractCommand {
     const tableConfig = {
       head: ['name', 'alias', 'description'],
       chars: {
-        'left': leftMargin.concat('│'),
+        left: leftMargin.concat('│'),
         'top-left': leftMargin.concat('┌'),
         'bottom-left': leftMargin.concat('└'),
-        'mid': '',
+        mid: '',
         'left-mid': '',
         'mid-mid': '',
         'right-mid': '',

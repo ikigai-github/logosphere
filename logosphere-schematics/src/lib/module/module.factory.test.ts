@@ -20,5 +20,8 @@ describe('Module Factory', () => {
     expect(
       files.find(filename => filename === '/foo/foo.module.ts'),
     ).not.toBeUndefined();
+    expect(
+      files.find(filename => filename === '/foo/foo.model.ts'),
+    ).not.toBeUndefined();
   });
 });

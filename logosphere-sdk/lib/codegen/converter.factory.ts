@@ -6,7 +6,6 @@ import { FlureeGenerator } from './fluree';
 import { DtoGenerator } from './dto';
 
 export class ConverterFactory {
-  
   static getConverter(
     sourceSchemaType: SchemaType,
     targetSchemaType: SchemaType
@@ -15,11 +14,14 @@ export class ConverterFactory {
       case SchemaType.Json:
         switch (targetSchemaType) {
           case SchemaType.Gql:
-            return new Converter(new JsonFederatedSchemaParser(), new GqlFederatedGenerator());
+            return new Converter(
+              new JsonFederatedSchemaParser(),
+              new GqlFederatedGenerator()
+            );
           case SchemaType.Fluree:
             return new Converter(new JsonSchemaParser(), new FlureeGenerator());
           case SchemaType.Dto:
-              return new Converter(new JsonSchemaParser(), new DtoGenerator());
+            return new Converter(new JsonSchemaParser(), new DtoGenerator());
           default:
             throw new Error(
               `${sourceSchemaType} to ${targetSchemaType} converter not implemented.`

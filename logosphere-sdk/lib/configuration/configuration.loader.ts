@@ -2,7 +2,7 @@ import { Reader } from '../readers';
 import { Configuration } from './configuration';
 import { FileSystemReader } from '../readers';
 import { LOGOSPHERE_CONFIG_FILE } from './defaults';
-import { constants as c} from './configuration.constants';
+import { constants as c } from './configuration.constants';
 import { ConfigurationError, messages as m } from './configuration.error';
 
 export class ConfigurationLoader {
@@ -17,13 +17,16 @@ export class ConfigurationLoader {
     }
     const fileConfig = JSON.parse(content);
 
-    if (!(c.CONFIG in fileConfig) ||
-        !(c.MODULES in fileConfig[c.CONFIG])) {
+    if (
+      !(c.CONFIG in fileConfig) ||
+      !(c.MODEL in fileConfig[c.CONFIG]) ||
+      (fileConfig[c.CONFIG][c.MODEL] === c.SCHEMA_FIRST &&
+        !(c.MODULES in fileConfig[c.CONFIG]))
+    ) {
       throw new ConfigurationError(m.INVALID_FORMAT);
     }
 
     return fileConfig[c.CONFIG];
-
   }
 }
 

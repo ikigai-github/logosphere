@@ -1,2 +1,2 @@
 import { FederatedSchema } from '../federated.schema';
-export interface JsonFederatedSchema extends FederatedSchema {}
+export type JsonFederatedSchema = FederatedSchema;

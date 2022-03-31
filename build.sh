@@ -14,6 +14,7 @@ echo "<<< Building schematics >>>"
 pushd logosphere-schematics
 pnpm install
 pnpm build
+pnpm run postbuild
 popd
 
 echo ""

@@ -1,7 +1,7 @@
 import { FlureePropGenerator } from './fluree.prop-generator';
-import { Property, DefinitionType} from '../canonical.schema';
+import { Property, DefinitionType } from '../canonical.schema';
 import { FlureePredicate } from './fluree.schema';
-import { constants as c } from './fluree.constants'
+import { constants as c } from './fluree.constants';
 
 describe('Fluree Schema Prop Generator', () => {
   const propGen = new FlureePropGenerator('user');
@@ -20,7 +20,7 @@ describe('Fluree Schema Prop Generator', () => {
       type: c.BIGINT,
       doc: 'desc',
       unique: false,
-      index: true
+      index: true,
     } as FlureePredicate);
   });
 
@@ -40,7 +40,7 @@ describe('Fluree Schema Prop Generator', () => {
       doc: 'desc',
       multi: true,
       unique: false,
-      index: true
+      index: true,
     } as FlureePredicate);
   });
 
@@ -59,7 +59,7 @@ describe('Fluree Schema Prop Generator', () => {
       type: c.INSTANT,
       doc: 'unix time',
       unique: false,
-      index: true
+      index: true,
     } as FlureePredicate);
   });
 
@@ -79,7 +79,7 @@ describe('Fluree Schema Prop Generator', () => {
       doc: 'desc',
       restrictCollection: 'artwork',
       unique: false,
-      index: true
+      index: true,
     } as FlureePredicate);
   });
 
@@ -100,7 +100,7 @@ describe('Fluree Schema Prop Generator', () => {
       restrictCollection: 'artwork',
       multi: true,
       unique: false,
-      index: true
+      index: true,
     } as FlureePredicate);
   });
 
@@ -119,7 +119,7 @@ describe('Fluree Schema Prop Generator', () => {
       type: c.STRING,
       doc: 'desc, identifier of artwork',
       unique: false,
-      index: true
+      index: true,
     } as FlureePredicate);
   });
 
@@ -139,9 +139,7 @@ describe('Fluree Schema Prop Generator', () => {
       doc: 'desc, identifier of artwork',
       multi: true,
       unique: false,
-      index: true
+      index: true,
     } as FlureePredicate);
   });
-
-
 });

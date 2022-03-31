@@ -1,5 +1,6 @@
 {
   "config": {
+    "model": "schema-first",
     "modules": [
       {
         "name": "user",

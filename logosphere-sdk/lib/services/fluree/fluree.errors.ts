@@ -8,7 +8,7 @@ export const messages = Object.freeze({
   INVALID_DB_FORMAT: 'Invalid database format. Should be {network}/{database}',
 });
 
-export class FlureeError extends LogosphereError {   
+export class FlureeError extends LogosphereError {
   constructor(message: string, error?: any) {
     const details = error?.response?.data?.message ?? '';
     super(`${message}: ${details}`, error);

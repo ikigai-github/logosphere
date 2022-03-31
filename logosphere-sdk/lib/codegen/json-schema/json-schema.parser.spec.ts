@@ -1,4 +1,3 @@
-import * as fs from 'fs';
 import * as f from '../../../test/fixtures/schemas/monolith/json-schema.json';
 import { constants as c } from './json-schema.constants';
 import { Definition, Property } from '../canonical.schema';
