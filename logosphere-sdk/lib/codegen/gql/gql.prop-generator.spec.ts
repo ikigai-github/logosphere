@@ -1,5 +1,5 @@
 import { GqlPropGenerator } from './gql.prop-generator';
-import { DefinitionType, Property } from '../canonical.schema';
+import { DefinitionType, Property } from '../canonical';
 
 describe('GQL prop generator', () => {
   const propGen = new GqlPropGenerator();

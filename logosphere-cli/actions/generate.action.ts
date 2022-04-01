@@ -8,7 +8,7 @@ import { getValueOrDefault } from '@nestjs/cli/lib/compiler/helpers/get-value-or
 import { Collection, CollectionFactory } from '../lib/schematics';
 import { MESSAGES } from '../lib/ui';
 import { SchemaType } from '@logosphere/sdk/lib/codegen/schema-type';
-import { ConverterFactory } from '@logosphere/sdk/lib/codegen';
+import { canonicalSchemaLoader, ConverterFactory } from '@logosphere/sdk/lib/codegen';
 import {
   jsonFederatedSchemaLoader,
   JsonFederatedSchema,
@@ -62,6 +62,7 @@ const generateFiles = async (inputs: Input[]) => {
     ) {
       const module = await askModuleName(inputs);
       schematicOptions.push(new SchematicOption('name', module.name));
+      schematicOptions.push(new SchematicOption('module', module.name));
       await collection.execute(
         schematicInput.value as string,
         schematicOptions,
@@ -73,17 +74,25 @@ const generateFiles = async (inputs: Input[]) => {
       const schemaType = await selectSchemaType();
       schematicOptions.push(new SchematicOption('schemaType', schemaType));
 
-      const converter = ConverterFactory.getConverter(
-        SchemaType.Json,
-        schemaType,
-      );
-      const federatedJsonSchemas: JsonFederatedSchema[] =
-        jsonFederatedSchemaLoader();
+      const converter = config.model === 'schema-first' 
+        ? ConverterFactory.getConverter(
+          SchemaType.Json,
+          schemaType
+        )
+        : ConverterFactory.getConverter(
+          SchemaType.Canonical,
+          schemaType
+        )
+
+      const inputSchema = config.model === 'schema-first' 
+          ?  jsonFederatedSchemaLoader()
+          : canonicalSchemaLoader()
+     
 
       let targetSchema: any;
       if (schemaType === SchemaType.Gql) {
         const federatedGqlSchemas: GqlFederatedSchema[] =
-          converter.convert(federatedJsonSchemas);
+          converter.convert(inputSchema);
         targetSchema = federatedGqlSchemas.find(
           (schema: GqlFederatedSchema) => schema.module === module.name,
         ).schema;
@@ -94,23 +103,28 @@ const generateFiles = async (inputs: Input[]) => {
           );
         }
         schematicOptions.push(new SchematicOption('name', module.name));
+        schematicOptions.push(new SchematicOption('module', module.name));
         schematicOptions.push(new SchematicOption('content', targetSchema));
         await collection.execute(
           schematicInput.value as string,
           schematicOptions,
         );
       } else {
-        targetSchema = converter.convert(
-          federatedJsonSchemas.find(
-            (schema: JsonFederatedSchema) => schema.module === module.name,
-          ).schema,
-        );
+        targetSchema = config.model === 'schema-first'
+        ? converter.convert(
+            (inputSchema as JsonFederatedSchema[]).find(
+              (schema: JsonFederatedSchema) => schema.module === module.name,
+            ).schema,
+          )
+        : converter.convert(inputSchema);
+
         if (!targetSchema || targetSchema.length === 0) {
           throw Error(
             `No ${schemaType} schema was generated for ${module.name}.`,
           );
         }
         schematicOptions.push(new SchematicOption('name', module.name));
+        schematicOptions.push(new SchematicOption('module', module.name));
         schematicOptions.push(
           new SchematicOption('content', targetSchema.replace(/\"/gi, '\\"')),
         );
@@ -206,7 +220,7 @@ const askModuleName = async (inputs: Input[]): Promise<ModuleConfiguration> => {
 
 const selectModule = async (
   config: Configuration,
-): Promise<ModuleConfiguration> => {
+): Promise<Partial<ModuleConfiguration>> => {
   const modules =
     config.model === 'schema-first'
       ? config.modules
@@ -218,8 +232,8 @@ const selectModule = async (
           });
 
   const answers: Answers = await askForModule(modules);
-  return config.modules.find(
-    (m: ModuleConfiguration) => m.name === answers['module'],
+  return modules.find(
+    (m: Partial<ModuleConfiguration>) => m.name === answers['module'],
   );
 };
 

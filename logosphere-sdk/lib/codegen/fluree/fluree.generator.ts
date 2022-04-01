@@ -1,8 +1,12 @@
 import { isEmpty } from 'lodash';
-import { Definition, DefinitionType } from '../canonical.schema';
+import { 
+  Definition, 
+  DefinitionType, 
+  CanonicalSchema, 
+  Property 
+} from '../canonical';
 import { Generator } from '../abstract';
 import { FlureePropGenerator } from './fluree.prop-generator';
-import { CanonicalSchema, Property } from '../canonical.schema';
 import { constants as c } from './fluree.constants';
 
 import { FlureeItem } from './fluree.schema';

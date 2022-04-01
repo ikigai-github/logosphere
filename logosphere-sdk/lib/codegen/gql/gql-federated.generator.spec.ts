@@ -13,7 +13,7 @@ describe('Converters', () => {
       new GqlFederatedGenerator()
     );
     const federatedSchemas = jsonFederatedSchemaLoader(
-      `${__dirname}/../../../test/fixtures`
+      `${__dirname}/../../../test/fixtures/schema-first`
     );
     const gqlFederated: GqlFederatedSchema[] =
       converter.convert(federatedSchemas);

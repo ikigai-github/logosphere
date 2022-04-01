@@ -1,4 +1,4 @@
-import { Property } from '../canonical.schema';
+import { Property } from '../canonical';
 import { PropGenerator } from '../abstract';
 import { FlureePredicate } from './fluree.schema';
 import { constants as c } from './fluree.constants';

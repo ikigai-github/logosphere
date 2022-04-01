@@ -1,13 +1,13 @@
 import * as fs from 'fs';
 import { GqlGenerator } from './gql.generator';
-import { CanonicalSchema } from '../canonical.schema';
+import { CanonicalSchema } from '../canonical';
 import { JsonSchemaParser } from '../json-schema';
 describe('Test GQL generator', () => {
   it('should generate valid GQL', () => {
     const parser = new JsonSchemaParser();
     const jsonSchema = JSON.parse(
       fs.readFileSync(
-        `${__dirname}/../../../test/fixtures/schemas/monolith/json-schema.json`,
+        `${__dirname}/../../../test/fixtures/schema-first/schemas/monolith/json-schema.json`,
         'utf-8'
       )
     );

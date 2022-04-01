@@ -1,4 +1,4 @@
-import { DefinitionType, Property } from '../canonical.schema';
+import { DefinitionType, Property } from '../canonical/canonical.schema';
 export abstract class PropGenerator {
   protected abstract generateScalar(prop: Partial<Property>): any;
   protected abstract generateEnum(prop: Partial<Property>): any;

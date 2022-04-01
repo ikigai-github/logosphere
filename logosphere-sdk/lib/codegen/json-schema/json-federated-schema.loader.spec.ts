@@ -4,7 +4,7 @@ import { JsonFederatedSchema } from './json-federated.schema';
 describe('Federated Schema Loader', () => {
   test('Load federated JSON schema', () => {
     const federatedSchema = jsonFederatedSchemaLoader(
-      `${__dirname}/../../../test/fixtures`
+      `${__dirname}/../../../test/fixtures/schema-first`
     );
     expect(federatedSchema).toBeDefined();
     expect(

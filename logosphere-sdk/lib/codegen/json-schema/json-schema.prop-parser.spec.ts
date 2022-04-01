@@ -1,6 +1,6 @@
-import * as f from '../../../test/fixtures/schemas/monolith/json-schema.json';
+import * as f from '../../../test/fixtures/schema-first/schemas/monolith/json-schema.json';
 import { JsonSchemaPropParser } from './json-schema.prop-parser';
-import { DefinitionType } from '../canonical.schema';
+import { DefinitionType } from '../canonical';
 import { constants as c } from './json-schema.constants';
 describe('test JsonSchemaPropParser', () => {
   it('parse scalar', () => {

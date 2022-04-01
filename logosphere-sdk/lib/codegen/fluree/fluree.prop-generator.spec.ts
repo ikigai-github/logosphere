@@ -1,5 +1,5 @@
 import { FlureePropGenerator } from './fluree.prop-generator';
-import { Property, DefinitionType } from '../canonical.schema';
+import { Property, DefinitionType } from '../canonical';
 import { FlureePredicate } from './fluree.schema';
 import { constants as c } from './fluree.constants';
 

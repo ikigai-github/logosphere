@@ -1,4 +1,4 @@
-import { Definition, CanonicalSchema } from '../canonical.schema';
+import { Definition, CanonicalSchema } from '../canonical';
 import { FederatedSchema } from '../federated.schema';
 import { JsonSchemaParser } from './json-schema.parser';
 

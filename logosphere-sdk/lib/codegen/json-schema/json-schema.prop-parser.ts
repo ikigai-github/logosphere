@@ -1,4 +1,4 @@
-import { DefinitionType } from '../canonical.schema';
+import { DefinitionType } from '../canonical';
 import { PropParser } from '../abstract/prop-parser.abstract';
 import { constants as c } from './json-schema.constants';
 import { hasKey } from './util';

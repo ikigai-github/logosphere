@@ -5,7 +5,7 @@ describe('Test DTO generator', () => {
   const generator = new DtoGenerator();
   const parser = new JsonSchemaParser();
   const jsonSchema = JSON.parse(
-    fs.readFileSync(`test/fixtures/schemas/monolith/json-schema.json`, 'utf-8')
+    fs.readFileSync(`test/fixtures/schema-first/schemas/monolith/json-schema.json`, 'utf-8')
   );
   const canonical = parser.parse(jsonSchema);
   it('should generate enum', () => {

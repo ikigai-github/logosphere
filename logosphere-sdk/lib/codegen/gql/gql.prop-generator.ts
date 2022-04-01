@@ -1,5 +1,5 @@
 import { pascalCase } from 'pascal-case';
-import { Property } from '../canonical.schema';
+import { Property } from '../canonical';
 import { PropGenerator } from '../abstract/prop-generator.abstract';
 
 export class GqlPropGenerator extends PropGenerator {

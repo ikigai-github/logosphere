@@ -1,8 +1,12 @@
-import * as f from '../../../test/fixtures/schemas/monolith/json-schema.json';
+import * as f from '../../../test/fixtures/schema-first/schemas/monolith/json-schema.json';
 import { constants as c } from './json-schema.constants';
-import { Definition, Property } from '../canonical.schema';
+import { 
+  Definition, 
+  Property, 
+  DefinitionType 
+} from '../canonical';
 import { JsonSchemaParser } from './json-schema.parser';
-import { DefinitionType } from '../canonical.schema';
+
 
 describe('test JsonSchemaParser', () => {
   it('parse defs schema', () => {

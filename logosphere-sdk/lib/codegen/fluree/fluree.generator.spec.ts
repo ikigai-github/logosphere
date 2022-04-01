@@ -7,7 +7,7 @@ describe('Fluree Generator', () => {
     const parser = new JsonSchemaParser();
     const jsonSchema = JSON.parse(
       fs.readFileSync(
-        `${__dirname}/../../../test/fixtures/schemas/monolith/json-schema.json`,
+        `${__dirname}/../../../test/fixtures/schema-first/schemas/monolith/json-schema.json`,
         'utf-8'
       )
     );
