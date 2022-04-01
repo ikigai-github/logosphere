@@ -1,0 +1,135 @@
+{
+  "definitions": [
+    {
+      "name": "listing",
+      "type": "Entity",
+      "description": "Auction listing",
+      "props": [
+        {
+          "name": "identifier",
+          "type": "string",
+          "defType": "Scalar",
+          "description": "Identifier of the entity",
+          "isPK": true,
+          "isEnabled": true,
+          "isReadOnly": true,
+          "isRequired": true
+        },
+        {
+          "name": "nft",
+          "type": "nft",
+          "isEnabled": true,
+          "isRequired": false,
+          "isPK": false,
+          "isReadOnly": false,
+          "isWriteOnly": false,
+          "defType": "ExternalEntity",
+          "externalModule": "minting"
+        },
+        {
+          "name": "minimumPrice",
+          "type": "number",
+          "isEnabled": true,
+          "isRequired": false,
+          "isPK": false,
+          "isReadOnly": false,
+          "isWriteOnly": false,
+          "defType": "Scalar",
+          "description": "Minimum price of the listing the owner agrees to sell it for"
+        },
+        {
+          "name": "buyNowPrice",
+          "type": "number",
+          "isEnabled": true,
+          "isRequired": false,
+          "isPK": false,
+          "isReadOnly": false,
+          "isWriteOnly": false,
+          "defType": "Scalar",
+          "description": "Price of the listing the owner agrees the listing to be immediately bought for without an auction"
+        },
+        {
+          "name": "startTime",
+          "type": "integer",
+          "isEnabled": true,
+          "isRequired": false,
+          "isPK": false,
+          "isReadOnly": false,
+          "isWriteOnly": false,
+          "defType": "Scalar",
+          "description": "Start time of the auction"
+        },
+        {
+          "name": "endTime",
+          "type": "integer",
+          "isEnabled": true,
+          "isRequired": false,
+          "isPK": false,
+          "isReadOnly": false,
+          "isWriteOnly": false,
+          "defType": "Scalar",
+          "description": "End time of the auction"
+        },
+        {
+          "name": "currentBid",
+          "type": "bid",
+          "isEnabled": true,
+          "isRequired": false,
+          "isPK": false,
+          "isReadOnly": false,
+          "isWriteOnly": false,
+          "defType": "Entity"
+        }
+      ]
+    },
+    {
+      "name": "bid",
+      "type": "Entity",
+      "description": "An active bid on an auction listing",
+      "props": [
+        {
+          "name": "identifier",
+          "type": "string",
+          "defType": "Scalar",
+          "description": "Identifier of the entity",
+          "isPK": true,
+          "isEnabled": true,
+          "isReadOnly": true,
+          "isRequired": true
+        },
+        {
+          "name": "bidder",
+          "type": "user",
+          "isEnabled": true,
+          "isRequired": false,
+          "isPK": false,
+          "isReadOnly": false,
+          "isWriteOnly": false,
+          "defType": "ExternalEntity",
+          "externalModule": "user"
+        },
+        {
+          "name": "listing",
+          "type": "listing",
+          "isEnabled": true,
+          "isRequired": false,
+          "isPK": false,
+          "isReadOnly": false,
+          "isWriteOnly": false,
+          "defType": "Entity"
+        },
+        {
+          "name": "bidPrice",
+          "type": "number",
+          "isEnabled": true,
+          "isRequired": false,
+          "isPK": false,
+          "isReadOnly": false,
+          "isWriteOnly": false,
+          "defType": "Scalar",
+          "description": "Price of the bid"
+        }
+      ]
+    }
+  ]
+}

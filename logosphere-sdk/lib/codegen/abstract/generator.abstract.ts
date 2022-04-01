@@ -2,7 +2,7 @@ import {
   CanonicalSchema,
   Definition,
   DefinitionType,
-} from '../canonical.schema';
+} from '../canonical/canonical.schema';
 export abstract class Generator {
   protected abstract generateEnum(def: Definition): any;
   protected abstract generateEntity(def: Definition): any;

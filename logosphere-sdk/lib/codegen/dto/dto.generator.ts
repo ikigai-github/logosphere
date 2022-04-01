@@ -5,7 +5,7 @@ import {
   Property,
   CanonicalSchema,
   DefinitionType,
-} from '../canonical.schema';
+} from '../canonical';
 import { DtoPropGenerator } from './dto.prop-generator';
 import { DtoSchema } from './dto.schema';
 export class DtoGenerator extends Generator {

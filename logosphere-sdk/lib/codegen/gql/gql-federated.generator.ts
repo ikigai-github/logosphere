@@ -4,7 +4,7 @@ import {
   Definition,
   DefinitionType,
   Property,
-} from '../canonical.schema';
+} from '../canonical';
 
 import { GqlFederatedSchema } from './gql-federated.schema';
 
