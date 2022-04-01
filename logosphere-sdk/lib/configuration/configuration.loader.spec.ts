@@ -9,7 +9,7 @@ describe('Test configuration loader', () => {
       new FileSystemReader(__dirname)
     );
     const config: Configuration = configLoader.load(
-      '../../test/fixtures/logosphere-schema-first.json'
+      '../../test/fixtures/schema-first/logosphere.json'
     );
     expect(config).toBeDefined();
     expect(config.model).toBeDefined();
@@ -23,7 +23,7 @@ describe('Test configuration loader', () => {
       new FileSystemReader(__dirname)
     );
     const config: Configuration = configLoader.load(
-      '../../test/fixtures/logosphere-code-first.json'
+      '../../test/fixtures/code-first/logosphere.json'
     );
     expect(config).toBeDefined();
     expect(config.model).toBeDefined();

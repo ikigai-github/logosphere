@@ -6,7 +6,7 @@ describe('Test JSON Schema Federated Parser', () => {
   it('should return canonical schema', () => {
     const parser = new JsonFederatedSchemaParser();
     const federatedSchemas: JsonFederatedSchema[] = jsonFederatedSchemaLoader(
-      `${__dirname}/../../../test/fixtures`
+      `${__dirname}/../../../test/fixtures/schema-first`
     );
     const canonicalSchema = parser.parse(federatedSchemas);
     expect(canonicalSchema).toBeDefined();
