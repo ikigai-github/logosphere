@@ -1,8 +1,16 @@
+/* eslint-disable @typescript-eslint/ban-types */
+
+/**
+ * Generic metadata that comes from any property decorator
+ */
 export interface PropertyMetadata {
-  // eslint-disable-next-line @typescript-eslint/ban-types
+  /**
+   * 
+   */
   target: Object;
   propertyKey: string | symbol;
 }
+
 
 export interface MethodMetadata<T> extends PropertyMetadata {
   descriptor: TypedPropertyDescriptor<T>;

@@ -11,8 +11,4 @@ export interface SpecOptions {
   specDoc?: string;
 }
 
-export interface VersionOptions {
-  version?: string;
-}
-
 export type CommonOptions = NameOptions & DocOptions & SpecOptions;

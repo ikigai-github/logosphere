@@ -1,5 +1,5 @@
 export enum StorageLayer {
-  One = 0,
-  Two = 1 << 0,
-  Three = 1 << 1,
+  Blockchain = 1 << 0,
+  KnowledgeGraph = 1 << 1,
+  HotLayer = 1 << 2,
 }

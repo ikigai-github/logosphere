@@ -19,13 +19,15 @@ export function Entity(
       name: name || target.name,
       root: options.root || target,
       version: options.version || 1,
-      layer: options.layer || StorageLayer.Two | StorageLayer.Three,
+      layer:
+        options.layer || StorageLayer.KnowledgeGraph | StorageLayer.HotLayer,
       doc: options.doc,
       spec: options.spec,
       specDoc: options.specDoc,
     };
+
     // TODO: Store metadata for processing
-    console.log('Extracted metadate for entity:');
+    console.log('Extracted metadata for entity:');
     console.log(JSON.stringify(metadata));
   };
 }

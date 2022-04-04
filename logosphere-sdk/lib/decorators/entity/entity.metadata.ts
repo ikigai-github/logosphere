@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { CommonMetadata } from '../common';
 import { StorageLayer } from './entity.types';
 
-/* eslint-disable @typescript-eslint/ban-types */
+/**
+ * The metadata extracted from entity class and decorators
+ */
 export type EntityMetadata = CommonMetadata & {
   target: Function;
   version: number;
