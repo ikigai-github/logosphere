@@ -1,21 +1,28 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+import { AnyParamConstructor } from '../common';
+import { MetadataKeys } from '../metadata';
 import { EntityMetadata } from './entity.metadata';
-import { EntityOptions } from './entity.options';
 import { StorageLayer } from './entity.types';
+
+export type EntityOptions = Partial<EntityMetadata>;
 
 export function Entity(): ClassDecorator;
 export function Entity(options?: EntityOptions): ClassDecorator;
 export function Entity(name?: string, options?: EntityOptions): ClassDecorator;
 
+/**
+ * Any class decorated with the entity decorator can be evaluated for modeling
+ * @param nameOrOptions The name of the entity or an options object
+ * @param maybeOptions The options object in the event the name was passed as the first param
+ * @returns A class decorator function
+ */
 export function Entity(
   nameOrOptions?: string | EntityOptions,
   maybeOptions?: EntityOptions
 ) {
   const { options, name } = getNameAndOptions(nameOrOptions, maybeOptions);
 
-  return function (target) {
-    const metadata = {
-      target,
+  return function (target: AnyParamConstructor) {
+    const metadata: EntityMetadata = {
       name: name || target.name,
       root: options.root || target,
       version: options.version || 1,
@@ -26,12 +33,13 @@ export function Entity(
       specDoc: options.specDoc,
     };
 
-    // TODO: Store metadata for processing
-    console.log('Extracted metadata for entity:');
-    console.log(JSON.stringify(metadata));
+    Reflect.defineMetadata(MetadataKeys.EntityCache, metadata, target);
   };
 }
 
+/**
+ * Utility function to distinguish the name and options passed in.
+ */
 function getNameAndOptions(
   nameOrOptions: string | EntityOptions | undefined,
   maybeOptions: EntityOptions | undefined

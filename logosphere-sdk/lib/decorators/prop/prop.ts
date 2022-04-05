@@ -1,27 +1,29 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { AnyParamConstructor, DeferredFunc } from '../common';
 import { MetadataKeys } from '../metadata';
-import { PropMetadata, PropMetadataMap } from './Prop.metadata';
-import { PropOptions } from './Prop.options';
-import { LazyType } from './Prop.types';
+import { PropMetadata, PropMetadataMap } from './prop.metadata';
+
+export type PropOptions = Partial<PropMetadata>;
 
 /**
  * This decorator can be added to entity properties to add additional metadata
  * @param options The optional decooration parameters to add to the metadata
  */
 export function Prop(options?: PropOptions): PropertyDecorator {
-  return (target: Object, key: string) => {
+  return (target: AnyParamConstructor, key: string) => {
     options = options ?? {};
 
     const metadataMap = fetchOrCreateMap(target);
 
-    const metadata = {
-      target,
+    const type = options.type || createTypeGetter(target, key);
+
+    const metadata: PropMetadata = {
       name: options.name || key,
-      type: options.type || createTypeGetter(target, key),
+      type,
       index: options.index || false,
       unique: options.unique || false,
-      required: options.required || false,
+      required: options.required || true,
       examples: options.examples || [],
       readOnly: options.readOnly,
       writeOnly: options.writeOnly,
@@ -41,7 +43,7 @@ export function Prop(options?: PropOptions): PropertyDecorator {
  * @param key The name of the property within the class
  * @returns A function that can get the type of the
  */
-function createTypeGetter(target: Object, key: string): LazyType {
+function createTypeGetter(target: Object, key: string): DeferredFunc {
   return () => Reflect.getMetadata(MetadataKeys.Type, target, key);
 }
 

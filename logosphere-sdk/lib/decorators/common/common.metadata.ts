@@ -1,24 +1,4 @@
-/* eslint-disable @typescript-eslint/ban-types */
-
-/**
- * Generic metadata that comes from any property decorator
- */
-export interface PropertyMetadata {
-  /**
-   * 
-   */
-  target: Object;
-  propertyKey: string | symbol;
-}
-
-
-export interface MethodMetadata<T> extends PropertyMetadata {
-  descriptor: TypedPropertyDescriptor<T>;
-}
-
-export interface ParameterMetadata extends PropertyMetadata {
-  parameterIndex: number;
-}
+// Metadata shared by multiple decorators
 
 export interface NameMetadata {
   name: string;

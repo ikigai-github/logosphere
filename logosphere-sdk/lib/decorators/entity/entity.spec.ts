@@ -1,31 +1,28 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import 'reflect-metadata';
 import { MetadataKeys } from '../metadata';
 import { Prop } from '../prop';
 import { Entity } from './entity';
+import { EntityMetadata } from './entity.metadata';
 import { StorageLayer } from './entity.types';
 
-describe('Test Entity Decorator', () => {
-  it('should use reflection to get default metadata', () => {
-    @Entity({ name: 'sample' })
+describe('The Entity decorator', () => {
+  it('should have default metadata', () => {
+    @Entity()
     class SampleEntity {
-      @Prop({ type: () => String })
-      label: string;
-
       @Prop()
-      thing: number;
-
-      @Prop({ type: () => Boolean })
-      lie: string;
+      aProp: string;
     }
 
-    const props = Reflect.getMetadata(
-      MetadataKeys.PropCache,
-      SampleEntity.prototype
+    const entity: EntityMetadata = Reflect.getMetadata(
+      MetadataKeys.EntityCache,
+      SampleEntity
     );
 
-    expect(props.get('label').type()).toBe(String);
-    expect(props.get('thing').type()).toBe(Number);
-    expect(props.get('lie').type()).toBe(Boolean);
+    expect(entity.name).toBe('SampleEntity');
+    expect(entity.layer).toBe(
+      StorageLayer.HotLayer | StorageLayer.KnowledgeGraph
+    );
+    expect(entity.root).toBe(SampleEntity);
+    expect(entity.version).toBe(1);
   });
 });

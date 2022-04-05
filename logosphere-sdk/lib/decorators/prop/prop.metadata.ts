@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/ban-types */
-import { CommonMetadata } from '../common';
-import { LazyType } from './Prop.types';
+import { CommonMetadata, DeferredFunc } from '../common';
 
 // TODO: Add support for storing metadata about class-validator annotations
 //     @Min, @Max, @Length, @IsRFC339(), etc...
@@ -9,11 +7,10 @@ export type PropMetadata = CommonMetadata & {
   index: boolean;
   unique: boolean;
   required: boolean;
-  examples: string[];
+  examples?: string[];
   readOnly?: boolean;
   writeOnly?: boolean;
-  target: Object;
-  type: LazyType;
+  type: DeferredFunc;
 };
 
-export type PropMetadataMap = Map<string | symbol, PropMetadata>;
+export type PropMetadataMap = Map<string, PropMetadata>;

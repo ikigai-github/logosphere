@@ -1,2 +1,2 @@
 export * from './common.metadata';
-export * from './common.options';
+export * from './common.types';
