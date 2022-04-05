@@ -1,5 +1,4 @@
-import { AnyParamConstructor } from '../common';
-import { MetadataKeys } from '../metadata';
+import { getMetadataStorage, MetadataKeys } from '../metadata';
 import { EntityMetadata } from './entity.metadata';
 import { StorageLayer } from './entity.types';
 
@@ -21,8 +20,11 @@ export function Entity(
 ) {
   const { options, name } = getNameAndOptions(nameOrOptions, maybeOptions);
 
-  return function (target: AnyParamConstructor) {
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  return function (target: Function) {
     const metadata: EntityMetadata = {
+      target,
+      module: options.module,
       name: name || target.name,
       root: options.root || target,
       version: options.version || 1,
@@ -34,6 +36,7 @@ export function Entity(
     };
 
     Reflect.defineMetadata(MetadataKeys.EntityCache, metadata, target);
+    getMetadataStorage().addEntity(metadata);
   };
 }
 

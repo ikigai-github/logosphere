@@ -1,5 +1,10 @@
 // Metadata shared by multiple decorators
 
+export interface TargetMetadata {
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  target: Function;
+}
+
 export interface NameMetadata {
   name: string;
 }
@@ -13,4 +18,7 @@ export interface SpecMetadata {
   specDoc?: string;
 }
 
-export type CommonMetadata = NameMetadata & DocMetadata & SpecMetadata;
+export type CommonMetadata = TargetMetadata &
+  NameMetadata &
+  DocMetadata &
+  SpecMetadata;
