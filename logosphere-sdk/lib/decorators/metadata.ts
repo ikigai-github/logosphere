@@ -29,7 +29,6 @@ export enum MetadataKeys {
  */
 export class MetadataStorage {
   private entities: EntityMetadata[] = [];
-  private schema: CanonicalSchema;
 
   addEntity(entity: EntityMetadata) {
     this.entities.push(entity);
@@ -37,10 +36,9 @@ export class MetadataStorage {
 
   clear() {
     this.entities = [];
-    this.schema = undefined;
   }
 
-  buildSchema() {
+  buildSchema(): CanonicalSchema {
     const definitions: Definition[] = [];
     this.entities.forEach((entity) => {
       const propMetaMap: PropMetadataMap = Reflect.getMetadata(
@@ -80,7 +78,7 @@ export class MetadataStorage {
       });
     });
 
-    this.schema = { definitions };
+    return { definitions };
   }
 }
 

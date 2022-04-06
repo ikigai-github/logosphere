@@ -8,6 +8,7 @@ import {
   ConfigurationLoader,
   LOGOSPHERE_CONFIG_FILE,
 } from '../../configuration';
+import { getMetadataStorage } from '../../decorators/metadata';
 
 
 const getAllFiles = function(dirPath: string, arrayOfFiles?: string[]) {
@@ -29,19 +30,11 @@ const getAllFiles = function(dirPath: string, arrayOfFiles?: string[]) {
 export const canonicalSchemaLoader = (
   sourceDir?: string
 ): CanonicalSchema => {
-  const joinedSchema: CanonicalSchema = {
-    definitions: []
-  };
-  const dir = sourceDir ? sourceDir : `${process.cwd()}/src`;
-  const schemaFiles = getAllFiles(dir)
-    .filter((file) => file.indexOf('canonical.schema.json') > -1 )
-  schemaFiles.map((file: string) => {
-    const schema: CanonicalSchema = JSON.parse(fs.readFileSync(file, 'utf-8'));
-    const module = file.split('/').pop().replace('.canonical.schema.json', '');
-    schema.definitions.map((def: Definition ) => {
-      def.module = module;
-      joinedSchema.definitions.push(def);
-    })
+  const dir = sourceDir ? sourceDir : `${process.cwd()}/dist`;
+  const entityFiles = getAllFiles(dir).filter((file) => file.endsWith('entity.js'));
+  entityFiles.map((file: string) => {
+    eval(fs.readFileSync(file, 'utf-8'));
   });
-  return joinedSchema;
+
+  return getMetadataStorage().buildSchema();
 };

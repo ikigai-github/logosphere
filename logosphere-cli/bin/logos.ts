@@ -1,4 +1,5 @@
 #!/usr/bin/env ts-node
+import 'reflect-metadata';
 import * as commander from 'commander';
 import { CommanderStatic } from 'commander';
 import { CommandLoader } from '../commands';
