@@ -21,6 +21,7 @@ echo ""
 echo "<<< Building CLI >>>"
 pushd logosphere-cli 
 pnpm link ../logosphere-sdk
+pnpm link ../logosphere-schematics
 pnpm install
 pnpm run build 
 popd
@@ -30,6 +31,7 @@ echo "<<< Building primer >>>"
 pushd logosphere-primer 
 pnpm link ../logosphere-schematics
 pnpm link ../logosphere-cli 
+pnpm link ../logosphere-sdk
 pnpm install
 pnpm run build
 popd
