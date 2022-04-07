@@ -17,6 +17,7 @@ export const jsonFederatedSchemaLoader = (
   const configLoader = new ConfigurationLoader(new FileSystemReader(dir));
   const config: Configuration = configLoader.load(LOGOSPHERE_CONFIG_FILE);
 
+  console.log(`Config: ${JSON.stringify(config)}`)
   config.modules.map((module: ModuleConfiguration) => {
     const schema = JSON.parse(reader.read(module.jsonSchemaFile));
     const modelSchema = schema.$defs;

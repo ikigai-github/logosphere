@@ -25,15 +25,16 @@ export class JsonSchemaParser extends Parser {
     // so we need to grab the full definition from $defs in this case
 
     // let's grab everything from properties that is not a reference and bring them to $defs
-    const resolved = Object.assign(schema[c.DEFS]);
 
-    Object.keys(schema[c.PROPERTIES])
-      .filter((propKey: string) => {
-        return !hasKey(schema[c.PROPERTIES][propKey], c.REF, c.STRING);
-      })
-      .forEach((propKey: string) => {
-        resolved[propKey] = schema[c.PROPERTIES][propKey];
-      });
+    const resolved = Object.assign(schema);
+
+    // Object.keys(schema)
+    //   .filter((propKey: string) => {
+    //     return !hasKey(schema[c.PROPERTIES][propKey], c.REF, c.STRING);
+    //   })
+    //   .forEach((propKey: string) => {
+    //     resolved[propKey] = schema[c.PROPERTIES][propKey];
+    //   });
 
     // parse enums
     Object.keys(resolved)

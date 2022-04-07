@@ -52,6 +52,7 @@ const generateFiles = async (inputs: Input[]) => {
 
     const module = await selectModule(config.modules);
    
+
     if ((schematicInput.value === 'sch' || 
         schematicInput.value === 'schema')) {
       const schemaType = await selectSchemaType();
