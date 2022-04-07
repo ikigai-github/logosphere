@@ -11,24 +11,22 @@ export interface TypeInfo {
 export function resolveType(typeFunc: TypeFunc): TypeInfo {
   const type = typeFunc();
 
-  if (type instanceof Function && isPrimitiveType(type)) {
-    return { type, depth: 0 };
-  } else if (Array.isArray(type)) {
+  if (Array.isArray(type)) {
     const { depth: arrayDepth, type: returnType } = resolveArrayType(type);
 
     if (isDefined(returnType)) {
       return { type: returnType, depth: arrayDepth };
     }
+  } else {
+    return { type, depth: 0 };
   }
-
-  return { type: undefined, depth: 0 };
 }
 
 export function isDefined(variable: any) {
   return variable !== undefined && variable !== null;
 }
 
-function isPrimitiveType(type: Function) {
+export function isScalarType(type: Function) {
   return (
     type.name == 'String' || type.name === 'Number' || type.name === 'Boolean'
   );

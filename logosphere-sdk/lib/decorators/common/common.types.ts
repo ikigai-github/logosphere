@@ -10,7 +10,6 @@ export interface NewableClass<T = any> {
  */
 export type NewConstructor<T = any> = new (...args: any) => T;
 
-
 export type NoArgFunc<T = any> = () => T;
 
 /**

@@ -7,7 +7,8 @@ import {
 import { lowerCase } from 'lodash';
 import { EntityMetadata } from './entity';
 import { PropMetadataMap } from './prop';
-import { resolveType } from './utils';
+import { isDefined, resolveType } from './utils';
+import { isScalarType } from 'graphql';
 
 export enum MetadataKeys {
   /** Get the Typescript assigned Type at runtime */
@@ -49,6 +50,14 @@ export class MetadataStorage {
       const props: Partial<Property>[] = [];
       for (const [_, meta] of propMetaMap.entries()) {
         const { type, depth } = resolveType(meta.type);
+        const defType = getDefType(type, depth, isDefined(meta.externalModule));
+
+        if (!isDefined(defType)) {
+          throw Error(
+            `Could not determine definition type for property ${meta.name} on entity ${meta.target.name}`
+          );
+        }
+
         props.push({
           name: meta.name,
           type: lowerCase(type.name),
@@ -63,9 +72,7 @@ export class MetadataStorage {
           minLength: meta.minLength,
           maxLength: meta.maxLength,
           externalModule: meta.externalModule,
-          // TODO: There can be enums, references,  to other entities which are TBA
-          defType:
-            depth > 0 ? DefinitionType.ScalarArray : DefinitionType.Scalar,
+          defType,
         });
       }
 
@@ -80,6 +87,30 @@ export class MetadataStorage {
 
     return { definitions };
   }
+}
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+function getDefType(type: Function, depth: number, external: boolean) {
+  // If we found another entity for the resolved type its a reference
+  if (external) {
+    return depth > 0
+      ? DefinitionType.ExternalEntityArray
+      : DefinitionType.ExternalEntity;
+  } else {
+    // If the type has entity metadata then itsa reference
+    const ref = Reflect.hasMetadata(MetadataKeys.EntityCache, type);
+    if (ref) {
+      return depth > 0 ? DefinitionType.EntityArray : DefinitionType.Entity;
+    }
+
+    // TODO: See if we can determine the type is an Enum or Enum Array
+
+    if (isScalarType(type)) {
+      return depth > 0 ? DefinitionType.ScalarArray : DefinitionType.Scalar;
+    }
+  }
+
+  return undefined;
 }
 
 export function getMetadataStorage(): MetadataStorage {

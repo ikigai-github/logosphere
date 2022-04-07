@@ -1,10 +1,9 @@
 import 'reflect-metadata';
 import { MetadataKeys } from '../metadata';
 import { Prop } from '../prop';
-import { Entity } from '../entity';
+import { Entity, EntityMetadata } from '../entity';
 import { resolveType } from '../utils';
 import { PropMetadataMap } from './prop.metadata';
-import exp from 'constants';
 
 function validateTypeInfo<T>(
   props: PropMetadataMap,
@@ -113,7 +112,7 @@ describe('The Prop decorator', () => {
         externalModule: 'external',
         doc: 'a doc',
         spec: ['a spec'],
-        specDoc: 'a specDoc'
+        specDoc: 'a specDoc',
       })
       aString: CoolClass;
     }
@@ -143,5 +142,32 @@ describe('The Prop decorator', () => {
     expect(metadata.doc).toBe('a doc');
     expect(metadata.spec).toContain('a spec');
     expect(metadata.specDoc).toBe('a specDoc');
+  });
+
+  it('should support finding reference entities', () => {
+    @Entity()
+    class AnEntity {
+      @Prop()
+      aString: string;
+    }
+
+    @Entity()
+    class AggregateRoot {
+      @Prop()
+      aEntity: AnEntity;
+    }
+
+    const props: PropMetadataMap = Reflect.getMetadata(
+      MetadataKeys.PropCache,
+      AggregateRoot
+    );
+
+    const metadata = props.get('aEntity');
+    const childEntity: EntityMetadata = Reflect.getMetadata(
+      MetadataKeys.EntityCache,
+      metadata.target
+    );
+
+    expect(childEntity).toBeDefined();
   });
 });
