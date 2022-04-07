@@ -4,3 +4,4 @@ export * from './abstract';
 export * from './schema-type';
 export * from './canonical.schema';
 export * from './federated.schema';
+export * from './test-data';

@@ -21,13 +21,13 @@ export class FlureeGenerator extends Generator {
     items.push({
       _id: c.COLLECTION,
       name: def.name,
-      doc: def.description
+      doc: def.description,
     });
 
     // create predicates
     def.props.forEach((prop: Property) => {
       if (prop.isEnabled) {
-        items.push(propGenerator.generate(prop))
+        items.push(propGenerator.generate(prop));
       }
     });
 
@@ -36,14 +36,13 @@ export class FlureeGenerator extends Generator {
 
   protected generateExternalEntity(def: Definition): void {
     // we don't need to generate collections for external entities
-    // because they are going to be defined in their modules and 
-    // linked by identifiers. 
+    // because they are going to be defined in their modules and
+    // linked by identifiers.
   }
 
   generate(schema: CanonicalSchema): string {
     const flureeItems: FlureeItem[] = [];
     schema.definitions.forEach((def: Definition) => {
-
       switch (def.type) {
         case DefinitionType.Entity:
           flureeItems.push(...this.generateEntity(def));
@@ -58,7 +57,5 @@ export class FlureeGenerator extends Generator {
       null,
       2
     );
-
   }
-    
 }

@@ -1,4 +1,4 @@
 export const constants = {
   CONFIG: 'config',
-  MODULES: 'modules'
+  MODULES: 'modules',
 };

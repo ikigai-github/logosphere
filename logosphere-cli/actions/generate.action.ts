@@ -23,6 +23,7 @@ import { shouldGenerateSpec } from '@nestjs/cli/lib/utils/project-utils';
 import { AbstractAction } from '@nestjs/cli/actions';
 import { ConsoleLogger } from '@nestjs/common';
 import { DtoSchema } from '@logosphere/sdk/lib/codegen/dto/dto.schema';
+import { createTestDb } from '@logosphere/sdk/lib/codegen/test-data';
 
 export class GenerateAction extends AbstractAction {
   public async handle(inputs: Input[], options: Input[]) {
@@ -98,7 +99,24 @@ const generateFiles = async (inputs: Input[]) => {
         await collection.execute(schematicInput.value as string, schematicOptions);
 
       });
-    }
+    } else if (schematicInput.value === 'test-data') {
+      console.log('Creating database in Fluree and generating test data')
+      createTestDb(module.name);
+      // const reader = new FileSystemReader(process.cwd());
+      // const sourceSchema = JSON.parse(reader.read(module.jsonSchemaFile));
+      // const converter = ConverterFactory.getConverter(SchemaType.Json, SchemaType.Dto);
+      // const dtos: DtoSchema[] = converter.convert(sourceSchema);
+
+      // dtos.map(async (dto: DtoSchema) => {
+        
+      //   const schematicOptions = buildSchematicOptions(inputs, nestConfig);
+      //   schematicOptions.push(new SchematicOption('module', module.name));
+      //   schematicOptions.push(new SchematicOption('name', `${module.name}/dto/${dto.name}`));
+      //   schematicOptions.push(new SchematicOption('content', dto.schema));
+      //   await collection.execute(schematicInput.value as string, schematicOptions);
+
+      // });
+    } 
     
   } catch (error) {
     if (error && error.message) {

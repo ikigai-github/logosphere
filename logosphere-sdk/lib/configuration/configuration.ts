@@ -1,7 +1,7 @@
 export interface ModuleConfiguration {
   name: string;
   jsonSchemaFile: string;
-  fluree: FlureeConfiguration
+  fluree: FlureeConfiguration;
 }
 
 export interface FlureeConfiguration {
@@ -12,10 +12,9 @@ export interface FlureeConfiguration {
 }
 
 export interface Configuration {
-  
   modules: ModuleConfiguration[];
 }
 
 export interface DefaultConfiguration {
-  fluree: FlureeConfiguration
+  fluree: FlureeConfiguration;
 }

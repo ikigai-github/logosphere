@@ -1,0 +1,22 @@
+[
+  {
+    "collection": "user",
+    "count": 3
+  },
+  {
+    "collection": "wallet",
+    "count": 3
+  },
+  {
+    "collection": "artwork",
+    "count": 3
+  },
+  {
+    "collection": "nft",
+    "count": 3
+  },
+  {
+    "collection": "property",
+    "count": 3
+  }
+]

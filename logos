@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+/Users/dmitri/workplace/github/ikigai/logosphere/logosphere-primer/node_modules/.bin/logos $1 $2
