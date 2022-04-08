@@ -1,3 +1,4 @@
+import { TypeFunc } from '../common';
 import { getMetadataStorage, MetadataKeys } from '../metadata';
 import { EntityMetadata } from './entity.metadata';
 import { StorageLayer } from './entity.types';
@@ -26,7 +27,7 @@ export function Entity(
       target,
       module: options.module,
       name: name || target.name,
-      root: options.root || target,
+      root: options.root || (target as TypeFunc),
       version: options.version || 1,
       layer:
         options.layer || StorageLayer.KnowledgeGraph | StorageLayer.HotLayer,

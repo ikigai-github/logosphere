@@ -4,11 +4,10 @@ import {
   DefinitionType,
   Property,
 } from '../codegen';
-import { lowerCase } from 'lodash';
 import { EntityMetadata } from './entity';
-import { PropMetadataMap } from './prop';
-import { isDefined, resolveType } from './utils';
-import { isScalarType } from 'graphql';
+import { PropMetadataMap, resolvePropType } from './prop';
+import { isDefined } from './utils';
+import { EnumMetadata } from './enum/enum.metadata';
 
 export enum MetadataKeys {
   /** Get the Typescript assigned Type at runtime */
@@ -30,13 +29,23 @@ export enum MetadataKeys {
  */
 export class MetadataStorage {
   private entities: EntityMetadata[] = [];
+  private enums: EnumMetadata[] = [];
 
-  addEntity(entity: EntityMetadata) {
-    this.entities.push(entity);
+  addEntity(metadata: EntityMetadata) {
+    this.entities.push(metadata);
+  }
+
+  addEnum(metadata: EnumMetadata) {
+    this.enums.push(metadata);
+  }
+
+  getEnumByType<T extends object = any>(type: T) {
+    return this.enums.find((item) => item.type === type);
   }
 
   clear() {
     this.entities = [];
+    this.enums = [];
   }
 
   buildSchema(): CanonicalSchema {
@@ -48,9 +57,8 @@ export class MetadataStorage {
       );
 
       const props: Partial<Property>[] = [];
-      for (const [_, meta] of propMetaMap.entries()) {
-        const { type, depth } = resolveType(meta.type);
-        const defType = getDefType(type, depth, isDefined(meta.externalModule));
+      for (const meta of propMetaMap.values()) {
+        const { typename, defType } = resolvePropType(meta);
 
         if (!isDefined(defType)) {
           throw Error(
@@ -60,7 +68,7 @@ export class MetadataStorage {
 
         props.push({
           name: meta.name,
-          type: lowerCase(type.name),
+          type: typename,
           isEnabled: meta.enabled,
           isRequired: meta.required,
           isPK: meta.primary,
@@ -87,30 +95,6 @@ export class MetadataStorage {
 
     return { definitions };
   }
-}
-
-// eslint-disable-next-line @typescript-eslint/ban-types
-function getDefType(type: Function, depth: number, external: boolean) {
-  // If we found another entity for the resolved type its a reference
-  if (external) {
-    return depth > 0
-      ? DefinitionType.ExternalEntityArray
-      : DefinitionType.ExternalEntity;
-  } else {
-    // If the type has entity metadata then itsa reference
-    const ref = Reflect.hasMetadata(MetadataKeys.EntityCache, type);
-    if (ref) {
-      return depth > 0 ? DefinitionType.EntityArray : DefinitionType.Entity;
-    }
-
-    // TODO: See if we can determine the type is an Enum or Enum Array
-
-    if (isScalarType(type)) {
-      return depth > 0 ? DefinitionType.ScalarArray : DefinitionType.Scalar;
-    }
-  }
-
-  return undefined;
 }
 
 export function getMetadataStorage(): MetadataStorage {

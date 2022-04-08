@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { TypeFunc } from './common';
 
-type RecursiveArray<TValue> = Array<RecursiveArray<TValue> | TValue>;
+export type TypeValue = Function | string | number | boolean | object;
 
 export interface TypeInfo {
-  type: Function;
+  type: TypeValue;
   depth: number;
 }
 
@@ -26,9 +26,32 @@ export function isDefined(variable: any) {
   return variable !== undefined && variable !== null;
 }
 
-export function isScalarType(type: Function) {
+export function isScalarType(type: TypeValue) {
+  if (type instanceof Function) {
+    return (
+      type.name == 'String' || type.name === 'Number' || type.name === 'Boolean'
+    );
+  }
+
+  if (type instanceof Object) return false;
+
+  return type !== null && type !== undefined;
+}
+
+type RecursiveArray<TValue> = Array<RecursiveArray<TValue> | TValue>;
+
+export function isTypeValue(type: unknown): type is TypeValue {
+  if (type instanceof Function) {
+    return (
+      type.name == 'String' || type.name === 'Number' || type.name === 'Boolean'
+    );
+  }
+
   return (
-    type.name == 'String' || type.name === 'Number' || type.name === 'Boolean'
+    type instanceof Object ||
+    type instanceof String ||
+    type instanceof Boolean ||
+    type instanceof Number
   );
 }
 
@@ -37,7 +60,7 @@ function resolveArrayType(
   depth = 1
 ): TypeInfo {
   if (!Array.isArray(type)) {
-    if (type instanceof Function) {
+    if (isTypeValue(type)) {
       return { type, depth };
     } else {
       return { type: undefined, depth };
