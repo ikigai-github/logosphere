@@ -1,4 +1,4 @@
-import { CommonMetadata } from '../common';
+import { CommonMetadata, TypeFunc } from '../common';
 import { StorageLayer } from './entity.types';
 
 /**
@@ -10,5 +10,5 @@ export type EntityMetadata = CommonMetadata & {
   module?: string;
   description?: string;
   // eslint-disable-next-line @typescript-eslint/ban-types
-  root: Function;
+  root: TypeFunc;
 };

@@ -4,10 +4,10 @@ import {
   DefinitionType,
   Property,
 } from '../codegen';
-import { lowerCase } from 'lodash';
 import { EntityMetadata } from './entity';
-import { PropMetadataMap } from './prop';
-import { resolveType } from './utils';
+import { PropMetadataMap, resolvePropType } from './prop';
+import { isDefined } from './utils';
+import { EnumMetadata } from './enum/enum.metadata';
 
 export enum MetadataKeys {
   /** Get the Typescript assigned Type at runtime */
@@ -29,13 +29,23 @@ export enum MetadataKeys {
  */
 export class MetadataStorage {
   private entities: EntityMetadata[] = [];
+  private enums: EnumMetadata[] = [];
 
-  addEntity(entity: EntityMetadata) {
-    this.entities.push(entity);
+  addEntity(metadata: EntityMetadata) {
+    this.entities.push(metadata);
+  }
+
+  addEnum(metadata: EnumMetadata) {
+    this.enums.push(metadata);
+  }
+
+  getEnumByType<T extends object = any>(type: T) {
+    return this.enums.find((item) => item.type === type);
   }
 
   clear() {
     this.entities = [];
+    this.enums = [];
   }
 
   buildSchema(): CanonicalSchema {
@@ -47,11 +57,18 @@ export class MetadataStorage {
       );
 
       const props: Partial<Property>[] = [];
-      for (const [_, meta] of propMetaMap.entries()) {
-        const { type, depth } = resolveType(meta.type);
+      for (const meta of propMetaMap.values()) {
+        const { typename, defType } = resolvePropType(meta);
+
+        if (!isDefined(defType)) {
+          throw Error(
+            `Could not determine definition type for property ${meta.name} on entity ${meta.target.name}`
+          );
+        }
+
         props.push({
           name: meta.name,
-          type: lowerCase(type.name),
+          type: typename,
           isEnabled: meta.enabled,
           isRequired: meta.required,
           isPK: meta.primary,
@@ -63,9 +80,7 @@ export class MetadataStorage {
           minLength: meta.minLength,
           maxLength: meta.maxLength,
           externalModule: meta.externalModule,
-          // TODO: There can be enums, references,  to other entities which are TBA
-          defType:
-            depth > 0 ? DefinitionType.ScalarArray : DefinitionType.Scalar,
+          defType,
         });
       }
 
