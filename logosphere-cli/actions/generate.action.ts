@@ -135,13 +135,23 @@ const generateFiles = async (inputs: Input[]) => {
         );
       }
     } else if (schematicInput.value === 'dto') {
+
       const module = await selectModule(config);
+
       const reader = new FileSystemReader(process.cwd());
-      const sourceSchema = JSON.parse(reader.read(module.jsonSchemaFile));
-      const converter = ConverterFactory.getConverter(
-        SchemaType.Json,
-        SchemaType.Dto,
-      );
+      const sourceSchema = config.model === 'schema-first' 
+          ? JSON.parse(reader.read(module.jsonSchemaFile))
+          : canonicalSchemaLoader()
+      
+      const converter = config.model === 'schema-first' 
+        ? ConverterFactory.getConverter(
+            SchemaType.Json,
+            SchemaType.Dto,
+          )
+        : ConverterFactory.getConverter(
+          SchemaType.Canonical,
+          SchemaType.Dto,
+        )
       const dtos: DtoSchema[] = converter.convert(sourceSchema);
 
       dtos.map(async (dto: DtoSchema) => {
