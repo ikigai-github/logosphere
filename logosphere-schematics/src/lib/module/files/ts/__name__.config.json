@@ -1,0 +1,11 @@
+{
+  "config": {
+    "name": "<%= name %>",
+    "fluree": {
+      "ledgerUrl": "http://localhost:8090",
+      "queryUrl": "http://localhost:8090",
+      "network": "local",
+      "db": "<%= name %>"
+    }
+  }
+}

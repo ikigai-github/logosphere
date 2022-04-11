@@ -108,6 +108,8 @@ dist
 # this is a test project for the CLI generators
 logosphere-dapp
 test-app
+crypto-bisons
+iog-demo
 
 # This script is generated for references dev env specific logos binary
 logos

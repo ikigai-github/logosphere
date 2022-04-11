@@ -18,13 +18,17 @@ specifiers:
   eslint-plugin-prettier: 4.0.0
   graphql: 16.3.0
   jest: 27.5.1
+  js-sha3: 0.8.0
   lodash: 4.17.21
   pascal-case: 3.1.2
   prettier: 2.6.1
+  randomstring: 1.2.1
   reflect-metadata: 0.1.13
   rxjs: 7.5.5
+  sleep-promise: 9.1.0
   ts-jest: 27.1.4
   typescript: 4.6.3
+  typescript-string-operations: 1.4.1
 
 dependencies:
   '@nestjs/common': 8.4.3_e7ea248743279784063e3708d703abc5
@@ -50,9 +54,13 @@ devDependencies:
   eslint-config-prettier: 8.5.0_eslint@8.12.0
   eslint-plugin-prettier: 4.0.0_b253a92c95b42c3296c682f11cccb3bd
   jest: 27.5.1
+  js-sha3: 0.8.0
   prettier: 2.6.1
+  randomstring: 1.2.1
+  sleep-promise: 9.1.0
   ts-jest: 27.1.4_9985e1834e803358b7be1e6ce5ca0eea
   typescript: 4.6.3
+  typescript-string-operations: 1.4.1
 
 packages:
 
@@ -1097,6 +1105,11 @@ packages:
   /array-union/2.1.0:
     resolution: {integrity: sha512-HGyxoOTYUyCM6stUe6EJgnd4EoewAI7zMdfqO+kGjnlZmBDz/cR5pf8r/cR4Wq60sL/p0IkcjUEEPwS3GFrIyw==}
     engines: {node: '>=8'}
+    dev: true
+
+  /array-uniq/1.0.2:
+    resolution: {integrity: sha1-X8w3OSB3VyPP1k1lxkvvU7+eum0=}
+    engines: {node: '>=0.10.0'}
     dev: true
 
   /asynckit/0.4.0:
@@ -2589,6 +2602,10 @@ packages:
       - utf-8-validate
     dev: true
 
+  /js-sha3/0.8.0:
+    resolution: {integrity: sha512-gF1cRrHhIzNfToc802P800N8PpXS+evLLXfsVpowqmAFR9uwbi89WvXg2QspOmXL8QL86J4T1EpFu+yUkwJY3Q==}
+    dev: true
+
   /js-tokens/4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
     dev: true
@@ -3049,6 +3066,18 @@ packages:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
     dev: true
 
+  /randombytes/2.0.3:
+    resolution: {integrity: sha1-Z0yZdgkBw8QRJ3GjHlIdw0nMCew=}
+    dev: true
+
+  /randomstring/1.2.1:
+    resolution: {integrity: sha512-eMnfell9XuU3jfCx3f4xCaFAt0YMFPZhx9R3PSStmLarDKg5j5vivqKhf/8pvG+VX/YkxsckHK/VPUrKa5V07A==}
+    hasBin: true
+    dependencies:
+      array-uniq: 1.0.2
+      randombytes: 2.0.3
+    dev: true
+
   /react-is/17.0.2:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
     dev: true
@@ -3171,6 +3200,10 @@ packages:
   /slash/3.0.0:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
     engines: {node: '>=8'}
+    dev: true
+
+  /sleep-promise/9.1.0:
+    resolution: {integrity: sha512-UHYzVpz9Xn8b+jikYSD6bqvf754xL2uBUzDFwiU6NcdZeifPr6UfgU43xpkPu67VMS88+TI2PSI7Eohgqf2fKA==}
     dev: true
 
   /source-map-support/0.5.21:
@@ -3422,6 +3455,10 @@ packages:
     resolution: {integrity: sha512-zdu8XMNEDepKKR+XYOXAVPtWui0ly0NtohUscw+UmaHiAWT8hrV1rr//H6V+0DvJ3OQ19S979M0laLfX8rm82Q==}
     dependencies:
       is-typedarray: 1.0.0
+    dev: true
+
+  /typescript-string-operations/1.4.1:
+    resolution: {integrity: sha512-c+q+Tb0hxeebohdT9KpGUAm5zwxhU8pHeNOeuLCGFMXKN0OrldoAxtufrGLR3xSPCXDA4A3IBCEdRNNscVqLQg==}
     dev: true
 
   /typescript/4.6.3:

@@ -29,6 +29,7 @@ import {
 import { shouldGenerateSpec } from '@nestjs/cli/lib/utils/project-utils';
 import { AbstractAction } from '@nestjs/cli/actions';
 import { DtoSchema } from '@logosphere/sdk/lib/codegen/dto/dto.schema';
+import { createTestDb } from '@logosphere/sdk/lib/test-data';
 
 export class GenerateAction extends AbstractAction {
   public async handle(inputs: Input[], options: Input[]) {
@@ -165,7 +166,10 @@ const generateFiles = async (inputs: Input[]) => {
           schematicOptions,
         );
       });
-    }
+    } else if (schematicInput.value === 'test-data') {
+      const module = await selectModule(config);
+      createTestDb(module.name);
+    } 
   } catch (error) {
     if (error && error.message) {
       console.error(chalk.red(error.message));
