@@ -36,6 +36,7 @@ export function resolvePropType(meta: PropMetadata): PropTypeInfo {
     // If the type has entity metadata then it's a reference
     const entityRef = Reflect.getOwnMetadata(MetadataKeys.EntityCache, type);
     if (entityRef) {
+      typename = entityRef.name;
       return isArray
         ? { typename, defType: DefinitionType.EntityArray }
         : { typename, defType: DefinitionType.Entity };
