@@ -1,6 +1,6 @@
 import { ConfigurationLoader } from './configuration.loader';
 import { FileSystemReader } from '../readers';
-import { Configuration } from './configuration';
+import { Configuration, ModuleConfiguration } from './configuration';
 import { constants as c } from './configuration.constants';
 
 describe('Test configuration loader', () => {
@@ -28,5 +28,18 @@ describe('Test configuration loader', () => {
     expect(config).toBeDefined();
     expect(config.model).toBeDefined();
     expect(config.model).toEqual(c.CODE_FIRST);
+  });
+
+  it('should load configuration from the module config file', async () => {
+    const configLoader = new ConfigurationLoader(
+      new FileSystemReader(__dirname)
+    );
+    const moduleConfig: ModuleConfiguration = configLoader.loadModuleConfig('user',
+      '../../test/fixtures/code-first/modules/user/user.config.json'
+    );
+
+    expect(moduleConfig).toBeDefined();
+    expect(moduleConfig.name).toBeDefined();
+   
   });
 });
