@@ -1,0 +1,6 @@
+[
+  {
+    "collection": "<%= name %>",
+    "count": 3
+  }
+]

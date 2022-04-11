@@ -59,3 +59,10 @@ export function loadConfiguration(path?: string): Configuration {
   );
   return loader.load();
 }
+
+export function loadModuleConfiguration(moduleName, path?: string): ModuleConfiguration {
+  const loader: ConfigurationLoader = new ConfigurationLoader(
+    new FileSystemReader(path ? path : process.cwd())
+  );
+  return loader.loadModuleConfig(moduleName, path);
+}

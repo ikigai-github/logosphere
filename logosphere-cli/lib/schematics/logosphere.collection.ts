@@ -30,6 +30,11 @@ export class LogosphereCollection extends AbstractCollection {
       alias: 'dto',
       description: 'Generate DTOs (data transfer objects)',
     },
+    {
+      name: 'test-data',
+      alias: 'td',
+      description: 'Generate Fluree database with test data'
+    }
   ];
 
   constructor(runner: AbstractRunner) {

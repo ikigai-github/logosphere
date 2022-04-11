@@ -15,6 +15,8 @@ export interface Property {
   isEnabled: boolean;
   isRequired: boolean;
   isPK: boolean;
+  isUnique: boolean;
+  isFullText: boolean;
   isReadOnly: boolean;
   isWriteOnly: boolean;
   defType: DefinitionType;
