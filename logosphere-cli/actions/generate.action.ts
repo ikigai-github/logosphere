@@ -159,20 +159,6 @@ const generateFiles = async (inputs: Input[]) => {
     } else if (schematicInput.value === 'test-data') {
       const module = await selectModule(config);
       createTestDb(module.name);
-      // const reader = new FileSystemReader(process.cwd());
-      // const sourceSchema = JSON.parse(reader.read(module.jsonSchemaFile));
-      // const converter = ConverterFactory.getConverter(SchemaType.Json, SchemaType.Dto);
-      // const dtos: DtoSchema[] = converter.convert(sourceSchema);
-
-      // dtos.map(async (dto: DtoSchema) => {
-        
-      //   const schematicOptions = buildSchematicOptions(inputs, nestConfig);
-      //   schematicOptions.push(new SchematicOption('module', module.name));
-      //   schematicOptions.push(new SchematicOption('name', `${module.name}/dto/${dto.name}`));
-      //   schematicOptions.push(new SchematicOption('content', dto.schema));
-      //   await collection.execute(schematicInput.value as string, schematicOptions);
-
-      // });
     } 
   } catch (error) {
     if (error && error.message) {
