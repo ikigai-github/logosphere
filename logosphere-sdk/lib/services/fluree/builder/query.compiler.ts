@@ -1,4 +1,4 @@
-import { FlureeWhereOperator, FlureeQuery } from '../fluree';
+import { FlureeWhereOperator, FlureeQuery } from '../fluree.schema';
 import { PredicateNode, QueryContext, ReferenceNode } from './query.schema';
 
 function isReferenceNode(node: PredicateNode): node is ReferenceNode {

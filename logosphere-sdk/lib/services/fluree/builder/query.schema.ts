@@ -4,7 +4,7 @@ import {
   FlureeFromClause,
   FlureeWhereOperator,
   FlureeQueryOptions,
-} from '../fluree';
+} from '../fluree.schema';
 
 export interface ReferenceNode {
   readonly field: string;

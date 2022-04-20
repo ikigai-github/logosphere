@@ -1,5 +1,5 @@
 import * as fluree from '@fluree/flureenjs';
-import { compile, QueryContext } from '../builder';
+
 import { FlureeQuery, FlureeResult } from './fluree.schema';
 
 export interface FlureeConfig {
