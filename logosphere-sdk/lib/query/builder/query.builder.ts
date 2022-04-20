@@ -1,89 +1,87 @@
 import {
-  PredicateNode,
-  QueryContext,
-  QueryFromClause,
-  QueryOptions,
-  QueryOrderClause,
-  ReferenceNode,
+  FlureeOrderClause,
+  FlureeQueryOptions,
+  FlureeFromClause,
   ReferenceOptions,
-} from './query.schema';
+} from '../fluree';
+import { PredicateNode, QueryContext, ReferenceNode } from './query.schema';
 
 interface BuildableStep {
   build(): QueryContext;
 }
 
-interface OptionsStep<T> extends BuildableStep {
-  limit(limit: number): OptionsStep<T>;
-  offset(offset: number): OptionsStep<T>;
-  orderBy(orderBy: QueryOrderClause): OptionsStep<T>;
-  options(options: QueryOptions): OptionsStep<T>;
+interface OptionsStep extends BuildableStep {
+  limit(limit: number): OptionsStep;
+  offset(offset: number): OptionsStep;
+  orderBy(orderBy: FlureeOrderClause): OptionsStep;
+  options(options: FlureeQueryOptions): OptionsStep;
 }
 
-interface SelectStep<T> {
-  from(clause: QueryFromClause): FromStep<T>;
-  where(clause: string): WhereStep<T>;
+interface SelectStep {
+  from(clause: FlureeFromClause): FromStep;
+  where(clause: string): WhereStep;
 }
 
-interface FromStep<T> extends OptionsStep<T> {
-  where(clause: string): WhereStep<T>;
-  limit(limit: number): OptionsStep<T>;
+interface FromStep extends OptionsStep {
+  where(clause: string): WhereStep;
+  limit(limit: number): OptionsStep;
 }
 
-interface AndStep<T> extends OptionsStep<T> {
-  and(clause: string): AndStep<T>;
+interface AndStep extends OptionsStep {
+  and(clause: string): AndStep;
 }
 
-interface OrStep<T> extends OptionsStep<T> {
-  or(clause: string): OrStep<T>;
+interface OrStep extends OptionsStep {
+  or(clause: string): OrStep;
 }
 
-interface WhereStep<T> extends AndStep<T>, OrStep<T> {}
+interface WhereStep extends AndStep, OrStep {}
 
-class QueryBuilderStep<T> implements SelectStep<T>, WhereStep<T> {
+class QueryBuilderStep implements SelectStep, WhereStep {
   constructor(private context: QueryContext) {}
 
-  from(clause: QueryFromClause): FromStep<T> {
+  from(clause: FlureeFromClause): FromStep {
     this.context.from = clause;
     return this;
   }
 
-  where(clause: string): WhereStep<T> {
+  where(clause: string): WhereStep {
     this.context.where = [clause];
     return this;
   }
 
-  and(clause: string): AndStep<T> {
+  and(clause: string): AndStep {
     this.context.where.push(clause);
     this.context.whereOperator = 'AND';
     return this;
   }
 
-  or(clause: any): OrStep<T> {
+  or(clause: any): OrStep {
     this.context.where.push(clause);
     this.context.whereOperator = 'OR';
     return this;
   }
 
-  limit(limit: number): OptionsStep<T> {
+  limit(limit: number): OptionsStep {
     const options = this.getOptions();
     options.limit = limit;
     return this;
   }
 
-  offset(offset: number): OptionsStep<T> {
+  offset(offset: number): OptionsStep {
     const options = this.getOptions();
     options.offset = offset;
     return this;
   }
 
-  orderBy(orderBy: QueryOrderClause): OptionsStep<T> {
+  orderBy(orderBy: FlureeOrderClause): OptionsStep {
     const options = this.getOptions();
     options.orderBy = orderBy;
     return this;
   }
 
-  options(options: QueryOptions): OptionsStep<T> {
-    this.context.options = options;
+  options(options: FlureeQueryOptions): OptionsStep {
+    this.context.opts = options;
     return this;
   }
 
@@ -91,54 +89,50 @@ class QueryBuilderStep<T> implements SelectStep<T>, WhereStep<T> {
     return this.context;
   }
 
-  private getOptions(): QueryOptions {
-    let options = this.context.options;
-    if (!options) {
-      options = {};
-      this.context.options = options;
+  private getOptions(): FlureeQueryOptions {
+    let opts = this.context.opts;
+    if (!opts) {
+      opts = {};
+      this.context.opts = opts;
     }
 
-    return options;
+    return opts;
   }
 }
 
-export function select<T = any>(
-  ...predicates: PredicateNode[]
-): QueryBuilderStep<T[]> {
+export function select(...predicates: PredicateNode[]): SelectStep {
   const context: QueryContext = {
     key: 'select',
     predicates,
   };
 
-  return new QueryBuilderStep<T[]>(context);
+  return new QueryBuilderStep(context);
 }
 
-export function selectOne<T = any>(
-  ...predicates: PredicateNode[]
-): QueryBuilderStep<T> {
+export function selectOne(...predicates: PredicateNode[]): SelectStep {
   const context: QueryContext = {
     key: 'selectOne',
     predicates,
   };
 
-  return new QueryBuilderStep<T>(context);
+  return new QueryBuilderStep(context);
 }
 
 export function ref(field: string, predicates: PredicateNode[]): ReferenceNode;
 export function ref(
   field: string,
   predicates: PredicateNode[],
-  options?: ReferenceOptions
+  opts?: ReferenceOptions
 ): ReferenceNode;
 
 export function ref(
   field: string,
   predicates: PredicateNode[],
-  options?: ReferenceOptions
+  opts?: ReferenceOptions
 ): ReferenceNode {
   return {
     field,
     predicates,
-    options,
+    opts,
   };
 }

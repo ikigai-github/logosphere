@@ -1,53 +1,25 @@
-export type QueryOrdering = 'ASC' | 'DESC';
-
-export type QueryOrderClause = string | [QueryOrdering, string];
-
-export type QueryFromPredicate = [string, string];
-
-export type QueryFromClause =
-  | string
-  | number
-  | QueryFromPredicate
-  | [number, QueryFromPredicate][];
-
-export type SelectKey = 'select' | 'selectOne' | 'selectDistinct';
-
-export type WhereOperator = 'AND' | 'OR';
-
-export interface QueryOptions {
-  limit?: number;
-  offset?: number;
-  orderBy?: QueryOrderClause;
-  component?: boolean;
-  compact?: boolean;
-  syncTo?: number;
-  syncTimeout?: number;
-}
-
-export interface ReferenceOptions {
-  _limit?: number;
-  _offset?: number;
-  _recur?: number;
-  _component?: boolean;
-  _as?: string;
-  _orderBy?: QueryOrderClause;
-  _compact?: string;
-}
+import {
+  ReferenceOptions,
+  FlureeSelectKey,
+  FlureeFromClause,
+  FlureeWhereOperator,
+  FlureeQueryOptions,
+} from '../fluree';
 
 export interface ReferenceNode {
   readonly field: string;
   readonly predicates: PredicateNode[];
-  options?: ReferenceOptions;
+  readonly opts?: ReferenceOptions;
 }
 
 export type PredicateNode = string | ReferenceNode;
 
 export interface QueryContext {
-  key: SelectKey;
+  key: FlureeSelectKey;
   predicates: PredicateNode[];
-  from?: QueryFromClause;
+  from?: FlureeFromClause;
   where?: string[];
-  whereOperator?: WhereOperator;
+  whereOperator?: FlureeWhereOperator;
   block?: number;
-  options?: QueryOptions;
+  opts?: FlureeQueryOptions;
 }
