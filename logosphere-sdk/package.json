@@ -29,6 +29,7 @@
     "url": "https://github.com/ikigai-github/logosphere/issues"
   },
   "dependencies": {
+    "@fluree/flureenjs": "^1.0.0-rc56",
     "@nestjs/common": "8.4.3",
     "@nestjs/config": "2.0.0",
     "@nestjs/core": "8.4.3",
