@@ -3,7 +3,7 @@ import { ref, select } from './query.builder';
 
 describe('Query Builder', () => {
   it('should build a basic query', () => {
-    const context = select('*')
+    const spec = select('*')
       .from('test')
       .where('test < 1')
       .and('test > 0')
@@ -12,13 +12,13 @@ describe('Query Builder', () => {
       .orderBy(['ASC', 'test'])
       .build();
 
-    expect(context.predicates).toEqual(['*']);
-    expect(context.from).toBe('test');
-    expect(context.where).toEqual(['test < 1', 'test > 0']);
-    expect(context.whereOperator).toBe('AND');
-    expect(context.opts).toBeDefined();
-    expect(context.opts.limit).toBe(10);
-    expect(context.opts.orderBy).toEqual(['ASC', 'test']);
+    expect(spec.predicates).toEqual(['*']);
+    expect(spec.from).toBe('test');
+    expect(spec.where).toEqual(['test < 1', 'test > 0']);
+    expect(spec.whereOperator).toBe('AND');
+    expect(spec.opts).toBeDefined();
+    expect(spec.opts.limit).toBe(10);
+    expect(spec.opts.orderBy).toEqual(['ASC', 'test']);
   });
 
   it('should allow for reference following', () => {
@@ -40,14 +40,14 @@ describe('Query Builder', () => {
       offset: 0,
       syncTimeout: 1000,
     };
-    const context = select('*')
+    const spec = select('*')
       .where('a != b')
       .or('b > 1')
       .options(options)
       .build();
 
-    expect(context.opts).toEqual(options);
-    expect(context.where).toEqual(['a != b', 'b > 1']);
-    expect(context.whereOperator).toBe('OR');
+    expect(spec.opts).toEqual(options);
+    expect(spec.where).toEqual(['a != b', 'b > 1']);
+    expect(spec.whereOperator).toBe('OR');
   });
 });

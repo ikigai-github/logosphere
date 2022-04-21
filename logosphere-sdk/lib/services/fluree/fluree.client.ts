@@ -1,6 +1,6 @@
 import * as fluree from '@fluree/flureenjs';
 
-import { FlureeQuery, FlureeResult } from './fluree.schema';
+import { FlureeQuery, FlureeObject } from './fluree.schema';
 
 export interface FlureeConfig {
   url: string;
@@ -37,7 +37,7 @@ export class FlureeClient {
     }
   }
 
-  async query(fql: FlureeQuery): Promise<FlureeResult> {
+  async query(fql: FlureeQuery): Promise<FlureeObject> {
     const connecting = this.connecting;
     if (connecting) await connecting;
 
