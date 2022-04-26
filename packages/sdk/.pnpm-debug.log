@@ -1,0 +1,78 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 2,
+    "total": 2,
+    "workspacePrefix": "/Users/dmitri/workplace/github/ikigai/nx/logosphere"
+  },
+  "1 debug pnpm:package-manifest": {
+    "initial": {
+      "name": "@logosphere/sdk",
+      "version": "0.0.1",
+      "main": "src/index.js",
+      "generators": "./generators.json",
+      "executors": "./executors.json"
+    },
+    "prefix": "/Users/dmitri/workplace/github/ikigai/nx/logosphere/packages/sdk"
+  },
+  "2 debug pnpm:package-manifest": {
+    "initial": {
+      "name": "@logosphere",
+      "version": "0.0.0",
+      "license": "MIT",
+      "scripts": {
+        "start": "nx serve",
+        "build": "nx build",
+        "test": "nx test",
+        "preinstall": "npx only-allow pnpm"
+      },
+      "private": true,
+      "devDependencies": {
+        "@nrwl/cli": "14.0.2",
+        "@nrwl/devkit": "14.0.2",
+        "@nrwl/eslint-plugin-nx": "14.0.2",
+        "@nrwl/jest": "14.0.2",
+        "@nrwl/js": "14.0.2",
+        "@nrwl/linter": "14.0.2",
+        "@nrwl/nx-plugin": "^14.0.2",
+        "@nrwl/workspace": "14.0.2",
+        "@types/jest": "27.4.1",
+        "@types/node": "16.11.7",
+        "@typescript-eslint/eslint-plugin": "~5.18.0",
+        "@typescript-eslint/parser": "~5.18.0",
+        "eslint": "~8.12.0",
+        "eslint-config-prettier": "8.1.0",
+        "jest": "27.5.1",
+        "nx": "14.0.2",
+        "prettier": "^2.5.1",
+        "ts-jest": "27.1.4",
+        "ts-node": "9.1.1",
+        "tslib": "^2.0.0",
+        "typescript": "~4.6.2"
+      },
+      "dependencies": {
+        "tslib": "^2.3.0",
+        "sdk": "workspace:*"
+      }
+    },
+    "prefix": "/Users/dmitri/workplace/github/ikigai/nx/logosphere"
+  },
+  "3 debug pnpm:context": {
+    "currentLockfileExists": true,
+    "storeDir": "/Users/dmitri/.pnpm-store/v3",
+    "virtualStoreDir": "/Users/dmitri/workplace/github/ikigai/nx/logosphere/node_modules/.pnpm"
+  },
+  "4 debug pnpm:stage": {
+    "prefix": "/Users/dmitri/workplace/github/ikigai/nx/logosphere",
+    "stage": "resolution_started"
+  },
+  "5 error pnpm": {
+    "code": "ERR_PNPM_NO_MATCHING_VERSION_INSIDE_WORKSPACE",
+    "pkgsStack": [],
+    "err": {
+      "name": "pnpm",
+      "message": "In ../..: No matching version found for sdk@* inside the workspace",
+      "code": "ERR_PNPM_NO_MATCHING_VERSION_INSIDE_WORKSPACE",
+      "stack": "pnpm: In ../..: No matching version found for sdk@* inside the workspace\n    at tryResolveFromWorkspace (/Users/dmitri/.nvm/versions/node/v16.13.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.4/node_modules/pnpm/dist/pnpm.cjs:86006:15)\n    at resolveNpm (/Users/dmitri/.nvm/versions/node/v16.13.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.4/node_modules/pnpm/dist/pnpm.cjs:85897:39)\n    at Object.resolve (/Users/dmitri/.nvm/versions/node/v16.13.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.4/node_modules/pnpm/dist/pnpm.cjs:86129:40)\n    at ctx.requestsQueue.add.priority (/Users/dmitri/.nvm/versions/node/v16.13.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.4/node_modules/pnpm/dist/pnpm.cjs:74483:75)\n    at run (/Users/dmitri/.nvm/versions/node/v16.13.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.4/node_modules/pnpm/dist/pnpm.cjs:74199:90)\n    at PQueue._tryToStartAnother (/Users/dmitri/.nvm/versions/node/v16.13.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.4/node_modules/pnpm/dist/pnpm.cjs:74153:13)\n    at /Users/dmitri/.nvm/versions/node/v16.13.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.4/node_modules/pnpm/dist/pnpm.cjs:74212:16\n    at new Promise (<anonymous>)\n    at PQueue.add (/Users/dmitri/.nvm/versions/node/v16.13.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.4/node_modules/pnpm/dist/pnpm.cjs:74194:16)\n    at resolveAndFetch (/Users/dmitri/.nvm/versions/node/v16.13.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.4/node_modules/pnpm/dist/pnpm.cjs:74483:55)"
+    }
+  }
+}

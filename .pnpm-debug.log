@@ -1,0 +1,14 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 1
+  },
+  "1 error pnpm": {
+    "code": "ERR_PNPM_LOCKFILE_NOT_FOUND",
+    "err": {
+      "name": "pnpm",
+      "message": "No lockfile found",
+      "code": "ERR_PNPM_LOCKFILE_NOT_FOUND",
+      "stack": "pnpm: No lockfile found\n    at Object.handler [as import] (/Users/dmitri/.nvm/versions/node/v16.13.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.4/node_modules/pnpm/dist/pnpm.cjs:174724:15)\n    at async /Users/dmitri/.nvm/versions/node/v16.13.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.4/node_modules/pnpm/dist/pnpm.cjs:182129:21\n    at async run (/Users/dmitri/.nvm/versions/node/v16.13.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.4/node_modules/pnpm/dist/pnpm.cjs:182103:34)\n    at async runPnpm (/Users/dmitri/.nvm/versions/node/v16.13.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.4/node_modules/pnpm/dist/pnpm.cjs:182322:5)\n    at async /Users/dmitri/.nvm/versions/node/v16.13.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.4/node_modules/pnpm/dist/pnpm.cjs:182314:7"
+    }
+  }
+}
