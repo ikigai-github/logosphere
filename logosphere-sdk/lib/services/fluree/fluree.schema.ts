@@ -105,7 +105,16 @@ export type FlureeMultiObject = FlureeSingleObject[];
 export type FlureeObject = FlureeSingleObject | FlureeMultiObject;
 
 /**
- * Type guard to heck if an object is a Fluree object
+ * Type gaurd to chif if an object is a single fluree object
+ * @param obj The object to perform the type guard on
+ * @returns true if the object is a single Fluree Object
+ */
+export function isFlureeSingleObject(obj: any): obj is FlureeSingleObject {
+  return typeof obj === 'object' && obj._id !== undefined;
+}
+
+/**
+ * Type guard to check if an object is a Fluree object
  * @param obj The object to perform the type guard on
  * @returns true if the object is a FlureeObject
  */
@@ -114,11 +123,7 @@ export function isFlureeObject(obj: any): obj is FlureeObject {
     return true;
   }
 
-  if (typeof obj === 'object' && obj._id !== undefined) {
-    return true;
-  }
-
-  return false;
+  return isFlureeSingleObject(obj);
 }
 
 /**

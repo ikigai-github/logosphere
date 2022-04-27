@@ -169,17 +169,13 @@ class QueryBuilderStep implements SelectStep, WhereStep {
 
 /**
  * Begins building a query specification with the given select predicates
- * @param predicate The first predicate to add to the list of selected predicates
- * @param predicates The rest of the predicates to add to the list of selected predicates
+ * @param predicates The predicates to select. No predicates is same as select('*').
  * @returns A query builder at the select step
  */
-export function select(
-  predicate: PredicateNode,
-  ...predicates: PredicateNode[]
-): SelectStep {
+export function select(...predicates: PredicateNode[]): SelectStep {
   const spec: QuerySpec = {
     key: 'select',
-    predicates: [predicate, ...predicates],
+    predicates: predicates.length === 0 ? ['*'] : predicates,
   };
 
   return new QueryBuilderStep(spec);
@@ -187,17 +183,13 @@ export function select(
 
 /**
  * Begins building a query specification with the given selectOne predicates
- * @param predicate The first predicate to add to the list of selected predicates
- * @param predicates The rest of the predicates to add to the list of selected predicates
+ * @param predicates The predicates to select. No predicates is same as selectOne('*').
  * @returns A query builder at the select step
  */
-export function selectOne(
-  predicate: PredicateNode,
-  ...predicates: PredicateNode[]
-): SelectStep {
+export function selectOne(...predicates: PredicateNode[]): SelectStep {
   const spec: QuerySpec = {
     key: 'selectOne',
-    predicates: [predicate, ...predicates],
+    predicates: predicates.length === 0 ? ['*'] : predicates,
   };
 
   return new QueryBuilderStep(spec);
