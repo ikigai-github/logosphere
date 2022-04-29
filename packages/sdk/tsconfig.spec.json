@@ -18,5 +18,8 @@
     "**/*.test.jsx",
     "**/*.d.ts",
     "jest.config.ts"
+  ],
+  "exclude": [
+    "**/files/*"
   ]
 }

@@ -1,5 +1,6 @@
 import type { Tree } from '@nrwl/devkit';
 import { getWorkspaceLayout, joinPathFragments, names } from '@nrwl/devkit';
+import { strings } from '@angular-devkit/core/src';
 import { Linter } from '@nrwl/linter';
 import type { Schema as NodeApplicationGeneratorOptions } from '@nrwl/node/src/generators/application/schema';
 import type { ApplicationGeneratorOptions, NormalizedOptions } from '../schema';
@@ -17,8 +18,15 @@ export function normalizeOptions(
     appDirectory
   );
 
+  const className = strings.classify(options.name);
+  const dashedName = strings.dasherize(options.name);
+  const cameledName = strings.camelize(options.name);
+
   return {
     ...options,
+    className,
+    dashedName,
+    cameledName,
     appProjectRoot,
     linter: options.linter ?? Linter.EsLint,
     unitTestRunner: options.unitTestRunner ?? 'jest',

@@ -1,0 +1,6 @@
+[
+  {
+    "collection": "<%= cameledName %>",
+    "count": 3
+  }
+]

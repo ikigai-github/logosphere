@@ -17,7 +17,6 @@
       "aliases": ["ng-add"],
       "hidden": true
     }
-    
   },
   "generators": {
     "application": {

@@ -24,22 +24,9 @@ describe('application generator', () => {
 
   it('should generate files', async () => {
     await applicationGenerator(tree, { name: appName });
-
     expect(tree.exists(`apps/${appDirectory}/src/main.ts`)).toBeTruthy();
     expect(
-      tree.exists(`apps/${appDirectory}/src/app/app.controller.spec.ts`)
-    ).toBeTruthy();
-    expect(
-      tree.exists(`apps/${appDirectory}/src/app/app.controller.ts`)
-    ).toBeTruthy();
-    expect(
       tree.exists(`apps/${appDirectory}/src/app/app.module.ts`)
-    ).toBeTruthy();
-    expect(
-      tree.exists(`apps/${appDirectory}/src/app/app.service.spec.ts`)
-    ).toBeTruthy();
-    expect(
-      tree.exists(`apps/${appDirectory}/src/app/app.service.ts`)
     ).toBeTruthy();
   });
 

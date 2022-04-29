@@ -1,0 +1,9 @@
+import {Entity, Prop, StorageLayer} from '@logosphere/sdk/dist/lib/decorators';
+
+class <%= className %>Entity {
+  @Prop({
+    examples:['<%= dashedName %>-1', '<%= dashedName %>-2', '<%= dashedName %>-3'],
+    layer: StorageLayer.HotLayer
+  })
+  username: string;
+}
