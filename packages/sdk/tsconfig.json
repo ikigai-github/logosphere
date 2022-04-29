@@ -1,7 +1,10 @@
 {
   "extends": "../../tsconfig.base.json",
-  "files": [],
+  "compilerOptions": {
+    "types": ["node", "jest"]
+  },
   "include": [],
+  "files": [],
   "references": [
     {
       "path": "./tsconfig.lib.json"
@@ -9,11 +12,5 @@
     {
       "path": "./tsconfig.spec.json"
     }
-  ],
-  "compilerOptions": {
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true
-  }
+  ]
 }

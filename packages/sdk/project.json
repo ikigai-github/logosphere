@@ -1,23 +1,76 @@
 {
   "root": "packages/sdk",
-  "sourceRoot": "packages/sdk/src",
+  "sourceRoot": "packages/sdk",
   "projectType": "library",
   "targets": {
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["packages/sdk/**/*.ts"]
-      }
-    },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/sdk"],
       "options": {
         "jestConfig": "packages/sdk/jest.config.ts",
         "passWithNoTests": true
-      }
+      },
+      "outputs": ["coverage/packages/sdk"]
+    },
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "options": {
+        "outputPath": "dist/packages/sdk",
+        "tsConfig": "packages/sdk/tsconfig.lib.json",
+        "main": "packages/sdk/index.ts",
+        "updateBuildableProjectDepsInPackageJson": false,
+        "assets": [
+          {
+            "input": "packages/sdk",
+            "glob": "**/files/**",
+            "output": "/"
+          },
+          {
+            "input": "packages/sdk",
+            "glob": "**/files/**/.gitkeep",
+            "output": "/"
+          },
+          {
+            "input": "packages/sdk",
+            "glob": "**/*.json",
+            "ignore": ["**/tsconfig*.json", "project.json"],
+            "output": "/"
+          },
+          {
+            "input": "packages/sdk",
+            "glob": "**/*.js",
+            "ignore": ["**/jest.config.js"],
+            "output": "/"
+          },
+          {
+            "input": "packages/sdk",
+            "glob": "**/*.d.ts",
+            "output": "/"
+          },
+          {
+            "input": "",
+            "glob": "LICENSE",
+            "output": "/"
+          }
+        ]
+      },
+      "outputs": ["{options.outputPath}"]
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "packages/sdk/**/*.ts",
+          "packages/sdk/**/*.spec.ts",
+          "packages/sdk/**/*_spec.ts",
+          "packages/sdk/**/*.spec.tsx",
+          "packages/sdk/**/*.spec.js",
+          "packages/sdk/**/*.spec.jsx",
+          "packages/sdk/**/*.d.ts",
+          "packages/sdk/**/executors/**/schema.json",
+          "packages/sdk/**/generators/**/schema.json"
+        ]
+      },
+      "outputs": ["{options.outputFile}"]
     }
-  },
-  "tags": []
+  }
 }

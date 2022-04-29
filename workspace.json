@@ -2,7 +2,6 @@
   "version": 2,
   "projects": {
     "sdk": "packages/sdk",
-    "nest": "packages/nest",
     "sdk-e2e": "e2e/sdk-e2e"
   }
 }

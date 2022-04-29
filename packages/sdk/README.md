@@ -1,11 +1,13 @@
-# sdk
+<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx.png" width="600" alt="Nx - Smart, Fast and Extensible Build System"></p>
 
-This library was generated with [Nx](https://nx.dev).
+{{links}}
 
-## Running unit tests
+<hr>
 
-Run `nx test sdk` to execute the unit tests via [Jest](https://jestjs.io).
+# Nx: Smart, Fast and Extensible Build System
 
-## Running lint
+Nx is a next generation build system with first class monorepo support and powerful integrations.
 
-Run `nx lint sdk` to execute the lint via [ESLint](https://eslint.org/).
+This package is a [NestJS plugin for Nx](https://nx.dev/nest/overview).
+
+{{content}}

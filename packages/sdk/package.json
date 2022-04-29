@@ -1,11 +1,11 @@
 {
-  "name": "@logosphere/nest",
+  "name": "@logosphere/sdk",
   "version": "0.0.1",
   "description": "The Nx Plugin for Nest that contains executors and generators for allowing your workspace to create powerful Nest best in class APIs.",
   "repository": {
     "type": "git",
     "url": "https://github.com/nrwl/nx.git",
-    "directory": "packages/nest"
+    "directory": "packages/sdk"
   },
   "keywords": [
     "Monorepo",

@@ -6,15 +6,17 @@
     "types": ["jest", "node"]
   },
   "include": [
-    "jest.config.ts",
-    "**/*.test.ts",
     "**/*.spec.ts",
-    "**/*.test.tsx",
+    "**/*.test.ts",
+    "**/*_spec.ts",
+    "**/*_test.ts",
     "**/*.spec.tsx",
-    "**/*.test.js",
+    "**/*.test.tsx",
     "**/*.spec.js",
-    "**/*.test.jsx",
+    "**/*.test.js",
     "**/*.spec.jsx",
-    "**/*.d.ts"
+    "**/*.test.jsx",
+    "**/*.d.ts",
+    "jest.config.ts"
   ]
 }
