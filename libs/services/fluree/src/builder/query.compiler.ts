@@ -46,6 +46,8 @@ function buildWhere(clauses: string[], operator?: FlureeWhereOperator): string {
 
     return clause;
   }
+
+  return undefined;
 }
 
 /**

@@ -28,7 +28,7 @@ describe('Query Builder', () => {
 
     expect(context.predicates).toEqual([
       'thing',
-      { field: 'something', predicates: ['else'], options },
+      { field: 'something', predicates: ['else'], opts: options },
     ]);
     expect(context.from).toBe('place');
     expect(context.opts).toBeUndefined();
