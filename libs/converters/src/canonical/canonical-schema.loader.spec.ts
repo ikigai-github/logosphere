@@ -4,22 +4,19 @@ import { Definition } from './canonical.schema';
 describe('Federated Schema Loader', () => {
   test('Load canonical schema', () => {
     const schema = canonicalSchemaLoader(
-      `${__dirname}/../../../test/fixtures`
+      `${__dirname}/../../../test/fixtures/`
     );
     expect(schema).toBeDefined();
+    console.log(schema)
+    expect(schema.definitions.length > 0).toBeTruthy()
     expect(
       schema.definitions.find(
-        (def: Definition) => def.module === 'user'
+        (def: Definition) => def.name === 'user'
       )
     ).toBeDefined();
     expect(
       schema.definitions.find(
-        (def: Definition) => def.module === 'minting'
-      )
-    ).toBeDefined();
-    expect(
-      schema.definitions.find(
-        (def: Definition) => def.module === 'auction'
+        (def: Definition) => def.name === 'wallet'
       )
     ).toBeDefined();
   });
