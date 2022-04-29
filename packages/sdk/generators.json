@@ -1,5 +1,5 @@
 {
-  "name": "nx/nest",
+  "name": "nx/sdk",
   "version": "0.1",
   "extends": ["@nrwl/workspace"],
   "schematics": {
@@ -8,12 +8,12 @@
       "schema": "./src/generators/application/schema.json",
       "aliases": ["app"],
       "x-type": "application",
-      "description": "Create a NestJS application."
+      "description": "Create a Logosphere application."
     },
     "init": {
       "factory": "./src/generators/init/init#initSchematic",
       "schema": "./src/generators/init/schema.json",
-      "description": "Initialize the `@nrwl/nest` plugin.",
+      "description": "Initialize the `@logosphere/sdk` plugin.",
       "aliases": ["ng-add"],
       "hidden": true
     }
@@ -25,12 +25,12 @@
       "schema": "./src/generators/application/schema.json",
       "aliases": ["app"],
       "x-type": "application",
-      "description": "Create a NestJS application."
+      "description": "Create a Logosphere application."
     },
     "init": {
       "factory": "./src/generators/init/init",
       "schema": "./src/generators/init/schema.json",
-      "description": "Initialize the `@nrwl/nest` plugin.",
+      "description": "Initialize the `@logosphere/sdk` plugin.",
       "aliases": ["ng-add"],
       "hidden": true
     }
