@@ -1,0 +1,1477 @@
+[
+  { "_id": "_collection", "name": "person" },
+  {
+    "_id": "_predicate",
+    "name": "person/owner",
+    "doc": "The person's data owner",
+    "type": "ref",
+    "restrictCollection": "_user",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "person/identifier",
+    "doc": "person's identifier field",
+    "index": true,
+    "unique": false,
+    "type": "string",
+    "fullText": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "person/firstName",
+    "doc": "person's firstName field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "person/middleName",
+    "doc": "person's middleName field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "person/lastName",
+    "doc": "person's lastName field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "person/addresses",
+    "doc": "person's addresses field",
+    "type": "ref",
+    "restrictCollection": "address",
+    "multi": true,
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "person/createdAt",
+    "doc": "person's createdAt field",
+    "type": "instant",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "person/updatedAt",
+    "doc": "person's updatedAt field",
+    "type": "instant",
+    "index": true
+  },
+  { "_id": "_collection", "name": "user" },
+  {
+    "_id": "_predicate",
+    "name": "user/owner",
+    "doc": "The user's data owner",
+    "type": "ref",
+    "restrictCollection": "_user",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "user/identifier",
+    "doc": "user's identifier field",
+    "index": true,
+    "unique": false,
+    "type": "string",
+    "fullText": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "user/username",
+    "doc": "user's username field",
+    "type": "string",
+    "unique": true,
+    "fullText": true,
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "user/displayName",
+    "doc": "user's displayName field",
+    "type": "string",
+    "unique": false,
+    "fullText": true,
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "user/profileImageVariants",
+    "doc": "user's profileImageVariants field",
+    "type": "ref",
+    "restrictCollection": "imageVariant",
+    "multi": true,
+    "unique": true,
+    "fullText": false,
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "user/person",
+    "doc": "user's person field",
+    "type": "ref",
+    "restrictCollection": "person",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "user/follows",
+    "doc": "user's follows field",
+    "type": "ref",
+    "restrictCollection": "user",
+    "multi": true,
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "user/followedBy",
+    "doc": "user's followedBy field",
+    "type": "ref",
+    "restrictCollection": "user",
+    "multi": true,
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "user/badges",
+    "doc": "user's badges field",
+    "type": "ref",
+    "restrictCollection": "badge",
+    "multi": true,
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "user/followersCount",
+    "doc": "user's followersCount field",
+    "type": "bigint",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "user/followingCount",
+    "doc": "user's followingCount field",
+    "type": "bigint",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "user/socialMediaLinks",
+    "doc": "user's socialMediaLinks field",
+    "type": "ref",
+    "restrictCollection": "socialMedia",
+    "multi": true,
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "user/isActive",
+    "doc": "user's isActive field",
+    "type": "boolean",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "user/email",
+    "doc": "user's email field",
+    "type": "string",
+    "unique": true,
+    "fullText": false,
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "user/mobile",
+    "doc": "user's mobile field",
+    "type": "string",
+    "unique": true,
+    "fullText": false,
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "user/curatorPageUrl",
+    "doc": "user's curatorPageUrl field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "user/artworks",
+    "doc": "user's artworks field",
+    "type": "ref",
+    "restrictCollection": "artwork",
+    "multi": true,
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "user/listings",
+    "doc": "user's listings field",
+    "type": "ref",
+    "restrictCollection": "listing",
+    "multi": true,
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "user/description",
+    "doc": "user's description field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "user/wallet",
+    "doc": "user's wallet field",
+    "type": "ref",
+    "restrictCollection": "wallet",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "user/login",
+    "doc": "user's login field",
+    "type": "ref",
+    "restrictCollection": "login",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "user/createdAt",
+    "doc": "user's createdAt field",
+    "type": "instant",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "user/updatedAt",
+    "doc": "user's updatedAt field",
+    "type": "instant",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "user/likes",
+    "doc": "user's likes field",
+    "type": "ref",
+    "restrictCollection": "listing",
+    "multi": true,
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "user/watchedListings",
+    "doc": "user's watchedListings field",
+    "type": "ref",
+    "restrictCollection": "listing",
+    "multi": true,
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "user/userSettings",
+    "doc": "user's userSettings field",
+    "type": "ref",
+    "restrictCollection": "userSettings",
+    "index": true
+  },
+  { "_id": "_collection", "name": "address" },
+  {
+    "_id": "_predicate",
+    "name": "address/owner",
+    "doc": "The address's data owner",
+    "type": "ref",
+    "restrictCollection": "_user",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "address/identifier",
+    "doc": "address's identifier field",
+    "index": true,
+    "unique": false,
+    "type": "string",
+    "fullText": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "address/addressLine1",
+    "doc": "address's addressLine1 field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "address/addressLine2",
+    "doc": "address's addressLine2 field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "address/city",
+    "doc": "address's city field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "address/division",
+    "doc": "address's division field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "address/postalCode",
+    "doc": "address's postalCode field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "address/country",
+    "doc": "address's country field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "address/addressType",
+    "doc": "address's addressType field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "address/createdAt",
+    "doc": "address's createdAt field",
+    "type": "instant",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "address/updatedAt",
+    "doc": "address's updatedAt field",
+    "type": "instant",
+    "index": true
+  },
+  { "_id": "_collection", "name": "artwork" },
+  {
+    "_id": "_predicate",
+    "name": "artwork/owner",
+    "doc": "The artwork's data owner",
+    "type": "ref",
+    "restrictCollection": "_user",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "artwork/identifier",
+    "doc": "artwork's identifier field",
+    "index": true,
+    "unique": true,
+    "type": "string",
+    "fullText": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "artwork/title",
+    "doc": "artwork's title field",
+    "type": "string",
+    "unique": false,
+    "fullText": true,
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "artwork/description",
+    "doc": "artwork's description field",
+    "type": "string",
+    "unique": false,
+    "fullText": true,
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "artwork/nft",
+    "doc": "artwork's nft field",
+    "type": "ref",
+    "restrictCollection": "nft",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "artwork/author",
+    "doc": "artwork's author field",
+    "type": "ref",
+    "restrictCollection": "user",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "artwork/imageVariants",
+    "doc": "artwork's imageVariants field",
+    "type": "ref",
+    "restrictCollection": "imageVariant",
+    "multi": true,
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "artwork/listings",
+    "doc": "artwork's listings field",
+    "type": "ref",
+    "restrictCollection": "listing",
+    "multi": true,
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "artwork/isMinted",
+    "doc": "artwork's isMinted field",
+    "type": "boolean",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "artwork/createdAt",
+    "doc": "artwork's createdAt field",
+    "type": "instant",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "artwork/updatedAt",
+    "doc": "artwork's updatedAt field",
+    "type": "instant",
+    "index": true
+  },
+  { "_id": "_collection", "name": "nft" },
+  {
+    "_id": "_predicate",
+    "name": "nft/owner",
+    "doc": "The nft's data owner",
+    "type": "ref",
+    "restrictCollection": "_user",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "nft/identifier",
+    "doc": "nft's identifier field",
+    "index": true,
+    "unique": false,
+    "type": "string",
+    "fullText": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "nft/ipfsCid",
+    "doc": "nft's ipfsCid field",
+    "type": "string",
+    "unique": true,
+    "fullText": false,
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "nft/arweaveId",
+    "doc": "nft's arweaveId field",
+    "type": "string",
+    "unique": true,
+    "fullText": false,
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "nft/standard",
+    "doc": "nft's standard field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "nft/policyId",
+    "doc": "nft's policyId field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "nft/assetName",
+    "doc": "nft's assetName field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "nft/mintedBy",
+    "doc": "nft's mintedBy field",
+    "type": "ref",
+    "restrictCollection": "user",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "nft/transactionId",
+    "doc": "nft's transactionId field",
+    "type": "string",
+    "unique": true,
+    "fullText": false,
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "nft/artworkId",
+    "doc": "nft's artworkId field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "nft/mintedFor",
+    "doc": "nft's mintedFor field",
+    "type": "ref",
+    "restrictCollection": "user",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "nft/nftProperty",
+    "doc": "nft's nftProperty field",
+    "type": "ref",
+    "restrictCollection": "nftProperty",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "nft/nftCollectionId",
+    "doc": "nft's nftCollectionId field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "nft/createdAt",
+    "doc": "nft's createdAt field",
+    "type": "instant",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "nft/updatedAt",
+    "doc": "nft's updatedAt field",
+    "type": "instant",
+    "index": true
+  },
+  { "_id": "_collection", "name": "listing" },
+  {
+    "_id": "_predicate",
+    "name": "listing/owner",
+    "doc": "The listing's data owner",
+    "type": "ref",
+    "restrictCollection": "_user",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "listing/identifier",
+    "doc": "listing's identifier field",
+    "index": true,
+    "unique": false,
+    "type": "string",
+    "fullText": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "listing/listedBy",
+    "doc": "listing's listedBy field",
+    "type": "ref",
+    "restrictCollection": "user",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "listing/currentPrice",
+    "doc": "listing's currentPrice field",
+    "type": "bigint",
+    "unique": false,
+    "fullText": false,
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "listing/reservePrice",
+    "doc": "listing's reservePrice field",
+    "type": "bigint",
+    "unique": false,
+    "fullText": false,
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "listing/buyNowPrice",
+    "doc": "listing's buyNowPrice field",
+    "type": "bigint",
+    "unique": false,
+    "fullText": false,
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "listing/description",
+    "doc": "listing's description field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "listing/tags",
+    "doc": "listing's tags field",
+    "type": "string",
+    "multi": true,
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "listing/purchaseOrder",
+    "doc": "listing's purchaseOrder field",
+    "type": "ref",
+    "restrictCollection": "purchaseOrder",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "listing/startDate",
+    "doc": "listing's startDate field",
+    "type": "instant",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "listing/endDate",
+    "doc": "listing's endDate field",
+    "type": "instant",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "listing/likeCount",
+    "doc": "listing's likeCount field",
+    "type": "bigint",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "listing/watchCount",
+    "doc": "listing's watchCount field",
+    "type": "bigint",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "listing/bidHistory",
+    "doc": "listing's bidHistory field",
+    "type": "ref",
+    "restrictCollection": "bidEvent",
+    "multi": true,
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "listing/soldEvent",
+    "doc": "listing's soldEvent field",
+    "type": "ref",
+    "restrictCollection": "soldEvent",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "listing/isFeatured",
+    "doc": "listing's isFeatured field",
+    "type": "boolean",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "listing/isTrending",
+    "doc": "listing's isTrending field",
+    "type": "boolean",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "listing/artwork",
+    "doc": "listing's artwork field",
+    "type": "ref",
+    "restrictCollection": "artwork",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "listing/createdAt",
+    "doc": "listing's createdAt field",
+    "type": "bigint",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "listing/updatedAt",
+    "doc": "listing's updatedAt field",
+    "type": "bigint",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "listing/isActive",
+    "doc": "listing's isActive field",
+    "type": "boolean",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "listing/isLiked",
+    "doc": "listing's isLiked field",
+    "type": "boolean",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "listing/isWatched",
+    "doc": "listing's isWatched field",
+    "type": "boolean",
+    "index": true
+  },
+  { "_id": "_collection", "name": "bidEvent" },
+  {
+    "_id": "_predicate",
+    "name": "bidEvent/owner",
+    "doc": "The bidEvent's data owner",
+    "type": "ref",
+    "restrictCollection": "_user",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "bidEvent/identifier",
+    "doc": "bidEvent's identifier field",
+    "index": true,
+    "unique": false,
+    "type": "string",
+    "fullText": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "bidEvent/bidPrice",
+    "doc": "bidEvent's bidPrice field",
+    "type": "bigint",
+    "unique": false,
+    "fullText": false,
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "bidEvent/user",
+    "doc": "bidEvent's user field",
+    "type": "ref",
+    "restrictCollection": "user",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "bidEvent/date",
+    "doc": "bidEvent's date field",
+    "type": "bigint",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "bidEvent/listingId",
+    "doc": "bidEvent's listingId field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "bidEvent/createdAt",
+    "doc": "bidEvent's createdAt field",
+    "type": "instant",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "bidEvent/updatedAt",
+    "doc": "bidEvent's updatedAt field",
+    "type": "instant",
+    "index": true
+  },
+  { "_id": "_collection", "name": "soldEvent" },
+  {
+    "_id": "_predicate",
+    "name": "soldEvent/owner",
+    "doc": "The soldEvent's data owner",
+    "type": "ref",
+    "restrictCollection": "_user",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "soldEvent/identifier",
+    "doc": "soldEvent's identifier field",
+    "index": true,
+    "unique": false,
+    "type": "string",
+    "fullText": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "soldEvent/listing",
+    "doc": "soldEvent's listing field",
+    "type": "ref",
+    "restrictCollection": "listing",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "soldEvent/bid",
+    "doc": "soldEvent's bid field",
+    "type": "ref",
+    "restrictCollection": "bidEvent",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "soldEvent/createdAt",
+    "doc": "soldEvent's createdAt field",
+    "type": "instant",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "soldEvent/updatedAt",
+    "doc": "soldEvent's updatedAt field",
+    "type": "instant",
+    "index": true
+  },
+  { "_id": "_collection", "name": "socialMedia" },
+  {
+    "_id": "_predicate",
+    "name": "socialMedia/owner",
+    "doc": "The socialMedia's data owner",
+    "type": "ref",
+    "restrictCollection": "_user",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "socialMedia/identifier",
+    "doc": "socialMedia's identifier field",
+    "index": true,
+    "unique": false,
+    "type": "string",
+    "fullText": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "socialMedia/handle",
+    "doc": "socialMedia's handle field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "socialMedia/socialMediaType",
+    "doc": "socialMedia's socialMediaType field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "socialMedia/createdAt",
+    "doc": "socialMedia's createdAt field",
+    "type": "instant",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "socialMedia/updatedAt",
+    "doc": "socialMedia's updatedAt field",
+    "type": "instant",
+    "index": true
+  },
+  { "_id": "_collection", "name": "imageVariant" },
+  {
+    "_id": "_predicate",
+    "name": "imageVariant/owner",
+    "doc": "The imageVariant's data owner",
+    "type": "ref",
+    "restrictCollection": "_user",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "imageVariant/identifier",
+    "doc": "imageVariant's identifier field",
+    "index": true,
+    "unique": false,
+    "type": "string",
+    "fullText": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "imageVariant/size",
+    "doc": "imageVariant's size field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "imageVariant/url",
+    "doc": "imageVariant's url field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "imageVariant/createdAt",
+    "doc": "imageVariant's createdAt field",
+    "type": "instant",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "imageVariant/updatedAt",
+    "doc": "imageVariant's updatedAt field",
+    "type": "instant",
+    "index": true
+  },
+  { "_id": "_collection", "name": "wallet" },
+  {
+    "_id": "_predicate",
+    "name": "wallet/owner",
+    "doc": "The wallet's data owner",
+    "type": "ref",
+    "restrictCollection": "_user",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "wallet/id",
+    "doc": "wallet's id field",
+    "type": "string",
+    "unique": true,
+    "fullText": false,
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "wallet/identifier",
+    "doc": "wallet's identifier field",
+    "index": true,
+    "unique": false,
+    "type": "string",
+    "fullText": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "wallet/mnemonic",
+    "doc": "wallet's mnemonic field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "wallet/userId",
+    "doc": "wallet's userId field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "wallet/name",
+    "doc": "wallet's name field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "wallet/passPhrase",
+    "doc": "wallet's passPhrase field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "wallet/createdAt",
+    "doc": "wallet's createdAt field",
+    "type": "instant",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "wallet/updatedAt",
+    "doc": "wallet's updatedAt field",
+    "type": "instant",
+    "index": true
+  },
+  { "_id": "_collection", "name": "login" },
+  {
+    "_id": "_predicate",
+    "name": "login/owner",
+    "doc": "The login's data owner",
+    "type": "ref",
+    "restrictCollection": "_user",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "login/identifier",
+    "doc": "login's identifier field",
+    "index": true,
+    "unique": false,
+    "type": "string",
+    "fullText": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "login/username",
+    "doc": "login's username field",
+    "type": "string",
+    "unique": true,
+    "fullText": false,
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "login/displayName",
+    "doc": "login's displayName field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "login/password",
+    "doc": "login's password field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "login/createdAt",
+    "doc": "login's createdAt field",
+    "type": "instant",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "login/updatedAt",
+    "doc": "login's updatedAt field",
+    "type": "instant",
+    "index": true
+  },
+  { "_id": "_collection", "name": "nftProperty" },
+  {
+    "_id": "_predicate",
+    "name": "nftProperty/owner",
+    "doc": "The nftProperty's data owner",
+    "type": "ref",
+    "restrictCollection": "_user",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "nftProperty/identifier",
+    "doc": "nftProperty's identifier field",
+    "index": true,
+    "unique": false,
+    "type": "string",
+    "fullText": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "nftProperty/properties",
+    "doc": "nftProperty's properties field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "nftProperty/mintedOn",
+    "doc": "nftProperty's mintedOn field",
+    "type": "instant",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "nftProperty/createdAt",
+    "doc": "nftProperty's createdAt field",
+    "type": "instant",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "nftProperty/updatedAt",
+    "doc": "nftProperty's updatedAt field",
+    "type": "instant",
+    "index": true
+  },
+  { "_id": "_collection", "name": "purchaseOrder" },
+  {
+    "_id": "_predicate",
+    "name": "purchaseOrder/owner",
+    "doc": "The purchaseOrder's data owner",
+    "type": "ref",
+    "restrictCollection": "_user",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "purchaseOrder/identifier",
+    "doc": "purchaseOrder's identifier field",
+    "index": true,
+    "unique": true,
+    "type": "string"
+  },
+  {
+    "_id": "_predicate",
+    "name": "purchaseOrder/buyer",
+    "doc": "purchaseOrder's buyer field",
+    "type": "ref",
+    "restrictCollection": "person",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "purchaseOrder/seller",
+    "doc": "purchaseOrder's seller field",
+    "type": "ref",
+    "restrictCollection": "person",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "purchaseOrder/itemDescription",
+    "doc": "purchaseOrder's itemDescription field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "purchaseOrder/saleDescription",
+    "doc": "purchaseOrder's saleDescription field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "purchaseOrder/createdAt",
+    "doc": "purchaseOrder's createdAt field",
+    "type": "bigint",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "purchaseOrder/updatedAt",
+    "doc": "purchaseOrder's updatedAt field",
+    "type": "bigint",
+    "index": true
+  },
+  { "_id": "_collection", "name": "personInput" },
+  {
+    "_id": "_predicate",
+    "name": "personInput/owner",
+    "doc": "The personInput's data owner",
+    "type": "ref",
+    "restrictCollection": "_user",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "personInput/identifier",
+    "doc": "personInput's identifier field",
+    "index": true,
+    "unique": true,
+    "type": "string"
+  },
+  {
+    "_id": "_predicate",
+    "name": "personInput/firstName",
+    "doc": "personInput's firstName field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "personInput/middleName",
+    "doc": "personInput's middleName field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "personInput/lastName",
+    "doc": "personInput's lastName field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "personInput/addresses",
+    "doc": "personInput's addresses field",
+    "type": "ref",
+    "restrictCollection": "addressInput",
+    "multi": true,
+    "index": true
+  },
+  { "_id": "_collection", "name": "addressInput" },
+  {
+    "_id": "_predicate",
+    "name": "addressInput/owner",
+    "doc": "The addressInput's data owner",
+    "type": "ref",
+    "restrictCollection": "_user",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "addressInput/identifier",
+    "doc": "addressInput's identifier field",
+    "index": true,
+    "unique": true,
+    "type": "string"
+  },
+  {
+    "_id": "_predicate",
+    "name": "addressInput/addressLine1",
+    "doc": "addressInput's addressLine1 field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "addressInput/addressLine2",
+    "doc": "addressInput's addressLine2 field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "addressInput/city",
+    "doc": "addressInput's city field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "addressInput/division",
+    "doc": "addressInput's division field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "addressInput/postalCode",
+    "doc": "addressInput's postalCode field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "addressInput/country",
+    "doc": "addressInput's country field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "addressInput/addressType",
+    "doc": "addressInput's addressType field",
+    "type": "string",
+    "index": true
+  },
+  { "_id": "_collection", "name": "userSettings" },
+  {
+    "_id": "_predicate",
+    "name": "userSettings/owner",
+    "doc": "The userSettings's data owner",
+    "type": "ref",
+    "restrictCollection": "_user",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "userSettings/isNotificationForBiddingUpdatesOn",
+    "doc": "userSettings's isNotificationForBiddingUpdatesOn field",
+    "type": "boolean",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "userSettings/isNotificationForBidLossesOn",
+    "doc": "userSettings's isNotificationForBidLossesOn field",
+    "type": "boolean",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "userSettings/isNotificationForBidWinsOn",
+    "doc": "userSettings's isNotificationForBidWinsOn field",
+    "type": "boolean",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "userSettings/isNotificationForNewFollowerOn",
+    "doc": "userSettings's isNotificationForNewFollowerOn field",
+    "type": "boolean",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "userSettings/isNotificationForNewArtFromFollowedUsersOn",
+    "doc": "userSettings's isNotificationForNewArtFromFollowedUsersOn field",
+    "type": "boolean",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "userSettings/isPrivateAccountModeOn",
+    "doc": "userSettings's isPrivateAccountModeOn field",
+    "type": "boolean",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "userSettings/identifier",
+    "doc": "userSettings's identifier field",
+    "index": true,
+    "unique": true,
+    "type": "string"
+  },
+  { "_id": "_collection", "name": "nftCollection" },
+  {
+    "_id": "_predicate",
+    "name": "nftCollection/owner",
+    "doc": "The nftCollection's data owner",
+    "type": "ref",
+    "restrictCollection": "_user",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "nftCollection/identifier",
+    "doc": "nftCollection's identifier field",
+    "index": true,
+    "unique": true,
+    "type": "string"
+  },
+  {
+    "_id": "_predicate",
+    "name": "nftCollection/name",
+    "doc": "nftCollection's name field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "nftCollection/description",
+    "doc": "nftCollection's description field",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "nftCollection/nfts",
+    "doc": "nftCollection's nfts field",
+    "type": "ref",
+    "restrictCollection": "nft",
+    "multi": true,
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "nftCollection/createdAt",
+    "doc": "nftCollection's createdAt field",
+    "type": "bigint",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "nftCollection/updatedAt",
+    "doc": "nftCollection's updatedAt field",
+    "type": "bigint",
+    "index": true
+  },
+  { "_id": "_collection", "name": "cardanoExchangeRates" },
+  {
+    "_id": "_predicate",
+    "name": "cardanoExchangeRates/owner",
+    "doc": "The cardanoExchangeRates's data owner",
+    "type": "ref",
+    "restrictCollection": "_user",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "cardanoExchangeRates/identifier",
+    "doc": "cardanoExchangeRates's identifier field",
+    "index": true,
+    "unique": false,
+    "type": "string",
+    "fullText": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "cardanoExchangeRates/usd",
+    "doc": "cardanoExchangeRates's usd field",
+    "type": "bigint",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "cardanoExchangeRates/cad",
+    "doc": "cardanoExchangeRates's cad field",
+    "type": "bigint",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "cardanoExchangeRates/eur",
+    "doc": "cardanoExchangeRates's eur field",
+    "type": "bigint",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "cardanoExchangeRates/btc",
+    "doc": "cardanoExchangeRates's btc field",
+    "type": "bigint",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "cardanoExchangeRates/eth",
+    "doc": "cardanoExchangeRates's eth field",
+    "type": "bigint",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "cardanoExchangeRates/createdAt",
+    "doc": "cardanoExchangeRates's createdAt field",
+    "type": "instant",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "cardanoExchangeRates/updatedAt",
+    "doc": "cardanoExchangeRates's updatedAt field",
+    "type": "instant",
+    "index": true
+  }
+]

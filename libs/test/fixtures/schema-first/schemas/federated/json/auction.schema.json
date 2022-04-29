@@ -1,0 +1,74 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "auction",
+    "type": "object",
+    "$defs": {
+        "listing": {
+            "isActivated": true,
+            "type": "object",
+            "properties": {
+                "nft": {
+                    "$ref": "minting.hck.json#/definitions/properties/nft",
+                    "isActivated": true
+                },
+                "minimumPrice": {
+                    "isActivated": true,
+                    "type": "number",
+                    "description": "Minimum price of the listing the owner agrees to sell it for"
+                },
+                "buyNowPrice": {
+                    "isActivated": true,
+                    "type": "number",
+                    "description": "Price of the listing the owner agrees the listing to be immediately bought for without an auction"
+                },
+                "startTime": {
+                    "isActivated": true,
+                    "type": "integer",
+                    "description": "Start time of the auction"
+                },
+                "endTime": {
+                    "isActivated": true,
+                    "type": "integer",
+                    "description": "End time of the auction"
+                },
+                "currentBid": {
+                    "$ref": "#/$defs/bid",
+                    "isActivated": true
+                }
+            },
+            "additionalProperties": false,
+            "description": "Auction listing"
+        },
+        "bid": {
+            "isActivated": true,
+            "type": "object",
+            "properties": {
+                "bidder": {
+                    "$ref": "user.hck.json#/definitions/properties/user",
+                    "isActivated": true
+                },
+                "listing": {
+                    "$ref": "#/$defs/listing",
+                    "isActivated": true
+                },
+                "bidPrice": {
+                    "isActivated": true,
+                    "type": "number",
+                    "description": "Price of the bid"
+                }
+            },
+            "additionalProperties": false,
+            "description": "An active bid on an auction listing"
+        }
+    },
+    "properties": {
+        "listing": {
+            "$ref": "#/$defs/listing",
+            "isActivated": true
+        },
+        "bid": {
+            "$ref": "#/$defs/bid",
+            "isActivated": true
+        }
+    }
+}

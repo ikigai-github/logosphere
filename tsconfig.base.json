@@ -10,13 +10,20 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
+    "resolveJsonModule": true,
     "lib": ["es2017", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@logosphere/configuration": ["libs/configuration/index.ts"],
+      "@logosphere/converters": ["libs/converters/index.ts"],
+      "@logosphere/decorators": ["libs/decorators/index.ts"],
+      "@logosphere/errors": ["libs/errors/index.ts"],
+      "@logosphere/model": ["libs/model/src/index.ts"],
+      "@logosphere/readers": ["libs/readers/index.ts"],
       "@logosphere/sdk": ["libs/sdk/src/index.ts"],
-      "@logosphere/model": ["libs/model/src/index.ts"]
+      "@logosphere/test/fixtures": ["libs/test/fixtures"]
     }
   },
   "exclude": ["node_modules", "tmp"]

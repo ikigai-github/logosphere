@@ -1,0 +1,24 @@
+{
+  "root": "libs/converters",
+  "sourceRoot": "libs/converters/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/converters/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/converters"],
+      "options": {
+        "jestConfig": "libs/converters/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["scope:shared"],
+  "impliciDependencies": ["readers"]
+}
