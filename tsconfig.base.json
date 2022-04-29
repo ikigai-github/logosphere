@@ -23,7 +23,10 @@
       "@logosphere/model": ["libs/model/src/index.ts"],
       "@logosphere/readers": ["libs/readers/index.ts"],
       "@logosphere/sdk": ["libs/sdk/src/index.ts"],
-      "@logosphere/test/fixtures": ["libs/test/fixtures"]
+      "@logosphere/services/fluree": ["libs/services/fluree/src/index.ts"],
+      "@logosphere/test-data": ["libs/test-data/src/index.ts"],
+      "@logosphere/test/fixtures": ["libs/test/fixtures"],
+      "@logosphere/util": ["libs/util/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
