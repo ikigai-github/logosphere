@@ -1,4 +1,4 @@
-import * as fs from 'fs';
+import * as fs from 'fs-extra';
 import { Reader } from './reader';
 export class FileSystemReader implements Reader {
   constructor(private readonly directory: string) {}

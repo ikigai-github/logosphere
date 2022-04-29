@@ -1,7 +1,7 @@
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { Tree, readProjectConfiguration } from '@nrwl/devkit';
 
-import generator from './generator';
+import generator from './dto';
 import { DtoGeneratorSchema } from './schema';
 
 describe('dto generator', () => {

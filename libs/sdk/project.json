@@ -72,5 +72,6 @@
       },
       "outputs": ["{options.outputFile}"]
     }
-  }
+  },
+  "tags": ["scope:shared"]
 }

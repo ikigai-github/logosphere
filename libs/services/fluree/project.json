@@ -3,6 +3,16 @@
   "sourceRoot": "libs/services/fluree/src",
   "projectType": "library",
   "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/services/fluree",
+        "main": "libs/services/fluree/src/index.ts",
+        "tsConfig": "libs/services/fluree/tsconfig.lib.json",
+        "assets": ["libs/services/fluree/*.md"]
+      }
+    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],

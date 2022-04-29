@@ -3,6 +3,16 @@
   "sourceRoot": "libs/errors/src",
   "projectType": "library",
   "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/errors",
+        "main": "libs/errors/src/index.ts",
+        "tsConfig": "libs/errors/tsconfig.lib.json",
+        "assets": ["libs/errors/*.md"]
+      }
+    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],

@@ -7,7 +7,6 @@ describe('Federated Schema Loader', () => {
       `${__dirname}/../../../test/fixtures/`
     );
     expect(schema).toBeDefined();
-    console.log(schema)
     expect(schema.definitions.length > 0).toBeTruthy()
     expect(
       schema.definitions.find(

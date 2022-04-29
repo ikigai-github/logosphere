@@ -14,6 +14,12 @@
       },
       "x-prompt": "What name would you like to use?"
     },
+    "project": {
+      "type": "string",
+      "description": "Project (module) for which DTOs should be generated",
+      "x-prompt": "What project is it for?",
+      "alias": "p"
+    },
     "tags": {
       "type": "string",
       "description": "Add tags to the project (used for linting)",
@@ -25,5 +31,5 @@
       "alias": "d"
     }
   },
-  "required": ["name"]
+  "required": ["name", "project"]
 }
