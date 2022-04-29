@@ -1,12 +1,16 @@
 {
   "name": "nx/sdk",
   "version": "0.1",
-  "extends": ["@nrwl/workspace"],
+  "extends": [
+    "@nrwl/workspace"
+  ],
   "schematics": {
     "application": {
       "factory": "./src/generators/application/application#applicationSchematic",
       "schema": "./src/generators/application/schema.json",
-      "aliases": ["app"],
+      "aliases": [
+        "app"
+      ],
       "x-type": "application",
       "description": "Create a Logosphere application."
     },
@@ -14,7 +18,9 @@
       "factory": "./src/generators/init/init#initSchematic",
       "schema": "./src/generators/init/schema.json",
       "description": "Initialize the `@logosphere/sdk` plugin.",
-      "aliases": ["ng-add"],
+      "aliases": [
+        "ng-add"
+      ],
       "hidden": true
     }
   },
@@ -22,7 +28,9 @@
     "application": {
       "factory": "./src/generators/application/application",
       "schema": "./src/generators/application/schema.json",
-      "aliases": ["app"],
+      "aliases": [
+        "app"
+      ],
       "x-type": "application",
       "description": "Create a Logosphere application."
     },
@@ -30,8 +38,15 @@
       "factory": "./src/generators/init/init",
       "schema": "./src/generators/init/schema.json",
       "description": "Initialize the `@logosphere/sdk` plugin.",
-      "aliases": ["ng-add"],
+      "aliases": [
+        "ng-add"
+      ],
       "hidden": true
+    },
+    "dto": {
+      "factory": "./src/generators/dto/generator",
+      "schema": "./src/generators/dto/schema.json",
+      "description": "dto generator"
     }
   }
 }
