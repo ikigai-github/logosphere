@@ -1,10 +1,10 @@
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import {
-  CanonicalSchema,
-  Definition,
-  DefinitionType,
-  Property,
-} from '@logosphere/converters';
+// import {
+//   CanonicalSchema,
+//   Definition,
+//   DefinitionType,
+//   Property,
+// } from '@logosphere/converters';
 import { EntityMetadata } from './entity';
 import { PropMetadataMap, resolvePropType } from './prop';
 import { isDefined } from './utils';
@@ -49,15 +49,15 @@ export class MetadataStorage {
     this.enums = [];
   }
 
-  buildSchema(): CanonicalSchema {
-    const definitions: Definition[] = [];
+  buildSchema() {
+    const definitions = [];
     this.entities.forEach((entity) => {
       const propMetaMap: PropMetadataMap = Reflect.getMetadata(
         MetadataKeys.PropCache,
         entity.target
       );
 
-      const props: Partial<Property>[] = [];
+      const props = [];
       for (const meta of propMetaMap.values()) {
         const { typename, defType } = resolvePropType(meta);
 
@@ -87,7 +87,7 @@ export class MetadataStorage {
 
       definitions.push({
         name: entity.name,
-        type: DefinitionType.Entity,
+        type: 'Entity',
         module: entity.module,
         description: entity.description,
         props,

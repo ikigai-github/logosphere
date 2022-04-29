@@ -13,3 +13,14 @@ export type TypeFunc<T = any> = () =>
   | NewConstructor<T>[]
   | NewConstructor<T>[][]
   | object;
+
+export enum DefinitionType {
+  Scalar = 'Scalar',
+  Enum = 'Enum',
+  Entity = 'Entity',
+  ScalarArray = 'ScalarArray',
+  EnumArray = 'EnumArray',
+  EntityArray = 'EntityArray',
+  ExternalEntity = 'ExternalEntity',
+  ExternalEntityArray = 'ExternalEntityArray'
+}

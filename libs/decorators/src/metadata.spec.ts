@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { DefinitionType } from 'libs/converters';
+import { DefinitionType } from './common';
 import { Entity } from './entity';
 import { registerEnum } from './enum/enum';
 import { getMetadataStorage, MetadataKeys } from './metadata';

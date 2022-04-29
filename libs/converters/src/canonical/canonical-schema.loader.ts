@@ -1,13 +1,5 @@
 import * as fs from 'fs-extra';
-import * as path from 'path';
-import { FileSystemReader } from '@logosphere/readers';
-import { CanonicalSchema, Definition } from './canonical.schema';
-import {
-  Configuration,
-  ModuleConfiguration,
-  ConfigurationLoader,
-  LOGOSPHERE_CONFIG_FILE,
-} from '@logosphere/configuration';
+import { CanonicalSchema } from './canonical.schema';
 import { getMetadataStorage } from '@logosphere/decorators';
 
 

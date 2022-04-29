@@ -1,5 +1,5 @@
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { DefinitionType } from '@logosphere/converters';
+import { DefinitionType } from '../common';
 import { lowerCase } from 'lodash';
 import { MetadataKeys, getMetadataStorage } from '../metadata';
 import { isScalarType, resolveType } from '../utils';
