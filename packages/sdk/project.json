@@ -1,39 +1,8 @@
 {
   "root": "packages/sdk",
   "sourceRoot": "packages/sdk/src",
+  "projectType": "library",
   "targets": {
-    "build": {
-      "executor": "@nrwl/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/sdk",
-        "main": "packages/sdk/src/index.ts",
-        "tsConfig": "packages/sdk/tsconfig.lib.json",
-        "assets": [
-          "packages/sdk/*.md",
-          {
-            "input": "./packages/sdk/src",
-            "glob": "**/!(*.ts)",
-            "output": "./src"
-          },
-          {
-            "input": "./packages/sdk/src",
-            "glob": "**/*.d.ts",
-            "output": "./src"
-          },
-          {
-            "input": "./packages/sdk",
-            "glob": "generators.json",
-            "output": "."
-          },
-          {
-            "input": "./packages/sdk",
-            "glob": "executors.json",
-            "output": "."
-          }
-        ]
-      }
-    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
