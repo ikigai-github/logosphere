@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@@logosphere/sdk": ["packages/sdk/src/index.ts"]
+      "@logosphere/sdk": ["libs/sdk/src/index.ts"],
+      "@logosphere/model": ["libs/model/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -8,7 +8,7 @@ import {
 describe('sdk e2e', () => {
   it('should create sdk', async () => {
     const plugin = uniq('sdk');
-    ensureNxProject('@logosphere/sdk', 'dist/packages/sdk');
+    ensureNxProject('@logosphere/sdk', 'dist/libs/sdk');
     await runNxCommandAsync(`generate @logosphere/sdk:sdk ${plugin}`);
 
     const result = await runNxCommandAsync(`build ${plugin}`);
@@ -18,7 +18,7 @@ describe('sdk e2e', () => {
   describe('--directory', () => {
     it('should create src in the specified directory', async () => {
       const plugin = uniq('sdk');
-      ensureNxProject('@logosphere/sdk', 'dist/packages/sdk');
+      ensureNxProject('@logosphere/sdk', 'dist/libs/sdk');
       await runNxCommandAsync(
         `generate @logosphere/sdk:sdk ${plugin} --directory subdir`
       );
@@ -31,7 +31,7 @@ describe('sdk e2e', () => {
   describe('--tags', () => {
     it('should add tags to the project', async () => {
       const plugin = uniq('sdk');
-      ensureNxProject('@logosphere/sdk', 'dist/packages/sdk');
+      ensureNxProject('@logosphere/sdk', 'dist/libs/sdk');
       await runNxCommandAsync(
         `generate @logosphere/sdk:sdk ${plugin} --tags e2etag,e2ePackage`
       );

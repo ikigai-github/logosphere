@@ -1,7 +1,8 @@
 {
   "version": 2,
   "projects": {
-    "sdk": "packages/sdk",
+    "model": "libs/model",
+    "sdk": "libs/sdk",
     "sdk-e2e": "e2e/sdk-e2e"
   }
 }
