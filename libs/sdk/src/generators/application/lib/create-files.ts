@@ -6,7 +6,7 @@ export function createFiles(tree: Tree, options: NormalizedOptions): void {
   generateFiles(
     tree,
     joinPathFragments(__dirname, '..', 'files'),
-    joinPathFragments(options.appProjectRoot, 'src'),
+    options.appProjectRoot,
     {
       tmpl: '',
       name: options.name,

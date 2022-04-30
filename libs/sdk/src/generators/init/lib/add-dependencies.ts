@@ -58,6 +58,7 @@ export function addDependencies(tree: Tree): GeneratorCallback {
     {
       '@nestjs/schematics': nestJsSchematicsVersion,
       '@nestjs/testing': NEST_VERSION,
+      '@nrwl/js': nxVersion,
       '@nrwl/nest': nxVersion,
     }
   );
