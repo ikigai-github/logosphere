@@ -9,7 +9,7 @@ export function updateProject(tree: Tree, options: NormalizedOptions): void {
     (json) => {
       json.targets['build-model'] = {
         executor: '@nrwl/js:tsc',
-        outputs: ['{options.outputPath}'],
+        outputs: [`dist/apps/${options.name}`],
         options: {
           outputPath: `dist/apps/${options.name}`,
           tsConfig: `apps/${options.name}/tsconfig.model.json`,

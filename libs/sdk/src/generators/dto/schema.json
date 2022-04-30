@@ -7,29 +7,23 @@
   "properties": {
     "name": {
       "type": "string",
-      "description": "",
-      "$default": {
-        "$source": "argv",
-        "index": 0
-      },
-      "x-prompt": "What name would you like to use?"
+      "description": "Name of the DTO"
     },
-    "project": {
+    "module": {
       "type": "string",
-      "description": "Project (module) for which DTOs should be generated",
-      "x-prompt": "What project is it for?",
-      "alias": "p"
+      "description": "Module for which DTOs should be generated",
+      "x-prompt": "What module is it for?",
+      "alias": "m"
     },
-    "tags": {
-      "type": "string",
-      "description": "Add tags to the project (used for linting)",
-      "alias": "t"
-    }, 
     "directory": {
       "type": "string",
-      "description": "A directory where the project is placed",
+      "description": "A directory where the dto is placed",
       "alias": "d"
+    },
+    "source": {
+      "type": "string",
+      "description": "Generated source code for DTOs "
     }
   },
-  "required": ["name", "project"]
+  "required": ["module"]
 }

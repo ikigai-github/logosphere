@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {Entity, Prop, StorageLayer} from '@logosphere/decorators';
+import {Entity, Prop} from '@logosphere/decorators';
 
-@Entity('user')
+@Entity('<%= cameledName %>')
 class <%= className %>Entity {
   @Prop({
     examples:['<%= dashedName %>-1', '<%= dashedName %>-2', '<%= dashedName %>-3'],
   })
-  username: string;
+  <%= cameledName %>: string;
 }

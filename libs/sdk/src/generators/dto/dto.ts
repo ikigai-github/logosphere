@@ -20,34 +20,29 @@ interface NormalizedSchema extends DtoGeneratorSchema {
   projectName: string;
   projectRoot: string;
   projectDirectory: string;
-  content?: string;
-  parsedTags: string[]
 }
 
 function normalizeOptions(tree: Tree, options: DtoGeneratorSchema): NormalizedSchema {
   const name = names(options.name).fileName;
   const projectDirectory = options.directory
     ? `${names(options.directory).fileName}/${name}`
-    : name;
-  const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
-  const projectRoot = `${getWorkspaceLayout(tree).libsDir}/${projectDirectory}`;
-  const parsedTags = options.tags
-    ? options.tags.split(',').map((s) => s.trim())
-    : [];
+    : `dto/${name}`;
+  const projectName = options.module; //projectDirectory.replace(new RegExp('/', 'g'), '-');
+  const projectRoot = `${getWorkspaceLayout(tree).libsDir}/${options.module}`;
+  
 
   return {
     ...options,
     projectName,
     projectRoot,
-    projectDirectory,
-    parsedTags,
+    projectDirectory
   };
 }
 
 function addFiles(tree: Tree, options: NormalizedSchema) {
     const templateOptions = {
       ...options,
-      ...names(options.name),
+      ...names(options.projectDirectory),
       offsetFromRoot: offsetFromRoot(options.projectRoot),
       template: ''
     };
@@ -55,7 +50,6 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
 }
 
 export default async function (tree: Tree, options: DtoGeneratorSchema) {
-  const normalizedOptions = normalizeOptions(tree, options);
   const sourceSchema = canonicalSchemaLoader();
   const converter =  ConverterFactory.getConverter(
           SchemaType.Canonical,
@@ -63,12 +57,14 @@ export default async function (tree: Tree, options: DtoGeneratorSchema) {
         )
   const dtos: DtoSchema[] = converter.convert(sourceSchema);
   dtos.map(async (dto: DtoSchema) => {
-    const contentOptions: NormalizedSchema = {
-      ...normalizedOptions,
+   
+    options = {
+      ...options,
       name: dto.name,
-      content: dto.schema
+      source: dto.schema
     }
-    addFiles(tree, contentOptions);
+    const normalizedOptions = normalizeOptions(tree, options);
+    addFiles(tree, normalizedOptions);
     await formatFiles(tree);
   });
 }

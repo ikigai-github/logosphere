@@ -19,6 +19,8 @@ describe('application generator', () => {
 
   beforeEach(() => {
     tree = createTreeWithEmptyWorkspace();
+
+    
     jest.clearAllMocks();
   });
 

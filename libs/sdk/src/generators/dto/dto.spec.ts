@@ -1,20 +1,20 @@
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
-import { Tree, readProjectConfiguration } from '@nrwl/devkit';
-
+import { Tree } from '@nrwl/devkit';
 import generator from './dto';
+import { applicationGenerator } from '../application';
 import { DtoGeneratorSchema } from './schema';
 
 describe('dto generator', () => {
-  let appTree: Tree;
-  const options: DtoGeneratorSchema = { name: 'test' };
+  let tree: Tree;
+  const options: DtoGeneratorSchema = { name: 'wallet', module: 'user', source: '' };
 
-  beforeEach(() => {
-    appTree = createTreeWithEmptyWorkspace();
+  beforeEach( async () => {
+    tree = createTreeWithEmptyWorkspace();
+    await applicationGenerator(tree, { name: 'test-app' })
   });
 
   it('should run successfully', async () => {
-    await generator(appTree, options);
-    const config = readProjectConfiguration(appTree, 'test');
-    expect(config).toBeDefined();
+    await generator(tree, options);
+    expect(tree.exists('apps')).toBeTruthy();
   })
 });

@@ -1,6 +1,6 @@
 export interface DtoGeneratorSchema {
-    name: string;
-    project: string;
-    tags?: string;
+    name: string,
+    module: string;
     directory?: string;
+    source?: string;
 }
