@@ -22,6 +22,11 @@
         "ng-add"
       ],
       "hidden": true
+    },
+    "dto": {
+      "factory": "./src/generators/dto/dto",
+      "schema": "./src/generators/dto/schema.json",
+      "description": "dto generator"
     }
   },
   "generators": {
@@ -44,7 +49,7 @@
       "hidden": true
     },
     "dto": {
-      "factory": "./src/generators/dto/generator",
+      "factory": "./src/generators/dto/dto",
       "schema": "./src/generators/dto/schema.json",
       "description": "dto generator"
     }

@@ -23,7 +23,7 @@ export const canonicalSchemaLoader = (
   sourceDir?: string
 ): CanonicalSchema => {
   const dir = sourceDir ? sourceDir : `${process.cwd()}/dist`;
-  const entityFiles = getAllFiles(dir).filter((file) => file.endsWith('entity.js'));
+  const entityFiles = getAllFiles(dir).filter((file) => file.endsWith('model.js'));
   entityFiles.map((file: string) => {
     eval(fs.readFileSync(file, 'utf-8'));
   });
