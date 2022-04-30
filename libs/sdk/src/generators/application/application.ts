@@ -8,6 +8,7 @@ import {
   normalizeOptions,
   toNodeApplicationGeneratorOptions,
   updateTsConfig,
+  updateProject
 } from './lib';
 import type { ApplicationGeneratorOptions } from './schema';
 
@@ -20,7 +21,7 @@ export async function applicationGenerator(
     unitTestRunner: options.unitTestRunner,
     skipFormat: true,
   });
-  
+
   const nodeApplicationTask = await nodeApplicationGenerator(
     tree,
     toNodeApplicationGeneratorOptions(options)
@@ -28,6 +29,7 @@ export async function applicationGenerator(
 
   createFiles(tree, options);
   updateTsConfig(tree, options);
+  updateProject(tree, options);
 
   if (!options.skipFormat) {
     await formatFiles(tree);
