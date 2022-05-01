@@ -1,10 +1,9 @@
 import type { Tree } from '@nrwl/devkit';
 import { getWorkspaceLayout, joinPathFragments, names } from '@nrwl/devkit';
-import { strings } from '@angular-devkit/core/src';
 import { Linter } from '@nrwl/linter';
 import type { Schema as NodeApplicationGeneratorOptions } from '@nrwl/node/src/generators/application/schema';
 import type { ApplicationGeneratorOptions, NormalizedOptions } from '../schema';
-
+import { ModuleBoundaryTag } from '../../../common';
 export function normalizeOptions(
   tree: Tree,
   options: ApplicationGeneratorOptions
@@ -18,15 +17,14 @@ export function normalizeOptions(
     appDirectory
   );
 
-  const className = strings.classify(options.name);
-  const dashedName = strings.dasherize(options.name);
-  const cameledName = strings.camelize(options.name);
-
+  const className = names(options.name).className;
+  options.tags =  options.tags = options.tags 
+  ? options.tags.concat(ModuleBoundaryTag.Client)
+  : ModuleBoundaryTag.Client;
+  
   return {
     ...options,
     className,
-    dashedName,
-    cameledName,
     appProjectRoot,
     linter: options.linter ?? Linter.EsLint,
     unitTestRunner: options.unitTestRunner ?? 'jest',
@@ -36,6 +34,7 @@ export function normalizeOptions(
 export function toNodeApplicationGeneratorOptions(
   options: NormalizedOptions
 ): NodeApplicationGeneratorOptions {
+
   return {
     name: options.name,
     directory: options.directory,

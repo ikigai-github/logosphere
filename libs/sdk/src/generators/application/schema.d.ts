@@ -17,6 +17,4 @@ export interface ApplicationGeneratorOptions {
 interface NormalizedOptions extends ApplicationGeneratorOptions {
   appProjectRoot: Path;
   className: string;
-  dashedName: string;
-  cameledName: string;
 }

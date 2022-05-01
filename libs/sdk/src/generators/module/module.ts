@@ -10,8 +10,14 @@ import { libraryGenerator } from '@nrwl/node';
 import { strings } from '@angular-devkit/core/src';
 import * as path from 'path';
 import { NodeLibraryGeneratorSchema } from './schema';
+import { 
+  ModuleBoundaryTag, 
+  DEFAULT_CODEGEN_DIR,
+  DEFAULT_COMPILER
+} from '../../common';
 
 interface NormalizedSchema extends NodeLibraryGeneratorSchema {
+  npmScope: string;
   projectName: string;
   projectRoot: string;
   projectDirectory: string;
@@ -24,10 +30,12 @@ interface NormalizedSchema extends NodeLibraryGeneratorSchema {
 function normalizeOptions(tree: Tree, options: NodeLibraryGeneratorSchema): NormalizedSchema {
   const name = names(options.name).fileName;
   const projectDirectory = options.directory
-    ? `${names(options.directory).fileName}/${name}`
+    ? `${options.directory}/${options.name}`
     : name;
   const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
-  const projectRoot = `${getWorkspaceLayout(tree).libsDir}/${projectDirectory}`;
+  const workspace = getWorkspaceLayout(tree);
+  const npmScope = workspace.npmScope;
+  const projectRoot = `${workspace.libsDir}/${projectDirectory}`;
   const parsedTags = options.tags
     ? options.tags.split(',').map((s) => s.trim())
     : [];
@@ -38,6 +46,7 @@ function normalizeOptions(tree: Tree, options: NodeLibraryGeneratorSchema): Norm
 
   return {
     ...options,
+    npmScope,
     projectName,
     projectRoot,
     projectDirectory,
@@ -60,10 +69,13 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
 
 export default async function (tree: Tree, options: NodeLibraryGeneratorSchema) {
   options.buildable = true;
-  options.compiler = 'tsc';
-  options.directory = 'codegen';
-  await libraryGenerator(tree, options);
+  options.compiler = DEFAULT_COMPILER;
+  options.directory = DEFAULT_CODEGEN_DIR;
+  options.tags = ModuleBoundaryTag.Shared;
   const normalizedOptions = normalizeOptions(tree, options);
+  options.importPath = `@${normalizedOptions.npmScope}/${normalizedOptions.projectName}`;
+  await libraryGenerator(tree, options);
+ 
   addFiles(tree, normalizedOptions);
   await formatFiles(tree);
 }

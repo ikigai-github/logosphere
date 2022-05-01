@@ -11,8 +11,6 @@ export function createFiles(tree: Tree, options: NormalizedOptions): void {
       tmpl: '',
       name: options.name,
       className: options.className,
-      dashedName: options.dashedName,
-      cameledName: options.cameledName,
       root: options.appProjectRoot,
     }
   );

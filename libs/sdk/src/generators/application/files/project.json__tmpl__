@@ -47,5 +47,6 @@
         "passWithNoTests": true
       }
     }
-  }
+  },
+  "tags": ["scope:client"]
 }

@@ -7,8 +7,7 @@ import {
   createFiles,
   normalizeOptions,
   toNodeApplicationGeneratorOptions,
-  updateTsConfig,
-  updateProject
+  updateTsConfig
 } from './lib';
 import type { ApplicationGeneratorOptions } from './schema';
 
@@ -29,8 +28,6 @@ export async function applicationGenerator(
 
   createFiles(tree, options);
   updateTsConfig(tree, options);
-  updateProject(tree, options);
-  
 
   if (!options.skipFormat) {
     await formatFiles(tree);

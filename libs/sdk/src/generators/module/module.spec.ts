@@ -5,7 +5,7 @@ import generator from './module';
 import  { NodeLibraryGeneratorSchema }  from './schema';
 
 describe('module generator', () => {
-  let appTree: Tree;
+  let tree: Tree;
   const options: NodeLibraryGeneratorSchema = { 
     name: 'test',
     directory: 'codegen',
@@ -13,12 +13,21 @@ describe('module generator', () => {
   };
 
   beforeEach(() => {
-    appTree = createTreeWithEmptyWorkspace();
+    tree = createTreeWithEmptyWorkspace();
   });
 
   it('should run successfully', async () => {
-    await generator(appTree, options);
-    const config = readProjectConfiguration(appTree, 'codegen-test');
+    await generator(tree, options);
+    const config = readProjectConfiguration(tree, 'codegen-test');
     expect(config).toBeDefined();
-  })
+  });
+
+  it('should generate files', async () => {
+    await generator(tree, options);
+    expect(tree.exists(`libs/${options.directory}/${options.name}/package.json`)).toBeTruthy();
+    expect(tree.exists(`libs/${options.directory}/${options.name}/src/${options.name}.config.json`)).toBeTruthy();
+    expect(tree.exists(`libs/${options.directory}/${options.name}/src/${options.name}.model.ts`)).toBeTruthy();
+    expect(tree.exists(`libs/${options.directory}/${options.name}/src/${options.name}.test-data.json`)).toBeTruthy();
+  });
+
 });
