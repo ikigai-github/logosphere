@@ -15,6 +15,7 @@ import {
   canonicalSchemaLoader 
 } from '@logosphere/converters';
 import { DtoGeneratorSchema } from './schema';
+import { DEFAULT_CODEGEN_DIR } from '../../common';
 
 interface NormalizedSchema extends DtoGeneratorSchema {
   projectName: string;
@@ -28,7 +29,7 @@ function normalizeOptions(tree: Tree, options: DtoGeneratorSchema): NormalizedSc
     ? `${names(options.directory).fileName}/${name}`
     : `dto/${name}`;
   const projectName = options.module; //projectDirectory.replace(new RegExp('/', 'g'), '-');
-  const projectRoot = `${getWorkspaceLayout(tree).libsDir}/${options.module}`;
+  const projectRoot = `${getWorkspaceLayout(tree).libsDir}/${DEFAULT_CODEGEN_DIR}/${options.module}/src`;
   
 
   return {
