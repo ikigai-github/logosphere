@@ -2,27 +2,27 @@
   "$schema": "http://json-schema.org/schema",
   "cli": "nx",
   "$id": "NxNodeLibrary",
-  "title": "Create a Node Library for Nx",
-  "description": "Create a Node Library for an Nx workspace.",
+  "title": "Create a Logosphere codegen module",
+  "description": "Create a Logosphere codegen module in an Nx workspace.",
   "type": "object",
   "properties": {
     "name": {
       "type": "string",
-      "description": "Library name",
+      "description": "Module name",
       "$default": {
         "$source": "argv",
         "index": 0
       },
-      "x-prompt": "What name would you like to use for the library?"
+      "x-prompt": "What name would you like to use for the module?"
     },
     "directory": {
       "type": "string",
-      "description": "A directory where the lib is placed",
+      "description": "A directory where the module is placed",
       "alias": "dir"
     },
     "tags": {
       "type": "string",
-      "description": "Add tags to the library (used for linting).",
+      "description": "Add tags to the module.",
       "alias": "t"
     }
   },
