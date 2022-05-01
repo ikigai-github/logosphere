@@ -67,7 +67,7 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
     generateFiles(tree, path.join(__dirname, 'files'), options.projectRoot, templateOptions);
 }
 
-export default async function (tree: Tree, options: NodeLibraryGeneratorSchema) {
+export async function moduleGenerator (tree: Tree, options: NodeLibraryGeneratorSchema) {
   options.buildable = true;
   options.compiler = DEFAULT_COMPILER;
   options.directory = DEFAULT_CODEGEN_DIR;
@@ -79,3 +79,5 @@ export default async function (tree: Tree, options: NodeLibraryGeneratorSchema) 
   addFiles(tree, normalizedOptions);
   await formatFiles(tree);
 }
+
+export default moduleGenerator;

@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "NxLogosphereFlureeGeneratorSchema",
+  "title": "",
+  "type": "object",
+  "properties": {
+    "module": {
+      "type": "string",
+      "description": "Module for which DTOs should be generated",
+      "x-prompt": "What module is it for?",
+      "alias": "m"
+    },
+    "tags": {
+      "type": "string",
+      "description": "Add tags to the project (used for linting)",
+      "alias": "t"
+    }, 
+    "directory": {
+      "type": "string",
+      "description": "A directory where the project is placed",
+      "alias": "d"
+    },
+    "source": {
+      "type": "string",
+      "description": "Generated schema for Fluree "
+    }
+  },
+  "required": ["module"]
+}

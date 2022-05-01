@@ -1,12 +1,13 @@
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { Tree } from '@nrwl/devkit';
-import generator from './dto';
-import { moduleGenerator }  from '../module';
-import { DtoGeneratorSchema } from './schema';
 
-describe('dto generator', () => {
+import generator from './gql';
+import { moduleGenerator } from '../module';
+import { GqlGeneratorSchema } from './schema';
+
+describe('fluree-schema generator', () => {
   let tree: Tree;
-  const options: DtoGeneratorSchema = { name: 'wallet', module: 'test-app' };
+  const options: GqlGeneratorSchema = { module: 'test-sdk' };
 
   beforeEach( async () => {
     tree = createTreeWithEmptyWorkspace();

@@ -4,4 +4,5 @@ export * from './src/abstract';
 export * from './src/schema-type';
 export * from './src/canonical';
 export * from './src/federated.schema';
+export * from './src/gql';
 export * from './src/dto';

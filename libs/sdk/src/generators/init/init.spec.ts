@@ -22,7 +22,7 @@ describe('init generator', () => {
     const packageJson = devkit.readJson(tree, 'package.json');
     expect(packageJson.dependencies['@nestjs/common']).toBe(nestJsVersion8);
     expect(packageJson.dependencies['@nestjs/core']).toBe(nestJsVersion8);
-    expect(packageJson.dependencies['@nestjs/platform-express']).toBe(
+    expect(packageJson.dependencies['@nestjs/platform-fastify']).toBe(
       nestJsVersion8
     );
     expect(packageJson.dependencies['reflect-metadata']).toBeDefined();

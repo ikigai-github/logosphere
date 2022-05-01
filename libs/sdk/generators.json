@@ -36,6 +36,16 @@
       "factory": "./src/generators/dto/dto",
       "schema": "./src/generators/dto/schema.json",
       "description": "dto generator"
+    },
+    "fluree": {
+      "factory": "./src/generators/fluree/fluree",
+      "schema": "./src/generators/fluree/schema.json",
+      "description": "Fluree Schema Generator"
+    },
+    "gql": {
+      "factory": "./src/generators/gql/gql",
+      "schema": "./src/generators/gql/schema.json",
+      "description": "GraphQL Schema Generator"
     }
   },
   "generators": {
@@ -70,6 +80,16 @@
       "factory": "./src/generators/dto/dto",
       "schema": "./src/generators/dto/schema.json",
       "description": "dto generator"
+    },
+    "fluree": {
+      "factory": "./src/generators/fluree/fluree",
+      "schema": "./src/generators/fluree/schema.json",
+      "description": "Fluree Schema Generator"
+    },
+    "gql": {
+      "factory": "./src/generators/gql/gql",
+      "schema": "./src/generators/gql/schema.json",
+      "description": "GraphQL Schema Generator"
     }
   }
 }
