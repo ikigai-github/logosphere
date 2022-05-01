@@ -18,7 +18,6 @@
     "paths": {
       "@logosphere/configuration": ["libs/configuration/index.ts"],
       "@logosphere/converters": ["libs/converters/index.ts"],
-      "@logosphere/ddd": ["libs/ddd/src/index.ts"],
       "@logosphere/decorators": ["libs/decorators/index.ts"],
       "@logosphere/errors": ["libs/errors/index.ts"],
       "@logosphere/model": ["libs/model/src/index.ts"],

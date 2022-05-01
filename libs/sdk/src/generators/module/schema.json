@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "NxNodeLibrary",
+  "title": "Create a Node Library for Nx",
+  "description": "Create a Node Library for an Nx workspace.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Library name",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What name would you like to use for the library?"
+    },
+    "directory": {
+      "type": "string",
+      "description": "A directory where the lib is placed",
+      "alias": "dir"
+    },
+    "tags": {
+      "type": "string",
+      "description": "Add tags to the library (used for linting).",
+      "alias": "t"
+    }
+  },
+  "required": ["name"]
+}

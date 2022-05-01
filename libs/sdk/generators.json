@@ -14,6 +14,15 @@
       "x-type": "application",
       "description": "Create a Logosphere application."
     },
+    "module": {
+      "factory": "./src/generators/module/module",
+      "schema": "./src/generators/module/schema.json",
+      "aliases": [
+        "m"
+      ],
+      "x-type": "library",
+      "description": "Create a Logosphere app module."
+    },
     "init": {
       "factory": "./src/generators/init/init#initSchematic",
       "schema": "./src/generators/init/schema.json",
@@ -38,6 +47,15 @@
       ],
       "x-type": "application",
       "description": "Create a Logosphere application."
+    },
+    "module": {
+      "factory": "./src/generators/module/module",
+      "schema": "./src/generators/module/schema.json",
+      "aliases": [
+        "m"
+      ],
+      "x-type": "library",
+      "description": "Create a Logosphere app module."
     },
     "init": {
       "factory": "./src/generators/init/init",
