@@ -1,29 +1,58 @@
 {
-  "name": "logosphere",
-  "version": "1.0.0",
-  "description": "L2 metadata solution for blockchains",
-  "main": "index.js",
+  "name": "@logosphere",
+  "version": "0.0.0",
+  "license": "MIT",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "./build.sh"
+    "start": "nx serve",
+    "build": "nx build",
+    "test": "nx test",
+    "preinstall": "npx only-allow pnpm"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ikigai-github/logosphere.git"
+  "private": true,
+  "devDependencies": {
+    "@angular-devkit/core": "^13.3.4",
+    "@babel/core": "7.0.1",
+    "@babel/preset-env": "7.0.0",
+    "@nestjs/common": "^8.4.4",
+    "@nestjs/core": "^8.4.4",
+    "@nestjs/testing": "^8.4.4",
+    "@nrwl/angular": "14.0.2",
+    "@nrwl/cli": "14.0.2",
+    "@nrwl/devkit": "14.0.2",
+    "@nrwl/eslint-plugin-nx": "14.0.2",
+    "@nrwl/jest": "14.0.2",
+    "@nrwl/js": "14.0.2",
+    "@nrwl/linter": "14.0.2",
+    "@nrwl/nest": "14.0.2",
+    "@nrwl/nx-plugin": "^14.0.2",
+    "@nrwl/workspace": "14.0.2",
+    "@types/jest": "27.4.1",
+    "@types/fs-extra": "9.0.13",
+    "@types/node": "16.11.7",
+    "@typescript-eslint/eslint-plugin": "~5.18.0",
+    "@typescript-eslint/parser": "~5.18.0",
+    "babel-loader": "8.0.2",
+    "eslint": "~8.12.0",
+    "eslint-config-prettier": "8.1.0",
+    "jest": "27.5.1",
+    "nx": "14.0.2",
+    "prettier": "^2.5.1",
+    "rxjs": "6.5.3",
+    "semver": "7.3.7",
+    "ts-jest": "27.1.4",
+    "ts-node": "9.1.1",
+    "tslib": "^2.0.0",
+    "typescript": "~4.6.2",
+    "webpack": "5.0.0"
   },
-  "keywords": [
-    "logo",
-    "sphere",
-    "logosphere",
-    "ikigai",
-    "blockchain",
-    "cardano",
-    "fluree"
-  ],
-  "author": "Ikigai Technologies",
-  "license": "AGPL-3.0-or-later",
-  "bugs": {
-    "url": "https://github.com/ikigai-github/logosphere/issues"
-  },
-  "homepage": "https://github.com/ikigai-github/logosphere#readme"
+  "dependencies": {
+    "@fluree/flureenjs": "^1.0.0-rc56",
+    "axios": "0.26.1",
+    "graphql": "^16.4.0",
+    "lodash": "4.17.21",
+    "pascal-case": "3.1.2",
+    "path": "^0.12.7",
+    "reflect-metadata": "0.1.13",
+    "tslib": "^2.3.0"
+  }
 }

@@ -1,0 +1,33 @@
+{
+  "root": "libs/readers",
+  "sourceRoot": "libs/readers/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/readers",
+        "main": "libs/readers/src/index.ts",
+        "tsConfig": "libs/readers/tsconfig.lib.json",
+        "assets": ["libs/readers/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/readers/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/readers"],
+      "options": {
+        "jestConfig": "libs/readers/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["scope:shared"]
+}

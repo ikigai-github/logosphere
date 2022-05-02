@@ -1,0 +1,34 @@
+{
+  "root": "libs/converters",
+  "sourceRoot": "libs/converters/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/converters",
+        "main": "libs/converters/src/index.ts",
+        "tsConfig": "libs/converters/tsconfig.lib.json",
+        "assets": ["libs/converters/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/converters/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/converters"],
+      "options": {
+        "jestConfig": "libs/converters/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["scope:shared"],
+  "impliciDependencies": ["readers"]
+}

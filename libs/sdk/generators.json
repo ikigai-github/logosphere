@@ -1,0 +1,95 @@
+{
+  "name": "nx/sdk",
+  "version": "0.1",
+  "extends": [
+    "@nrwl/workspace"
+  ],
+  "schematics": {
+    "application": {
+      "factory": "./src/generators/application/application#applicationSchematic",
+      "schema": "./src/generators/application/schema.json",
+      "aliases": [
+        "app"
+      ],
+      "x-type": "application",
+      "description": "Create a Logosphere application."
+    },
+    "module": {
+      "factory": "./src/generators/module/module",
+      "schema": "./src/generators/module/schema.json",
+      "aliases": [
+        "m"
+      ],
+      "x-type": "library",
+      "description": "Create a Logosphere app module."
+    },
+    "init": {
+      "factory": "./src/generators/init/init#initSchematic",
+      "schema": "./src/generators/init/schema.json",
+      "description": "Initialize the `@logosphere/sdk` plugin.",
+      "aliases": [
+        "ng-add"
+      ],
+      "hidden": true
+    },
+    "dto": {
+      "factory": "./src/generators/dto/dto",
+      "schema": "./src/generators/dto/schema.json",
+      "description": "dto generator"
+    },
+    "fluree": {
+      "factory": "./src/generators/fluree/fluree",
+      "schema": "./src/generators/fluree/schema.json",
+      "description": "Fluree Schema Generator"
+    },
+    "gql": {
+      "factory": "./src/generators/gql/gql",
+      "schema": "./src/generators/gql/schema.json",
+      "description": "GraphQL Schema Generator"
+    }
+  },
+  "generators": {
+    "application": {
+      "factory": "./src/generators/application/application",
+      "schema": "./src/generators/application/schema.json",
+      "aliases": [
+        "app"
+      ],
+      "x-type": "application",
+      "description": "Create a Logosphere application."
+    },
+    "module": {
+      "factory": "./src/generators/module/module",
+      "schema": "./src/generators/module/schema.json",
+      "aliases": [
+        "m"
+      ],
+      "x-type": "library",
+      "description": "Create a Logosphere app module."
+    },
+    "init": {
+      "factory": "./src/generators/init/init",
+      "schema": "./src/generators/init/schema.json",
+      "description": "Initialize the `@logosphere/sdk` plugin.",
+      "aliases": [
+        "ng-add"
+      ],
+      "hidden": true
+    },
+    "dto": {
+      "factory": "./src/generators/dto/dto",
+      "schema": "./src/generators/dto/schema.json",
+      "description": "dto generator"
+    },
+    "fluree": {
+      "factory": "./src/generators/fluree/fluree",
+      "schema": "./src/generators/fluree/schema.json",
+      "description": "Fluree Schema Generator"
+    },
+    "gql": {
+      "factory": "./src/generators/gql/gql",
+      "schema": "./src/generators/gql/schema.json",
+      "description": "GraphQL Schema Generator"
+    }
+  }
+}

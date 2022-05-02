@@ -1,0 +1,77 @@
+{
+  "root": "libs/sdk",
+  "sourceRoot": "libs/sdk",
+  "projectType": "library",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "options": {
+        "jestConfig": "libs/sdk/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "outputs": ["coverage/libs/sdk"]
+    },
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "options": {
+        "outputPath": "dist/libs/sdk",
+        "tsConfig": "libs/sdk/tsconfig.lib.json",
+        "main": "libs/sdk/index.ts",
+        "updateBuildableProjectDepsInPackageJson": false,
+        "assets": [
+          {
+            "input": "libs/sdk",
+            "glob": "**/files/**",
+            "output": "/"
+          },
+          {
+            "input": "libs/sdk",
+            "glob": "**/files/**/.gitkeep",
+            "output": "/"
+          },
+          {
+            "input": "libs/sdk",
+            "glob": "**/*.json",
+            "ignore": ["**/tsconfig*.json", "project.json"],
+            "output": "/"
+          },
+          {
+            "input": "libs/sdk",
+            "glob": "**/*.js",
+            "ignore": ["**/jest.config.js"],
+            "output": "/"
+          },
+          {
+            "input": "libs/sdk",
+            "glob": "**/*.d.ts",
+            "output": "/"
+          },
+          {
+            "input": "",
+            "glob": "LICENSE",
+            "output": "/"
+          }
+        ]
+      },
+      "outputs": ["{options.outputPath}"]
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/sdk/**/*.ts",
+          "libs/sdk/**/*.spec.ts",
+          "libs/sdk/**/*_spec.ts",
+          "libs/sdk/**/*.spec.tsx",
+          "libs/sdk/**/*.spec.js",
+          "libs/sdk/**/*.spec.jsx",
+          "libs/sdk/**/*.d.ts",
+          "libs/sdk/**/executors/**/schema.json",
+          "libs/sdk/**/generators/**/schema.json"
+        ]
+      },
+      "outputs": ["{options.outputFile}"]
+    }
+  },
+  "tags": ["scope:shared"]
+}

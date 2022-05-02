@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "projects": {
+    "configuration": "libs/configuration",
+    "converters": "libs/converters",
+    "decorators": "libs/decorators",
+    "errors": "libs/errors",
+    "model": "libs/model",
+    "readers": "libs/readers",
+    "sdk": "libs/sdk",
+    "sdk-e2e": "e2e/sdk-e2e",
+    "services-fluree": "libs/services/fluree",
+    "test-data": "libs/test-data",
+    "utils": "libs/utils"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "NxNodeLibrary",
+  "title": "Create a Logosphere codegen module",
+  "description": "Create a Logosphere codegen module in an Nx workspace.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Module name",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What name would you like to use for the module?"
+    },
+    "directory": {
+      "type": "string",
+      "description": "A directory where the module is placed",
+      "alias": "dir"
+    },
+    "tags": {
+      "type": "string",
+      "description": "Add tags to the module.",
+      "alias": "t"
+    }
+  },
+  "required": ["name"]
+}

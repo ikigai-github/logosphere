@@ -1,0 +1,1 @@
+export  { moduleGenerator } from './module'; 

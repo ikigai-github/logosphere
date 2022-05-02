@@ -1,0 +1,20 @@
+{
+  "name": "@logosphere/sdk",
+  "version": "0.0.1",
+  "description": "The Nx Plugin for Logosphere SDK",
+  "main": "./index.js",
+  "typings": "./index.d.ts",
+  "homepage": "https://nx.dev",
+  "schematics": "./generators.json",
+  "ng-update": {
+    "requirements": {}
+  },
+  "dependencies": {
+    "@nrwl/devkit": "*",
+    "@nrwl/linter": "*",
+    "@nrwl/node": "*",
+    "@nrwl/js": "*",
+    "@nrwl/jest": "*",
+    "@nestjs/schematics": "^8.0.0"
+  }
+}
