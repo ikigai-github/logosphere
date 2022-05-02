@@ -26,6 +26,8 @@ export class FlureeService {
       return +duration.replace('m', '') * 1000 * 60;
     } else if (duration.indexOf('h') > 0) {
       return +duration.replace('h', '') * 1000 * 60 * 60;
+    } else {
+      return +duration;
     }
   }
 

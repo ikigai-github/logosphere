@@ -1,7 +1,7 @@
 import {
   FlureeExistingTransactIdentifier,
   FlureeTransaction,
-} from './transact.schema';
+} from '../fluree.transact.schema';
 
 interface FlureeRemoveIdStep {
   id(id: FlureeExistingTransactIdentifier): FlureeRemoveBuilder;
