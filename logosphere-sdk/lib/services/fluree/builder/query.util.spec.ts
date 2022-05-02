@@ -1,5 +1,5 @@
 import { FlureeClient } from '../fluree.client';
-import { FlureeObject } from '../fluree.schema';
+import { FlureeObject } from '../fluree.query.schema';
 import { select } from './query.builder';
 import { query, removeNamespace } from './query.util';
 

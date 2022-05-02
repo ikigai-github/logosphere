@@ -1,7 +1,7 @@
 // import { select, ref } from './query.builder';
 
 import { FlureeClient } from '../fluree.client';
-import { FlureeObject, isFlureeObject } from '../fluree.schema';
+import { FlureeObject, isFlureeObject } from '../fluree.query.schema';
 import { compile } from './query.compiler';
 import { QuerySpec as QuerySpec } from './query.schema';
 

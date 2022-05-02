@@ -3,7 +3,7 @@ import {
   FlureeQueryOptions,
   FlureeFromClause,
   ReferenceOptions,
-} from '../fluree.schema';
+} from '../fluree.query.schema';
 import { PredicateNode, QuerySpec, ReferenceNode } from './query.schema';
 
 /**

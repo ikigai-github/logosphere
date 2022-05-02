@@ -4,7 +4,7 @@ import {
   FlureeFromClause,
   FlureeWhereOperator,
   FlureeQueryOptions,
-} from '../fluree.schema';
+} from '../fluree.query.schema';
 
 /**
  * A reference node is used to indicate a reference from the subject should be followed

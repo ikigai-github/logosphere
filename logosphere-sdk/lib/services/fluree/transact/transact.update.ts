@@ -6,7 +6,7 @@ import {
   FlureeTransactBuildStep,
   FlureeTransaction,
   isFlureeExistingTransactObject,
-} from './transact.schema';
+} from '../fluree.transact.schema';
 
 /**
  * An update Transact pair can be either a predicate value or a subject id

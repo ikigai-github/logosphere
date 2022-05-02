@@ -1,7 +1,7 @@
 import {
   FlureeTransactIdentifier,
   FlureeTransactObject,
-} from './transact.schema';
+} from '../fluree.transact.schema';
 import { makeId } from './transact.util';
 
 type FlureeLinkType = 'link';

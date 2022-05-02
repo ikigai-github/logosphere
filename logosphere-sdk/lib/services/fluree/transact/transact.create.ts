@@ -1,9 +1,9 @@
 import { isFlureeLinkNode } from './transact.link';
 import {
-  FlureeTransactBuildStep as FlureeTransactBuildStep,
+  FlureeTransactBuildStep,
   FlureeTransactIdentifier,
   FlureeTransaction,
-} from './transact.schema';
+} from '../fluree.transact.schema';
 import { makeId } from './transact.util';
 
 /**
