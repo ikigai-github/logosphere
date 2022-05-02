@@ -48,6 +48,7 @@
     "@nestjs/common": "^8.4.4",
     "@nestjs/config": "^2.0.0",
     "@nestjs/core": "^8.4.4",
+    "@nestjs/platform-fastify": "^8.4.4",
     "axios": "0.26.1",
     "graphql": "^16.4.0",
     "lodash": "4.17.21",

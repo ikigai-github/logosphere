@@ -5,6 +5,7 @@
     "converters": "libs/converters",
     "decorators": "libs/decorators",
     "errors": "libs/errors",
+    "fluree-e2e": "e2e/fluree-e2e",
     "model": "libs/model",
     "readers": "libs/readers",
     "sdk": "libs/sdk",

@@ -6,5 +6,6 @@ import { flureeConfig } from './fluree.config';
 @Module({
   imports: [ConfigModule.forFeature(flureeConfig)],
   providers: [FlureeClient],
+  exports: [FlureeClient]
 })
 export class FlureeModule {}
