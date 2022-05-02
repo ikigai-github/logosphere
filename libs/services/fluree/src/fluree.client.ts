@@ -18,8 +18,8 @@ import { ConfigType } from '@nestjs/config';
 
 @Injectable()
 export class FlureeClient {
-  #connection: any;
-  #connecting: Promise<any>;
+  #connection: unknown;
+  #connecting: Promise<unknown>;
   #config: FlureeConfig;
 
   /**
@@ -85,7 +85,7 @@ export class FlureeClient {
       return response.map((tuple: string[]) => {
         return tuple.join('/');
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       throw new FlureeError(messages.LIST_LEDGERS_FAILED, error);
     }
   }
@@ -99,7 +99,7 @@ export class FlureeClient {
     try {
       const connection = await this.connection();
       return await fluree.ledgerInfo(connection, ledger);
-    } catch (error: any) {
+    } catch (error: unknown) {
       throw new FlureeError(messages.LIST_LEDGER_INFO_FAILED, error);
     }
   }
@@ -117,7 +117,7 @@ export class FlureeClient {
     try {
       const connection = await this.connection();
       return await fluree.newLedger(connection, ledger);
-    } catch (error: any) {
+    } catch (error: unknown) {
       throw new FlureeError(messages.CREATE_LEDGER_FAILED, error);
     }
   }
@@ -135,7 +135,7 @@ export class FlureeClient {
     try {
       const connection = await this.connection();
       return await fluree.deleteLedger(connection, ledger);
-    } catch (error: any) {
+    } catch (error: unknown) {
       throw new FlureeError(messages.DELETE_LEDGER_FAILED, error);
     }
   }
@@ -150,7 +150,7 @@ export class FlureeClient {
       const connection = await this.connection();
       const channel = await fluree.db(connection, this.#config.ledger);
       return await fluree.query(channel, fql);
-    } catch (error: any) {
+    } catch (error: unknown) {
       throw new FlureeError(messages.QUERY_FAILED, error);
     }
   }
