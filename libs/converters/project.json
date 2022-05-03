@@ -29,6 +29,6 @@
       }
     }
   },
-  "tags": ["scope:shared"],
+  "tags": ["scope:shared", "type:lib", "kind:feature"],
   "impliciDependencies": ["readers"]
 }
