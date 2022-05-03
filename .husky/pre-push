@@ -1,0 +1,4 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+pnpx nx affected --target=test --exclude='e2e/*' --uncomitted

@@ -6,7 +6,8 @@
     "start": "nx serve",
     "build": "nx build",
     "test": "nx test",
-    "preinstall": "npx only-allow pnpm"
+    "preinstall": "npx only-allow pnpm",
+    "prepare": "husky install"
   },
   "private": true,
   "devDependencies": {
@@ -34,7 +35,9 @@
     "babel-loader": "8.0.2",
     "eslint": "~8.12.0",
     "eslint-config-prettier": "8.1.0",
+    "husky": "^7.0.0",
     "jest": "27.5.1",
+    "lint-staged": "^12.4.1",
     "nx": "14.0.2",
     "prettier": "^2.5.1",
     "semver": "7.3.7",
@@ -47,8 +50,8 @@
     "@fluree/flureenjs": "1.0.0-rc56",
     "@nestjs/apollo": "^10.0.0",
     "@nestjs/common": "^8.0.0",
-    "@nestjs/core": "^8.0.0",
     "@nestjs/config": "^2.0.0",
+    "@nestjs/core": "^8.0.0",
     "@nestjs/graphql": "^10.0.0",
     "@nestjs/platform-fastify": "^8.0.0",
     "apollo-server-core": "^3.6.7",
