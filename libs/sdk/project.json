@@ -73,5 +73,5 @@
       "outputs": ["{options.outputFile}"]
     }
   },
-  "tags": ["scope:shared"]
+  "tags": ["scope:cli", "type:lib", "kind:feature"]
 }

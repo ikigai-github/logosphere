@@ -1,4 +1,4 @@
-import { LogosphereError } from '@logosphere/errors';
+import { LogosphereError } from '@logosphere/errors'
 
 export const messages = Object.freeze({
   TRANSACT_FAILED: 'Fluree transact failed',

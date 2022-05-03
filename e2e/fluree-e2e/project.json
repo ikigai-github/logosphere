@@ -48,5 +48,5 @@
       }
     }
   },
-  "tags": ["scope:client"]
+  "tags": ["scope:e2e", "type:app", "kind:test"]
 }

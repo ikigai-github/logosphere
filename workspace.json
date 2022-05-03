@@ -6,11 +6,10 @@
     "decorators": "libs/decorators",
     "errors": "libs/errors",
     "fluree-e2e": "e2e/fluree-e2e",
-    "model": "libs/model",
     "readers": "libs/readers",
     "sdk": "libs/sdk",
     "sdk-e2e": "e2e/sdk-e2e",
-    "services-fluree": "libs/services/fluree",
+    "fluree": "libs/fluree",
     "test-data": "libs/test-data",
     "utils": "libs/utils"
   }

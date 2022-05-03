@@ -19,5 +19,5 @@
       }
     }
   },
-  "tags": ["scope:admin"]
+  "tags": ["scope:cli", "type:lib", "kind:feature"]
 }

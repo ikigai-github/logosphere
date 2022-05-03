@@ -1,6 +1,6 @@
 
 import { Module } from '@nestjs/common';
-import { FlureeModule } from '@logosphere/services/fluree'
+import { FlureeModule } from '@logosphere/fluree'
 import { TestController } from '../test/test.controller';
 
 

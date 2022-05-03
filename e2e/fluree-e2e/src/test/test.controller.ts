@@ -1,5 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
-import { FlureeQueryResponse, FlureeClient } from '@logosphere/services/fluree'
+import { FlureeQueryResponse, FlureeClient } from '@logosphere/fluree'
 
 @Controller('test')
 export class TestController {

@@ -1,16 +1,16 @@
 import { ConfigModule, registerAs } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
-import { FlureeClient, flureeConfig } from '@logosphere/services/fluree'
+import { FlureeClient, flureeConfig } from '@logosphere/fluree'
 
 let client: FlureeClient;
 const ledger = `test/test${new Date().valueOf()}`;
 
-jest.mock('@logosphere/services/fluree', () => ({
+jest.mock('@logosphere/fluree', () => ({
   flureeConfig: registerAs('fluree', () => ({
     url: 'http://localhost:8090',
     ledger,
   })),
-  FlureeClient: jest.requireActual('@logosphere/services/fluree').FlureeClient
+  FlureeClient: jest.requireActual('@logosphere/fluree').FlureeClient
 }));
 
 describe('Fluree client', () => {
