@@ -1,16 +1,16 @@
 {
-"root": "apps/<%= name %>",
-  "sourceRoot": "apps/<%= name %>/src",
+"root": "<%= root %>",
+  "sourceRoot": "<%= root %>/src",
   "projectType": "application",
   "targets": {
     "build": {
       "executor": "@nrwl/node:webpack",
-      "outputs": ["dist/apps/<%= name %>"],
+      "outputs": ["dist/<%= root %>"],
       "options": {
-        "outputPath": "dist/apps/<%= name %>",
-        "main": "apps/<%= name %>/src/main.ts",
-        "tsConfig": "apps/<%= name %>/tsconfig.app.json",
-        "assets": ["apps/<%= name %>/src/assets"]
+        "outputPath": "dist/<%= root %>",
+        "main": "<%= root %>/src/main.ts",
+        "tsConfig": "<%= root %>/tsconfig.app.json",
+        "assets": ["<%= root %>/src/assets"]
       },
       "configurations": {
         "production": {
@@ -19,8 +19,8 @@
           "inspect": false,
           "fileReplacements": [
             {
-              "replace": "apps/<%= name %>/src/environments/environment.ts",
-              "with": "apps/<%= name %>/src/environments/environment.prod.ts"
+              "replace": "<%= root %>/src/environments/environment.ts",
+              "with": "<%= root %>/src/environments/environment.prod.ts"
             }
           ]
         }
@@ -34,16 +34,16 @@
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": ["dist/<%= root %>"],
       "options": {
-        "lintFilePatterns": ["apps/<%= name %>/**/*.ts"]
+        "lintFilePatterns": ["<%= root %>/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/<%= name %>"],
+      "outputs": ["coverage/<%= root %>"],
       "options": {
-        "jestConfig": "apps/<%= name %>/jest.config.ts",
+        "jestConfig": "<%= root %>/jest.config.ts",
         "passWithNoTests": true
       }
     }
