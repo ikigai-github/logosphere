@@ -1,4 +1,4 @@
-import { FlureeQueryOptions } from '../fluree.schema';
+import { FlureeQueryOptions } from '../fluree.query.schema';
 import { ref, select } from './query.builder';
 
 describe('Query Builder', () => {

@@ -33,5 +33,5 @@
     "appsDir": "e2e",
     "libsDir": "libs"
   },
-  "defaultProject": "test-e2e"
+  "defaultProject": "fluree-e2e"
 }

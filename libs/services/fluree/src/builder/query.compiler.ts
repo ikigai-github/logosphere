@@ -1,4 +1,4 @@
-import { FlureeWhereOperator, FlureeQuery } from '../fluree.schema';
+import { FlureeWhereOperator, FlureeQuery } from '../fluree.query.schema';
 import { PredicateNode, QuerySpec, ReferenceNode } from './query.schema';
 
 /**
@@ -61,16 +61,16 @@ export function compile(spec: QuerySpec): FlureeQuery {
   const from = spec.from;
   const opts = spec.opts;
 
-  if (spec.key === 'select' || spec.key == 'selectDistinct') {
+  if (spec.key === 'selectOne') {
     return {
-      select: predicates,
+      selectOne: predicates,
       where,
       from,
       opts,
     };
   } else {
     return {
-      selectOne: predicates,
+      select: predicates,
       where,
       from,
       opts,
