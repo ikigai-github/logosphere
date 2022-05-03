@@ -1,9 +1,10 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../../dist/out-tsc",
-    "module": "commonjs",
+    "outDir": "../../dist/out-tsc",
+    "module": "CommonJS",
     "declaration": true,
+    "experimentalDecorators": true,
     "types": []
   },
   "include": ["**/*.ts"],

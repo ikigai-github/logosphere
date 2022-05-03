@@ -1,7 +1,6 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "rootDir": ".",
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
@@ -16,17 +15,16 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@logosphere/configuration": ["libs/configuration/index.ts"],
-      "@logosphere/converters": ["libs/converters/index.ts"],
-      "@logosphere/decorators": ["libs/decorators/index.ts"],
-      "@logosphere/errors": ["libs/errors/index.ts"],
+      "@logosphere/configuration": ["libs/configuration/src/index.ts"],
+      "@logosphere/converters": ["libs/converters/src/index.ts"],
+      "@logosphere/decorators": ["libs/decorators/src/index.ts"],
+      "@logosphere/errors": ["libs/errors/src/index.ts"],
       "@logosphere/model": ["libs/model/src/index.ts"],
-      "@logosphere/readers": ["libs/readers/index.ts"],
+      "@logosphere/readers": ["libs/readers/src/index.ts"],
       "@logosphere/sdk": ["libs/sdk/src/index.ts"],
-      "@logosphere/services/fluree": ["libs/services/fluree/src/index.ts"],
+      "@logosphere/fluree": ["libs/fluree/src/index.ts"],
       "@logosphere/test-data": ["libs/test-data/src/index.ts"],
-      "@logosphere/test/fixtures": ["libs/test/fixtures"],
-      "@logosphere/util": ["libs/util/src/index.ts"]
+      "@logosphere/utils": ["libs/utils/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

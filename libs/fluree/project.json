@@ -1,30 +1,30 @@
 {
-  "root": "libs/decorators",
-  "sourceRoot": "libs/decorators/src",
+  "root": "libs/fluree",
+  "sourceRoot": "libs/fluree/src",
   "projectType": "library",
   "targets": {
     "build": {
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/decorators",
-        "main": "libs/decorators/src/index.ts",
-        "tsConfig": "libs/decorators/tsconfig.lib.json",
-        "assets": ["libs/decorators/*.md"]
+        "outputPath": "dist/libs/fluree",
+        "main": "libs/fluree/src/index.ts",
+        "tsConfig": "libs/fluree/tsconfig.lib.json",
+        "assets": ["libs/fluree/*.md"]
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/decorators/**/*.ts"]
+        "lintFilePatterns": ["libs/fluree/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/decorators"],
+      "outputs": ["coverage/libs/fluree"],
       "options": {
-        "jestConfig": "libs/decorators/jest.config.ts",
+        "jestConfig": "libs/fluree/jest.config.ts",
         "passWithNoTests": true
       }
     }

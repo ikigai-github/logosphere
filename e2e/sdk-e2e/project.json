@@ -11,6 +11,5 @@
       }
     }
   },
-  "tags": [],
-  "implicitDependencies": ["sdk"]
+  "tags": ["scope:e2e", "type:app", "kind:test"]
 }
