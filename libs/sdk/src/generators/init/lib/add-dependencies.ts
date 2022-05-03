@@ -44,17 +44,15 @@ export function addDependencies(tree: Tree): GeneratorCallback {
       '@nestjs/core': NEST_VERSION,
       '@nestjs/graphql': nestJsGraphQLVersion,
       '@nestjs/platform-fastify': NEST_VERSION,
-      '@nrwl/nest': nxVersion,
       'apollo-server-core': '^3.6.7',
       'apollo-server-fastify': '^3.6.7',
-      "class-transformer": "0.2.0",
-      "class-validator": "0.13.2",
-      'fastify': '3.17.0',
-      'graphql': '15.7.2',
+      'class-transformer': '0.2.0',
+      'class-validator': '0.13.2',
+      fastify: '3.17.0',
+      graphql: '15.7.2',
       'reflect-metadata': reflectMetadataVersion,
       rxjs: RXJS,
       tslib: '^2.0.0',
-     
     },
     {
       '@babel/core': '^7.0.0',
@@ -62,8 +60,9 @@ export function addDependencies(tree: Tree): GeneratorCallback {
       '@nestjs/schematics': nestJsSchematicsVersion,
       '@nestjs/testing': NEST_VERSION,
       '@nrwl/js': nxVersion,
+      '@nrwl/nest': nxVersion,
       'babel-loader': '^8.0.2',
-      webpack: '^5'
+      webpack: '^5',
     }
   );
 }

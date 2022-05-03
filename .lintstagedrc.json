@@ -1,0 +1,3 @@
+{
+  "*.{js,jsx,ts,tsx,json,md}": ["pnpx nx format:write --uncommitted"]
+}
