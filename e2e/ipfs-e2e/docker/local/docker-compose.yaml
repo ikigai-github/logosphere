@@ -1,0 +1,52 @@
+version: '3.6'
+services:
+  fluree-ledger:
+    image: fluree/ledger:latest
+    ports:
+      - '8090:8090'
+  cardano-node:
+    image: inputoutput/cardano-node:1.34.1
+    environment:
+      NETWORK: ${CARDANO_NETWORK}
+    volumes:
+      - ./volumes/cardano-node/${CARDANO_NETWORK}:/data
+      - node-ipc:/ipc
+    restart: on-failure
+    logging:
+      driver: 'json-file'
+      options:
+        compress: 'true'
+        max-file: '10'
+        max-size: '50m'
+  cardano-wallet:
+    image: inputoutput/cardano-wallet:2022.4.27
+    volumes:
+      - ./volumes/cardano-wallet/${CARDANO_NETWORK}/db:/wallet-db
+      - node-ipc:/ipc
+    ports:
+      - 7070:8090
+    entrypoint: []
+    command: bash -c "
+      ([[ $$CARDANO_NETWORK == \"mainnet\" ]] && $$CMD --mainnet) ||
+      ($$CMD --testnet /config/${CARDANO_NETWORK}/genesis-byron.json)
+      "
+    environment:
+      CMD: 'cardano-wallet serve --node-socket /ipc/node.socket --database /wallet-db --listen-address 0.0.0.0'
+      NETWORK: ${CARDANO_NETWORK}
+    restart: on-failure
+    logging:
+      driver: 'json-file'
+      options:
+        compress: 'true'
+        max-file: '10'
+        max-size: '50m'
+
+volumes:
+  node-mainnet-db:
+  node-testnet-db:
+  node-alonzo-purple-db:
+  wallet-mainnet-db:
+  wallet-testnet-db:
+  wallet-alonzo-purple-db:
+  node-ipc:
+  node-config:

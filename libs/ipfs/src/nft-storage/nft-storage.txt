@@ -1,0 +1,162 @@
+import { NFTStorage } from 'nft.storage';
+import fs from 'fs';
+import path from 'path';
+//import axios from 'axios';
+import { StatusCodes } from 'http-status-codes'; 
+import VulcanError from '../error-handler/vulcan-error';
+import { String } from 'typescript-string-operations';
+import { VulcanErrorMessages } from '../error-handler/error-messages';
+import { S3 } from 'aws-sdk';
+import { v4 as uuid4 } from 'uuid';
+import * as c from '../common/const';
+import ConfigProvider from '../common/configProvider';
+import Log from '../model/decorators/log';
+import { startSpan } from './telemetry'
+
+/**
+ * Common NFT storage for the artifacts
+ * 
+ * @author : https://github.com/Manik-Jain
+ */
+export default class NFTStore {
+
+    private readonly ipfs: NFTStorage;
+
+    constructor() {
+        const apiKey: string = ConfigProvider.getProps()['API_KEY'] || process.env.API_KEY || '';
+        if (String.IsNullOrWhiteSpace(apiKey)) {
+            throw new VulcanError(StatusCodes.NOT_ACCEPTABLE.toString(), VulcanErrorMessages.MISSING_NFT_STORAGE_API_KEY)
+        }
+        this.ipfs = new NFTStorage(Object.freeze({ token: apiKey }))
+
+    }
+
+    @Log(false,`Uploading file to NFT IPFS`)
+    private async uploadFile(file: any) {
+        const cid = await this.ipfs.storeBlob(file)
+        console.log(`File uploaded to NFT IPFS at : ${cid}`)
+        
+        // Disabling Arweave upload, because it has new way of pinning IPFS files
+        // https://v6e6oce5g3szgi2wvasyj2dtq6gogfe2v63cjvcjwbyb77getsna.arweave.net/r4nnCJ025ZMjVqglhOhzh4zjFJqvtiTUSbBwH_zEnJo
+        // TODO: Spike on pinning to Arweave using this new method
+
+        // changing arweaveId to random UUID until we decide what to do with arweave. There is a unique constraint of this predicate, so fixing it with UUID for now. 
+        const nftMetadata = {
+            ipfsCid: cid,
+            arweaveId: uuid4() 
+        }
+
+        return nftMetadata
+    }
+
+    /**
+     * upload the artifact to 
+     * 1. Decentralised IPFS
+     * 2. Arweave blockchain
+     * 
+     * @returns {ipfsId, arweaveId}
+     */
+     @Log(false,`Uploading file to IPFS and Arweave`)
+    async upload(filePath: string): Promise<Readonly<{ipfsCid: string, arweaveId: string}>> {
+        return  startSpan('nft-storage-ipfs-upload',  VulcanErrorMessages.NFT_STORAGE_IPFS_UPLOAD_FAILED, async () => {
+            try {
+                let file : any  = await fs.promises.readFile(path.resolve(filePath));
+                return await this.uploadFile(file);
+            } catch(error: any) {
+                throw new VulcanError(error.status ? error.status : StatusCodes.INTERNAL_SERVER_ERROR.toString(), error.message)
+            }
+        })()
+    }
+
+    /**
+     * Uploads the artifact from S3 to IPFS and Arweave
+     * @param bucket 
+     * @param key 
+     * 
+     * @returns {ipfsId, arweaveId}
+     */
+    async uploadFromS3(bucket: string, key: string): Promise<Readonly<{ipfsCid: string; arweaveId: string}>> {
+        return  startSpan('nft-storage-ipfs-upload-from-s3',  VulcanErrorMessages.NFT_STORAGE_IPFS_UPLOAD_FAILED, async () => {
+            try {
+                const s3 = new S3({region: ConfigProvider.getProps()['AWS_REGION'] || process.env.AWS_REGION || c.DEFAULT_REGION });
+
+                const params = {
+                    Bucket: bucket,
+                    Key: key
+                };
+                const file = await s3.getObject(params).promise();
+                return await this.uploadFile(file.Body);
+            } catch(error: any) {
+                throw new VulcanError(StatusCodes.INTERNAL_SERVER_ERROR.toString(), error.message)
+            }
+        })()
+    }
+
+    /**
+     * Gets upload URL to directly upload content to S3 bucket
+     * @param contentType: content type header, i.e. image/jpeg
+     * @param extension: extension of the uploaded file, i.e. jpg
+     * @param folder: folder inside the bucket to put the content in, accepts subfolders i.e. f1/f2/f3 etc.
+     * @returns { url, bucket, key } object
+     */
+    async getS3UploadUrl(contentType: string, extension: string, folder: string): Promise<Readonly<{
+        url: string,
+        bucket: string,
+        key: string
+    }>> {
+        return  startSpan('nft-storage-getting-s3-upload-url',  VulcanErrorMessages.NFT_STORAGE_IPFS_UPLOAD_FAILED, async () => {
+            try {
+                const uuid = uuid4();
+                const key = `${folder}/${uuid}.${extension}`;
+
+                const uploadBucket: string = ConfigProvider.getProps()['UPLOAD_BUCKET'] || process.env.UPLOAD_BUCKET || '';
+                if (String.IsNullOrWhiteSpace(uploadBucket)) {
+                    throw new VulcanError(StatusCodes.NOT_ACCEPTABLE.toString(), VulcanErrorMessages.MISSING_UPLOAD_BUCKET);
+                }
+
+                const s3Params = {
+
+                    Bucket: uploadBucket,
+                    Key: key,
+                    Expires: ConfigProvider.getProps()['UPLOAD_URL_EXPIRATION_SECONDS'] ||  process.env.UPLOAD_URL_EXPIRATION_SECONDS || 300,
+                    ContentType: contentType
+                }
+                const s3 = new S3({region: ConfigProvider.getProps()['AWS_REGION'] || process.env.AWS_REGION || c.DEFAULT_REGION });
+                const uploadUrl = await s3.getSignedUrlPromise('putObject', s3Params)
+                const response = {
+                    url: uploadUrl,
+                    bucket: uploadBucket,
+                    key
+                };
+
+                console.log(`S3 Upload URL: ${JSON.stringify(response)}`);
+
+                return response;
+
+            } catch(error: any) {
+                throw new VulcanError(StatusCodes.INTERNAL_SERVER_ERROR.toString(), error.message)
+            }
+        })()
+    }
+
+    // Disabling Arweave for now
+
+    // async uploadToArweave(cid: string) : Promise<NFTMetadata> {
+    //     const arweaveUrl: string =  process.env.ARWEAVE_URL || '';
+    //     if (String.IsNullOrWhiteSpace(arweaveUrl)) {
+    //         throw new VulcanError(StatusCodes.NOT_ACCEPTABLE.toString(), VulcanErrorMessages.MISSING_ARWEAVE_URL);
+    //     }
+    //     let url : string = arweaveUrl.concat(`${cid}`)
+    //     console.log(`Uploading IPFS cid : [${cid}] to Arweave`)
+    //     try {
+    //         let response = await axios.post(url)
+    //         let {arweaveId} = response.data
+    //         console.log(`Upload to Arweave complete with arweaveID : ${arweaveId}`)
+    //         return Object.freeze({ipfsCid : response.data.ipfsHash, arweaveId : response.data.arweaveId})
+    //     } catch(error) {
+    //         console.error(error.response)
+    //         this.ipfs.delete(cid)
+    //         throw new Error(error.message)
+    //     }
+    // }
+}
