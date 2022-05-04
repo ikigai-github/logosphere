@@ -40,6 +40,15 @@ export class CardanoWalletService {
   }
 
   /**
+   * Get network status
+   *
+   * @returns network status
+   */
+  async getNetworkInformation(): Promise<ApiNetworkInformation> {
+    return await this.#walletServer.getNetworkInformation();
+  }
+
+  /**
    * Get network parameters
    *
    * @returns network parameters

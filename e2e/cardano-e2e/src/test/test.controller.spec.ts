@@ -23,6 +23,11 @@ describe('Cardano Wallet Service', () => {
   });
 
   it('should get network information', async () => {
+    const result = await wallet.getNetworkInformation();
+    expect(result.sync_progress.status).toBe('ready');
+  });
+
+  it('should get network parameters', async () => {
     const result = await wallet.getNetworkParameters();
     expect(result.genesis_block_hash).toBe(
       '96fceff972c2c06bd3bb5243c39215333be6d56aaf4823073dca31afe5038471'

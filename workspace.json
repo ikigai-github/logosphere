@@ -2,7 +2,7 @@
   "version": 2,
   "projects": {
     "cardano": "libs/cardano",
-    "cardano-wallet-e2e": "e2e/cardano-wallet-e2e",
+    "cardano-e2e": "e2e/cardano-e2e",
     "configuration": "libs/configuration",
     "converters": "libs/converters",
     "decorators": "libs/decorators",
