@@ -1,0 +1,486 @@
+import { WalletServer, 
+  Seed, 
+  AssetWallet, 
+  TokenWallet, 
+  Config, 
+  AddressWallet, 
+  NativeScript, 
+  ScriptAny, 
+  ShelleyWallet,
+  ApiNetworkParameters,
+  ApiNetworkInformation,
+  TransactionWallet
+} from 'cardano-wallet-js';
+import { String } from 'typescript-string-operations'; 
+import {sha3_256} from 'js-sha3';
+import ConfigProvider from '../common/configProvider';
+import { INft, ISpotWallet } from '../model/codegen/interfaces';
+import Log from '../model/decorators/log';
+import {NFT_STANDARD, NFT_VERSION} from '../common/const';
+
+
+/**
+* A general purpose Cardano Wallet Provider 
+* Use this class for user operations like
+* 
+* 1. Creating user wallets
+* 2. Minting Non-Fungible Token(s)
+* 3. Minting Collectible NFTs
+* 
+* @author : https://github.com/Manik-Jain
+* 
+*/
+export default class CardanoWalletProvider {
+  private readonly walletServer: WalletServer;
+
+  private readonly network : string = 'testnet';
+
+  constructor() {
+      const walletHost = ConfigProvider.getProps()['WALLET_HOST'] || process.env.WALLET_HOST
+      const walletPort = ConfigProvider.getProps()['WALLET_PORT'] || process.env.WALLET_PORT
+      this.walletServer = WalletServer.init(`http://${walletHost}:${walletPort}/v2`);
+  }
+
+  /**
+   * Get network status
+   * 
+   * @returns Newtork information
+   */
+   @Log(false, 'Getting network status from Cardano server...')
+  async getNetworkStatus() : Promise<ApiNetworkInformation>{
+      return  startSpan('wallet-get-network-status',  VulcanErrorMessages.WALLET_ERROR, async () => {
+          try {
+              return await this.walletServer.getNetworkInformation();
+          } catch (error: any) {
+              throw new VulcanError(StatusCodes.INTERNAL_SERVER_ERROR.toString(), error.data.message ? error.data.message : error.message);
+          }
+      })()
+  }
+
+  /**
+   * Get network parameters
+   * 
+   * @returns network parameters
+   */
+   @Log(false, 'Getting network parameters from Cardano server...')
+  async getNetworkParameters() : Promise<ApiNetworkParameters>{
+      return  startSpan('wallet-get-network-parameters',  VulcanErrorMessages.WALLET_ERROR, async () => {
+          try {
+              return await this.walletServer.getNetworkParameters();
+          } catch (error: any) {
+              throw new VulcanError(StatusCodes.INTERNAL_SERVER_ERROR.toString(), error.data.message ? error.data.message : error.message);
+          }
+      })()
+  }
+
+  @Log(true, 'Getting wallet details from Cardano server...')
+  async getWallet(walletId: string) : Promise<ShelleyWallet>{
+      return  startSpan('get-wallet',  VulcanErrorMessages.WALLET_ERROR, async () => {
+          if(String.IsNullOrWhiteSpace(walletId)) {
+              throw new VulcanError(StatusCodes.BAD_REQUEST.toString(), VulcanErrorMessages.INVALID_WALLET_ID);
+          }
+
+          try {
+              return await this.walletServer.getShelleyWallet(walletId);
+          } catch (error: any) {
+              throw new VulcanError(StatusCodes.INTERNAL_SERVER_ERROR.toString(), error.data.message ? error.data.message : error.message);
+          }
+      })()
+  }
+
+  /**
+   * Create a new wallet for users
+   * 
+   * @param {*} userId of the user
+   * @param {*} name of the wallet
+   * @param {*} passphrase for the wallet 
+   * @returns new wallet and the generated mnemonic
+   * @throws VulcanError should anything foes wrong
+   */
+   @Log(false, 'Creating user wallet on Cardano server...')
+  async createWallet(userId: string, name: string, passphrase: string) : Promise<Partial<ISpotWallet>> {
+      return  startSpan('create-wallet',  VulcanErrorMessages.WALLET_ERROR, async () => {
+          if(String.IsNullOrWhiteSpace(name)) {
+              throw new VulcanError(StatusCodes.BAD_REQUEST.toString(), VulcanErrorMessages.INVALID_WALLET_NAME);
+          } else if(String.IsNullOrWhiteSpace(passphrase)) {
+              throw new VulcanError(StatusCodes.BAD_REQUEST.toString(), VulcanErrorMessages.INVALID_CREATE_WALLET_PASSPHRASE);
+          } else if(String.IsNullOrWhiteSpace(userId)) {
+              throw new VulcanError(StatusCodes.BAD_REQUEST.toString(), VulcanErrorMessages.INVALID_USER_ID);
+          }
+
+          try {
+              console.log(`Creating default wallet for : [${userId}]`)
+              const recoveryPhrase = Seed.generateRecoveryPhrase();
+              const mnemonicSentence = Seed.toMnemonicList(recoveryPhrase);
+              const wallet = await this.walletServer.createOrRestoreShelleyWallet(name, mnemonicSentence, passphrase);
+
+              console.log(`Created default wallet for : [${userId}] with id : [${wallet.id}]`)
+              return { userId, name, id : wallet.id, mnemonic : recoveryPhrase}
+
+          } catch(error: any) {
+              console.log(error)
+              throw new VulcanError(StatusCodes.INTERNAL_SERVER_ERROR.toString(), error.data.message ? error.data.message : error.message);
+          }
+      })()
+  }
+
+  /**
+   * Delete a user wallet
+   * 
+   * @param {*} walletId 
+   * @returns boolean
+   */
+   @Log(true, 'Deleting user wallet on Cardano server...')
+  async deleteWallet(walletId: string) : Promise<boolean> {
+      return  startSpan('delete-wallet',  VulcanErrorMessages.WALLET_ERROR, async () => {
+          if(String.IsNullOrWhiteSpace(walletId)) {
+              throw new VulcanError(StatusCodes.BAD_REQUEST.toString(), VulcanErrorMessages.INVALID_WALLET_ID);
+          }
+
+          try {
+              const wallet = await this.walletServer.getShelleyWallet(walletId)
+              await wallet.delete();
+              return true;
+          } catch(error: any) {
+              throw new VulcanError(StatusCodes.INTERNAL_SERVER_ERROR.toString(), error.data.message ? error.data.message : error.message);
+          } 
+      })()
+  }
+
+
+  /**
+   * Rename existing wallet to a new one
+   * @param {*} walletId 
+   * @param {*} newName 
+   * @returns wallet object with new name, 
+   * undefined otherwise
+   */
+   @Log(true, 'Re-naming user wallet on Cardano server...')
+  async renameWallet(walletId: string, newName: string) : Promise<ShelleyWallet>{
+      return  startSpan('rename-wallet',  VulcanErrorMessages.WALLET_ERROR, async () => {
+          if(String.IsNullOrWhiteSpace(walletId)) {
+              throw new VulcanError(StatusCodes.BAD_REQUEST.toString(), VulcanErrorMessages.INVALID_WALLET_ID)
+          } else if(String.IsNullOrWhiteSpace(newName)) {
+              throw new VulcanError(StatusCodes.BAD_REQUEST.toString(), VulcanErrorMessages.INVALID_WALLET_NAME)
+          }
+
+          try {
+              let wallet = await this.walletServer.getShelleyWallet(walletId)
+              wallet = await wallet.rename(newName);
+              return wallet
+          } catch(error: any) {
+              throw new VulcanError(StatusCodes.INTERNAL_SERVER_ERROR.toString(), error.data.message ? error.data.message : error.message);
+          } 
+      })() 
+  }
+
+  /**
+   * get specific txn detail
+   * 
+   * @param {*} walletId 
+   * @param {*} txnId 
+   * @returns transaction details
+   */
+   @Log(true, 'Getting transaction details from Cardano server...')
+  async getTransactionDetails(walletId: string, txnId: string) : Promise<TransactionWallet>{
+      return  startSpan('wallet-get-transaction-details',  VulcanErrorMessages.WALLET_ERROR, async () => {
+          if(String.IsNullOrWhiteSpace(walletId)) {
+              throw new VulcanError(StatusCodes.BAD_REQUEST.toString(), VulcanErrorMessages.INVALID_WALLET_ID)
+          } else if(String.IsNullOrWhiteSpace(txnId)) {
+              throw new VulcanError(StatusCodes.BAD_REQUEST.toString(), VulcanErrorMessages.INVALID_TRANSACTION_ID)
+          }
+
+          try {
+              const wallet = await this.walletServer.getShelleyWallet(walletId);
+              return await wallet.getTransaction(txnId);
+          } catch(error: any) {
+              throw new VulcanError(StatusCodes.INTERNAL_SERVER_ERROR.toString(), error.data.message ? error.data.message : error.message);
+          }
+      })()
+  }
+
+  /**
+   * Returns the available balance in wallet
+   * 
+   * Always Use this to validate if user is 
+   * having enough balance in their account
+   * before any operation
+   * 
+   * @param {*} walletId 
+   * @returns amount in lovelace
+   */
+   @Log(true, 'Getting account balance from Cardano server...')
+  async getAccountBalance(walletId: string) : Promise<number> {
+      return  startSpan('wallet-get-account-balance',  VulcanErrorMessages.WALLET_ERROR, async () => {
+          if(String.IsNullOrWhiteSpace(walletId)) {
+              throw new VulcanError(StatusCodes.BAD_REQUEST.toString(), VulcanErrorMessages.INVALID_WALLET_ID)
+          }
+
+          try {
+              const wallet = await this.walletServer.getShelleyWallet(walletId);
+              return wallet.getAvailableBalance();
+          } catch(error: any) {
+              throw new VulcanError(StatusCodes.INTERNAL_SERVER_ERROR.toString(), error.data.message ? error.data.message : error.message);
+          }  
+      })()
+  }
+
+  /**
+   * Return account address in the wallet
+   * @param {*} walletId 
+   * @returns 
+   */
+   @Log(true, 'Getting account address in the wallet from Cardano server...')
+  async getAccountAddresses(walletId: string) : Promise<AddressWallet[]>{
+      return startSpan('wallet-get-account-addresses',  VulcanErrorMessages.WALLET_ERROR, async () => {
+          if(String.IsNullOrWhiteSpace(walletId)) {
+              throw new VulcanError(StatusCodes.BAD_REQUEST.toString(), VulcanErrorMessages.INVALID_WALLET_ID)
+          }
+
+          try {
+              const wallet = await this.walletServer.getShelleyWallet(walletId)
+              return await wallet.getAddresses();
+          } catch(error: any) {
+              throw new VulcanError(StatusCodes.INTERNAL_SERVER_ERROR.toString(), error.data.message ? error.data.message : error.message);
+          }
+      })()
+  }
+
+  @Log(true, 'Preparing Non-Fungible Token metadata...')
+  private prepareTokenData(token: any) : any {
+      return  {
+          [token.standard] : {
+              [token.policyId] : {
+                  [token.assetName] : {
+                      identifier : token.identifier,
+                      name : token.name,
+                      ipfsCid : token.ipfsCid,
+                      arweaveId : token.arweaveId,
+                      type : 'image/*',
+                      author : token.mintedBy,
+                      ...(token.nftCollectionId && token.nftCollectionId !== '') && {properties : token.nftProperty.properties}
+                  }
+              },
+              version : NFT_VERSION
+          }
+      }
+  }
+
+  /**
+   * Mint a new NFT using the input details
+   * The newly minted NFT can be a standalone asset 
+   * or
+   * a new collectible 
+   * 
+   * @param {*} token 
+   * 
+   * @returns transactionId
+   */
+  @Log(true, 'Minting new Non-Fungible token on Cardano server...')
+  async mint(token : Partial<INft>) {
+      return  startSpan('wallet-mint',  VulcanErrorMessages.WALLET_ERROR, async () => {
+          if(!token) {
+              throw new VulcanError(StatusCodes.BAD_REQUEST.toString(), VulcanErrorMessages.INVALID_MINTING_INPUT)
+          }
+
+          console.log(JSON.stringify(token))
+
+          const cardanoNetwork = ConfigProvider.getProps()['CARDANO_NETWORK'] || process.env.CARDANO_NETWORK;
+          if(String.IsNullOrWhiteSpace(cardanoNetwork)) {
+              throw new VulcanError(StatusCodes.INTERNAL_SERVER_ERROR.toString(), VulcanErrorMessages.MISSING_NETWORK)
+          }
+
+          try {
+              console.log(`Minting NFT for user : [${token.mintedBy}] on ${cardanoNetwork}`)
+              const config =  cardanoNetwork === this.network ? Config.Testnet : Config.Mainnet;
+              const wallet = await this.walletServer.getShelleyWallet(ConfigProvider.getProps()['WALLET_ID'] || process.env.WALLET_ID)
+              const addresses = [(await wallet.getAddresses())[0]];
+                      
+              // policy public/private keypair
+              const keyPair = Seed.generateKeyPair();
+              const policyVKey = keyPair.publicKey;
+              //const policySKey = keyPair.privateKey;
+
+              // generate single issuer native script
+              const keyHash = Seed.getKeyHash(policyVKey);
+              const script = Seed.buildSingleIssuerScript(keyHash);
+
+              //generate policy id
+              const scriptHash = Seed.getScriptHash(script);
+              const policyId = Seed.getPolicyId(scriptHash);
+
+              console.log(`Generated policyId : [${policyId}] for asset : ${token.assetName}`);
+
+              const assetName: string = ConfigProvider.getProps()['ASSET_NAME'] || process.env.ASSET_NAME || '';
+              if (String.IsNullOrWhiteSpace(assetName)) {
+                  throw new VulcanError(StatusCodes.NOT_ACCEPTABLE.toString(), VulcanErrorMessages.MISSING_ASSET_NAME)
+              }
+
+              token.policyId = policyId
+              token.assetName = assetName
+              token.standard = token.standard ?? NFT_STANDARD
+              let data: any = {}
+              
+              token.identifier = sha3_256(JSON.stringify(token))
+              const preparedToken = this.prepareTokenData(token)
+
+              console.log('Prepared token data', JSON.stringify(preparedToken))
+
+              data[0] = preparedToken
+
+              // asset
+              const asset = new AssetWallet(policyId, assetName, 1);
+
+              // token
+              let tokens = [new TokenWallet(asset, script, [keyPair])];
+
+              //scripts
+              let scripts = tokens.map(t => t.script || NativeScript.new_script_any(new ScriptAny()));
+
+              // get min ada for address holding tokens
+              const minAda = Seed.getMinUtxoValueWithAssets([asset], config);
+              const amounts = [minAda];
+
+              // get ttl info
+              const info = await this.walletServer.getNetworkInformation();
+              const ttl = info.node_tip.absolute_slot_number * 12000;
+
+              // get coin selection structure (without the assets)
+              let coinSelection = await wallet.getCoinSelection(addresses, amounts, data);
+              
+              // add signing keys
+              const mnemonic: string = ConfigProvider.getProps()['MNEMONIC'] || process.env.MNEMONIC || '';
+              if (String.IsNullOrWhiteSpace(mnemonic)) {
+                  throw new VulcanError(StatusCodes.NOT_ACCEPTABLE.toString(), VulcanErrorMessages.MISSING_MNEMONIC)
+              }
+
+              const rootKey = Seed.deriveRootKey(mnemonic.split(',')); 
+
+              let signingKeys = coinSelection.inputs.map(i => {
+                  let privateKey = Seed.deriveKey(rootKey, i.derivation_path).to_raw_key();
+                  return privateKey;
+              });
+
+              // add policy signing keys
+              tokens.filter(t => t.scriptKeyPairs).forEach(t => signingKeys.push(...(t.scriptKeyPairs || []).map(k => k.privateKey.to_raw_key())));
+              const metadata = Seed.buildTransactionMetadata(data);
+
+              // the wallet currently doesn't support including tokens not previuosly minted
+              // so we need to include it manually.
+              coinSelection.outputs = coinSelection.outputs.map(output => {
+                  if (output.address === addresses[0].address) {
+                      output.assets = tokens.map(t => {
+                          let asset = {
+                              policy_id: t.asset.policy_id,
+                              asset_name: Buffer.from(t.asset.asset_name).toString('hex'),
+                              quantity: t.asset.quantity
+                          };
+                          return asset;
+                      });
+                  }
+                  return output;
+              });
+
+              const txBody = Seed.buildTransactionWithToken(coinSelection, ttl, tokens, signingKeys, {data : data, config : config});
+
+              let tx = Seed.sign(txBody, signingKeys, metadata, scripts);
+
+              // submit the tx	
+              const signed = Buffer.from(tx.to_bytes()).toString('hex');
+
+              const txnId = await this.walletServer.submitTx(signed);
+              console.log(`Minted token with transaction id : [${txnId}]`)
+              token.transactionId = txnId;
+              return token;
+          } catch(error: any) {
+              throw new VulcanError(StatusCodes.INTERNAL_SERVER_ERROR.toString(), error.response?.data?.message ? error.response?.data?.message : error.message);
+          }
+      })()
+  }
+
+  @Log(true, 'Transfering funds on Cardano server...')
+  async transferFunds(input: any, config = Config.Testnet) {
+      return  startSpan('wallet-transfer-funds',  VulcanErrorMessages.WALLET_ERROR, async () => {
+          try {
+              if(input.amount <= 0) {
+                  throw new VulcanError(StatusCodes.BAD_REQUEST.toString(), VulcanErrorMessages.INVALID_TRANSFER_AMOUNT);
+              }
+
+              const receiverAddress = input.receiverAddress
+              if(String.IsNullOrWhiteSpace(receiverAddress)) {
+                  throw new VulcanError(StatusCodes.BAD_REQUEST.toString(), VulcanErrorMessages.INVALID_RECEIVER_ADDRESS);
+              }
+
+              let senderWallet;
+              let passphrase = input.passPhrase
+              if(input.user) {
+                  senderWallet = await this.getWallet(input.senderWallet)
+              } else {
+                  const walletId : string = ConfigProvider.getProps()['WALLET_ID'] || process.env.WALLET_ID || '';
+                  passphrase = ConfigProvider.getProps()['WALLET_PASS_PHRASE'] || process.env.WALLET_PASS_PHRASE || '';
+                  senderWallet = await this.getWallet(walletId)
+              }
+
+              const receiverWallet = [new AddressWallet(receiverAddress)];
+              let transaction = await senderWallet.sendPayment(passphrase, receiverWallet, [input.amount]);
+              return {transactionId : transaction.id}
+          } catch(error : any) {
+              throw new VulcanError(StatusCodes.INTERNAL_SERVER_ERROR.toString(), error.response?.data?.message ? error.response?.data?.message : error.message);
+          }   
+      })()
+  }
+
+  @Log(true, 'Transfering asset on Cardano server...')
+  async transferAsset(policyId: string, address: string, walletId : string, config = Config.Testnet) : Promise<string> {
+      return  startSpan('wallet-transfer-asset',  VulcanErrorMessages.WALLET_ERROR, async () => {
+          if(String.IsNullOrWhiteSpace(walletId)) {
+              throw new VulcanError(StatusCodes.BAD_REQUEST.toString(), VulcanErrorMessages.INVALID_WALLET_ID) 
+          } else if(String.IsNullOrWhiteSpace(policyId)) {
+              throw new VulcanError(StatusCodes.BAD_REQUEST.toString(), VulcanErrorMessages.INVALID_POLICY_ID) 
+          } else if(String.IsNullOrWhiteSpace(address)) {
+              throw new VulcanError(StatusCodes.BAD_REQUEST.toString(), VulcanErrorMessages.INVALID_ADDRESS)
+          }
+
+          try {
+              let addresses = [new AddressWallet(address)];
+
+              const assetName: string = ConfigProvider.getProps()['ASSET_NAME'] || process.env.ASSET_NAME || '';
+              if (String.IsNullOrWhiteSpace(assetName)) {
+                  throw new VulcanError(StatusCodes.NOT_ACCEPTABLE.toString(), VulcanErrorMessages.MISSING_ASSET_NAME)
+              }
+              const asset = new AssetWallet(policyId, assetName, 1);
+
+              let assets: {[key: string]: [AssetWallet] } = {}; 
+              assets[addresses[0].id] = [asset];
+
+              const minUtxo = Seed.getMinUtxoValueWithAssets([asset], config)
+              const wallet = await this.walletServer.getShelleyWallet(walletId)
+
+              const data =  ['send tokens'];
+              let coinSelection = await wallet.getCoinSelection(addresses, [minUtxo], data, assets);
+              const info = await this.walletServer.getNetworkInformation();
+
+              const mnemonic: string = ConfigProvider.getProps()['MNEMONIC'] || process.env.MNEMONIC || '';
+              if (String.IsNullOrWhiteSpace(mnemonic)) {
+                  throw new VulcanError(StatusCodes.NOT_ACCEPTABLE.toString(), VulcanErrorMessages.MISSING_MNEMONIC)
+              }
+
+              const rootKey = Seed.deriveRootKey(mnemonic.split(',')); 
+              const signingKeys = coinSelection.inputs.map(i => {
+                  let privateKey = Seed.deriveKey(rootKey, i.derivation_path).to_raw_key();
+                  return privateKey;
+              });
+
+              const metadata = Seed.buildTransactionMetadata(data);
+              const txBuild = Seed.buildTransaction(coinSelection, info.node_tip.absolute_slot_number * 12000, {metadata: metadata, config: config});
+              let txBody = Seed.sign(txBuild, signingKeys, metadata);
+              const signed = Buffer.from(txBody.to_bytes()).toString('hex');
+              const txId = await this.walletServer.submitTx(signed);
+              console.log(`Asset successfully transfered to : [${address}]. Transaction id : [${txId}]`);
+              return txId;
+          } catch(error: any) {
+              throw new VulcanError(StatusCodes.INTERNAL_SERVER_ERROR.toString(), error.data.message ? error.data.message : error.message);
+          }
+      })()
+  }
+}

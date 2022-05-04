@@ -1,1 +1,1 @@
-export * from './lib/cardano';
+export * from './cardano-wallet';

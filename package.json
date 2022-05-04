@@ -57,15 +57,18 @@
     "apollo-server-core": "^3.6.7",
     "apollo-server-fastify": "^3.6.7",
     "axios": "0.26.1",
+    "cardano-wallet-js": "1.4.0",
     "class-transformer": "0.2.0",
     "class-validator": "0.13.2",
     "fastify": "3.17.0",
     "graphql": "^16.4.0",
+    "js-sha3": "0.8.0",
     "lodash": "4.17.21",
     "pascal-case": "3.1.2",
     "path": "^0.12.7",
     "reflect-metadata": "0.1.13",
     "rxjs": "^7.0.0",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "typescript-string-operations": "1.4.1"
   }
 }
