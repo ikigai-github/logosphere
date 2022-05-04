@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { FlureeModule } from '@logosphere/fluree';
+import { CardanoModule } from '@logosphere/cardano';
 import { TestController } from '../test/test.controller';
 
 @Module({
-  imports: [FlureeModule],
+  imports: [CardanoModule],
   controllers: [TestController],
 })
 export class AppModule {}
