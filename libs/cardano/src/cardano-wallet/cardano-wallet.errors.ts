@@ -1,6 +1,6 @@
 import { LogosphereError } from '@logosphere/errors';
 
-export const messages = Object.freeze({
+export const walletMessages = Object.freeze({
   MISSING_WALLET_NAME:
     'The wallet name parameter is either undefined or empty string. Should be a valid alpha-numeric.',
   MISSING_PASS_PHRASE: 'The passphrase is either undefined or empty string.',

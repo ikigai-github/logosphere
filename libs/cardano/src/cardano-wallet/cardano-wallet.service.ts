@@ -18,7 +18,7 @@ import {
   cardanoWalletConfig,
   CardanoWalletConfig,
 } from './cardano-wallet.config';
-import { CardanoWalletError, messages } from './cardano-wallet.errors';
+import { CardanoWalletError, walletMessages } from './cardano-wallet.errors';
 import { constants } from './cardano-wallet.constants';
 
 import { String } from 'typescript-string-operations';
@@ -75,10 +75,10 @@ export class CardanoWalletService {
    */
   async createWallet(name: string, passphrase: string): Promise<CardanoWallet> {
     if (String.IsNullOrWhiteSpace(name)) {
-      throw new CardanoWalletError(messages.MISSING_WALLET_NAME);
+      throw new CardanoWalletError(walletMessages.MISSING_WALLET_NAME);
     }
     if (String.IsNullOrWhiteSpace(passphrase)) {
-      throw new CardanoWalletError(messages.MISSING_PASS_PHRASE);
+      throw new CardanoWalletError(walletMessages.MISSING_PASS_PHRASE);
     }
 
     try {
@@ -100,7 +100,7 @@ export class CardanoWalletService {
     } catch (error) {
       console.log(error);
       throw new CardanoWalletError(
-        messages.CREATE_WALLET_FAILED,
+        walletMessages.CREATE_WALLET_FAILED,
         error.message
       );
     }
@@ -114,14 +114,14 @@ export class CardanoWalletService {
    */
   async deleteWallet(walletId: string): Promise<void> {
     if (String.IsNullOrWhiteSpace(walletId)) {
-      throw new CardanoWalletError(messages.MISSING_WALLET_ID);
+      throw new CardanoWalletError(walletMessages.MISSING_WALLET_ID);
     }
 
     try {
       const wallet = await this.#walletServer.getShelleyWallet(walletId);
       await wallet.delete();
     } catch (error) {
-      throw new CardanoWalletError(messages.DELETE_WALLET_FAILED, error);
+      throw new CardanoWalletError(walletMessages.DELETE_WALLET_FAILED, error);
     }
   }
 
@@ -132,13 +132,13 @@ export class CardanoWalletService {
    */
   async getWallet(walletId: string): Promise<ShelleyWallet> {
     if (String.IsNullOrWhiteSpace(walletId)) {
-      throw new CardanoWalletError(messages.MISSING_WALLET_ID);
+      throw new CardanoWalletError(walletMessages.MISSING_WALLET_ID);
     }
 
     try {
       return await this.#walletServer.getShelleyWallet(walletId);
     } catch (error) {
-      throw new CardanoWalletError(messages.GET_WALLET_FAILED, error);
+      throw new CardanoWalletError(walletMessages.GET_WALLET_FAILED, error);
     }
   }
 
@@ -153,10 +153,10 @@ export class CardanoWalletService {
     newName: string
   ): Promise<ShelleyWallet> {
     if (String.IsNullOrWhiteSpace(walletId)) {
-      throw new CardanoWalletError(messages.MISSING_WALLET_ID);
+      throw new CardanoWalletError(walletMessages.MISSING_WALLET_ID);
     }
     if (String.IsNullOrWhiteSpace(newName)) {
-      throw new CardanoWalletError(messages.MISSING_WALLET_NAME);
+      throw new CardanoWalletError(walletMessages.MISSING_WALLET_NAME);
     }
 
     try {
@@ -164,7 +164,7 @@ export class CardanoWalletService {
       const renamedWallet = await wallet.rename(newName);
       return renamedWallet;
     } catch (error) {
-      throw new CardanoWalletError(messages.RENAME_WALLET_FAILED, error);
+      throw new CardanoWalletError(walletMessages.RENAME_WALLET_FAILED, error);
     }
   }
 
@@ -180,13 +180,13 @@ export class CardanoWalletService {
    */
   async getAccountBalance(walletId: string): Promise<number> {
     if (String.IsNullOrWhiteSpace(walletId)) {
-      throw new CardanoWalletError(messages.MISSING_WALLET_ID);
+      throw new CardanoWalletError(walletMessages.MISSING_WALLET_ID);
     }
     try {
       const wallet = await this.#walletServer.getShelleyWallet(walletId);
       return wallet.getAvailableBalance();
     } catch (error) {
-      throw new CardanoWalletError(messages.GET_BALANCE_FAILED, error);
+      throw new CardanoWalletError(walletMessages.GET_BALANCE_FAILED, error);
     }
   }
 
@@ -197,14 +197,23 @@ export class CardanoWalletService {
    */
   async getWalletAddresses(walletId: string): Promise<AddressWallet[]> {
     if (String.IsNullOrWhiteSpace(walletId)) {
-      throw new CardanoWalletError(messages.MISSING_WALLET_ID);
+      throw new CardanoWalletError(walletMessages.MISSING_WALLET_ID);
     }
 
     try {
       const wallet = await this.#walletServer.getShelleyWallet(walletId);
       return await wallet.getAddresses();
     } catch (error) {
-      throw new CardanoWalletError(messages.GET_ADDRESSES_FAILED, error);
+      throw new CardanoWalletError(walletMessages.GET_ADDRESSES_FAILED, error);
     }
+  }
+
+  /**
+   * Submits transaction to blockchain
+   * @param tx signed transaction
+   * @returns transaction ID
+   */
+  async submitTx(tx: string): Promise<string> {
+    return await this.#walletServer.submitTx(tx);
   }
 }

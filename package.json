@@ -47,6 +47,7 @@
     "webpack": "5.0.0"
   },
   "dependencies": {
+    "@emurgo/cardano-serialization-lib-nodejs": "8.0.0",
     "@fluree/flureenjs": "1.0.0-rc56",
     "@nestjs/apollo": "^10.0.0",
     "@nestjs/common": "^8.0.0",
@@ -58,7 +59,7 @@
     "apollo-server-core": "^3.6.7",
     "apollo-server-fastify": "^3.6.7",
     "axios": "0.26.1",
-    "cardano-wallet-js": "1.4.0",
+    "cardano-wallet-js": "1.2.3",
     "class-transformer": "0.2.0",
     "class-validator": "0.13.2",
     "fastify": "3.17.0",

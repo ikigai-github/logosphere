@@ -39,6 +39,7 @@ export function addDependencies(tree: Tree): GeneratorCallback {
   return addDependenciesToPackageJson(
     tree,
     {
+      '@emurgo/cardano-serialization-lib-nodejs': '8.0.0',
       '@nestjs/apollo': nestJsApolloVersion,
       '@nestjs/common': NEST_VERSION,
       '@nestjs/core': NEST_VERSION,

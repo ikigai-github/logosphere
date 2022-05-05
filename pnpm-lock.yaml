@@ -7,6 +7,7 @@ importers:
       '@angular-devkit/core': ^13.3.4
       '@babel/core': 7.0.1
       '@babel/preset-env': 7.0.0
+      '@emurgo/cardano-serialization-lib-nodejs': 8.0.0
       '@fluree/flureenjs': 1.0.0-rc56
       '@nestjs/apollo': ^10.0.0
       '@nestjs/common': ^8.0.0
@@ -37,7 +38,7 @@ importers:
       apollo-server-fastify: ^3.6.7
       axios: 0.26.1
       babel-loader: 8.0.2
-      cardano-wallet-js: 1.4.0
+      cardano-wallet-js: 1.2.3
       class-transformer: 0.2.0
       class-validator: 0.13.2
       eslint: ~8.12.0
@@ -63,6 +64,7 @@ importers:
       typescript-string-operations: 1.4.1
       webpack: 5.0.0
     dependencies:
+      '@emurgo/cardano-serialization-lib-nodejs': 8.0.0
       '@fluree/flureenjs': 1.0.0-rc56
       '@nestjs/apollo': 10.0.9_d18125ddd4516b3d35bd03a442d3d804
       '@nestjs/common': 8.4.4_255e70253a36faa9ea84cf0e650a77c8
@@ -74,7 +76,7 @@ importers:
       apollo-server-core: 3.6.7_graphql@16.4.0
       apollo-server-fastify: 3.6.7_fastify@3.17.0+graphql@16.4.0
       axios: 0.26.1
-      cardano-wallet-js: 1.4.0
+      cardano-wallet-js: 1.2.3
       class-transformer: 0.2.0
       class-validator: 0.13.2
       fastify: 3.17.0
@@ -1200,8 +1202,12 @@ packages:
       - supports-color
     dev: true
 
-  /@emurgo/cardano-serialization-lib-nodejs/10.0.4:
-    resolution: {integrity: sha512-s0/bzBvR+wCL8IwB/2IU0yHdSybfGVORrOPxCuEMOFvvIM4KO5aYVoHMFjqzEO2A4aXk+yPx6E2R2zyndxWGVA==}
+  /@emurgo/cardano-serialization-lib-nodejs/7.1.0:
+    resolution: {integrity: sha512-ogAUL23kJLDdc5nfRGBMhx/84aq0hnmEJea6VNozm3vnTYPsE1tmdvcYAmoRvsn+k745/E89ToSYBrjwnuZZpg==}
+    dev: false
+
+  /@emurgo/cardano-serialization-lib-nodejs/8.0.0:
+    resolution: {integrity: sha512-GHN1w1B//JwLRKr3/VE5xTGpY3Nof0FnZ6pMvxYaZ8LbXHlW7vfcqzz/5cEc2m1oyULzdCPQm8/8u5I9VTvJlg==}
     dev: false
 
   /@eslint/eslintrc/1.2.2:
@@ -3746,11 +3752,11 @@ packages:
   /caniuse-lite/1.0.30001332:
     resolution: {integrity: sha512-10T30NYOEQtN6C11YGg411yebhvpnC6Z102+B95eAsN0oB6KUs01ivE8u+G6FMIRtIrVlYXhL+LUwQ3/hXwDWw==}
 
-  /cardano-wallet-js/1.4.0:
-    resolution: {integrity: sha512-u2O2GQHMo4cVQpmgR5pgxfuK6IkmhEeNrufD8xqsLUZD2gWIFoFfVV0A+6tUI/EzA5glKEJaryLkKC27hnS+Ng==}
+  /cardano-wallet-js/1.2.3:
+    resolution: {integrity: sha512-uCHdAcvd4v6BmiEK3SRyZcLNsyT67IFmXX2ssELusnVIVCDRqE24nqP14WhenYmh00AxZy/wdDL2rDeu3SPqnQ==}
     hasBin: true
     dependencies:
-      '@emurgo/cardano-serialization-lib-nodejs': 10.0.4
+      '@emurgo/cardano-serialization-lib-nodejs': 7.1.0
       axios: 0.21.4
       bip39: 3.0.4
       chai: 4.3.6

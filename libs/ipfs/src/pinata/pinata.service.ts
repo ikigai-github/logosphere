@@ -46,8 +46,8 @@ export class PinataService {
   /**
    *
    * @param file filePath or fs.ReadStream
-   * @param metadata Optional metadata
-   * @returns PinataPinOptions object
+   * @param metadata Optional PinataPinOptions
+   * @returns PinataPinResponse object
    */
   async uploadFile(
     file: string | fs.ReadStream,
