@@ -1510,17 +1510,10 @@ packages:
       - supports-color
     dev: true
 
-  /@emurgo/cardano-serialization-lib-nodejs/7.1.0:
+  /@emurgo/cardano-serialization-lib-nodejs/10.0.4:
     resolution:
       {
-        integrity: sha512-ogAUL23kJLDdc5nfRGBMhx/84aq0hnmEJea6VNozm3vnTYPsE1tmdvcYAmoRvsn+k745/E89ToSYBrjwnuZZpg==,
-      }
-    dev: false
-
-  /@emurgo/cardano-serialization-lib-nodejs/8.0.0:
-    resolution:
-      {
-        integrity: sha512-GHN1w1B//JwLRKr3/VE5xTGpY3Nof0FnZ6pMvxYaZ8LbXHlW7vfcqzz/5cEc2m1oyULzdCPQm8/8u5I9VTvJlg==,
+        integrity: sha512-s0/bzBvR+wCL8IwB/2IU0yHdSybfGVORrOPxCuEMOFvvIM4KO5aYVoHMFjqzEO2A4aXk+yPx6E2R2zyndxWGVA==,
       }
     dev: false
 
