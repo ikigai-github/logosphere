@@ -1,16 +1,16 @@
 {
-  "root": "e2e/fluree-e2e",
-  "sourceRoot": "e2e/fluree-e2e/src",
+  "root": "e2e/ipfs-e2e",
+  "sourceRoot": "e2e/ipfs-e2e/src",
   "projectType": "application",
   "targets": {
     "build": {
       "executor": "@nrwl/node:webpack",
-      "outputs": ["dist/e2e/fluree-e2e"],
+      "outputs": ["dist/e2e/ipfs-e2e"],
       "options": {
-        "outputPath": "dist/e2e/fluree-e2e",
-        "main": "e2e/fluree-e2e/src/main.ts",
-        "tsConfig": "e2e/fluree-e2e/tsconfig.app.json",
-        "assets": ["e2e/fluree-e2e/src/assets"]
+        "outputPath": "dist/e2e/ipfs-e2e",
+        "main": "e2e/ipfs-e2e/src/main.ts",
+        "tsConfig": "e2e/ipfs-e2e/tsconfig.app.json",
+        "assets": ["e2e/ipfs-e2e/src/assets"]
       },
       "configurations": {
         "production": {
@@ -19,8 +19,8 @@
           "inspect": false,
           "fileReplacements": [
             {
-              "replace": "e2e/fluree-e2e/src/environments/environment.ts",
-              "with": "e2e/fluree-e2e/src/environments/environment.prod.ts"
+              "replace": "e2e/ipfs-e2e/src/environments/environment.ts",
+              "with": "e2e/ipfs-e2e/src/environments/environment.prod.ts"
             }
           ]
         }
@@ -29,21 +29,21 @@
     "serve": {
       "executor": "@nrwl/node:node",
       "options": {
-        "buildTarget": "fluree-e2e:build"
+        "buildTarget": "ipfs-e2e:build"
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": ["dist/e2e/ipfs-e2e"],
       "options": {
-        "lintFilePatterns": ["e2e/fluree-e2e/**/*.ts"]
+        "lintFilePatterns": ["e2e/ipfs-e2e/**/*.ts"]
       }
     },
     "e2e": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/e2e/fluree-e2e"],
+      "outputs": ["coverage/e2e/ipfs-e2e"],
       "options": {
-        "jestConfig": "e2e/fluree-e2e/jest.config.ts",
+        "jestConfig": "e2e/ipfs-e2e/jest.config.ts",
         "passWithNoTests": true
       }
     }

@@ -9,6 +9,8 @@
     "errors": "libs/errors",
     "fluree": "libs/fluree",
     "fluree-e2e": "e2e/fluree-e2e",
+    "ipfs": "libs/ipfs",
+    "ipfs-e2e": "e2e/ipfs-e2e",
     "readers": "libs/readers",
     "sdk": "libs/sdk",
     "sdk-e2e": "e2e/sdk-e2e",

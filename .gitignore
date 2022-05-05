@@ -35,6 +35,9 @@ testem.log
 /typings
 .pnpm-debug.log
 
+# environment files
+.env*
+
 # System Files
 .DS_Store
 Thumbs.db

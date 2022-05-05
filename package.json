@@ -54,6 +54,7 @@
     "@nestjs/core": "^8.0.0",
     "@nestjs/graphql": "^10.0.0",
     "@nestjs/platform-fastify": "^8.0.0",
+    "@pinata/sdk": "1.1.25",
     "apollo-server-core": "^3.6.7",
     "apollo-server-fastify": "^3.6.7",
     "axios": "0.26.1",
