@@ -1,5 +1,10 @@
-import { FlureeWhereOperator, FlureeQuery } from '../fluree.query.schema';
-import { PredicateNode, QuerySpec, ReferenceNode } from './query.schema';
+import {
+  FlureeWhereOperator,
+  FlureeQuery,
+  PredicateNode,
+  QuerySpec,
+  ReferenceNode,
+} from './query.schema';
 
 /**
  * A guard to check if a predicate node is a reference node

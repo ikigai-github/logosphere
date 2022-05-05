@@ -1,7 +1,7 @@
 import {
   FlureeTransactIdentifier,
   FlureeTransactObject,
-} from '../fluree.transact.schema';
+} from './transact.schema';
 import { makeId } from './transact.util';
 
 type FlureeLinkType = 'link';
@@ -15,7 +15,7 @@ interface FlureeLinkDataNode {
   data(linkData: object): FlureeLinkNode;
 }
 
-export function isFlureeLinkNode(node: any) {
+export function isFlureeLinkNode(node: unknown) {
   return typeof node === 'object' && (node as FlureeLinkNode).$$kind === 'link';
 }
 

@@ -1,5 +1,5 @@
-import { create } from './transact';
-import { command, serialize, hash, signableCommand } from './fluree.command';
+import { create } from '../transact';
+import { command, serialize, hash, signableCommand } from './command.util';
 
 describe('Fluree command utils', () => {
   it('should create a valid command', () => {

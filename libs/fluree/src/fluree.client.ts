@@ -1,9 +1,11 @@
 import * as fluree from '@fluree/flureenjs';
-
+import { Inject, Injectable } from '@nestjs/common';
+import { ConfigType } from '@nestjs/config';
+import axios from 'axios';
 import { flureeConfig, FlureeConfig } from './fluree.config';
 import { FlureeError, messages } from './fluree.errors';
-import { FlureeQuery } from './fluree.query.schema';
-import { FlureeTransaction } from './fluree.transact.schema';
+import { FlureeQuery } from './query';
+import { FlureeTransaction } from './transact';
 import {
   FlureeCreateLedgerResponse,
   FlureeDeleteLedgerResponse,
@@ -12,10 +14,8 @@ import {
   FlureeQueryResponse,
   FlureeTransactionResponse,
 } from './fluree-response.interface';
+
 import { processFlureeDuration } from './fluree.util';
-import { Inject, Injectable } from '@nestjs/common';
-import { ConfigType } from '@nestjs/config';
-import axios from 'axios';
 
 @Injectable()
 export class FlureeClient {

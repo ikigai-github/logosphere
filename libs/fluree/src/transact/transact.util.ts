@@ -10,7 +10,7 @@ export function makeId(collection: string, handle?: string | number): string {
   if (typeof handle === 'undefined') {
     handle = globalFlureeTempIdHandle++;
   }
-  return `${collection}\$${handle}`;
+  return `${collection}$${handle}`;
 }
 
 /**
