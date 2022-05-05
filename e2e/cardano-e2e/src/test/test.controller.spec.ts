@@ -4,11 +4,16 @@ import {
   CardanoWalletService,
   CardanoWalletError,
   cardanoWalletConfig,
-  // constants,
+  MintService,
+  mintConfig,
+  Nft,
 } from '@logosphere/cardano';
 
 let wallet: CardanoWalletService;
+let minting: MintService;
+
 let walletId: string;
+let mintingWalletId: string;
 
 jest.mock('@logosphere/cardano', () => ({
   cardanoWalletConfig: registerAs('cardanoWallet', () => ({
@@ -16,16 +21,26 @@ jest.mock('@logosphere/cardano', () => ({
   })),
   CardanoWalletService: jest.requireActual('@logosphere/cardano')
     .CardanoWalletService,
+  mintConfig: registerAs('mint', () => ({
+    network: 'testnet',
+  })),
+  MintService: jest.requireActual('@logosphere/cardano').MintService,
 }));
 
-describe('Cardano Wallet Service', () => {
+describe('Cardano Module', () => {
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [ConfigModule.forFeature(cardanoWalletConfig)],
-      providers: [CardanoWalletService],
+      imports: [
+        ConfigModule.forFeature(cardanoWalletConfig),
+        ConfigModule.forFeature(mintConfig),
+      ],
+      providers: [CardanoWalletService, MintService],
     }).compile();
 
     wallet = module.get<CardanoWalletService>(CardanoWalletService);
+    minting = module.get<MintService>(MintService);
+
+    mintingWalletId = process.env.CARDANO_WALLET_ID;
 
     const walletName = 'notMyKeysNotMyCryptoWallet';
     const passPhrase = 'nothingdawg';
@@ -82,8 +97,50 @@ describe('Cardano Wallet Service', () => {
     expect(addresses[0].state).toBe('unused');
   });
 
-  //walet ids:
-  // 2f144af47f06ffb2648470bd4452f25da09e9850 : "service measure clip canal toward door thought knock huge doctor library assume grid jealous lend"
+  it('should have ADA in the minting wallet', async () => {
+    const balance = await wallet.getAccountBalance(mintingWalletId);
+    console.log(`Available ADA in minting wallet: ${balance / 1000000}`);
+    expect(balance).toBeGreaterThan(1000000);
+  });
+
+  it('should mint NFT', async () => {
+    const ipfsCid = 'ipfs://QmPrhyaEVcavi3XuP7WHBcD2n8xcUK6mGcF1u6AchXYbgn';
+    const name = 'Ikigai Logo';
+
+    const nft: Nft = {
+      name,
+      description: 'Ikigai Technologies Logo',
+      assetName: 'logosphere-minting-e2e-test',
+      standard: '721',
+      mediaType: 'image/*',
+      version: '1.0',
+      thumbnailIpfsCid: ipfsCid,
+      files: [
+        {
+          name,
+          mediaType: 'image/*',
+          src: ipfsCid,
+        },
+      ],
+      logosphere: {
+        ledgerId: 'test/alpha',
+        subjectId: '510173395288183',
+        txId: '16e045cbf0fc416a291aba43365c77864756b452520e832e3388c66379bdcef3',
+      },
+    };
+
+    const mintedNft = await minting.mint(
+      process.env.CARDANO_WALLET_ID,
+      process.env.CARDANO_WALLET_MNEMONIC,
+      nft
+    );
+
+    console.log(`Minted NFT: ${JSON.stringify(mintedNft)}`);
+  });
+
+  // minting wallet:  2f144af47f06ffb2648470bd4452f25da09e9850 : "service measure clip canal toward door thought knock huge doctor library assume grid jealous lend"
+
+  // other walet ids:
   // dc94f598eb6144cafcb3a6f1a20e7712e02156d9 : "forget sense waste pull spoil until best theme vital hotel eight confirm repeat sadness pink"
   // c78fe0bfc6a1198ea5f8de49e11a41701f5be72e : "track repeat toward type behave pull leg tribe leg soda forest master pitch benefit tenant"
   // 5f37c23c3cdc5b933919b09541ecee4183c06ad2 : "bamboo sail truth eyebrow ten sight main dilemma scheme jazz matrix dinosaur trim diary summer"
