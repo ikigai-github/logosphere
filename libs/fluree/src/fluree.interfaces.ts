@@ -30,12 +30,6 @@ export interface FlureePredicate {
   fullText?: boolean;
 }
 
-export interface FlureeQuery {
-  select: string[];
-  from: string[] | string;
-  where?: string[];
-}
-
 export const Predicates = Object.freeze({
   _ID: '_id',
   ID: 'id',

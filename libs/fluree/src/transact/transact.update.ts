@@ -1,7 +1,7 @@
 import {
   FlureeExistingTransactIdentifier,
-  FlureePredicate,
-  FlureeReferenceValue,
+  FlureePredicateKey,
+  FlureePredicateValue,
   FlureeSubjectId,
   FlureeTransactBuildStep,
   FlureeTransaction,
@@ -12,7 +12,7 @@ import {
  * An update Transact pair can be either a predicate value or a subject id
  */
 type FlureeUpdateTransactPair = [
-  FlureeReferenceValue | FlureeSubjectId,
+  FlureePredicateValue | FlureeSubjectId,
   object
 ];
 
@@ -59,7 +59,7 @@ interface FlureeUpdateTransactDataStep {
  * @returns true if the node matches the tuple shape
  */
 function isFlureeUpdateTransactPair(
-  node: any[]
+  node: unknown[]
 ): node is FlureeUpdateTransactPair {
   return (
     node.length === 2 &&
@@ -73,7 +73,7 @@ function isFlureeUpdateTransactPair(
  */
 function makeId(
   value: string | number,
-  predicate?: FlureePredicate
+  predicate?: FlureePredicateKey
 ): FlureeExistingTransactIdentifier {
   if (typeof predicate !== 'undefined') {
     return [predicate, value];
@@ -92,7 +92,7 @@ function makeId(
  */
 function asUpdateTransactions(
   data: FlureeUpdateTransactDataInput,
-  predicate?: FlureePredicate
+  predicate?: FlureePredicateKey
 ): FlureeTransaction[] {
   // Is it an array of input?
   if (Array.isArray(data)) {
@@ -139,7 +139,7 @@ function asUpdateTransactions(
 class FlureeUpdateTransactBuilder implements FlureeUpdateTransactNode {
   private _data: FlureeTransaction[] = [];
 
-  constructor(private _predicate?: FlureePredicate) {}
+  constructor(private _predicate?: FlureePredicateKey) {}
 
   data<T extends FlureeUpdateTransactDataInput>(
     data: T
@@ -159,7 +159,7 @@ class FlureeUpdateTransactBuilder implements FlureeUpdateTransactNode {
  * @returns A builder ready to accept update data.
  */
 export function update(
-  predicate?: FlureePredicate
+  predicate?: FlureePredicateKey
 ): FlureeUpdateTransactDataStep {
   return new FlureeUpdateTransactBuilder(predicate);
 }

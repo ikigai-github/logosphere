@@ -92,7 +92,7 @@ export type FlureeQuery = FlureeMultiQuery | FlureeSingleQuery;
 /**
  * All Fluree objects will have an _id field at a minimum
  */
-export interface FlureeSingleObject extends Record<string, any> {
+export interface FlureeSingleObject extends Record<string, unknown> {
   _id: number;
 }
 
@@ -109,8 +109,10 @@ export type FlureeObject = FlureeSingleObject | FlureeMultiObject;
  * @param obj The object to perform the type guard on
  * @returns true if the object is a single Fluree Object
  */
-export function isFlureeSingleObject(obj: any): obj is FlureeSingleObject {
-  return typeof obj === 'object' && obj._id !== undefined;
+export function isFlureeSingleObject(obj: unknown): obj is FlureeSingleObject {
+  return (
+    typeof obj === 'object' && (obj as FlureeSingleObject)._id !== undefined
+  );
 }
 
 /**
@@ -118,7 +120,7 @@ export function isFlureeSingleObject(obj: any): obj is FlureeSingleObject {
  * @param obj The object to perform the type guard on
  * @returns true if the object is a FlureeObject
  */
-export function isFlureeObject(obj: any): obj is FlureeObject {
+export function isFlureeObject(obj: unknown): obj is FlureeObject {
   if (Array.isArray(obj) && (obj.length === 0 || obj[0]._id !== undefined)) {
     return true;
   }

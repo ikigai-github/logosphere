@@ -1,9 +1,9 @@
 import * as fluree from '@fluree/flureenjs';
+
 import { flureeConfig, FlureeConfig } from './fluree.config';
 import { FlureeError, messages } from './fluree.errors';
 import { FlureeQuery } from './fluree.query.schema';
 import { FlureeTransaction } from './fluree.transact.schema';
-
 import {
   FlureeCreateLedgerResponse,
   FlureeDeleteLedgerResponse,
@@ -15,6 +15,7 @@ import {
 import { processFlureeDuration } from './fluree.util';
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
+import axios from 'axios';
 
 @Injectable()
 export class FlureeClient {
@@ -187,6 +188,21 @@ export class FlureeClient {
       bytes: response.bytes,
       flakes: response.flakes.length,
     };
+  }
+
+  /**
+   * Posts the command to the ledger configured by the client
+   */
+  async command(cmd: string, sig?: string) {
+    try {
+      const response = await axios.post(
+        `${this.#config.url}/fdb/${this.#config.ledger}/command`,
+        { cmd, sig }
+      );
+      return response.data;
+    } catch (error) {
+      throw new FlureeError(messages.CREATE_DB_FAILED, error);
+    }
   }
 
   /**
