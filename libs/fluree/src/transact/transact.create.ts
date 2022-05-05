@@ -49,7 +49,7 @@ interface FlureeCreateTransactDataStep {
  * @returns true if the tuple matches the expected shape
  */
 function isFlureeCreateTransactPair(
-  node: any[]
+  node: unknown[]
 ): node is FlureeCreateTransactPair {
   return (
     node.length === 2 &&

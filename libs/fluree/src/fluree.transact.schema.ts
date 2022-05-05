@@ -3,8 +3,8 @@ const flureeTransactionActions = ['add', 'update', 'upsert', 'delete'] as const;
 export type FlureeTransactAction = typeof flureeTransactionActions[number];
 export type FlureeSubjectId = number;
 export type FlureeTemporaryId = string;
-export type FlureePredicate = string;
-export type FlureeReferenceValue = string | number;
+export type FlureePredicateKey = string;
+export type FlureePredicateValue = string | number;
 
 /**
  * A Fluree transaction identifier can be a subject id (number), temporary id (string),
@@ -13,7 +13,7 @@ export type FlureeReferenceValue = string | number;
 export type FlureeTransactIdentifier =
   | FlureeSubjectId
   | FlureeTemporaryId
-  | [FlureePredicate, FlureeReferenceValue];
+  | [FlureePredicateKey, FlureePredicateValue];
 
 /**
  * An existing identifier cannot include a temporary id

@@ -1,4 +1,4 @@
-import { LogosphereError } from '@logosphere/errors'
+import { LogosphereError } from '@logosphere/errors';
 
 export const messages = Object.freeze({
   TRANSACT_FAILED: 'Fluree transact failed',
@@ -10,10 +10,11 @@ export const messages = Object.freeze({
   LIST_LEDGER_INFO_FAILED: 'Failed to get ledger infor for the given ledger',
   CREATE_LEDGER_FAILED: 'Failed to create a new ledger',
   DELETE_LEDGER_FAILED: 'Failed to delete the given ledger',
+  COMMAND_FAILED: 'Failed to execute the supplied command',
 });
 
 export class FlureeError extends LogosphereError {
-  constructor(message: string, error?: any) {
+  constructor(message: string, error?) {
     const details = error?.response?.data?.message ?? '';
     super(`${message}: ${details}`, error);
   }

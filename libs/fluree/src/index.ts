@@ -6,3 +6,8 @@ export * from './fluree.config';
 export * from './queries';
 export * from './fluree.constants';
 export * from './fluree.module';
+export * from './fluree.transact.schema';
+export * from './fluree.query.schema';
+export * from './fluree.command';
+export * from './builder';
+export * from './transact';

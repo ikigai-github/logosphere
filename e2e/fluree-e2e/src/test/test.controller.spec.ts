@@ -1,6 +1,12 @@
 import { ConfigModule, registerAs } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
-import { FlureeClient, flureeConfig } from '@logosphere/fluree'
+import {
+  command,
+  create,
+  FlureeClient,
+  flureeConfig,
+  serialize,
+} from '@logosphere/fluree';
 
 let client: FlureeClient;
 const ledger = `test/test${new Date().valueOf()}`;
@@ -10,7 +16,10 @@ jest.mock('@logosphere/fluree', () => ({
     url: 'http://localhost:8090',
     ledger,
   })),
-  FlureeClient: jest.requireActual('@logosphere/fluree').FlureeClient
+  FlureeClient: jest.requireActual('@logosphere/fluree').FlureeClient,
+  command: jest.requireActual('@logosphere/fluree').command,
+  create: jest.requireActual('@logosphere/fluree').create,
+  serialize: jest.requireActual('@logosphere/fluree').serialize,
 }));
 
 describe('Fluree client', () => {
@@ -71,5 +80,29 @@ describe('Fluree client', () => {
     expect(result.status).toBe(200);
 
     console.log(JSON.stringify(result));
+  });
+
+  it('should accept a command', async () => {
+    const collectionName = `thing${Math.floor(Math.random() * 10)}`;
+    const txResult = await client.transact([
+      {
+        _id: '_collection',
+        _action: 'add',
+        name: collectionName,
+      },
+      {
+        _id: '_predicate',
+        _action: 'add',
+        name: `${collectionName}/name`,
+        type: 'string',
+      },
+    ]);
+
+    expect(txResult.status).toBe(200);
+
+    const tx = create(collectionName).data({ name: 'something' }).build();
+    const cmd = command(ledger, tx);
+    const result = await client.command(serialize(cmd));
+    expect(result.status).toBe(200);
   });
 });
