@@ -44,6 +44,7 @@ export function addDependencies(tree: Tree): GeneratorCallback {
       '@nestjs/core': NEST_VERSION,
       '@nestjs/graphql': nestJsGraphQLVersion,
       '@nestjs/platform-fastify': NEST_VERSION,
+      '@pinata/sdk': '1.1.25',
       'apollo-server-core': '^3.6.7',
       'apollo-server-fastify': '^3.6.7',
       'cardano-wallet-js': '1.4.0',
