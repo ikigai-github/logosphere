@@ -1,13 +1,13 @@
 {
   "$schema": "http://json-schema.org/schema",
   "cli": "nx",
-  "$id": "NxLogosphereFlureeGeneratorSchema",
+  "$id": "NxLogosphereCanonicalGeneratorSchema",
   "title": "",
   "type": "object",
   "properties": {
     "module": {
       "type": "string",
-      "description": "Module for which Fluree schema should be generated",
+      "description": "Module for which canonical schema should be generated",
       "x-prompt": "What module is it for?",
       "alias": "m"
     },
@@ -23,7 +23,7 @@
     },
     "source": {
       "type": "string",
-      "description": "Generated schema for Fluree "
+      "description": "Generated canonical schema JSON "
     }
   },
   "required": ["module"]
