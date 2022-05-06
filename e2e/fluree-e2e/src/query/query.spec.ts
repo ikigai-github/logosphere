@@ -8,19 +8,21 @@ import {
   serialize,
 } from '@logosphere/fluree';
 
+import { createCollection, createLedger, removeLedger } from '../util.spec';
+
 let client: FlureeClient;
 const ledger = `test/test${new Date().valueOf()}`;
 
-jest.mock('@logosphere/fluree', () => ({
-  flureeConfig: registerAs('fluree', () => ({
-    url: 'http://localhost:8090',
-    ledger,
-  })),
-  FlureeClient: jest.requireActual('@logosphere/fluree').FlureeClient,
-  command: jest.requireActual('@logosphere/fluree').command,
-  create: jest.requireActual('@logosphere/fluree').create,
-  serialize: jest.requireActual('@logosphere/fluree').serialize,
-}));
+jest.mock('@logosphere/fluree', () => {
+  const original = jest.requireActual('@logosphere/fluree');
+  return {
+    ...original,
+    flureeConfig: registerAs('fluree', () => ({
+      url: 'http://localhost:8090',
+      ledger,
+    })),
+  };
+});
 
 describe('Fluree client', () => {
   /*
@@ -34,33 +36,14 @@ describe('Fluree client', () => {
 
     client = module.get<FlureeClient>(FlureeClient);
 
-    const ledgers = await client.listLedgers();
-    if (!ledgers.includes(ledger)) {
-      await client.createLedger(ledger);
-    }
-
-    let info = await client.ledgerInfo(ledger);
-    for (let i = 0; info.status !== 'ready' && i < 3; ++i) {
-      await new Promise((resolve) => setTimeout(resolve, 100));
-      info = await client.ledgerInfo(ledger);
-    }
-
-    if (info.status !== 'ready') {
-      throw Error('Timed out waiting for ledger to be ready for tests');
-    }
+    await createLedger(client, ledger);
   });
 
   /**
    * Remove the temporary ledger and close the connection after tests complete
    */
   afterAll(async () => {
-    try {
-      await client.deleteLedger(ledger);
-    } catch (error) {
-      console.log(error);
-    }
-
-    await client.close();
+    await removeLedger(client, ledger);
   });
 
   it('should accept a query', async () => {
@@ -83,24 +66,10 @@ describe('Fluree client', () => {
   });
 
   it('should accept a command', async () => {
-    const collectionName = `thing${Math.floor(Math.random() * 10)}`;
-    const txResult = await client.transact([
-      {
-        _id: '_collection',
-        _action: 'add',
-        name: collectionName,
-      },
-      {
-        _id: '_predicate',
-        _action: 'add',
-        name: `${collectionName}/name`,
-        type: 'string',
-      },
-    ]);
-
+    const txResult = await createCollection(client, 'cmdtest');
     expect(txResult.status).toBe(200);
 
-    const tx = create(collectionName).data({ name: 'something' }).build();
+    const tx = create('cmdtest').data({ name: 'something' }).build();
     const cmd = command(ledger, tx);
     const result = await client.command(serialize(cmd));
     expect(result.status).toBe(200);

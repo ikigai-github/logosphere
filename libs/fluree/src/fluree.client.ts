@@ -76,6 +76,20 @@ export class FlureeClient {
   }
 
   /**
+   * @returns The url of the Fluree database the client is connected to
+   */
+  getUrl() {
+    return this.#config.url;
+  }
+
+  /**
+   * @returns The ledger in the Fluree database the client is accessing
+   */
+  getLedger() {
+    return this.#config.ledger;
+  }
+
+  /**
    * Fetches a list of ledgers assocated with the current connection
    * @returns An array of ledger names
    */
@@ -199,7 +213,7 @@ export class FlureeClient {
         `${this.#config.url}/fdb/${this.#config.ledger}/command`,
         { cmd, sig }
       );
-      return response.data;
+      return response;
     } catch (error) {
       throw new FlureeError(messages.CREATE_DB_FAILED, error);
     }

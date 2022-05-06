@@ -6,6 +6,10 @@ module.exports = {
       tsconfig: '<rootDir>/tsconfig.spec.json',
     },
   },
+  testPathIgnorePatterns: [
+    '<rootDir>/node_modules',
+    '<rootDir>/src/util.spec.ts',
+  ],
   testEnvironment: 'node',
   transform: {
     '^.+\\.[tj]s$': 'ts-jest',
