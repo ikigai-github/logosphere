@@ -11,6 +11,7 @@ export const messages = Object.freeze({
   CREATE_LEDGER_FAILED: 'Failed to create a new ledger',
   DELETE_LEDGER_FAILED: 'Failed to delete the given ledger',
   COMMAND_FAILED: 'Failed to execute the supplied command',
+  TX_WAIT_FAILED: 'Failed waiting for transaction to complete',
 });
 
 export class FlureeError extends LogosphereError {

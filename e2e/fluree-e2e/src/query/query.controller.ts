@@ -1,12 +1,14 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { FlureeQueryResponse, FlureeClient } from '@logosphere/fluree';
 
 @Controller('query')
 export class QueryController {
   constructor(private client: FlureeClient) {}
 
-  @Get()
-  public async get(): Promise<FlureeQueryResponse> {
-    return this.client.query({ select: ['*'], from: '_collection' });
+  @Get('collection/:collection')
+  public async findAll(
+    @Param('collection') collection: string
+  ): Promise<FlureeQueryResponse> {
+    return this.client.query({ select: ['*'], from: collection });
   }
 }

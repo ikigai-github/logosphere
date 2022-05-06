@@ -1,10 +1,19 @@
 import { Module, CacheModule } from '@nestjs/common';
 import { FlureeModule } from '@logosphere/fluree';
-import { QueryController } from '../query/query.controller';
-import { SingingController } from '../signing/signing.controller';
+import { QueryController } from '../query';
+import { SingingController } from '../signing';
+import { LedgerController } from '../ledger';
+import { AccountController } from '../account';
+import { CollectionController } from '../collection';
 
 @Module({
   imports: [FlureeModule, CacheModule.register()],
-  controllers: [QueryController, SingingController],
+  controllers: [
+    LedgerController,
+    QueryController,
+    SingingController,
+    AccountController,
+    CollectionController,
+  ],
 })
 export class AppModule {}
