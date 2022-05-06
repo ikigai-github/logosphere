@@ -1,4 +1,4 @@
-import { FlureeObject } from './fluree.query.schema';
+import { FlureeObject } from './query';
 
 export interface FlureeResponse {
   transactionId: string;

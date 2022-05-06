@@ -1,6 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { FlureeService } from './fluree.service';
-import { FlureeResponse } from './fluree-response.interface';
 
 describe('FlureeService', () => {
   let fluree: FlureeService;

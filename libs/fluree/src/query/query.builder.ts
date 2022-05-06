@@ -3,7 +3,7 @@ import {
   FlureeQueryOptions,
   FlureeFromClause,
   ReferenceOptions,
-} from '../fluree.query.schema';
+} from './query.schema';
 import { PredicateNode, QuerySpec, ReferenceNode } from './query.schema';
 
 /**
@@ -123,7 +123,7 @@ class QueryBuilderStep implements SelectStep, WhereStep {
     return this;
   }
 
-  or(clause: any): OrStep {
+  or(clause: string): OrStep {
     this.spec.where.push(clause);
     this.spec.whereOperator = 'OR';
     return this;

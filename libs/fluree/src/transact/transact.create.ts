@@ -3,7 +3,7 @@ import {
   FlureeTransactBuildStep,
   FlureeTransactIdentifier,
   FlureeTransaction,
-} from '../fluree.transact.schema';
+} from './transact.schema';
 import { makeId } from './transact.util';
 
 /**

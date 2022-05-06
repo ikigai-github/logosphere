@@ -1,9 +1,11 @@
 import * as fluree from '@fluree/flureenjs';
-
+import { Inject, Injectable } from '@nestjs/common';
+import { ConfigType } from '@nestjs/config';
+import axios from 'axios';
 import { flureeConfig, FlureeConfig } from './fluree.config';
 import { FlureeError, messages } from './fluree.errors';
-import { FlureeQuery } from './fluree.query.schema';
-import { FlureeTransaction } from './fluree.transact.schema';
+import { FlureeQuery } from './query';
+import { FlureeTransaction } from './transact';
 import {
   FlureeCreateLedgerResponse,
   FlureeDeleteLedgerResponse,
@@ -12,10 +14,8 @@ import {
   FlureeQueryResponse,
   FlureeTransactionResponse,
 } from './fluree-response.interface';
+
 import { processFlureeDuration } from './fluree.util';
-import { Inject, Injectable } from '@nestjs/common';
-import { ConfigType } from '@nestjs/config';
-import axios from 'axios';
 
 @Injectable()
 export class FlureeClient {
@@ -73,6 +73,20 @@ export class FlureeClient {
     let connection = this.#connection;
     if (!connection) connection = await this.reconnect();
     return connection;
+  }
+
+  /**
+   * @returns The url of the Fluree database the client is connected to
+   */
+  getUrl() {
+    return this.#config.url;
+  }
+
+  /**
+   * @returns The ledger in the Fluree database the client is accessing
+   */
+  getLedger() {
+    return this.#config.ledger;
   }
 
   /**
@@ -199,7 +213,7 @@ export class FlureeClient {
         `${this.#config.url}/fdb/${this.#config.ledger}/command`,
         { cmd, sig }
       );
-      return response.data;
+      return response;
     } catch (error) {
       throw new FlureeError(messages.CREATE_DB_FAILED, error);
     }

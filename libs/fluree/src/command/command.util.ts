@@ -1,6 +1,7 @@
-import { FlureeTransaction } from './fluree.transact.schema';
+import { FlureeTransaction } from '../transact';
 import { configure } from 'safe-stable-stringify';
 import { randomBytes, createHash } from 'crypto';
+import { FlureeCommand, FlureeSignableCommand } from './command.schema';
 
 /**
  * Stable stringify needed for ensuring equivalent serialized JSON
@@ -18,53 +19,13 @@ const stringify = configure({
 const EXPIRY_OFFSET_MS = 10 * 60 * 1000;
 
 /**
- * A command prepared to be submitted to fluree
- */
-export interface FlureeCommand {
-  type: 'tx';
-  db: string;
-  tx: FlureeTransaction[];
-  auth?: string;
-  fuel?: number;
-  nonce: number;
-  expire: number;
-  txidOnly: boolean;
-  deps: string[];
-}
-
-/**
- * A command ready for signing that should be sent to the client
- */
-export interface FlureeSignableCommand {
-  command: FlureeCommand;
-  serialized: string;
-  hash: string;
-}
-
-/**
- * A command ready for signing that should be sent to the client
- */
-export interface FlureeCommandHash {
-  command: string;
-  hash: string;
-}
-
-/**
- * A signed hash of a stringified command
- */
-export interface FlureeSignedCommand {
-  hash: string;
-  signature: string;
-}
-
-/**
  * Creates a Fluree command for the given ledger and transactions
  * @param ledger The ledger the command will be run on
  * @param tx The transactions to run as part of the command
  * @param auth The identity of the party creating the transaction
  * @param deps an array of dependent transactions
  * @param fuel The maximum fuel allowed for the given command
- * @returns a Fluree Command map ready for submittal or
+ * @returns a Fluree Command map ready for submittal or signing
  */
 export function command(
   ledger: string,

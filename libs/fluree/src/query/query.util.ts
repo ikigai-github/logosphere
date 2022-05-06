@@ -1,11 +1,8 @@
-// import { select, ref } from './query.builder';
-
 import { FlureeClient } from '../fluree.client';
-import { FlureeObject, isFlureeObject } from '../fluree.query.schema';
+import { FlureeObject, QuerySpec, isFlureeObject } from './query.schema';
 import { compile } from './query.compiler';
-import { QuerySpec as QuerySpec } from './query.schema';
 
-type Mapper = (input: any) => any;
+type Mapper = (input: unknown) => unknown;
 
 /**
  * Walks through a FlureeObject and removes the namespace part of the predicate.

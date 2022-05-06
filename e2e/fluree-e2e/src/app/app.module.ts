@@ -1,9 +1,10 @@
-import { Module } from '@nestjs/common';
+import { Module, CacheModule } from '@nestjs/common';
 import { FlureeModule } from '@logosphere/fluree';
-import { TestController } from '../test/test.controller';
+import { QueryController } from '../query/query.controller';
+import { SingingController } from '../signing/signing.controller';
 
 @Module({
-  imports: [FlureeModule],
-  controllers: [TestController],
+  imports: [FlureeModule, CacheModule.register()],
+  controllers: [QueryController, SingingController],
 })
 export class AppModule {}
