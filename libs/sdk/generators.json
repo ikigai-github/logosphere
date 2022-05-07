@@ -1,25 +1,19 @@
 {
   "name": "nx/sdk",
   "version": "0.1",
-  "extends": [
-    "@nrwl/workspace"
-  ],
+  "extends": ["@nrwl/workspace"],
   "schematics": {
     "application": {
       "factory": "./src/generators/application/application#applicationSchematic",
       "schema": "./src/generators/application/schema.json",
-      "aliases": [
-        "app"
-      ],
+      "aliases": ["app"],
       "x-type": "application",
       "description": "Create a Logosphere application."
     },
     "module": {
       "factory": "./src/generators/module/module",
       "schema": "./src/generators/module/schema.json",
-      "aliases": [
-        "m"
-      ],
+      "aliases": ["m"],
       "x-type": "library",
       "description": "Create a Logosphere app module."
     },
@@ -27,9 +21,7 @@
       "factory": "./src/generators/init/init#initSchematic",
       "schema": "./src/generators/init/schema.json",
       "description": "Initialize the `@logosphere/sdk` plugin.",
-      "aliases": [
-        "ng-add"
-      ],
+      "aliases": ["ng-add"],
       "hidden": true
     },
     "dto": {
@@ -46,24 +38,25 @@
       "factory": "./src/generators/gql/gql",
       "schema": "./src/generators/gql/schema.json",
       "description": "GraphQL Schema Generator"
+    },
+    "canonical": {
+      "factory": "./src/generators/canonical/canonical",
+      "schema": "./src/generators/canonical/schema.json",
+      "description": "canonical generator"
     }
   },
   "generators": {
     "application": {
       "factory": "./src/generators/application/application",
       "schema": "./src/generators/application/schema.json",
-      "aliases": [
-        "app"
-      ],
+      "aliases": ["app"],
       "x-type": "application",
       "description": "Create a Logosphere application."
     },
     "module": {
       "factory": "./src/generators/module/module",
       "schema": "./src/generators/module/schema.json",
-      "aliases": [
-        "m"
-      ],
+      "aliases": ["m"],
       "x-type": "library",
       "description": "Create a Logosphere app module."
     },
@@ -71,9 +64,7 @@
       "factory": "./src/generators/init/init",
       "schema": "./src/generators/init/schema.json",
       "description": "Initialize the `@logosphere/sdk` plugin.",
-      "aliases": [
-        "ng-add"
-      ],
+      "aliases": ["ng-add"],
       "hidden": true
     },
     "dto": {
@@ -90,6 +81,11 @@
       "factory": "./src/generators/gql/gql",
       "schema": "./src/generators/gql/schema.json",
       "description": "GraphQL Schema Generator"
+    },
+    "canonical": {
+      "factory": "./src/generators/canonical/canonical",
+      "schema": "./src/generators/canonical/schema.json",
+      "description": "canonical generator"
     }
   }
 }

@@ -21,6 +21,10 @@
                 "onlyDependOnLibsWithTags": ["scope:shared", "scope:admin"]
               },
               {
+                "sourceTag": "scope:cli",
+                "onlyDependOnLibsWithTags": ["scope:shared", "scope:api"]
+              },
+              {
                 "sourceTag": "scope:e2e",
                 "onlyDependOnLibsWithTags": [
                   "scope:shared",
