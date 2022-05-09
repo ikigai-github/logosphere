@@ -1,6 +1,4 @@
 import { FlureeClient } from '@logosphere/fluree';
-import { account_id_from_public } from '@fluree/crypto-base';
-import { createECDH } from 'crypto';
 
 /**
  * Test utility function to create a empty ledger
@@ -57,37 +55,5 @@ export async function createCollection(
     },
   ]);
 
-  expect(result.status).toBe(200);
   return result;
-}
-
-/**
- * Utility function to create an account in Fluree
- * @param client The fluree client that will be used to create the account
- * @returns The public-private key pair and the auth id created from the public key
- */
-export async function createAccount(client: FlureeClient) {
-  const ecdh = createECDH('secp256k1');
-  ecdh.generateKeys();
-  const priv = ecdh.getPrivateKey('hex');
-  const pub = ecdh.getPublicKey('hex', 'compressed');
-  const auth = account_id_from_public(pub);
-
-  const result = await client.transact([
-    {
-      _id: '_auth',
-      _action: 'add',
-      id: auth,
-      doc: 'A temp auth record',
-      roles: [['_role/id', 'root']],
-    },
-  ]);
-
-  expect(result.status).toBe(200);
-
-  return {
-    priv,
-    pub,
-    auth,
-  };
 }

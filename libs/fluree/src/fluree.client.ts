@@ -205,7 +205,8 @@ export class FlureeClient {
   }
 
   /**
-   * Posts the command to the ledger configured by the client
+   * Posts the command to the ledger configured by the client and returns
+   * the response which contains the transaction id.
    */
   async command(cmd: string, sig?: string) {
     try {
@@ -216,6 +217,20 @@ export class FlureeClient {
       return response;
     } catch (error) {
       throw new FlureeError(messages.CREATE_DB_FAILED, error);
+    }
+  }
+
+  async waitTransaction(transactionId: string, maxWaitMs: number) {
+    try {
+      const connection = await this.connection();
+      return await fluree.monitorTx(
+        connection,
+        this.#config.ledger,
+        transactionId,
+        maxWaitMs
+      );
+    } catch (error) {
+      throw new FlureeError(messages.TX_WAIT_FAILED, error);
     }
   }
 
