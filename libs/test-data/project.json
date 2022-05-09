@@ -3,6 +3,17 @@
   "sourceRoot": "libs/test-data/src",
   "projectType": "library",
   "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/test-data",
+        "tsConfig": "libs/test-data/tsconfig.lib.json",
+        "packageJson": "libs/test-data/package.json",
+        "main": "libs/test-data/src/index.ts",
+        "assets": ["libs/test-data/*.md"]
+      }
+    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
@@ -19,5 +30,5 @@
       }
     }
   },
-  "tags": ["scope:cli", "type:lib", "kind:feature"]
+  "tags": ["scope:shared", "type:lib", "kind:feature"]
 }

@@ -1,14 +1,9 @@
-import FlureeSchema from './fluree';
-import { FlureeQuery, Predicates } from '../services/fluree';
 import { sha3_256 } from 'js-sha3';
-import { Definition, DefinitionType, Property } from '../codegen/canonical';
-import { 
-  BOOLEAN,
-  IDENTIFIER,
-  INTEGER,
-  NUMBER,
-  STRING,
-} from './const';
+import { FlureeQuery, Predicates } from '@logosphere/fluree';
+import { Definition, DefinitionType, Property } from '@logosphere/converters';
+import FlureeSchema from './fluree';
+
+import { BOOLEAN, IDENTIFIER, INTEGER, NUMBER, STRING } from './const';
 
 /**
  * Generic class that generates test data in the Fluree database.
@@ -28,7 +23,6 @@ export default class TestDataGenerator {
     this.dbData = {};
   }
 
-
   #shuffle(value: string) {
     return value
       .split('')
@@ -45,16 +39,12 @@ export default class TestDataGenerator {
         : this.fluree.extractValue(prop.type, prop);
 
     //adust unique strings
-    if (
-      prop.type === STRING &&
-      prop.isUnique === true
-    ) {
-      if (prop.maxLength)
-        value = this.#shuffle(value);
+    if (prop.type === STRING && prop.isUnique === true) {
+      if (prop.maxLength) value = this.#shuffle(value);
       else {
         value = `${value}${(Math.random() + 1)
           .toString(36)
-          .substring((prop.maxLength || 100) -  value.length)}`;
+          .substring((prop.maxLength || 100) - value.length)}`;
       }
     }
 
@@ -67,7 +57,9 @@ export default class TestDataGenerator {
    * @param numOfRecords
    */
   async generate(entity: string, numOfRecords: number, options?: any) {
-    const def = this.fluree.modelSchema.definitions.find((def: Definition) => def.name === entity);
+    const def = this.fluree.modelSchema.definitions.find(
+      (def: Definition) => def.name === entity
+    );
     if (!def) {
       console.log(`Entity ${entity} does not exist in schema`);
       return;
@@ -80,10 +72,9 @@ export default class TestDataGenerator {
         def.props.forEach((prop) => {
           if (prop.name !== IDENTIFIER) {
             if (prop.defType === DefinitionType.Enum) {
-               // TODO: Enable enum support in test data generator
+              // TODO: Enable enum support in test data generator
               //https://ikigai-technologies.atlassian.net/browse/LOG-100
             } else if (prop.defType === DefinitionType.Entity) {
-             
               const value =
                 options !== undefined && prop.name in options
                   ? options[prop.name]
@@ -91,15 +82,9 @@ export default class TestDataGenerator {
               datum[prop.name] = [`${prop.type}/${IDENTIFIER}`, value];
             } else {
               if (prop.type === STRING) {
-                datum[prop.name] = this.#value(
-                  prop,
-                  options
-                );
+                datum[prop.name] = this.#value(prop, options);
               } else if (prop.type === NUMBER || prop.type === INTEGER) {
-                datum[prop.name] = this.#value(
-                  prop,
-                  options
-                );
+                datum[prop.name] = this.#value(prop, options);
               } else if (prop.type === BOOLEAN) {
                 const value =
                   options !== undefined && prop.name in options
@@ -108,12 +93,10 @@ export default class TestDataGenerator {
                     ? true
                     : false;
                 datum[prop.name] = value;
-              } else if (
-               prop.defType === DefinitionType.EntityArray
-              ) {
+              } else if (prop.defType === DefinitionType.EntityArray) {
                 const refItems: any[] = [];
                 const n = 5;
-               
+
                 for (let j = 0; j < n; j++) {
                   const value =
                     options !== undefined && prop.name in options
@@ -141,18 +124,17 @@ export default class TestDataGenerator {
       //   path.resolve(__dirname + `/testData_${entity}.json`),
       //   testData
       // );
-      await this.fluree.dao.transact(
-        this.endpoint,
-        this.db,
-        testData
-      );
+      await this.fluree.dao.transact(this.endpoint, this.db, testData);
     });
   }
 
   async initTestData(def: Definition) {
     const dependencies: string[] = [];
     def.props.forEach((prop: Property) => {
-      if (prop.defType === DefinitionType.Entity || prop.defType === DefinitionType.EntityArray) {
+      if (
+        prop.defType === DefinitionType.Entity ||
+        prop.defType === DefinitionType.EntityArray
+      ) {
         dependencies.push(prop.type);
       }
     });
@@ -168,11 +150,7 @@ export default class TestDataGenerator {
       from: collection,
     };
 
-    return await this.fluree.dao.query(
-      this.endpoint,
-      this.db,
-      query
-    );
+    return await this.fluree.dao.query(this.endpoint, this.db, query);
   }
 
   getRandomValue(entity: string, isUnique?: boolean) {

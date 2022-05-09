@@ -22,7 +22,8 @@ pnpm link ../logosphere/dist/libs/errors
 pnpm link ../logosphere/dist/libs/model
 pnpm link ../logosphere/dist/libs/readers
 pnpm link ../logosphere/dist/libs/sdk
-pnpm link ../logosphere/dist/libs/services/fluree
+pnpm link ../logosphere/dist/libs/fluree
+pnpm link ../logosphere/dist/libs/test-data
 pnpm link ../logosphere/dist/libs/utils
 popd
 echo ""

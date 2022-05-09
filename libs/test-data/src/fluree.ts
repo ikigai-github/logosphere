@@ -2,8 +2,15 @@ import _ = require('lodash');
 import randomstring = require('randomstring');
 import { sha3_256 } from 'js-sha3';
 import sleep = require('sleep-promise');
-import { CanonicalSchema, canonicalSchemaLoader, Definition, DefinitionType, Property } from '../codegen/canonical';
-import { ModuleConfiguration } from '../configuration';
+import { workspaceRoot } from '@nrwl/devkit';
+import {
+  CanonicalSchema,
+  canonicalSchemaLoader,
+  Definition,
+  DefinitionType,
+  Property,
+} from '@logosphere/converters';
+import { ModuleConfiguration } from '@logosphere/configuration';
 import {
   FlureeService,
   FlureePredicate,
@@ -12,11 +19,11 @@ import {
   FlureeCollection,
   predicates,
   deprecatePredicate,
-  CREATED_AT
-} from '../services/fluree';
-import { FileUtil, isArray } from '../utils';
+  CREATED_AT,
+} from '@logosphere/fluree';
+import { FileUtil, isArray } from '@logosphere/utils';
 
-import { 
+import {
   ALPHABETIC,
   BIGINT,
   BOOLEAN,
@@ -29,7 +36,7 @@ import {
   ONE_THOUSAND,
   STRING,
   TIME,
-  UNDERSCORE, 
+  UNDERSCORE,
   UNIX_TIME,
 } from './const';
 
@@ -56,8 +63,9 @@ export default class FlureeSchema {
   private modifiers: any[] = [];
 
   constructor(config: ModuleConfiguration) {
-
-    this.modelSchema = canonicalSchemaLoader();
+    this.modelSchema = canonicalSchemaLoader(`${process.cwd()}/../../../dist`);
+    console.log(`Workspace Root: ${workspaceRoot}`);
+    console.log(`Schema: ${JSON.stringify(this.modelSchema)}`);
     this.config = config;
     this.dao = new FlureeService();
     this.fileUtil = new FileUtil();
@@ -76,29 +84,27 @@ export default class FlureeSchema {
     const referencedCollections: any[] = [];
     const independentCollections: any[] = [];
 
-    this.modelSchema.definitions 
-      .forEach((def: Definition ) => {
-        const map = new Map();
-        const predicateMap = new Map();
+    this.modelSchema.definitions.forEach((def: Definition) => {
+      const map = new Map();
+      const predicateMap = new Map();
 
-        def.props.forEach(
-          (prop) => {
-            // const predicateValue =
-            //   this.modelSchema[collection][PROPERTIES][predicate];
-            if (prop.defType === DefinitionType.Entity ||
-                prop.defType === DefinitionType.EntityArray) {
-            
-                predicateMap.set(prop.name, prop.type);
-            }
-          }
-        );
-
-        if (predicateMap.size === 0) {
-          independentCollections.push(def.name);
-        } else {
-          map.set(def.name, predicateMap);
-          referencedCollections.push(map);
+      def.props.forEach((prop) => {
+        // const predicateValue =
+        //   this.modelSchema[collection][PROPERTIES][predicate];
+        if (
+          prop.defType === DefinitionType.Entity ||
+          prop.defType === DefinitionType.EntityArray
+        ) {
+          predicateMap.set(prop.name, prop.type);
         }
+      });
+
+      if (predicateMap.size === 0) {
+        independentCollections.push(def.name);
+      } else {
+        map.set(def.name, predicateMap);
+        referencedCollections.push(map);
+      }
     });
 
     const map = new Map();
@@ -175,9 +181,9 @@ export default class FlureeSchema {
     };
 
     const response = await this.dao.query(
-        this.config.fluree.ledgerUrl, 
-        `${this.config.fluree.network}/${this.config.fluree.db}`, 
-        query
+      this.config.fluree.ledgerUrl,
+      `${this.config.fluree.network}/${this.config.fluree.db}`,
+      query
     );
 
     return response.reduce((acc, entry) => {
@@ -190,9 +196,9 @@ export default class FlureeSchema {
 
   async getPredicates(collection: string): Promise<string[]> {
     const response = await this.dao.query(
-        this.config.fluree.ledgerUrl, 
-        `${this.config.fluree.network}/${this.config.fluree.db}`,
-        predicates(collection)
+      this.config.fluree.ledgerUrl,
+      `${this.config.fluree.network}/${this.config.fluree.db}`,
+      predicates(collection)
     );
     return response.reduce((acc, entry) => {
       acc.push(entry.substring(entry.indexOf('/') + 1, entry.length));
@@ -203,27 +209,32 @@ export default class FlureeSchema {
   async init(dump: boolean) {
     try {
       // create database if it doesn't exist
-      const dbs: string[] = await this.dao.listDBs(this.config.fluree.ledgerUrl);
+      const dbs: string[] = await this.dao.listDBs(
+        this.config.fluree.ledgerUrl
+      );
       if (
         !dbs.find(
           (db: string) =>
             db === `${this.config.fluree.network}/${this.config.fluree.db}`
         )
       ) {
-        await this.dao.createDB(this.config.fluree.ledgerUrl,  `${this.config.fluree.network}/${this.config.fluree.db}`);
+        await this.dao.createDB(
+          this.config.fluree.ledgerUrl,
+          `${this.config.fluree.network}/${this.config.fluree.db}`
+        );
         // pausing for 10 sec to let DB initialize
         // there doesn't seem to be a clean way for pinging the status
         // but if we find one later on, we may want to change that
         await sleep(10000);
       } else {
-        console.log(
-          `Database ${this.config.fluree.db} already exists`
-        );
+        console.log(`Database ${this.config.fluree.db} already exists`);
       }
 
       this.collections = await this.getCollections();
 
-      const entities = this.modelSchema.definitions.map((def: Definition) => def.name);
+      const entities = this.modelSchema.definitions.map(
+        (def: Definition) => def.name
+      );
 
       for await (const entity of entities) {
         //Handle changes when new collections are added to schema
@@ -262,17 +273,17 @@ export default class FlureeSchema {
 
       if (this.collectionDefinitions.length > 0 && dump) {
         await this.dao.transact(
-            this.config.fluree.ledgerUrl,
-            `${this.config.fluree.network}/${this.config.fluree.db}`,
-            this.collectionDefinitions
+          this.config.fluree.ledgerUrl,
+          `${this.config.fluree.network}/${this.config.fluree.db}`,
+          this.collectionDefinitions
         );
       }
 
       if (this.modifiers.length > 0 && dump) {
         await this.dao.transact(
-            this.config.fluree.ledgerUrl,
-            `${this.config.fluree.network}/${this.config.fluree.db}`,
-            this.modifiers
+          this.config.fluree.ledgerUrl,
+          `${this.config.fluree.network}/${this.config.fluree.db}`,
+          this.modifiers
         );
       }
 
@@ -315,10 +326,10 @@ export default class FlureeSchema {
     if (dump) {
       //(path.resolve(__dirname + '/data.json'), data);
       await this.dao.transact(
-            this.config.fluree.ledgerUrl,
-            `${this.config.fluree.network}/${this.config.fluree.db}`,
-            data
-        );
+        this.config.fluree.ledgerUrl,
+        `${this.config.fluree.network}/${this.config.fluree.db}`,
+        data
+      );
     }
 
     console.log('Insertion complete...');
@@ -335,7 +346,7 @@ export default class FlureeSchema {
     console.log(`Processing ${collection}`);
     const transactions: any[] = [];
     const transaction = this.parse(collection);
-    console.log(`Transaction: ${JSON.stringify(transaction)}`)
+    console.log(`Transaction: ${JSON.stringify(transaction)}`);
     if (transaction) {
       transactions.push(transaction);
       this.toInsertData[collection] = transactions;
@@ -358,7 +369,7 @@ export default class FlureeSchema {
           ];
         return value !== undefined ? value : prop.examples[0];
       } else if (prop.defType === DefinitionType.Enum) {
-         // TODO: Enable enum support in test data generator
+        // TODO: Enable enum support in test data generator
         //https://ikigai-technologies.atlassian.net/browse/LOG-100
       } else {
         return randomstring.generate({
@@ -371,30 +382,26 @@ export default class FlureeSchema {
         prop.description !== undefined &&
         prop.description.includes(UNIX_TIME)
       ) {
-        return (
-          Date.now() +
-          ONE_DAY_MS * Math.floor(Math.random() * 100)
-        );
+        return Date.now() + ONE_DAY_MS * Math.floor(Math.random() * 100);
       } else {
-        return Math.floor(
-          Math.random() * (ONE_THOUSAND - 1 + 1) + 1
-        );
+        return Math.floor(Math.random() * (ONE_THOUSAND - 1 + 1) + 1);
       }
     }
   }
 
   public parse(entity: string) {
     let isPending = false;
-    const schema = this.modelSchema.definitions.find((def: Definition) => def.name === entity);
+    const schema = this.modelSchema.definitions.find(
+      (def: Definition) => def.name === entity
+    );
     const data = {};
     const pending: any[] = [];
     schema.props.forEach((prop: Property) => {
       if (prop.defType === DefinitionType.Scalar && prop.type === STRING) {
         data[prop.name] = this.extractValue(prop.type, prop);
       } else if (prop.defType === DefinitionType.EntityArray) {
-        const referenced = prop;
         const childEntity = prop.type;
-        const index: number = 5;
+        const index = 5;
         if (Object.keys(this.toInsertData).includes(childEntity)) {
           data[prop.name] = [this.toInsertData[childEntity][0][Predicates._ID]];
         }
@@ -416,12 +423,20 @@ export default class FlureeSchema {
             charset: ALPHABETIC,
           }),
         ];
-      } else if (prop.defType === DefinitionType.Scalar && (prop.type === NUMBER || prop.type === INTEGER)) {
+      } else if (
+        prop.defType === DefinitionType.Scalar &&
+        (prop.type === NUMBER || prop.type === INTEGER)
+      ) {
         data[prop.name] = this.extractValue(prop.type, prop);
-      } else if (prop.defType === DefinitionType.Scalar && prop.type === BOOLEAN) {
+      } else if (
+        prop.defType === DefinitionType.Scalar &&
+        prop.type === BOOLEAN
+      ) {
         data[prop.name] = false;
-      } else if (prop.defType === DefinitionType.Entity || prop.defType === DefinitionType.Enum) {
-       
+      } else if (
+        prop.defType === DefinitionType.Entity ||
+        prop.defType === DefinitionType.Enum
+      ) {
         if (
           prop.defType === DefinitionType.Entity &&
           !Object.keys(this.toInsertData).includes(prop.type)
@@ -441,13 +456,13 @@ export default class FlureeSchema {
           //https://ikigai-technologies.atlassian.net/browse/LOG-100
         }
       }
-    })
+    });
     data[Predicates._ID] = entity;
-   
+
     data[IDENTIFIER] = sha3_256(JSON.stringify(data));
     data[Predicates._ID] = `${entity}$${data[IDENTIFIER]}`;
-    
-    if (schema.props.find((prop: Property) => prop.name === CREATED_AT)){
+
+    if (schema.props.find((prop: Property) => prop.name === CREATED_AT)) {
       data[CREATED_AT] = Date.now();
     }
 
@@ -473,14 +488,14 @@ export default class FlureeSchema {
         _id: Predicates.COLLECTION,
         name: entityName,
       },
-    //   {
-    //     _id: Predicates.PREDICATE,
-    //     name: `${entityName}`.concat('/').concat(Predicates.OWNER),
-    //     doc: `The ${entityName}'s data owner`,
-    //     type: COLLECTION_REF,
-    //     restrictCollection: FlureeCollection.USER,
-    //     index: true,
-    //   },
+      //   {
+      //     _id: Predicates.PREDICATE,
+      //     name: `${entityName}`.concat('/').concat(Predicates.OWNER),
+      //     doc: `The ${entityName}'s data owner`,
+      //     type: COLLECTION_REF,
+      //     restrictCollection: FlureeCollection.USER,
+      //     index: true,
+      //   },
       {
         _id: Predicates.PREDICATE,
         name: `${entityName}`.concat('/').concat(Predicates.IDENTIFIER),
@@ -490,20 +505,25 @@ export default class FlureeSchema {
         index: true,
       },
     ];
-    const entitySchema: Definition = this.modelSchema.definitions.find((def: Definition) => def.name === entityName);
-    const collectionPredicates = entitySchema.props.map((prop: Property) => prop.name).reduce(
-      (acc, k: string) => {
+    const entitySchema: Definition = this.modelSchema.definitions.find(
+      (def: Definition) => def.name === entityName
+    );
+    const collectionPredicates = entitySchema.props
+      .map((prop: Property) => prop.name)
+      .reduce((acc, k: string) => {
         acc.push(this.preparePredicate(entityName, k, entitySchema));
         return acc;
-      },
-      collection
-    );
+      }, collection);
     return collectionPredicates;
   }
 
   resolve(entityName: string, dbPredicates: string[]): any[] {
-    const entitySchema = this.modelSchema.definitions.find((def: Definition) => def.name === entityName);
-    const collectionPredicates = entitySchema.props.map((prop: Property) => prop.name);
+    const entitySchema = this.modelSchema.definitions.find(
+      (def: Definition) => def.name === entityName
+    );
+    const collectionPredicates = entitySchema.props.map(
+      (prop: Property) => prop.name
+    );
     const transaction: any[] = [];
 
     const toAddPRedicates = _.difference(collectionPredicates, dbPredicates);
@@ -540,28 +560,31 @@ export default class FlureeSchema {
       type: STRING,
     };
 
-    const prop: Partial<Property> = entitySchema.props.find((prop: Partial<Property>) => prop.name === predicateName);
-    if ( prop.defType === DefinitionType.EntityArray) {
+    const prop: Partial<Property> = entitySchema.props.find(
+      (prop: Partial<Property>) => prop.name === predicateName
+    );
+    if (prop.defType === DefinitionType.EntityArray) {
       predicate.type = COLLECTION_REF;
-      predicate.restrictCollection = prop.type
+      predicate.restrictCollection = prop.type;
       predicate.multi = true;
-    } else if ( prop.defType === DefinitionType.ScalarArray) {
+    } else if (prop.defType === DefinitionType.ScalarArray) {
       predicate.type = prop.type;
       predicate.multi = true;
     } else if (
       //TODO: Make time as it's own type
       // https://ikigai-technologies.atlassian.net/browse/LOG-99
       prop.description !== undefined &&
-      prop.description.includes(
-        TIME
-      )
+      prop.description.includes(TIME)
     ) {
       predicate.type = INSTANT;
     } else {
-      const type = prop.type === INTEGER || prop.type === NUMBER ? BIGINT : prop.type;
-      predicate.type = (prop.defType === DefinitionType.Entity || prop.defType === DefinitionType.Enum)
-        ? COLLECTION_REF
-        : type;
+      const type =
+        prop.type === INTEGER || prop.type === NUMBER ? BIGINT : prop.type;
+      predicate.type =
+        prop.defType === DefinitionType.Entity ||
+        prop.defType === DefinitionType.Enum
+          ? COLLECTION_REF
+          : type;
     }
 
     // TODO: add unique to canonical schema
@@ -569,12 +592,11 @@ export default class FlureeSchema {
     predicate.unique = prop.isPK;
     predicate.fullText = false;
 
-    
     // referenced collections
     if (prop.defType === DefinitionType.Entity || DefinitionType.EntityArray) {
       predicate.restrictCollection = prop.type;
     }
-  
+
     predicate.index = true;
 
     return predicate;
