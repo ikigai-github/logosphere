@@ -1,0 +1,52 @@
+{
+  "root": "e2e/media-e2e",
+  "sourceRoot": "e2e/media-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:webpack",
+      "outputs": ["dist/e2e/media-e2e"],
+      "options": {
+        "outputPath": "dist/e2e/media-e2e",
+        "main": "e2e/media-e2e/src/main.ts",
+        "tsConfig": "e2e/media-e2e/tsconfig.app.json",
+        "assets": ["e2e/media-e2e/src/assets"]
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "e2e/media-e2e/src/environments/environment.ts",
+              "with": "e2e/media-e2e/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:node",
+      "options": {
+        "buildTarget": "media-e2e:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["dist/e2e/media-e2e"],
+      "options": {
+        "lintFilePatterns": ["e2e/media-e2e/**/*.ts"]
+      }
+    },
+    "e2e": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/e2e/media-e2e"],
+      "options": {
+        "jestConfig": "e2e/media-e2e/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["scope:e2e", "type:app", "kind:test"]
+}

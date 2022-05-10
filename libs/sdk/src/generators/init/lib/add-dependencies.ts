@@ -48,6 +48,7 @@ export function addDependencies(tree: Tree): GeneratorCallback {
       '@pinata/sdk': '1.1.25',
       'apollo-server-core': '^3.6.7',
       'apollo-server-fastify': '^3.6.7',
+      'aws-sdk': '2.1131.0',
       'cardano-wallet-js': '1.4.0',
       'class-transformer': '0.2.0',
       'class-validator': '0.13.2',
@@ -60,6 +61,7 @@ export function addDependencies(tree: Tree): GeneratorCallback {
       'sleep-promise': '9.1.0',
       tslib: '^2.0.0',
       'typescript-string-operations': '1.4.1',
+      uuid: '8.3.2',
     },
     {
       '@babel/core': '^7.0.0',
