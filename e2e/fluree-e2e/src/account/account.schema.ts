@@ -1,7 +1,6 @@
 import { FlureeClient } from '@logosphere/fluree';
 import { account_id_from_public } from '@fluree/crypto-base';
-import { createECDH, createHash } from 'crypto';
-import base58 from 'micro-base58';
+import { createECDH } from 'crypto';
 
 /**
  * Everything could be derived from the private key but
