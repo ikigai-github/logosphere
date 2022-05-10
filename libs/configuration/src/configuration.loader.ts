@@ -28,29 +28,29 @@ export class ConfigurationLoader {
     return fileConfig[c.CONFIG];
   }
 
-  public loadModuleConfig(moduleName: string, path?: string): ModuleConfiguration {
-    const moduleConfigFile = path ? path : 'src/' + `${moduleName}/${moduleName}${c.MODULE_CONFIG_FILE_EXT}`;
-    const content: string =  this.reader.read(moduleConfigFile);
+  public loadModuleConfig(
+    moduleName: string,
+    path?: string
+  ): ModuleConfiguration {
+    const moduleConfigFile = path
+      ? path
+      : `src/${moduleName}${c.MODULE_CONFIG_FILE_EXT}`;
+    const content: string = this.reader.read(moduleConfigFile);
 
     if (!content) {
       throw new Error('Error reading configuration file');
     }
     const fileConfig = JSON.parse(content);
-    if (
-      !(c.CONFIG in fileConfig) &&
-      !(c.NAME in fileConfig[c.CONFIG])
-    ) {
+    if (!(c.CONFIG in fileConfig) && !(c.NAME in fileConfig[c.CONFIG])) {
       throw new ConfigurationError(m.INVALID_FORMAT);
     }
 
     if (fileConfig[c.CONFIG][c.NAME] !== moduleName) {
-      throw new ConfigurationError(m.INCORRECT_MODULE_NAME)
+      throw new ConfigurationError(m.INCORRECT_MODULE_NAME);
     }
-    return fileConfig[c.CONFIG]
+    return fileConfig[c.CONFIG];
   }
 }
-
-
 
 export function loadConfiguration(path?: string): Configuration {
   const loader: ConfigurationLoader = new ConfigurationLoader(
@@ -59,7 +59,10 @@ export function loadConfiguration(path?: string): Configuration {
   return loader.load();
 }
 
-export function loadModuleConfiguration(moduleName, path?: string): ModuleConfiguration {
+export function loadModuleConfiguration(
+  moduleName,
+  path?: string
+): ModuleConfiguration {
   const loader: ConfigurationLoader = new ConfigurationLoader(
     new FileSystemReader(path ? path : process.cwd())
   );
