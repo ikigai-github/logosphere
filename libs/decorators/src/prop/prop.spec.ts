@@ -64,6 +64,36 @@ describe('The Prop decorator', () => {
     validateTypeInfo(props, 'aBoolean', Boolean, 1);
   });
 
+  it('should support arrays of entities', () => {
+    @Entity()
+    class ArrayEntityItem {
+      @Prop()
+      aString: string;
+    }
+
+    enum TestEnumItem {
+      thing = 'thing',
+      other = 'other',
+    }
+
+    @Entity()
+    class ArrayWithEntityTest {
+      @Prop({ type: () => [ArrayEntityItem] })
+      entityItems: ArrayEntityItem[];
+
+      @Prop({ type: () => [TestEnumItem] })
+      enumItems: TestEnumItem[];
+    }
+
+    const props: PropMetadataMap = Reflect.getMetadata(
+      MetadataKeys.PropCache,
+      ArrayWithEntityTest
+    );
+
+    validateTypeInfo(props, 'entityItems', ArrayEntityItem, 1);
+    validateTypeInfo(props, 'enumItems', TestEnumItem, 1);
+  });
+
   it('should provide default values for required metadata', () => {
     @Entity()
     class DefaultTypeTest {
