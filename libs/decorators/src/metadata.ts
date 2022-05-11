@@ -94,6 +94,16 @@ export class MetadataStorage {
       });
     });
 
+    this.enums.forEach((enumeration) => {
+      definitions.push({
+        name: enumeration.name,
+        type: 'Enum',
+        // TODO: Should these have a module?
+        description: enumeration.description,
+        enum: enumeration.keys,
+      });
+    });
+
     return { definitions };
   }
 }

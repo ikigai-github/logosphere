@@ -24,7 +24,7 @@ export function resolveType(typeFunc: TypeFunc): TypeInfo {
   }
 }
 
-export function isDefined(variable: any) {
+export function isDefined(variable) {
   return variable !== undefined && variable !== null;
 }
 
@@ -42,7 +42,7 @@ export function isScalarType(type: TypeValue) {
 
 type RecursiveArray<TValue> = Array<RecursiveArray<TValue> | TValue>;
 
-function isConstructor(value) {
+export function isConstructor(value) {
   try {
     new new Proxy(value, {
       construct() {
