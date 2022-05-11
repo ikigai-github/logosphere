@@ -6,6 +6,7 @@
     "configuration": "libs/configuration",
     "converters": "libs/converters",
     "decorators": "libs/decorators",
+    "domain": "libs/domain",
     "errors": "libs/errors",
     "fluree": "libs/fluree",
     "fluree-e2e": "e2e/fluree-e2e",
