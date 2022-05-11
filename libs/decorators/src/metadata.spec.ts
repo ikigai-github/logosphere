@@ -8,7 +8,7 @@ import { Prop, PropMetadataMap, resolvePropType } from './prop';
 describe('The Metadata store', () => {
   it('should support storing enum types', () => {
     enum TestEnum {
-      FIRST = 'FIRST',
+      FIRST = 0,
       SECOND = 'SECOND',
     }
 
@@ -32,6 +32,9 @@ describe('The Metadata store', () => {
     const enumTypeInfo = resolvePropType(enumMeta);
     expect(enumTypeInfo.defType).toBe(DefinitionType.Enum);
     expect(enumTypeInfo.typename).toBe('TestEnum');
+    expect(enumTypeInfo.values).toBeDefined();
+    expect(enumTypeInfo.values).toContain('FIRST');
+    expect(enumTypeInfo.values).toContain('SECOND');
 
     const enumArrayMeta = props.get('aEnumArray');
     const enumArrayTypeInfo = resolvePropType(enumArrayMeta);

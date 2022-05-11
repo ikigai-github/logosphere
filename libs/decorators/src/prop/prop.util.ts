@@ -7,7 +7,8 @@ import { PropMetadata } from './prop.metadata';
 
 export interface PropTypeInfo {
   typename: string;
-  defType: DefinitionType;
+  defType?: DefinitionType;
+  values?: string[];
 }
 
 export function resolvePropType(meta: PropMetadata): PropTypeInfo {
@@ -47,11 +48,12 @@ export function resolvePropType(meta: PropMetadata): PropTypeInfo {
 
     if (enumRef) {
       typename = enumRef.name;
+      const values = enumRef.keys;
       return isArray
-        ? { typename, defType: DefinitionType.EnumArray }
-        : { typename, defType: DefinitionType.Enum };
+        ? { typename, defType: DefinitionType.EnumArray, values }
+        : { typename, defType: DefinitionType.Enum, values };
     }
   }
 
-  return { typename, defType: undefined };
+  return { typename };
 }

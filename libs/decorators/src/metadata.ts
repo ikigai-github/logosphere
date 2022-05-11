@@ -59,7 +59,7 @@ export class MetadataStorage {
 
       const props = [];
       for (const meta of propMetaMap.values()) {
-        const { typename, defType } = resolvePropType(meta);
+        const { typename, defType, values } = resolvePropType(meta);
 
         if (!isDefined(defType)) {
           throw Error(
@@ -75,7 +75,7 @@ export class MetadataStorage {
           isPK: meta.primary,
           isReadOnly: meta.readOnly,
           isWriteOnly: meta.writeOnly,
-          examples: meta.examples,
+          examples: meta.examples || values,
           pattern: meta.pattern,
           description: meta.doc,
           minLength: meta.minLength,
