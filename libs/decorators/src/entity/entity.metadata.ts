@@ -9,6 +9,5 @@ export type EntityMetadata = CommonMetadata & {
   layer: StorageLayer;
   module?: string;
   description?: string;
-  // eslint-disable-next-line @typescript-eslint/ban-types
   root: TypeFunc;
 };

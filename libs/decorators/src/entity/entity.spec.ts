@@ -18,7 +18,7 @@ describe('The Entity decorator', () => {
       SampleEntity
     );
 
-    expect(entity.name).toBe('SampleEntity');
+    expect(entity.name).toBe('sampleEntity');
     expect(entity.layer).toBe(
       StorageLayer.HotLayer | StorageLayer.KnowledgeGraph
     );

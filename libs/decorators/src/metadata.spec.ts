@@ -39,6 +39,32 @@ describe('The Metadata store', () => {
     expect(enumArrayTypeInfo.typename).toBe('TestEnum');
   });
 
+  it('should default the name of a reference entity to the name of the entity', () => {
+    @Entity('match_this')
+    class ExampleMatchEntity {
+      @Prop()
+      aString: string;
+    }
+
+    @Entity('has_match')
+    class EntityWithMatch {
+      @Prop()
+      aMatch: ExampleMatchEntity;
+    }
+
+    const schema = getMetadataStorage().buildSchema();
+
+    const match = schema.definitions.find(
+      (definition) => definition.name === 'has_match'
+    );
+
+    expect(match).toBeDefined();
+
+    const ref = match.props.find((prop) => prop.name === 'match_this');
+
+    expect(ref).toBeDefined();
+  });
+
   it('should use name of referenced entity as type in canonical schema', () => {
     @Entity({ name: 'my_ref' })
     class TestRefEntity {
