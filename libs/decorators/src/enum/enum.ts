@@ -7,10 +7,11 @@ export function registerEnum<T extends object = object>(
   name: string,
   description?: string
 ) {
+  const keys = Object.keys(type);
   getMetadataStorage().addEnum({
     type,
     name,
-    keys: Object.keys(type),
+    keys,
     description,
   });
 }

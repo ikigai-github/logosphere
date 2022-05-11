@@ -1,3 +1,4 @@
+import exp = require('constants');
 import 'reflect-metadata';
 import { DefinitionType } from './common';
 import { Entity } from './entity';
@@ -50,6 +51,7 @@ describe('The Metadata store', () => {
     }
 
     @Entity('has_match')
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     class EntityWithMatch {
       @Prop()
       aMatch: ExampleMatchEntity;
@@ -94,5 +96,25 @@ describe('The Metadata store', () => {
 
     expect(ref).toBeDefined();
     expect(ref.type).toBe('my_ref');
+  });
+
+  it('should include enums in schema', () => {
+    enum Plants {
+      Tree = 'Tree',
+      Shrub = 'Shrub',
+      Grass = 'Grass',
+    }
+
+    registerEnum(Plants, 'plants');
+
+    const schema = getMetadataStorage().buildSchema();
+
+    const plants = schema.definitions.find(
+      (definition) => definition.name === 'plants'
+    );
+
+    expect(plants).toBeDefined();
+    expect(plants.name).toBe('plants');
+    expect(plants.enum).toEqual(['Tree', 'Shrub', 'Grass']);
   });
 });
