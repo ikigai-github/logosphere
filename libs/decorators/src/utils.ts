@@ -42,11 +42,22 @@ export function isScalarType(type: TypeValue) {
 
 type RecursiveArray<TValue> = Array<RecursiveArray<TValue> | TValue>;
 
+function isConstructor(value) {
+  try {
+    new new Proxy(value, {
+      construct() {
+        return {};
+      },
+    })();
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
+
 export function isTypeValue(type: unknown): type is TypeValue {
   if (type instanceof Function) {
-    return (
-      type.name == 'String' || type.name === 'Number' || type.name === 'Boolean'
-    );
+    return isConstructor(type);
   }
 
   return (

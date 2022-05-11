@@ -40,7 +40,7 @@ export class MetadataStorage {
     this.enums.push(metadata);
   }
 
-  getEnumByType<T extends object = any>(type: T) {
+  getEnumByType<T extends object = object>(type: T) {
     return this.enums.find((item) => item.type === type);
   }
 
