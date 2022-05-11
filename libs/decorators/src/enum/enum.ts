@@ -7,7 +7,8 @@ export function registerEnum<T extends object = object>(
   name: string,
   description?: string
 ) {
-  const keys = Object.keys(type);
+  // Exclude the numeric properties of the enum keys
+  const keys = Object.keys(type).filter((key) => isNaN(+key));
   getMetadataStorage().addEnum({
     type,
     name,
