@@ -1,3 +1,4 @@
+import { names } from '@nrwl/devkit';
 import { pascalCase } from 'pascal-case';
 import { Generator } from '../abstract';
 import {
@@ -49,7 +50,7 @@ export class DtoGenerator extends Generator {
         prop.defType === DefinitionType.EnumArray
       ) {
         schemaString += `import { ${pascalCase(prop.type)} } from './${
-          prop.type
+          names(prop.type).fileName
         }.dto';\n`;
       }
     });
