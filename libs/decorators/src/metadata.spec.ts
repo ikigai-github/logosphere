@@ -100,9 +100,9 @@ describe('The Metadata store', () => {
 
   it('should include enums in schema', () => {
     enum Plants {
-      Tree = 'Tree',
+      Tree = 0,
       Shrub = 'Shrub',
-      Grass = 'Grass',
+      Grass = 10,
     }
 
     registerEnum(Plants, 'plants');
@@ -115,6 +115,8 @@ describe('The Metadata store', () => {
 
     expect(plants).toBeDefined();
     expect(plants.name).toBe('plants');
-    expect(plants.enum).toEqual(['Tree', 'Shrub', 'Grass']);
+    expect(plants.enum).toContain('Tree');
+    expect(plants.enum).toContain('Shrub');
+    expect(plants.enum).toContain('Grass');
   });
 });
