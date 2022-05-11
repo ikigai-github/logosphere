@@ -4,7 +4,6 @@ import { getMetadataStorage, MetadataKeys } from '../metadata';
 import { EntityMetadata } from './entity.metadata';
 import { StorageLayer } from './entity.types';
 
-
 export type EntityOptions = Partial<EntityMetadata>;
 
 export function Entity(): ClassDecorator;
@@ -28,7 +27,7 @@ export function Entity(
     const metadata: EntityMetadata = {
       target,
       module: options.module,
-      name: name || target.name,
+      name: name || toCamelCase(target.name),
       root: options.root || (target as TypeFunc),
       version: options.version || 1,
       layer:
@@ -61,4 +60,18 @@ function getNameAndOptions(
       options: nameOrOptions || ({} as EntityOptions),
     };
   }
+}
+
+/**
+ * Util function to convert any tring to cammel case
+ * Taken from: https://caseconverter.pro/blog/convert-any-string-to-camelcase-javascript
+ * @param text The text to convert to camel case
+ * @returns A camel case formatted string
+ */
+function toCamelCase(text: string) {
+  return text
+    .replace(/(?:^\w|[A-Z]|\b\w)/g, (leftTrim: string, index: number) =>
+      index === 0 ? leftTrim.toLowerCase() : leftTrim.toUpperCase()
+    )
+    .replace(/\s+/g, '');
 }

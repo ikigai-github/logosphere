@@ -68,7 +68,7 @@ export class MetadataStorage {
         }
 
         props.push({
-          name: meta.name,
+          name: meta.name instanceof Function ? meta.name() : meta.name,
           type: typename,
           isEnabled: meta.enabled,
           isRequired: meta.required,

@@ -4,6 +4,7 @@ import { Prop } from '../prop';
 import { Entity, EntityMetadata } from '../entity';
 import { resolveType } from '../utils';
 import { PropMetadataMap } from './prop.metadata';
+import { StringFunc } from '../common';
 
 function validateTypeInfo<T>(
   props: PropMetadataMap,
@@ -109,7 +110,7 @@ describe('The Prop decorator', () => {
     const metadata = props.get('aString');
 
     expect(metadata.target).toBe(DefaultTypeTest);
-    expect(metadata.name).toBe('aString');
+    expect((metadata.name as StringFunc)()).toBe('aString');
     expect(metadata.index).toBe(false);
     expect(metadata.enabled).toBe(true);
     expect(metadata.primary).toBe(false);
@@ -155,7 +156,7 @@ describe('The Prop decorator', () => {
     const metadata = props.get('aString');
 
     expect(metadata.target).toBe(CustomizedTypeTest);
-    expect(metadata.name).toBe('aString');
+    expect((metadata.name as StringFunc)()).toBe('aString');
     expect(metadata.index).toBe(true);
     expect(metadata.enabled).toBe(false);
     expect(metadata.primary).toBe(true);
