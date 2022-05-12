@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "Entity",
+  "title": "",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the entity"
+    },
+    "module": {
+      "type": "string",
+      "description": "Module for which entities should be generated",
+      "x-prompt": "What module is it for?",
+      "alias": "m"
+    },
+    "directory": {
+      "type": "string",
+      "description": "A directory where the entities are placed",
+      "alias": "d"
+    },
+    "source": {
+      "type": "string",
+      "description": "Generated source code for entities "
+    }
+  },
+  "required": ["module"]
+}
