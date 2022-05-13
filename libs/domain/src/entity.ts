@@ -6,18 +6,16 @@ const isEntity = (v: any): v is Entity<any> => {
 };
 
 export abstract class Entity<T> {
-  protected readonly _identifier: SHA256Identifier;
+  protected readonly _id: SHA256Identifier;
   public readonly props: T;
 
   constructor(props: T, id?: string) {
-    this._identifier = id
-      ? new SHA256Identifier(id)
-      : new SHA256Identifier(props);
+    this._id = id ? new SHA256Identifier(id) : new SHA256Identifier(props);
     this.props = props;
   }
 
-  public get identifier(): SHA256Identifier {
-    return this._identifier;
+  public get id(): string {
+    return this._id.toString();
   }
 
   public equals(object?: Entity<T>): boolean {
@@ -33,6 +31,6 @@ export abstract class Entity<T> {
       return false;
     }
 
-    return this._identifier.equals(object._identifier);
+    return this._id.equals(object._id);
   }
 }
