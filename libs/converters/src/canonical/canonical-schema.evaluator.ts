@@ -22,9 +22,8 @@ export function combineEntityFiles(project: Project) {
   const files = Object.values(fileMap) as SourceFile[];
 
   // Fixme: Maybe just make a new empty project
-  const combineFile = project.createSourceFile('combined.ts', '', {
-    overwrite: true,
-  });
+  const sourceName = `combined${Math.floor(Math.random() * 10000)}`;
+  const combineFile = project.createSourceFile(`${sourceName}.ts`, '');
 
   // Copy everything but the imports from each file into the combined file
   files.forEach((file) => {
@@ -49,7 +48,7 @@ export function combineEntityFiles(project: Project) {
   const combinedJs = combineFile
     .getEmitOutput()
     .getOutputFiles()
-    .find((file) => file.getFilePath().endsWith('combined.js'))
+    .find((file) => file.getFilePath().endsWith(`${sourceName}.js`))
     .getText();
 
   project.removeSourceFile(combineFile);
