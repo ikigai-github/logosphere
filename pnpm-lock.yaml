@@ -64,6 +64,7 @@ importers:
       rxjs: ^7.0.0
       safe-stable-stringify: ^2.3.1
       semver: 7.3.7
+      shallow-equal: 1.2.1
       sleep-promise: 9.1.0
       ts-jest: 27.1.4
       ts-node: 9.1.1
@@ -100,6 +101,7 @@ importers:
       reflect-metadata: 0.1.13
       rxjs: 7.5.5
       safe-stable-stringify: 2.3.1
+      shallow-equal: 1.2.1
       sleep-promise: 9.1.0
       tslib: 2.4.0
       typescript-string-operations: 1.4.1
@@ -154,6 +156,9 @@ importers:
     specifiers: {}
 
   libs/decorators:
+    specifiers: {}
+
+  libs/domain:
     specifiers: {}
 
   libs/errors:
@@ -10684,6 +10689,13 @@ packages:
     engines: { node: '>=8' }
     dependencies:
       kind-of: 6.0.3
+
+  /shallow-equal/1.2.1:
+    resolution:
+      {
+        integrity: sha512-S4vJDjHHMBaiZuT9NPb616CSmLf618jawtv3sufLl6ivK8WocjAo58cXwbRV1cgqxH0Qbv+iUt6m05eqEa2IRA==,
+      }
+    dev: false
 
   /shebang-command/2.0.0:
     resolution:

@@ -58,6 +58,7 @@ export function addDependencies(tree: Tree): GeneratorCallback {
       randomstring: '1.2.2',
       'reflect-metadata': reflectMetadataVersion,
       rxjs: RXJS,
+      'shallow-equal': '1.2.1',
       'sleep-promise': '9.1.0',
       tslib: '^2.0.0',
       'typescript-string-operations': '1.4.1',
