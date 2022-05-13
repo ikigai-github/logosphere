@@ -15,6 +15,7 @@ pushd ../${workspace}
 echo ""
 echo "<<< Linking workspace ${workspace} >>>"
 
+pnpm link ../logosphere/dist/libs/cardano
 pnpm link ../logosphere/dist/libs/configuration
 pnpm link ../logosphere/dist/libs/converters
 pnpm link ../logosphere/dist/libs/decorators
