@@ -3,6 +3,7 @@ export * from './domain.error';
 export * from './guard';
 export * from './entity';
 export * from './identifier';
+export * from './mapper';
 export * from './repo';
 export * from './result';
 export * from './sha256-identifier';
