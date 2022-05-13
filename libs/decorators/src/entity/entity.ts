@@ -19,7 +19,7 @@ export function Entity(name?: string, options?: EntityOptions): ClassDecorator;
 export function Entity(
   nameOrOptions?: string | EntityOptions,
   maybeOptions?: EntityOptions
-) {
+): ClassDecorator {
   const { options, name } = getNameAndOptions(nameOrOptions, maybeOptions);
 
   // eslint-disable-next-line @typescript-eslint/ban-types

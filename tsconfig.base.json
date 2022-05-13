@@ -27,6 +27,7 @@
       "@logosphere/readers": ["libs/readers/src/index.ts"],
       "@logosphere/sdk": ["libs/sdk/src/index.ts"],
       "@logosphere/test-data": ["libs/test-data/src/index.ts"],
+      "@logosphere/test-schema": ["libs/test-schema/src/index.ts"],
       "@logosphere/utils": ["libs/utils/src/index.ts"]
     }
   },
