@@ -1,5 +1,4 @@
 {
-  "root": "libs/errors",
   "sourceRoot": "libs/errors/src",
   "projectType": "library",
   "targets": {
