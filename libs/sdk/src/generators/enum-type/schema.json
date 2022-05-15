@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "Enum Type",
+  "title": "",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the DTO"
+    },
+    "module": {
+      "type": "string",
+      "description": "Module for which DTOs should be generated",
+      "x-prompt": "What module is it for?",
+      "alias": "m"
+    },
+    "directory": {
+      "type": "string",
+      "description": "A directory where the dto is placed",
+      "alias": "d"
+    },
+    "definition": {
+      "type": "object",
+      "description": "canonical schema definition"
+    }
+  },
+  "required": ["module"]
+}

@@ -43,6 +43,11 @@
       "factory": "./src/generators/canonical/canonical",
       "schema": "./src/generators/canonical/schema.json",
       "description": "canonical generator"
+    },
+    "enum-type": {
+      "factory": "./src/generators/enum-type/enum-type",
+      "schema": "./src/generators/enum-type/schema.json",
+      "description": "enum type generator"
     }
   },
   "generators": {
