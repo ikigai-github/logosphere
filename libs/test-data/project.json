@@ -1,5 +1,4 @@
 {
-  "root": "libs/test-data",
   "sourceRoot": "libs/test-data/src",
   "projectType": "library",
   "targets": {

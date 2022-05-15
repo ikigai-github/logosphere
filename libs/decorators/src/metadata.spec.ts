@@ -1,4 +1,4 @@
-import exp = require('constants');
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import 'reflect-metadata';
 import { DefinitionType } from './common';
 import { Entity } from './entity';
@@ -33,9 +33,10 @@ describe('The Metadata store', () => {
     const enumTypeInfo = resolvePropType(enumMeta);
     expect(enumTypeInfo.defType).toBe(DefinitionType.Enum);
     expect(enumTypeInfo.typename).toBe('TestEnum');
-    expect(enumTypeInfo.values).toBeDefined();
-    expect(enumTypeInfo.values).toContain('FIRST');
-    expect(enumTypeInfo.values).toContain('SECOND');
+    expect(enumTypeInfo.items).toBeDefined();
+    const keys = enumTypeInfo.items.map((item) => item[0]);
+    expect(keys).toContain('FIRST');
+    expect(keys).toContain('SECOND');
 
     const enumArrayMeta = props.get('aEnumArray');
     const enumArrayTypeInfo = resolvePropType(enumArrayMeta);
@@ -51,7 +52,6 @@ describe('The Metadata store', () => {
     }
 
     @Entity('has_match')
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     class EntityWithMatch {
       @Prop()
       aMatch: ExampleMatchEntity;
@@ -78,7 +78,6 @@ describe('The Metadata store', () => {
     }
 
     @Entity({ name: 'my_root' })
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     class TestRootEntity {
       @Prop({ name: 'a_ref' })
       aRefEntity: TestRefEntity;
@@ -118,5 +117,35 @@ describe('The Metadata store', () => {
     expect(plants.enum).toContain('Tree');
     expect(plants.enum).toContain('Shrub');
     expect(plants.enum).toContain('Grass');
+  });
+
+  it('should correctly identify enums when type function is supplied', () => {
+    enum Tree {
+      Cedar,
+      Oak,
+      Pine,
+    }
+
+    registerEnum(Tree, 'tree');
+
+    @Entity('soil')
+    class Soil {
+      @Prop({ type: () => Tree })
+      aTree: Tree;
+    }
+
+    const schema = getMetadataStorage().buildSchema();
+
+    const soil = schema.definitions.find(
+      (definition) => definition.name === 'soil'
+    );
+
+    expect(soil).toBeDefined();
+    expect(soil.props).toBeDefined();
+
+    const tree = soil.props[0];
+    expect(tree.defType).toBe('Enum');
+    expect(tree.name).toBe('aTree');
+    expect(tree.type).toBe('tree');
   });
 });

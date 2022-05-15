@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { StringFunc, TypeFunc } from '../common';
-import { getMetadataStorage, MetadataKeys } from '../metadata';
+import { MetadataKeys } from '../metadata';
 import { isDefined } from '../utils';
 import { PropMetadata, PropMetadataMap } from './prop.metadata';
 
@@ -19,6 +19,7 @@ export function Prop(options?: PropOptions): PropertyDecorator {
 
     const type = options.type || createTypeGetter(target, key);
     const name = options.name || createNameGetter(target, key);
+
     // TODO: Add validation step for example readOnly && writeOnly can't both be true
     // TODO: Probably clearer to just use flags like `rw`, `r`, `w` so validation not required
     // TODO: Pattern, MinLength, MaxLength, and potentially other validators can come from other decorators
@@ -33,6 +34,7 @@ export function Prop(options?: PropOptions): PropertyDecorator {
       required: isDefined(options.required) ? options.required : false,
       readOnly: isDefined(options.readOnly) ? options.readOnly : false,
       writeOnly: isDefined(options.writeOnly) ? options.writeOnly : false,
+      comment: options.comment,
       doc: options.doc,
       spec: options.spec,
       specDoc: options.specDoc,

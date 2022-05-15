@@ -1,5 +1,4 @@
 {
-  "root": "e2e/fluree-e2e",
   "sourceRoot": "e2e/fluree-e2e/src",
   "projectType": "application",
   "targets": {

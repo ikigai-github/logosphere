@@ -58,31 +58,36 @@ export class MetadataStorage {
       );
 
       const props = [];
-      for (const meta of propMetaMap.values()) {
-        const { typename, defType, values } = resolvePropType(meta);
+      if (propMetaMap) {
+        for (const meta of propMetaMap.values()) {
+          const { typename, defType, items } = resolvePropType(meta);
 
-        if (!isDefined(defType)) {
-          throw Error(
-            `Could not determine definition type for property ${meta.name} on entity ${meta.target.name}`
-          );
+          if (!isDefined(defType)) {
+            const name =
+              meta.name instanceof Function ? meta.name() : meta.name;
+            throw Error(
+              `Could not determine definition type for property ${name} on entity ${meta.target.name}`
+            );
+          }
+
+          props.push({
+            name: meta.name instanceof Function ? meta.name() : meta.name,
+            type: typename,
+            isEnabled: meta.enabled,
+            isRequired: meta.required,
+            isPK: meta.primary,
+            isReadOnly: meta.readOnly,
+            isWriteOnly: meta.writeOnly,
+            examples: meta.examples || items,
+            pattern: meta.pattern,
+            description: meta.doc,
+            minLength: meta.minLength,
+            maxLength: meta.maxLength,
+            externalModule: meta.externalModule,
+            comment: meta.comment,
+            defType,
+          });
         }
-
-        props.push({
-          name: meta.name instanceof Function ? meta.name() : meta.name,
-          type: typename,
-          isEnabled: meta.enabled,
-          isRequired: meta.required,
-          isPK: meta.primary,
-          isReadOnly: meta.readOnly,
-          isWriteOnly: meta.writeOnly,
-          examples: meta.examples || values,
-          pattern: meta.pattern,
-          description: meta.doc,
-          minLength: meta.minLength,
-          maxLength: meta.maxLength,
-          externalModule: meta.externalModule,
-          defType,
-        });
       }
 
       definitions.push({
@@ -95,12 +100,13 @@ export class MetadataStorage {
     });
 
     this.enums.forEach((enumeration) => {
+      const values = enumeration.items.map((item) => item[0]);
       definitions.push({
         name: enumeration.name,
         type: 'Enum',
         // TODO: Should these have a module?
         description: enumeration.description,
-        enum: enumeration.keys,
+        enum: values,
       });
     });
 

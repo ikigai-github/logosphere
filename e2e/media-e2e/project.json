@@ -1,5 +1,4 @@
 {
-  "root": "e2e/media-e2e",
   "sourceRoot": "e2e/media-e2e/src",
   "projectType": "application",
   "targets": {

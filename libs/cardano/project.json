@@ -1,5 +1,4 @@
 {
-  "root": "libs/cardano",
   "sourceRoot": "libs/cardano/src",
   "projectType": "library",
   "targets": {

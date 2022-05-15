@@ -1,5 +1,4 @@
 {
-  "root": "libs/readers",
   "sourceRoot": "libs/readers/src",
   "projectType": "library",
   "targets": {

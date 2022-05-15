@@ -1,14 +1,14 @@
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { DefinitionType } from '../common';
-import { lowerCase } from 'lodash';
 import { MetadataKeys, getMetadataStorage } from '../metadata';
 import { isScalarType, resolveType } from '../utils';
 import { PropMetadata } from './prop.metadata';
+import { EnumItem } from '../enum';
 
 export interface PropTypeInfo {
   typename: string;
   defType?: DefinitionType;
-  values?: string[];
+  items?: EnumItem[];
 }
 
 export function resolvePropType(meta: PropMetadata): PropTypeInfo {
@@ -24,7 +24,7 @@ export function resolvePropType(meta: PropMetadata): PropTypeInfo {
 
   if (isScalarType(type)) {
     if (type instanceof Function) {
-      typename = lowerCase(type.name);
+      typename = type.name.toLowerCase();
     }
 
     return isArray
@@ -48,10 +48,9 @@ export function resolvePropType(meta: PropMetadata): PropTypeInfo {
 
     if (enumRef) {
       typename = enumRef.name;
-      const values = enumRef.keys;
       return isArray
-        ? { typename, defType: DefinitionType.EnumArray, values }
-        : { typename, defType: DefinitionType.Enum, values };
+        ? { typename, defType: DefinitionType.EnumArray, items: enumRef.items }
+        : { typename, defType: DefinitionType.Enum, items: enumRef.items };
     }
   }
 

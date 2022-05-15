@@ -1,5 +1,4 @@
 {
-  "root": "libs/fluree",
   "sourceRoot": "libs/fluree/src",
   "projectType": "library",
   "targets": {

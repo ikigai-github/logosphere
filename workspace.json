@@ -18,6 +18,7 @@
     "sdk": "libs/sdk",
     "sdk-e2e": "e2e/sdk-e2e",
     "test-data": "libs/test-data",
+    "test-schema": "libs/test-schema",
     "utils": "libs/utils"
   }
 }

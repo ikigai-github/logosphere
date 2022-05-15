@@ -1,5 +1,4 @@
 {
-  "root": "e2e/sdk-e2e",
   "projectType": "application",
   "sourceRoot": "e2e/sdk-e2e/src",
   "targets": {

@@ -1,5 +1,4 @@
 {
-  "root": "libs/media",
   "sourceRoot": "libs/media/src",
   "projectType": "library",
   "targets": {
