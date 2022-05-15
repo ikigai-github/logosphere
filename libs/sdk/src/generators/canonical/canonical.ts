@@ -55,8 +55,9 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
 }
 
 export default async function (tree: Tree, options: CanonicalGeneratorSchema) {
-  const sourceSchema = canonicalSchemaLoader();
-
+  const sourceSchema = canonicalSchemaLoader(
+    `${process.cwd()}/libs/codegen/${options.module}/tsconfig.lib.json`
+  );
   const source = JSON.stringify(sourceSchema, null, 2);
   options = {
     ...options,

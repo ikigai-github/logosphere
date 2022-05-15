@@ -8,10 +8,10 @@ import {
   Tree,
 } from '@nrwl/devkit';
 
-import { 
-  ConverterFactory, 
-  SchemaType, 
-  canonicalSchemaLoader 
+import {
+  ConverterFactory,
+  SchemaType,
+  canonicalSchemaLoader,
 } from '@logosphere/converters';
 import { FlureeGeneratorSchema } from './schema';
 import { DEFAULT_CODEGEN_DIR } from '../../common';
@@ -22,46 +22,56 @@ interface NormalizedSchema extends FlureeGeneratorSchema {
   projectDirectory: string;
 }
 
-function normalizeOptions(tree: Tree, options: FlureeGeneratorSchema): NormalizedSchema {
+function normalizeOptions(
+  tree: Tree,
+  options: FlureeGeneratorSchema
+): NormalizedSchema {
   const name = names(options.module).fileName;
   const projectDirectory = options.directory
     ? `${names(options.directory).fileName}/${name}`
     : `fluree/${name}`;
   const projectName = options.module; //projectDirectory.replace(new RegExp('/', 'g'), '-');
-  const projectRoot = `${getWorkspaceLayout(tree).libsDir}/${DEFAULT_CODEGEN_DIR}/${options.module}/src`;
-  
+  const projectRoot = `${
+    getWorkspaceLayout(tree).libsDir
+  }/${DEFAULT_CODEGEN_DIR}/${options.module}/src`;
 
   return {
     ...options,
     projectName,
     projectRoot,
-    projectDirectory
+    projectDirectory,
   };
 }
 
 function addFiles(tree: Tree, options: NormalizedSchema) {
-    const templateOptions = {
-      ...options,
-      ...names(options.projectDirectory),
-      offsetFromRoot: offsetFromRoot(options.projectRoot),
-      template: ''
-    };
-    generateFiles(tree, path.join(__dirname, 'files'), options.projectRoot, templateOptions);
+  const templateOptions = {
+    ...options,
+    ...names(options.projectDirectory),
+    offsetFromRoot: offsetFromRoot(options.projectRoot),
+    template: '',
+  };
+  generateFiles(
+    tree,
+    path.join(__dirname, 'files'),
+    options.projectRoot,
+    templateOptions
+  );
 }
 
 export default async function (tree: Tree, options: FlureeGeneratorSchema) {
-  const sourceSchema = canonicalSchemaLoader();
-  const converter =  ConverterFactory.getConverter(
-          SchemaType.Canonical,
-          SchemaType.Fluree,
-        )
+  const sourceSchema = canonicalSchemaLoader(
+    `${process.cwd()}/libs/codegen/${options.module}`
+  );
+  const converter = ConverterFactory.getConverter(
+    SchemaType.Canonical,
+    SchemaType.Fluree
+  );
   const source = converter.convert(sourceSchema);
   options = {
     ...options,
-    source
-  }
+    source,
+  };
   const normalizedOptions = normalizeOptions(tree, options);
   addFiles(tree, normalizedOptions);
   await formatFiles(tree);
-
 }
