@@ -1,5 +1,4 @@
 {
-  "root": "e2e/ipfs-e2e",
   "sourceRoot": "e2e/ipfs-e2e/src",
   "projectType": "application",
   "targets": {

@@ -1,5 +1,4 @@
 {
-  "root": "libs/configuration",
   "sourceRoot": "libs/configuration/src",
   "projectType": "library",
   "targets": {

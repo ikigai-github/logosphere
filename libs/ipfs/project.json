@@ -1,5 +1,4 @@
 {
-  "root": "libs/ipfs",
   "sourceRoot": "libs/ipfs/src",
   "projectType": "library",
   "targets": {
