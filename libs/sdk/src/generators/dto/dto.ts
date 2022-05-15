@@ -8,14 +8,17 @@ import {
   Tree,
 } from '@nrwl/devkit';
 
-import { 
-  ConverterFactory, 
-  DtoSchema,
-  SchemaType, 
-  canonicalSchemaLoader 
+import {
+  ConverterFactory,
+  Definition,
+  DefinitionType,
+  SchemaType,
+  canonicalSchemaLoader,
+  tsFormatter,
 } from '@logosphere/converters';
 import { DtoGeneratorSchema } from './schema';
 import { DEFAULT_CODEGEN_DIR } from '../../common';
+import { strings } from '@angular-devkit/core';
 
 interface NormalizedSchema extends DtoGeneratorSchema {
   projectName: string;
@@ -23,49 +26,57 @@ interface NormalizedSchema extends DtoGeneratorSchema {
   projectDirectory: string;
 }
 
-function normalizeOptions(tree: Tree, options: DtoGeneratorSchema): NormalizedSchema {
+function normalizeOptions(
+  tree: Tree,
+  options: DtoGeneratorSchema
+): NormalizedSchema {
   const name = names(options.name).fileName;
   const projectDirectory = options.directory
     ? `${names(options.directory).fileName}/${name}`
-    : `dto/${name}`;
+    : name;
   const projectName = options.module; //projectDirectory.replace(new RegExp('/', 'g'), '-');
-  const projectRoot = `${getWorkspaceLayout(tree).libsDir}/${DEFAULT_CODEGEN_DIR}/${options.module}/src`;
-  
+  const projectRoot = `${
+    getWorkspaceLayout(tree).libsDir
+  }/${DEFAULT_CODEGEN_DIR}/${options.module}/src`;
 
   return {
     ...options,
     projectName,
     projectRoot,
-    projectDirectory
+    projectDirectory,
   };
 }
 
 function addFiles(tree: Tree, options: NormalizedSchema) {
-    const templateOptions = {
-      ...options,
-      ...names(options.projectDirectory),
-      offsetFromRoot: offsetFromRoot(options.projectRoot),
-      template: ''
-    };
-    generateFiles(tree, path.join(__dirname, 'files'), options.projectRoot, templateOptions);
+  const templateOptions = {
+    ...options,
+    ...strings,
+    ...tsFormatter,
+    ...names(options.projectDirectory),
+    offsetFromRoot: offsetFromRoot(options.projectRoot),
+    template: '',
+  };
+  generateFiles(
+    tree,
+    path.join(__dirname, 'files'),
+    options.projectRoot,
+    templateOptions
+  );
 }
 
 export default async function (tree: Tree, options: DtoGeneratorSchema) {
   const sourceSchema = canonicalSchemaLoader();
-  const converter =  ConverterFactory.getConverter(
-          SchemaType.Canonical,
-          SchemaType.Dto,
-        )
-  const dtos: DtoSchema[] = converter.convert(sourceSchema);
-  dtos.map(async (dto: DtoSchema) => {
-   
-    options = {
-      ...options,
-      name: dto.name,
-      source: dto.schema
-    }
-    const normalizedOptions = normalizeOptions(tree, options);
-    addFiles(tree, normalizedOptions);
-    await formatFiles(tree);
-  });
+
+  sourceSchema.definitions
+    .filter((def: Definition) => def.type === DefinitionType.Entity)
+    .map(async (def: Definition) => {
+      options = {
+        ...options,
+        name: def.name,
+        definition: def,
+      };
+      const normalizedOptions = normalizeOptions(tree, options);
+      addFiles(tree, normalizedOptions);
+      await formatFiles(tree);
+    });
 }
