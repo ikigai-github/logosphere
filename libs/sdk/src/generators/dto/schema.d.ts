@@ -4,4 +4,5 @@ export interface DtoGeneratorSchema {
   module: string;
   directory?: string;
   definition?: Definition;
+  index?: Definition[];
 }

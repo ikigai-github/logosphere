@@ -30,10 +30,10 @@ function normalizeOptions(
   tree: Tree,
   options: DtoGeneratorSchema
 ): NormalizedSchema {
-  const name = names(options.name).fileName;
+  const module = names(options.module).fileName;
   const projectDirectory = options.directory
-    ? `${names(options.directory).fileName}/${name}`
-    : name;
+    ? `${names(options.directory).fileName}/${module}`
+    : module;
   const projectName = options.module; //projectDirectory.replace(new RegExp('/', 'g'), '-');
   const projectRoot = `${
     getWorkspaceLayout(tree).libsDir
@@ -48,6 +48,11 @@ function normalizeOptions(
 }
 
 function addFiles(tree: Tree, options: NormalizedSchema) {
+  const sourceSchema = canonicalSchemaLoader();
+  const definitions = sourceSchema.definitions.filter(
+    (def: Definition) => def.type === DefinitionType.Entity
+  );
+
   const templateOptions = {
     ...options,
     ...strings,
@@ -55,28 +60,26 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
     ...names(options.projectDirectory),
     offsetFromRoot: offsetFromRoot(options.projectRoot),
     template: '',
+    index: definitions,
   };
-  generateFiles(
-    tree,
-    path.join(__dirname, 'files'),
-    options.projectRoot,
-    templateOptions
-  );
+
+  definitions.map(async (def: Definition) => {
+    const defOptions = {
+      ...templateOptions,
+      name: names(def.name).fileName,
+      definition: def,
+    };
+    generateFiles(
+      tree,
+      path.join(__dirname, 'files'),
+      options.projectRoot,
+      defOptions
+    );
+  });
 }
 
 export default async function (tree: Tree, options: DtoGeneratorSchema) {
-  const sourceSchema = canonicalSchemaLoader();
-
-  sourceSchema.definitions
-    .filter((def: Definition) => def.type === DefinitionType.Entity)
-    .map(async (def: Definition) => {
-      options = {
-        ...options,
-        name: def.name,
-        definition: def,
-      };
-      const normalizedOptions = normalizeOptions(tree, options);
-      addFiles(tree, normalizedOptions);
-      await formatFiles(tree);
-    });
+  const normalizedOptions = normalizeOptions(tree, options);
+  addFiles(tree, normalizedOptions);
+  await formatFiles(tree);
 }
