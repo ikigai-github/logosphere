@@ -7,4 +7,5 @@ export default {
   displayName: 'nest',
   testEnvironment: 'node',
   preset: '../../jest.preset.js',
+  testPathIgnorePatterns: ['/files/'],
 };
