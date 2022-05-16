@@ -39,12 +39,11 @@ describe('TypeScript Formatter', () => {
       ],
     };
 
-    const imp = tsFormatter.enumTypeImports(d, '../enum-types');
+    const imp = tsFormatter.enumImports(d);
 
     expect(imp).toBeDefined();
     expect(imp).toHaveLength(1);
-    expect(imp[0].name).toBe('SomeEnum');
-    expect(imp[0].file).toBe('../enum-types/some-enum.type');
+    expect(imp[0]).toBe('SomeEnum');
   });
 
   it('should return entity import in DTO', () => {

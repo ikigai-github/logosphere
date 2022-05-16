@@ -55,7 +55,7 @@ export function dtoImports(
     });
 }
 
-export function isEnumTypeImport(def: Definition): boolean {
+export function isEnumImport(def: Definition): boolean {
   return (
     def.props.filter(
       (prop: Property) =>
@@ -65,20 +65,12 @@ export function isEnumTypeImport(def: Definition): boolean {
   );
 }
 
-export function enumTypeImports(
-  def: Definition,
-  relativePath: string = '.'
-): TsImport[] {
+export function enumImports(def: Definition): string[] {
   return def.props
     .filter(
       (prop: Property) =>
         prop.defType === DefinitionType.Enum ||
         prop.defType === DefinitionType.EnumArray
     )
-    .map((prop: Property) => {
-      return {
-        name: `${classify(prop.type)}`,
-        file: `${relativePath}/${dasherize(prop.type)}.type`,
-      };
-    });
+    .map((prop: Property) => `${classify(prop.type)}`);
 }
