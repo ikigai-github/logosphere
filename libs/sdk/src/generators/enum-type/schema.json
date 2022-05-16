@@ -22,7 +22,11 @@
     },
     "definition": {
       "type": "object",
-      "description": "canonical schema definition"
+      "description": "Canonical schema definition (single object)"
+    },
+    "index": {
+      "type": "array",
+      "description": "Canonical schema definitions to index"
     }
   },
   "required": ["module"]
