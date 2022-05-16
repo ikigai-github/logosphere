@@ -8,19 +8,18 @@ import {
   Tree,
 } from '@nrwl/devkit';
 
-import {
-  ConverterFactory,
-  Definition,
-  DefinitionType,
-  SchemaType,
-  canonicalSchemaLoader,
-  tsFormatter,
-} from '@logosphere/converters';
-import { DtoGeneratorSchema } from './schema';
-import { DEFAULT_CODEGEN_DIR } from '../../common';
 import { strings } from '@angular-devkit/core';
 
-interface NormalizedSchema extends DtoGeneratorSchema {
+import {
+  Definition,
+  canonicalSchemaLoader,
+  DefinitionType,
+  tsFormatter,
+} from '@logosphere/converters';
+import { EnumTypeGeneratorSchema } from './schema';
+import { DEFAULT_CODEGEN_DIR } from '../../common';
+
+interface NormalizedSchema extends EnumTypeGeneratorSchema {
   projectName: string;
   projectRoot: string;
   projectDirectory: string;
@@ -28,13 +27,13 @@ interface NormalizedSchema extends DtoGeneratorSchema {
 
 function normalizeOptions(
   tree: Tree,
-  options: DtoGeneratorSchema
+  options: EnumTypeGeneratorSchema
 ): NormalizedSchema {
   const module = names(options.module).fileName;
   const projectDirectory = options.directory
     ? `${names(options.directory).fileName}/${module}`
     : module;
-  const projectName = options.module; //projectDirectory.replace(new RegExp('/', 'g'), '-');
+  const projectName = options.module;
   const projectRoot = `${
     getWorkspaceLayout(tree).libsDir
   }/${DEFAULT_CODEGEN_DIR}/${options.module}/src`;
@@ -50,7 +49,7 @@ function normalizeOptions(
 function addFiles(tree: Tree, options: NormalizedSchema) {
   const sourceSchema = canonicalSchemaLoader();
   const definitions = sourceSchema.definitions.filter(
-    (def: Definition) => def.type === DefinitionType.Entity
+    (def: Definition) => def.type === DefinitionType.Enum
   );
 
   const templateOptions = {
@@ -78,7 +77,7 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
   });
 }
 
-export default async function (tree: Tree, options: DtoGeneratorSchema) {
+export default async function (tree: Tree, options: EnumTypeGeneratorSchema) {
   const normalizedOptions = normalizeOptions(tree, options);
   addFiles(tree, normalizedOptions);
   await formatFiles(tree);

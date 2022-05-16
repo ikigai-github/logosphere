@@ -1,5 +1,5 @@
 import { Definition } from '@logosphere/converters';
-export interface DtoGeneratorSchema {
+export interface EnumTypeGeneratorSchema {
   name: string;
   module: string;
   directory?: string;

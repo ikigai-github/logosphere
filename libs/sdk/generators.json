@@ -48,6 +48,11 @@
       "factory": "./src/generators/entity/entity",
       "schema": "./src/generators/entity/schema.json",
       "description": "Entities generator"
+    },
+    "enum-type": {
+      "factory": "./src/generators/enum-type/enum-type",
+      "schema": "./src/generators/enum-type/schema.json",
+      "description": "enum type generator"
     }
   },
   "generators": {
@@ -96,6 +101,11 @@
       "factory": "./src/generators/entity/entity",
       "schema": "./src/generators/entity/schema.json",
       "description": "Entities generator"
+    },
+    "enum-type": {
+      "factory": "./src/generators/enum-type/enum-type",
+      "schema": "./src/generators/enum-type/schema.json",
+      "description": "enum type generator"
     }
   }
 }
