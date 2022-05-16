@@ -1,3 +1,10 @@
+<% if (isEnumTypeImport(definition)) { -%>
+import {
+  <% enumTypeImports(definition, '../enum-types').map((imp) => {-%>
+  <%= imp.name %>,
+  <%_ }) %>
+} from '../enum-types';
+<% } -%>
 <% dtoImports(definition).map((imp) => {-%>
 import { <%= imp.name %> } from '<%= imp.file %>';
 <%_ }) %>

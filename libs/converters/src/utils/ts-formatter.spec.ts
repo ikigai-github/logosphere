@@ -39,7 +39,7 @@ describe('TypeScript Formatter', () => {
       ],
     };
 
-    const imp = tsFormatter.dtoImports(d);
+    const imp = tsFormatter.enumTypeImports(d, '../enum-types');
 
     expect(imp).toBeDefined();
     expect(imp).toHaveLength(1);

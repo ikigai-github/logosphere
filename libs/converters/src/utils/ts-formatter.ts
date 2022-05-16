@@ -16,10 +16,6 @@ function typeFormat(prop: Partial<Property>, objectType: string = '') {
       return `${strings.classify(prop.type)}`;
     case DefinitionType.EnumArray:
       return `${strings.classify(prop.type)}[]`;
-    case DefinitionType.ExternalEntity:
-      return `${strings.classify(prop.type)}${classify(objectType)}`;
-    case DefinitionType.ExternalEntityArray:
-      return `${strings.classify(prop.type)}${classify(objectType)}[]`;
     default:
       return `${strings.classify(prop.type)}${classify(objectType)}`;
   }
@@ -41,25 +37,48 @@ export interface TsImport {
   file: string;
 }
 
-export function dtoImports(def: Definition): TsImport[] {
+export function dtoImports(
+  def: Definition,
+  relativePath: string = '.'
+): TsImport[] {
   return def.props
     .filter(
       (prop: Property) =>
-        prop.defType !== DefinitionType.Scalar &&
-        prop.defType !== DefinitionType.ScalarArray
+        prop.defType === DefinitionType.Entity ||
+        prop.defType === DefinitionType.EntityArray
     )
     .map((prop: Property) => {
       return {
-        name:
-          prop.defType === DefinitionType.Enum ||
-          prop.defType === DefinitionType.EnumArray
-            ? classify(prop.type)
-            : `${classify(prop.type)}Dto`,
-        file:
-          prop.defType === DefinitionType.Enum ||
-          prop.defType === DefinitionType.EnumArray
-            ? `../enum-types/${dasherize(prop.type)}.type`
-            : `./${dasherize(prop.type)}.dto`,
+        name: `${classify(prop.type)}Dto`,
+        file: `${relativePath}/${dasherize(prop.type)}.dto`,
+      };
+    });
+}
+
+export function isEnumTypeImport(def: Definition): boolean {
+  return (
+    def.props.filter(
+      (prop: Property) =>
+        prop.defType === DefinitionType.Enum ||
+        prop.defType === DefinitionType.EnumArray
+    ).length > 0
+  );
+}
+
+export function enumTypeImports(
+  def: Definition,
+  relativePath: string = '.'
+): TsImport[] {
+  return def.props
+    .filter(
+      (prop: Property) =>
+        prop.defType === DefinitionType.Enum ||
+        prop.defType === DefinitionType.EnumArray
+    )
+    .map((prop: Property) => {
+      return {
+        name: `${classify(prop.type)}`,
+        file: `${relativePath}/${dasherize(prop.type)}.type`,
       };
     });
 }
