@@ -1,5 +1,4 @@
 {
-  "root": "libs/test-schema",
   "sourceRoot": "libs/test-schema/src",
   "projectType": "library",
   "targets": {

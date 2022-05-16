@@ -1,5 +1,4 @@
 {
-  "root": "libs/converters",
   "sourceRoot": "libs/converters/src",
   "projectType": "library",
   "targets": {
