@@ -53,6 +53,11 @@
       "factory": "./src/generators/enum-type/enum-type",
       "schema": "./src/generators/enum-type/schema.json",
       "description": "enum type generator"
+    },
+    "mapper": {
+      "factory": "./src/generators/mapper/mapper",
+      "schema": "./src/generators/mapper/schema.json",
+      "description": "Mapper generator"
     }
   },
   "generators": {
@@ -106,6 +111,11 @@
       "factory": "./src/generators/enum-type/enum-type",
       "schema": "./src/generators/enum-type/schema.json",
       "description": "enum type generator"
+    },
+    "mapper": {
+      "factory": "./src/generators/mapper/mapper",
+      "schema": "./src/generators/mapper/schema.json",
+      "description": "Mapper generator"
     }
   }
 }
