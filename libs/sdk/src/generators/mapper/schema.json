@@ -27,6 +27,11 @@
     "index": {
       "type": "array",
       "description": "Canonical schema definitions to index"
+    },
+    "fixtureDepth": {
+      "type": "number",
+      "description": "Depth of JSON data fixtures",
+      "default": 1
     }
   },
   "required": ["module"]

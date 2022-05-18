@@ -5,4 +5,5 @@ export interface MapperGeneratorSchema {
   directory?: string;
   definition?: Definition;
   index?: Definition[];
+  fixtureDepth?: number;
 }
