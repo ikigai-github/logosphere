@@ -10,7 +10,9 @@ export class SHA256Identifier extends Identifier<string> {
     } else {
       super(
         sha3_256(
-          JSON.stringify(obj).concat((Date.now() + Math.random()).toString())
+          JSON.stringify(obj).concat(
+            (Date.now() + Math.random() * 100).toString()
+          )
         )
       );
     }

@@ -1,7 +1,7 @@
-<% if (isEnumTypeImport(definition)) { -%>
+<% if (isEnumImport(definition)) { -%>
 import {
-  <% enumTypeImports(definition, '../enum-types').map((imp) => {-%>
-  <%= imp.name %>,
+  <% enumImports(definition).map((imp) => {-%>
+  <%= imp %>,
   <%_ }) %>
 } from '../enum-types';
 <% } -%>

@@ -5,6 +5,7 @@
     "module": "commonjs",
     "types": ["jest", "node"]
   },
+  "exclude": ["**/files/*", "**/files/*.spec.ts"],
   "include": [
     "**/*.spec.ts",
     "**/*.test.ts",
@@ -18,8 +19,5 @@
     "**/*.test.jsx",
     "**/*.d.ts",
     "jest.config.ts"
-  ],
-  "exclude": [
-    "**/files/*"
   ]
 }

@@ -1,7 +1,7 @@
-import { Entity } from './entity';
+import { Entity, EntityProps } from './entity';
 import { Result } from './result';
 
-interface TestProps {
+interface TestProps extends EntityProps {
   name: string;
   description: string;
 }
