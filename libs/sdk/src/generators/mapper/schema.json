@@ -30,9 +30,16 @@
     },
     "fixtureDepth": {
       "type": "number",
-      "description": "Depth of JSON data fixtures",
+      "description": "Depth of JSON data fixtures in unit tests",
       "default": 1
+    },
+    "persistence": {
+      "type": "string",
+      "description": "Persistence to map to",
+      "enum": ["fluree", "postgres"],
+      "default": "fluree",
+      "x-prompt": "What persistence type?"
     }
   },
-  "required": ["module"]
+  "required": ["module", "persistence"]
 }

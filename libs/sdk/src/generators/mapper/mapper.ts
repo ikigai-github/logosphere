@@ -69,8 +69,8 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
     };
     generateFiles(
       tree,
-      path.join(__dirname, 'files'),
-      options.projectRoot,
+      path.join(__dirname, `files/mappers/${options.persistence}`),
+      `${options.projectRoot}/mappers/${options.persistence}`,
       defOptions
     );
   });

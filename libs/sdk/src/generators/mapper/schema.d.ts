@@ -6,4 +6,5 @@ export interface MapperGeneratorSchema {
   definition?: Definition;
   index?: Definition[];
   fixtureDepth?: number;
+  persistence: string;
 }

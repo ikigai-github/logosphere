@@ -132,7 +132,11 @@ export function entityImports(def: Definition, relativePath = '.'): TsImport[] {
  * @param relativePath relative part to imports
  * @returns name and file for the imports
  */
-export function mapperImports(def: Definition, relativePath = '.'): TsImport[] {
+export function mapperImports(
+  def: Definition,
+  persistence: string,
+  relativePath = '.'
+): TsImport[] {
   return def.props
     .filter(
       (prop: Property) =>
@@ -141,8 +145,10 @@ export function mapperImports(def: Definition, relativePath = '.'): TsImport[] {
     )
     .map((prop: Property) => {
       return {
-        name: `${classify(prop.type)}Map`,
-        file: `${relativePath}/${dasherize(prop.type)}.map`,
+        name: `${classify(prop.type)}${classify(persistence)}Map`,
+        file: `${relativePath}/${dasherize(prop.type)}.${dasherize(
+          persistence
+        )}.map`,
       };
     });
 }
@@ -250,7 +256,7 @@ export function dataExample(prop: Property) {
  * @param prop Canonical schema property
  * @returns Mapper method to use in generated mapper class
  */
-export function mapperToEntity(prop: Property): string {
+export function mapperToEntity(prop: Property, persistence: string): string {
   switch (prop.defType) {
     case DefinitionType.Scalar:
       return `scalarToEntity<${camelize(prop.type)}>(${classify(prop.type)}`;
@@ -261,11 +267,15 @@ export function mapperToEntity(prop: Property): string {
     case DefinitionType.Entity:
       return `entityToEntity<${classify(prop.type)}, ${classify(
         prop.type
-      )}Map>(${classify(prop.type)}Map`;
+      )}${classify(persistence)}Map>(${classify(prop.type)}${classify(
+        persistence
+      )}Map`;
     case DefinitionType.EntityArray:
       return `entityArrayToEntity<${classify(prop.type)}, ${classify(
         prop.type
-      )}Map>(${classify(prop.type)}Map`;
+      )}${classify(persistence)}Map>(${classify(prop.type)}${classify(
+        persistence
+      )}Map`;
     case DefinitionType.Enum:
       return `enumToEntity<typeof ${classify(prop.type)}>(${classify(
         prop.type
