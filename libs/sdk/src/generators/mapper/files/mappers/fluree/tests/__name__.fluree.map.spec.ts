@@ -16,7 +16,7 @@ describe('<%= classify(name)%> <%= classify(persistence) %> Map', () => {
   });
 
   it('should create <%= classify(name) %> entity from data', () => {
-    const <%= camelize(name)%>: <%= classify(name)%> = mapper.toEntity(<%= camelize(name)%>Data);
+    const <%= camelize(name)%>: <%= classify(name)%> = mapper.dataToEntity(<%= camelize(name)%>Data);
     expect(<%= camelize(name)%>.id).toBe('<%= fx.IDENTIFIER %>');
     expect(<%= camelize(name)%>.subjectId).toBe('<%= fx.SUBJECT_ID %>');
     expect(<%= camelize(name)%>.createdAt instanceof Date).toBeTruthy();

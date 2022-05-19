@@ -259,29 +259,27 @@ export function dataExample(prop: Property) {
 export function mapperToEntity(prop: Property, persistence: string): string {
   switch (prop.defType) {
     case DefinitionType.Scalar:
-      return `scalarToEntity<${camelize(prop.type)}>(${classify(prop.type)}`;
+      return `scalar<${camelize(prop.type)}>(${classify(prop.type)}`;
     case DefinitionType.ScalarArray:
-      return `scalarArrayToEntity<${camelize(prop.type)}>(${classify(
-        prop.type
-      )}`;
+      return `scalarArray<${camelize(prop.type)}>(${classify(prop.type)}`;
     case DefinitionType.Entity:
-      return `entityToEntity<${classify(prop.type)}, ${classify(
+      return `objectToEntity<${classify(prop.type)}, ${classify(
         prop.type
       )}${classify(persistence)}Map>(${classify(prop.type)}${classify(
         persistence
       )}Map`;
     case DefinitionType.EntityArray:
-      return `entityArrayToEntity<${classify(prop.type)}, ${classify(
+      return `objectArrayToEntity<${classify(prop.type)}, ${classify(
         prop.type
       )}${classify(persistence)}Map>(${classify(prop.type)}${classify(
         persistence
       )}Map`;
     case DefinitionType.Enum:
-      return `enumToEntity<typeof ${classify(prop.type)}>(${classify(
+      return `stringToEnum<typeof ${classify(prop.type)}>(${classify(
         prop.type
       )}`;
     case DefinitionType.EnumArray:
-      return `enumArrayToEntity<typeof ${classify(prop.type)}>(${classify(
+      return `stringArrayToEnum<typeof ${classify(prop.type)}>(${classify(
         prop.type
       )}`;
     default:

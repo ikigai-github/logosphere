@@ -23,7 +23,7 @@ import {
 
 @Injectable()
 export class  <%= classify(name) %><%=classify(persistence)%>Map extends Mapper<<%= classify(name) %>> {
-  public toEntity(data: any): <%= classify(name) %> {
+  public dataToEntity(data: any): <%= classify(name) %> {
     const <%= camelize(name) %>OrError = <%= classify(name) %>.create({
       id: data['<%= camelize(name) %>/identifier'] || data.identifier,
       subjectId: String(data._id),
@@ -37,7 +37,7 @@ export class  <%= classify(name) %><%=classify(persistence)%>Map extends Mapper<
     return  <%= camelize(name) %>OrError.isSuccess ?  <%= camelize(name) %>OrError.getValue() : null;
   }
 
-  public static toPersistence(<%= camelize(name) %>: <%= classify(name) %>): any {
+  public entityToData(<%= camelize(name) %>: <%= classify(name) %>): any {
     return {};
   }
 }
