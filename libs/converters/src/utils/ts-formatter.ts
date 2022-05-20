@@ -129,6 +129,7 @@ export function entityImports(def: Definition, relativePath = '.'): TsImport[] {
 /**
  * Helper function for generating mapper import line
  * @param def Canonical schema definition
+ * @param persistence Persistency type, such as `fluree` or `postgres`
  * @param relativePath relative part to imports
  * @returns name and file for the imports
  */
