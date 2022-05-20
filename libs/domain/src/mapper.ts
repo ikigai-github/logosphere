@@ -38,7 +38,7 @@ export abstract class Mapper<T> {
    */
   protected scalarArray<S>(type: { (v: any): S }, vals: any[]) {
     if (vals && vals instanceof Array) {
-      return vals.map((val: any) => type(val));
+      return vals.map((val: any) => this.scalar(type, val));
     } else {
       return null;
     }
@@ -78,7 +78,7 @@ export abstract class Mapper<T> {
    */
   protected enumArray<E extends { [name: string]: any }>(e: E, keys: string[]) {
     if (keys && keys instanceof Array) {
-      return keys.map((key: string) => e[key]);
+      return keys.map((key: string) => this.enum(e, key));
     } else {
       return null;
     }
