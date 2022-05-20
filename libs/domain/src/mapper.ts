@@ -8,13 +8,13 @@ export abstract class Mapper<T> {
    * Takes data from persistence layer and create entity
    * @param data Persistency layer data
    */
-  public abstract dataToEntity(data: any): T;
+  public abstract toEntity(data: any): T;
 
   /**
    * Serializes entity into persistence layer data
    * @param entity Entity
    */
-  public abstract entityToData(entity: T): any;
+  public abstract fromEntity(entity: T): any;
 
   /**
    * Basic scalar mapper. Converts scalar value of one type
@@ -40,13 +40,12 @@ export abstract class Mapper<T> {
     if (vals && vals instanceof Array) {
       return vals.map((val: any) => type(val));
     } else {
-      return undefined;
+      return null;
     }
   }
 
   /**
-   * Converts string value of enum, that would typically come from
-   * an enum type, into actual enum value
+   * Converts enum from key to value and back
    * @param e Enum, for example
    * ```
    * enum SomeEnum {
@@ -54,10 +53,13 @@ export abstract class Mapper<T> {
    *  Second = 2
    * }
    * ```
-   * @param key String key in the enum, such as `'First'`
-   * @returns Value of the key in the enum, such as `1`
+   * @param key String key in the enum, such as `'First'`, or `1`
+   * @returns Value of the key in the enum, such as `1`, or `SomeEnum.First`, or `'First'`
    */
-  protected stringToEnum<E extends { [name: string]: any }>(e: E, key: string) {
+  protected enum<E extends { [name: string]: any }>(
+    e: E,
+    key: string | number
+  ) {
     return e[key];
   }
 
@@ -71,17 +73,14 @@ export abstract class Mapper<T> {
    *  Second = 2
    * }
    * ```
-   * @param keys array of string keys in the enum, such as `['First', 'Second']`
-   * @returns Array of values of the keys in the enum, such as `[1, 2]`
+   * @param keys array of string keys in the enum, such as `['First', 'Second']` or `[1, 2]`
+   * @returns Array of values of the keys in the enum, such as `[1, 2]` or `['First', 'Second']`
    */
-  protected stringArrayToEnum<E extends { [name: string]: any }>(
-    e: E,
-    keys: string[]
-  ) {
+  protected enumArray<E extends { [name: string]: any }>(e: E, keys: string[]) {
     if (keys && keys instanceof Array) {
       return keys.map((key: string) => e[key]);
     } else {
-      return undefined;
+      return null;
     }
   }
 
@@ -97,17 +96,17 @@ export abstract class Mapper<T> {
   ) {
     if (data) {
       const m = new mapper();
-      return m.dataToEntity(data);
+      return m.toEntity(data);
     } else {
-      return undefined;
+      return null;
     }
   }
 
   /**
    * Invokes mapper of another type on array of object data of this type
    * @param mapper Mapper  of type M
-   * @param data Array of object data
-   * @returns Array of entities of type E
+   * @param dataArray array of object data
+   * @returns array of entities
    */
   protected objectArrayToEntity<E, M extends Mapper<E>>(
     mapper: { new (): M },
@@ -115,9 +114,45 @@ export abstract class Mapper<T> {
   ) {
     if (dataArray && dataArray instanceof Array) {
       const m = new mapper();
-      return dataArray.map((data: any) => m.dataToEntity(data));
+      return dataArray.map((data: any) => m.toEntity(data));
     } else {
-      return undefined;
+      return null;
+    }
+  }
+
+  /**
+   * Invokes mapper of another type on entity of this type
+   * @param mapper Mapper  of type M
+   * @param entity Entity of type E
+   * @returns Serialized data
+   */
+  protected entityToData<E, M extends Mapper<E>>(
+    mapper: { new (): M },
+    entity: E
+  ) {
+    if (entity) {
+      const m = new mapper();
+      return m.fromEntity(entity);
+    } else {
+      return null;
+    }
+  }
+
+  /**
+   * Invokes mapper of another type on array of entities of this type
+   * @param mapper Mapper  of type M
+   * @param entityArray Array of entities of type E
+   * @returns array of serialized data
+   */
+  protected entityArrayToData<E, M extends Mapper<E>>(
+    mapper: { new (): M },
+    entityArray: E[]
+  ) {
+    if (entityArray && entityArray instanceof Array) {
+      const m = new mapper();
+      return entityArray.map((entity: E) => m.fromEntity(entity));
+    } else {
+      return null;
     }
   }
 }

@@ -6,7 +6,11 @@ import { MapperGeneratorSchema } from './schema';
 
 describe('dto generator', () => {
   let tree: Tree;
-  const options: MapperGeneratorSchema = { name: 'wallet', module: 'test-app' };
+  const options: MapperGeneratorSchema = {
+    name: 'wallet',
+    module: 'test-app',
+    persistence: 'fluree',
+  };
 
   beforeEach(async () => {
     tree = createTreeWithEmptyWorkspace();

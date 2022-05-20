@@ -23,7 +23,7 @@ import {
 
 @Injectable()
 export class  <%= classify(name) %><%=classify(persistence)%>Map extends Mapper<<%= classify(name) %>> {
-  public dataToEntity(data: any): <%= classify(name) %> {
+  public toEntity(data: any): <%= classify(name) %> {
     const <%= camelize(name) %>OrError = <%= classify(name) %>.create({
       id: data['<%= camelize(name) %>/identifier'] || data.identifier,
       subjectId: String(data._id),
@@ -37,7 +37,15 @@ export class  <%= classify(name) %><%=classify(persistence)%>Map extends Mapper<
     return  <%= camelize(name) %>OrError.isSuccess ?  <%= camelize(name) %>OrError.getValue() : null;
   }
 
-  public entityToData(<%= camelize(name) %>: <%= classify(name) %>): any {
-    return {};
+  public fromEntity(<%= camelize(name) %>: <%= classify(name) %>): any {
+    return {
+      _id: Number(<%= camelize(name) %>.subjectId),
+      '<%= camelize(name) %>/identifier': <%= camelize(name) %>.id,
+      '<%= camelize(name) %>/createdAt': Number(<%= camelize(name) %>.createdAt),
+      '<%= camelize(name) %>/updatedAt': Number(<%= camelize(name) %>.updatedAt),
+      <%_ definition.props.map((p) => { -%>
+      '<%= camelize(name) %>/<%= p.name %>': this.<%- mapperToData(p, persistence) %>, <%= camelize(name) %>.<%= p.name %>),
+      <%_ }) -%>
+    };
   }
 }

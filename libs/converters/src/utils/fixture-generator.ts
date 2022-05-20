@@ -88,6 +88,8 @@ function generateFlureeData(
         );
         data[`${prefix}${prop.name}`] =
           prop.defType === DefinitionType.Entity ? value : [value];
+      } else {
+        data[`${prefix}${prop.name}`] = null;
       }
     } else {
       data[`${prefix}${prop.name}`] = propExample(prop, random);
