@@ -24,7 +24,9 @@ export abstract class Entity<T extends EntityProps> {
     this.props = { ...props };
     this.props.id = this._id.toString();
     this.props.createdAt = props.createdAt ? props.createdAt : new Date();
-    this.props.updatedAt = props.updatedAt ? props.updatedAt : props.createdAt;
+    this.props.updatedAt = props.updatedAt
+      ? props.updatedAt
+      : this.props.createdAt;
   }
 
   public get id(): string {

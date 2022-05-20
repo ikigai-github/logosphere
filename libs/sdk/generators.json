@@ -59,6 +59,11 @@
       "schema": "./src/generators/repository/schema.json",
       "description": "Entity repositories generator",
       "aliases": ["repo"]
+    },
+    "mapper": {
+      "factory": "./src/generators/mapper/mapper",
+      "schema": "./src/generators/mapper/schema.json",
+      "description": "Mapper generator"
     }
   },
   "generators": {
@@ -118,6 +123,11 @@
       "schema": "./src/generators/repository/schema.json",
       "description": "Entity repositories generator",
       "aliases": ["repo"]
+    },
+    "mapper": {
+      "factory": "./src/generators/mapper/mapper",
+      "schema": "./src/generators/mapper/schema.json",
+      "description": "Mapper generator"
     }
   }
 }

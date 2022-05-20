@@ -15,7 +15,7 @@ describe('<%= classify(name)%> Entity', () => {
   beforeAll(() => {
     const result = <%= classify(name)%>.create({
       <%_ definition.props.filter((p) => p.isRequired).map((p) => { -%>
-        <%= p.name %>: <%- example(p) %>,
+        <%= p.name %>: <%- entityExample(p) %>,
       <%_ }) -%>
     });
     <%= camelize(name)%> = result.getValue();

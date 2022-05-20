@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "Mapper",
+  "title": "",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the mapper"
+    },
+    "module": {
+      "type": "string",
+      "description": "Module for which mappers should be generated",
+      "x-prompt": "What module is it for?",
+      "alias": "m"
+    },
+    "directory": {
+      "type": "string",
+      "description": "A directory where the mapper is placed",
+      "alias": "d"
+    },
+    "definition": {
+      "type": "object",
+      "description": "Canonical schema definition (single object)"
+    },
+    "index": {
+      "type": "array",
+      "description": "Canonical schema definitions to index"
+    },
+    "fixtureDepth": {
+      "type": "number",
+      "description": "Depth of JSON data fixtures in unit tests",
+      "default": 1
+    },
+    "persistence": {
+      "type": "string",
+      "description": "Persistence to map to",
+      "enum": ["fluree", "postgres"],
+      "default": "fluree",
+      "x-prompt": "What persistence type?"
+    }
+  },
+  "required": ["module", "persistence"]
+}
