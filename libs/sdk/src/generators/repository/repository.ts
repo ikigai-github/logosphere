@@ -71,8 +71,8 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
     };
     generateFiles(
       tree,
-      path.join(__dirname, 'files'),
-      options.projectRoot,
+      path.join(__dirname, `files/repositories/${options.type}`),
+      `${options.projectRoot}/repositories/${options.type}`,
       defOptions
     );
   });

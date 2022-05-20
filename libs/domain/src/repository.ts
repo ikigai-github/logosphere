@@ -1,8 +1,11 @@
 export interface Repository<T> {
+  exists(id: string): Promise<boolean>;
+  delete(id: string): Promise<boolean>;
   findAll(): Promise<T[]>;
-  findBySpec(): Promise<T[]>;
-  findOne(identifier: string): Promise<T>;
-  delete(identifier: string): Promise<boolean>;
-  exists(identifier: string): Promise<boolean>;
-  save(t: T): Promise<T>;
+  // TODO: implement findBySpec, once it naturally comes up in projects
+  // https://ikigai-technologies.atlassian.net/browse/LOG-151
+  //findBySpec(spec: QuerySpec): Promise<T[]>;
+  findMany(ids: string[]): Promise<T[]>;
+  findOne(id: string): Promise<T>;
+  save(entity: T): Promise<T>;
 }

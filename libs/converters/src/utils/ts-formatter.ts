@@ -161,11 +161,27 @@ export function mapperImports(
  */
 export function isEnumImport(def: Definition): boolean {
   return (
-    def.props.filter(
+    def.props.find(
       (prop: Property) =>
         prop.defType === DefinitionType.Enum ||
         prop.defType === DefinitionType.EnumArray
-    ).length > 0
+    ) !== undefined
+  );
+}
+
+/**
+ * Determines if there is at least one indexed enum in definition
+ * @param def Canonical schema definition
+ * @returns true or false
+ */
+export function hasIndexedEnum(def: Definition): boolean {
+  return (
+    def.props.find(
+      (prop: Property) =>
+        (prop.defType === DefinitionType.Enum ||
+          prop.defType === DefinitionType.EnumArray) &&
+        prop.isIndexed
+    ) !== undefined
   );
 }
 

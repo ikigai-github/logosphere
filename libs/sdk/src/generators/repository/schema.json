@@ -27,7 +27,14 @@
     "index": {
       "type": "array",
       "description": "Canonical schema definitions to index"
+    },
+    "type": {
+      "type": "string",
+      "description": "Type of repository to generate",
+      "enum": ["interfaces", "fluree", "postgres"],
+      "default": "interfaces",
+      "x-prompt": "What persistence type?"
     }
   },
-  "required": ["module"]
+  "required": ["module", "type"]
 }

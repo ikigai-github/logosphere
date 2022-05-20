@@ -9,6 +9,7 @@ describe('dto generator', () => {
   const options: RepositoryGeneratorSchema = {
     name: 'wallet',
     module: 'test-app',
+    type: 'fluree',
   };
 
   beforeEach(async () => {

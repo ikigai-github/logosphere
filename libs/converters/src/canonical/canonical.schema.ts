@@ -19,6 +19,7 @@ export interface Property {
   isFullText: boolean;
   isReadOnly: boolean;
   isWriteOnly: boolean;
+  isIndexed: boolean;
   defType: DefinitionType;
   examples: string[];
   pattern: string;

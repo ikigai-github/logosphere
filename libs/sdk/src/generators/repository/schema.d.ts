@@ -5,4 +5,5 @@ export interface RepositoryGeneratorSchema {
   directory?: string;
   definition?: Definition;
   index?: Definition[];
+  type: string;
 }
