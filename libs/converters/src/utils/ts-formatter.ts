@@ -129,13 +129,13 @@ export function entityImports(def: Definition, relativePath = '.'): TsImport[] {
 /**
  * Helper function for generating mapper import line
  * @param def Canonical schema definition
- * @param persistence Persistency type, such as `fluree` or `postgres`
+ * @param mapperType Persistency type, such as `fluree` or `postgres`
  * @param relativePath relative part to imports
  * @returns name and file for the imports
  */
 export function mapperImports(
   def: Definition,
-  persistence: string,
+  mapperType: string,
   relativePath = '.'
 ): TsImport[] {
   return def.props
@@ -146,9 +146,9 @@ export function mapperImports(
     )
     .map((prop: Property) => {
       return {
-        name: `${classify(prop.type)}${classify(persistence)}Map`,
+        name: `${classify(prop.type)}${classify(mapperType)}Map`,
         file: `${relativePath}/${dasherize(prop.type)}.${dasherize(
-          persistence
+          mapperType
         )}.map`,
       };
     });
@@ -273,7 +273,7 @@ export function dataExample(prop: Property) {
  * @param prop Canonical schema property
  * @returns Mapper method to use in generated mapper class
  */
-export function mapperToEntity(prop: Property, persistence: string): string {
+export function mapperToEntity(prop: Property, mapperType: string): string {
   switch (prop.defType) {
     case DefinitionType.Scalar:
       return `scalar<${camelize(prop.type)}>(${classify(prop.type)}`;
@@ -282,14 +282,14 @@ export function mapperToEntity(prop: Property, persistence: string): string {
     case DefinitionType.Entity:
       return `objectToEntity<${classify(prop.type)}, ${classify(
         prop.type
-      )}${classify(persistence)}Map>(${classify(prop.type)}${classify(
-        persistence
+      )}${classify(mapperType)}Map>(${classify(prop.type)}${classify(
+        mapperType
       )}Map`;
     case DefinitionType.EntityArray:
       return `objectArrayToEntity<${classify(prop.type)}, ${classify(
         prop.type
-      )}${classify(persistence)}Map>(${classify(prop.type)}${classify(
-        persistence
+      )}${classify(mapperType)}Map>(${classify(prop.type)}${classify(
+        mapperType
       )}Map`;
     case DefinitionType.Enum:
       return `enum<typeof ${classify(prop.type)}>(${classify(prop.type)}`;
@@ -300,7 +300,7 @@ export function mapperToEntity(prop: Property, persistence: string): string {
   }
 }
 
-export function mapperToData(prop: Property, persistence: string): string {
+export function mapperToData(prop: Property, mapperType: string): string {
   switch (prop.defType) {
     case DefinitionType.Scalar:
       return `scalar<${camelize(prop.type)}>(${classify(prop.type)}`;
@@ -309,14 +309,14 @@ export function mapperToData(prop: Property, persistence: string): string {
     case DefinitionType.Entity:
       return `entityToData<${classify(prop.type)}, ${classify(
         prop.type
-      )}${classify(persistence)}Map>(${classify(prop.type)}${classify(
-        persistence
+      )}${classify(mapperType)}Map>(${classify(prop.type)}${classify(
+        mapperType
       )}Map`;
     case DefinitionType.EntityArray:
       return `entityArrayToData<${classify(prop.type)}, ${classify(
         prop.type
-      )}${classify(persistence)}Map>(${classify(prop.type)}${classify(
-        persistence
+      )}${classify(mapperType)}Map>(${classify(prop.type)}${classify(
+        mapperType
       )}Map`;
     case DefinitionType.Enum:
       return `enum<typeof ${classify(prop.type)}>(${classify(prop.type)}`;

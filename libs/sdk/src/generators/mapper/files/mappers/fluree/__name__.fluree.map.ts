@@ -8,7 +8,7 @@ import {
   <%_ }) %>
 } from '../../entities';
 <% if (isMapperImport(definition)) { -%>
-  <% mapperImports(definition, persistence).map((imp) => {-%>
+  <% mapperImports(definition, type).map((imp) => {-%>
   import { <%= imp.name %> } from '<%- imp.file %>';
   <%_ }) %>
 <%_ } %>
@@ -22,7 +22,7 @@ import {
 
 
 @Injectable()
-export class  <%= classify(name) %><%=classify(persistence)%>Map extends Mapper<<%= classify(name) %>> {
+export class  <%= classify(name) %><%=classify(type)%>Map extends Mapper<<%= classify(name) %>> {
   public toEntity(data: any): <%= classify(name) %> {
     const <%= camelize(name) %>OrError = <%= classify(name) %>.create({
       id: data['<%= camelize(name) %>/identifier'] || data.identifier,
@@ -30,7 +30,7 @@ export class  <%= classify(name) %><%=classify(persistence)%>Map extends Mapper<
       createdAt: new Date(data['<%= camelize(name) %>/createdAt'] || data.createdAt),
       updatedAt: new Date(data['<%= camelize(name) %>/updatedAt'] || data.updatedAt),
       <%_ definition.props.map((p) => { -%>
-      <%= p.name %>: this.<%- mapperToEntity(p, persistence) %>, data['<%= camelize(name) %>/<%= p.name %>'] || data.<%= p.name %>),
+      <%= p.name %>: this.<%- mapperToEntity(p, type) %>, data['<%= camelize(name) %>/<%= p.name %>'] || data.<%= p.name %>),
       <%_ }) -%>
     });
     <%= camelize(name) %>OrError.isFailure ? console.log(<%= camelize(name) %>OrError) : '';
@@ -44,7 +44,7 @@ export class  <%= classify(name) %><%=classify(persistence)%>Map extends Mapper<
       '<%= camelize(name) %>/createdAt': Number(<%= camelize(name) %>.createdAt),
       '<%= camelize(name) %>/updatedAt': Number(<%= camelize(name) %>.updatedAt),
       <%_ definition.props.map((p) => { -%>
-      '<%= camelize(name) %>/<%= p.name %>': this.<%- mapperToData(p, persistence) %>, <%= camelize(name) %>.<%= p.name %>),
+      '<%= camelize(name) %>/<%= p.name %>': this.<%- mapperToData(p, type) %>, <%= camelize(name) %>.<%= p.name %>),
       <%_ }) -%>
     };
   }

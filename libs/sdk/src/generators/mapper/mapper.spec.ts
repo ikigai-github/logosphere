@@ -9,7 +9,7 @@ describe('dto generator', () => {
   const options: MapperGeneratorSchema = {
     name: 'wallet',
     module: 'test-app',
-    persistence: 'fluree',
+    type: 'dto',
   };
 
   beforeEach(async () => {

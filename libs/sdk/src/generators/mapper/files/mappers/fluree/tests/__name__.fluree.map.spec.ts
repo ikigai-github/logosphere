@@ -1,5 +1,5 @@
 import { <%= classify(name)%> } from '../../../entities/<%= dasherize(name) %>.entity';
-import { <%= classify(name)%><%= classify(persistence) %>Map } from '../<%= dasherize(name) %>.<%= dasherize(persistence) %>.map';
+import { <%= classify(name)%><%= classify(type) %>Map } from '../<%= dasherize(name) %>.<%= dasherize(type) %>.map';
 <% if (isEnumImport(definition)) { -%>
   import {
     <% enumImports(definition).map((imp) => {-%>
@@ -7,13 +7,13 @@ import { <%= classify(name)%><%= classify(persistence) %>Map } from '../<%= dash
     <%_ }) %>
   } from '../../../cb.model';
 <%_ } %>
-describe('<%= classify(name)%> <%= classify(persistence) %> Map', () => {
+describe('<%= classify(name)%> <%= classify(type) %> Map', () => {
   let <%= camelize(name)%>Data;
   let <%= camelize(name)%>: <%= classify(name)%>;
-  let mapper: <%= classify(name)%><%= classify(persistence) %>Map;
+  let mapper: <%= classify(name)%><%= classify(type) %>Map;
   beforeAll(() => {
     <%= camelize(name)%>Data = <%- flureeDataFixture(index, definition.name, fixtureDepth) %>
-    mapper = new <%= classify(name)%><%= classify(persistence) %>Map();
+    mapper = new <%= classify(name)%><%= classify(type) %>Map();
   });
 
   it('should create <%= classify(name) %> entity from Fluree data', () => {
