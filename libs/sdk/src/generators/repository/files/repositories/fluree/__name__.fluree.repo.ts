@@ -104,12 +104,28 @@ export class <%= classify(name) %><%= classify(type) %>Repository implements I<%
 
 <% definition.props.filter((p) => p.isUnique).map((p) => { -%>
   public async findOneBy<%= classify(p.name) %>(<%= camelize(p.name) %>: <%= entityProp(p).type %> ): Promise<<%= classify(name) %>>{
-    return null;
+    const query = selectOne('*')
+      .where(`<%= camelize(name) %>/<%= camelize(p.name) %> = '${<%= camelize(p.name) %>}'`)
+      .build();
+    const fql = compile(query);
+    const result = await this.fluree.query(fql);
+    if (result) {
+      return this.mapper.toEntity(result);
+    } else {
+      return null;
+    }
   };
 <% }) %>
 <% definition.props.filter((p) => p.isIndexed && !p.isUnique).map((p) => { -%>
   public async findAllBy<%= classify(p.name) %>(<%= camelize(p.name) %>: <%= entityProp(p).type %> ): Promise<<%= classify(name)%>[]>{
-    return null;
+    const query = select('*').where(`<%= camelize(name) %>/<%= camelize(p.name) %> = '${<%= camelize(p.name) %>}'`).build();
+    const fql = compile(query);
+    const result = await this.fluree.query(fql);
+    if (result && result.length > 0) {
+      return result.map((f: FlureeSingleObject) => this.mapper.toEntity(f));
+    } else {
+      return null;
+    }
   };
 <% }) %>
 
