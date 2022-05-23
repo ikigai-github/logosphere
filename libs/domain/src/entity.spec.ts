@@ -46,4 +46,16 @@ describe('Entity', () => {
     const testEntity2 = new TestEntity(testProps);
     expect(testEntity1.equals(testEntity2)).toBeFalsy();
   });
+
+  it('Should have valid createdAt', () => {
+    const testEntity = new TestEntity(testProps);
+    expect(testEntity.createdAt).toBeDefined();
+    expect(testEntity.createdAt instanceof Date).toBeTruthy();
+  });
+
+  it('Should have valid updatedAt', () => {
+    const testEntity = new TestEntity(testProps);
+    expect(testEntity.updatedAt).toBeDefined();
+    expect(testEntity.updatedAt instanceof Date).toBeTruthy();
+  });
 });

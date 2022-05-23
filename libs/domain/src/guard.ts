@@ -48,6 +48,17 @@ export class Guard {
     return { succeeded: true };
   }
 
+  public static isDate(value: any, argumentName: string): IGuardResult {
+    if (value && value instanceof Date && !isNaN(value.getTime())) {
+      return { succeeded: true };
+    } else {
+      return {
+        succeeded: false,
+        message: `${argumentName} value ${value} is not a valid Date`,
+      };
+    }
+  }
+
   public static isOneOf(
     value: any,
     validValues: any[],

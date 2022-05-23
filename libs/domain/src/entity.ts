@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { LogosphereError } from '@logosphere/errors';
 import { SHA256Identifier } from './sha256-identifier';
 
 const isEntity = (v: any): v is Entity<any> => {
@@ -10,6 +11,12 @@ export interface EntityProps {
   subjectId?: string;
   createdAt?: Date;
   updatedAt?: Date;
+}
+
+export class EntityError extends LogosphereError {
+  constructor(message: string, error?: any) {
+    super(message, error);
+  }
 }
 
 export abstract class Entity<T extends EntityProps> {

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from "@nestjs/common";
-import { Mapper } from '@logosphere/domain';
+import { Mapper, MapperError } from '@logosphere/domain';
 import { <%= classify(name) %>Dto} from '../../dto';
 import { 
   <%= classify(name) %>,
@@ -34,8 +34,11 @@ export class  <%= classify(name) %><%=classify(type)%>Map extends Mapper<<%= cla
       <%= p.name %>: this.<%- mapperToEntity(p, type) %>, data['<%= p.name %>']),
       <%_ }) -%>
     });
-    <%= camelize(name) %>OrError.isFailure ? console.log(<%= camelize(name) %>OrError) : '';
-    return  <%= camelize(name) %>OrError.isSuccess ?  <%= camelize(name) %>OrError.getValue() : null;
+    if (<%= camelize(name)  %>OrError.isSuccess) {
+      return <%= camelize(name)  %>OrError.getValue();
+    } else {
+      throw new MapperError(JSON.stringify(<%= camelize(name)  %>OrError.error));
+    }
   }
 
   public fromEntity(<%= camelize(name) %>: <%= classify(name) %>): <%= classify(name) %>Dto {
