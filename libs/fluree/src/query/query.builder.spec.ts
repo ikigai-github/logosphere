@@ -50,4 +50,17 @@ describe('Query Builder', () => {
     expect(spec.where).toEqual(['a != b', 'b > 1']);
     expect(spec.whereOperator).toBe('OR');
   });
+
+  it('should allow immediate or/and clause without a where', () => {
+    const options: FlureeQueryOptions = {
+      limit: 10,
+      offset: 0,
+      syncTimeout: 1000,
+    };
+    const spec = select('*').or('a != b').or('b > 1').options(options).build();
+
+    expect(spec.opts).toEqual(options);
+    expect(spec.where).toEqual(['a != b', 'b > 1']);
+    expect(spec.whereOperator).toBe('OR');
+  });
 });
