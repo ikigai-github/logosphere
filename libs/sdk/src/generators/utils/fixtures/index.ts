@@ -1,1 +1,2 @@
-export * as flureeFixture from './fluree';
+export * from './fluree';
+export * from './dto';

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from "@nestjs/common";
 import { Mapper } from '@logosphere/domain';
+import { <%= classify(name) %>Dto} from '../../dto';
 import { 
   <%= classify(name) %>,
   <% entityImports(definition).map((imp) => {-%>
@@ -23,28 +24,28 @@ import {
 
 @Injectable()
 export class  <%= classify(name) %><%=classify(type)%>Map extends Mapper<<%= classify(name) %>> {
-  public toEntity(data: any): <%= classify(name) %> {
+  public toEntity(data: <%= classify(name)%>Dto): <%= classify(name) %> {
     const <%= camelize(name) %>OrError = <%= classify(name) %>.create({
-      id: data['<%= camelize(name) %>/identifier'] || data.identifier,
-      subjectId: String(data._id),
-      createdAt: new Date(data['<%= camelize(name) %>/createdAt'] || data.createdAt),
-      updatedAt: new Date(data['<%= camelize(name) %>/updatedAt'] || data.updatedAt),
+      id: data.id,
+      subjectId: data.subjectId,
+      createdAt: new Date(data.createdAt),
+      updatedAt: new Date(data.updatedAt),
       <%_ definition.props.map((p) => { -%>
-      <%= p.name %>: this.<%- mapperToEntity(p, type) %>, data['<%= camelize(name) %>/<%= p.name %>'] || data.<%= p.name %>),
+      <%= p.name %>: this.<%- mapperToEntity(p, type) %>, data['<%= p.name %>']),
       <%_ }) -%>
     });
     <%= camelize(name) %>OrError.isFailure ? console.log(<%= camelize(name) %>OrError) : '';
     return  <%= camelize(name) %>OrError.isSuccess ?  <%= camelize(name) %>OrError.getValue() : null;
   }
 
-  public fromEntity(<%= camelize(name) %>: <%= classify(name) %>): any {
+  public fromEntity(<%= camelize(name) %>: <%= classify(name) %>): <%= classify(name) %>Dto {
     return {
-      _id: Number(<%= camelize(name) %>.subjectId),
-      '<%= camelize(name) %>/identifier': <%= camelize(name) %>.id,
-      '<%= camelize(name) %>/createdAt': Number(<%= camelize(name) %>.createdAt),
-      '<%= camelize(name) %>/updatedAt': Number(<%= camelize(name) %>.updatedAt),
+      subjectId: <%= camelize(name) %>.subjectId,
+      id: <%= camelize(name) %>.id,
+      createdAt: <%= camelize(name) %>.createdAt.toISOString(),
+      updatedAt: <%= camelize(name) %>.updatedAt.toISOString(),
       <%_ definition.props.map((p) => { -%>
-      '<%= camelize(name) %>/<%= p.name %>': this.<%- mapperToData(p, type) %>, <%= camelize(name) %>.<%= p.name %>),
+      '<%= p.name %>': this.<%- mapperToData(p, type) %>, <%= camelize(name) %>.<%= p.name %>),
       <%_ }) -%>
     };
   }

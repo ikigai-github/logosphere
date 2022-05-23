@@ -9,10 +9,8 @@ import {
 } from '@nrwl/devkit';
 
 import {
-  ConverterFactory,
   Definition,
   DefinitionType,
-  SchemaType,
   canonicalSchemaLoader,
 } from '@logosphere/converters';
 import { tsFormatter } from '../utils';

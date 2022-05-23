@@ -13,11 +13,15 @@ import {
 } from '@angular-devkit/core/src/utils/strings';
 import {
   flureeData,
-  fixtures as flureeFixtures,
-} from '../utils/fixtures/fluree';
+  flureeFixtures,
+  dtoData,
+  dtoFixtures,
+} from '../utils/fixtures';
+
 import { asserts, defaults } from './constants';
 
 export const flureeFx = flureeFixtures;
+export const dtoFx = dtoFixtures;
 
 function typeFormat(prop: Partial<Property>, objectType = '') {
   switch (prop.defType) {
@@ -353,6 +357,25 @@ export function flureeDataFixture(
 ) {
   return JSON.stringify(
     flureeData(defs, rootDefName, true, false, fixtureDepth),
+    null,
+    2
+  );
+}
+
+/**
+ * Create DTO nested JSON data fixture
+ * @param defs Canonical schema definitions
+ * @param rootDefName Name of the root collection
+ * @param fixtureDepth Depth of nested JSON
+ * @returns DTO data fixture
+ */
+export function dtoDataFixture(
+  defs: Definition[],
+  rootDefName: string,
+  fixtureDepth = defaults.FIXTURE_MAX_DEPTH
+) {
+  return JSON.stringify(
+    dtoData(defs, rootDefName, false, fixtureDepth),
     null,
     2
   );
