@@ -13,8 +13,8 @@ import {
   Definition,
   DefinitionType,
   canonicalSchemaLoader,
-  tsFormatter,
 } from '@logosphere/converters';
+import { tsFormatter } from '../utils';
 import { MapperGeneratorSchema } from './schema';
 import { DEFAULT_CODEGEN_DIR } from '../../common';
 

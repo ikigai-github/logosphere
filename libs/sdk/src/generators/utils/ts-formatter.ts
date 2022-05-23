@@ -3,21 +3,21 @@ import {
   Definition,
   Property,
   DefinitionType,
-  CanonicalSchema,
-} from '../canonical';
+  propExample,
+} from '@logosphere/converters';
 import { strings } from '@angular-devkit/core';
 import {
   classify,
   dasherize,
   camelize,
 } from '@angular-devkit/core/src/utils/strings';
-import { flureeData, propExample } from './fixture-generator';
-import { asserts, defaults, fixtures } from './constants';
+import {
+  flureeData,
+  fixtures as flureeFixtures,
+} from '../utils/fixtures/fluree';
+import { asserts, defaults } from './constants';
 
-/**
- * Fixture values to use in generators
- */
-export const fx = fixtures;
+export const flureeFx = flureeFixtures;
 
 function typeFormat(prop: Partial<Property>, objectType = '') {
   switch (prop.defType) {
@@ -349,7 +349,7 @@ export function createExpect(prop: Property): boolean {
 export function flureeDataFixture(
   defs: Definition[],
   rootDefName: string,
-  fixtureDepth = defaults.FLUREE_FIXTURE_MAX_DEPTH
+  fixtureDepth = defaults.FIXTURE_MAX_DEPTH
 ) {
   return JSON.stringify(
     flureeData(defs, rootDefName, true, false, fixtureDepth),

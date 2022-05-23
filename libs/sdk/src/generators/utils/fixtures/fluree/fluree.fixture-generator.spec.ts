@@ -1,5 +1,5 @@
-import { flureeData } from './fixture-generator';
-import * as schema from '../../../test/fixtures/code-first/schemas/monolith/canonical/art-marketplace.canonical.schema.json';
+import { flureeData } from './fluree.fixture-generator';
+import * as schema from '../../../../../../test/fixtures/code-first/schemas/monolith/canonical/art-marketplace.canonical.schema.json';
 import { CanonicalSchema } from '@logosphere/converters';
 
 describe('Fixture Generator', () => {

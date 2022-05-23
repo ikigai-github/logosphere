@@ -14,8 +14,8 @@ import {
   DefinitionType,
   SchemaType,
   canonicalSchemaLoader,
-  tsFormatter,
 } from '@logosphere/converters';
+import { tsFormatter } from '../utils';
 import { DtoGeneratorSchema } from './schema';
 import { DEFAULT_CODEGEN_DIR } from '../../common';
 import { strings } from '@angular-devkit/core';

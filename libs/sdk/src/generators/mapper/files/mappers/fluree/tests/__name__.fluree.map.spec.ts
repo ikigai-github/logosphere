@@ -18,8 +18,8 @@ describe('<%= classify(name)%> <%= classify(type) %> Map', () => {
 
   it('should create <%= classify(name) %> entity from Fluree data', () => {
     <%= camelize(name)%> = mapper.toEntity(<%= camelize(name)%>Data);
-    expect(<%= camelize(name)%>.id).toBe('<%= fx.IDENTIFIER %>');
-    expect(<%= camelize(name)%>.subjectId).toBe('<%= fx.SUBJECT_ID %>');
+    expect(<%= camelize(name)%>.id).toBe('<%= flureeFx.IDENTIFIER %>');
+    expect(<%= camelize(name)%>.subjectId).toBe('<%= flureeFx.SUBJECT_ID %>');
     expect(<%= camelize(name)%>.createdAt instanceof Date).toBeTruthy();
     expect(<%= camelize(name)%>.updatedAt instanceof Date).toBeTruthy();
     <%_ definition.props.map((p) => { -%>
