@@ -20,7 +20,7 @@ import { <%= classify(name) %>FlureeMap } from '../../mappers/fluree';
 import { I<%= classify(name) %>Repository } from '../interfaces';
 
 @Injectable()
-export class <%= classify(name) %>Repository implements I<%= classify(name) %>Repository {
+export class <%= classify(name) %><%= classify(type) %>Repository implements I<%= classify(name) %>Repository {
   constructor(
     private fluree: FlureeClient,
     private mapper: <%= classify(name) %>FlureeMap

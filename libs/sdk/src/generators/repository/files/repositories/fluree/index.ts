@@ -1,3 +1,3 @@
 <%_ index.map((def) => { -%>
-  export * from './<%= dasherize(def.name) %>.repo';
+  export * from './<%= dasherize(def.name) %>.fluree.repo';
 <% }) %>
