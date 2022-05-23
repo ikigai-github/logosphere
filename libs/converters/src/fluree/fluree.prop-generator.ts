@@ -41,8 +41,10 @@ export class FlureePropGenerator extends PropGenerator {
     };
   }
   protected generateEnum(prop: Partial<Property>): FlureePredicate {
-    return {} as FlureePredicate;
-    `${prop}`;
+    return {
+      ...this.#common(prop),
+      type: c.STRING,
+    };
   }
   protected generateEntity(prop: Partial<Property>): FlureePredicate {
     return {
