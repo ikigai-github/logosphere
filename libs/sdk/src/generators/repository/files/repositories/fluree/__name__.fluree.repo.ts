@@ -36,7 +36,14 @@ export class <%= classify(name) %><%= classify(type) %>Repository implements I<%
   }
 
   public async delete(id: string): Promise<boolean> {
-    return false;
+    const existing = await this.findOne(id);
+    if (existing) {
+      const transact = remove().id(+existing.subjectId).build();
+      const response = await this.fluree.transact(transact);
+      return response.status === 200;
+    } else {
+      return false;
+    }
   } 
 
   public async findAll(): Promise<<%= classify(name) %>[]> {
