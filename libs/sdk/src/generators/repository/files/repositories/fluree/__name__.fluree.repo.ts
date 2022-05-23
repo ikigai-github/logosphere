@@ -63,10 +63,11 @@ export class <%= classify(name) %><%= classify(type) %>Repository implements I<%
     const data = this.mapper.fromEntity(<%= camelize(name) %>);
     const existing = await this.findOne(<%= camelize(name) %>.id);
     if (existing) {
-      data.subjectId = existing.subjectId;
+      data._id = +existing.subjectId;
       transact = update('<%= camelize(name) %>')
       .data(data).build();
     } else {
+      data._id = `<%= camelize(name) %>$${data.id}`;
       transact = create('<%= camelize(name) %>')
       .data(data).build();
     }

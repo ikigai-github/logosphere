@@ -28,8 +28,8 @@ export class  <%= classify(name) %><%=classify(type)%>Map extends Mapper<<%= cla
     const <%= camelize(name) %>OrError = <%= classify(name) %>.create({
       id: data.id,
       subjectId: data.subjectId,
-      createdAt: new Date(data.createdAt),
-      updatedAt: new Date(data.updatedAt),
+      createdAt: data.createdAt ? new Date(data.createdAt) : new Date(),
+      updatedAt: data.updatedAt ? new Date(data.updatedAt) : new Date(),
       <%_ definition.props.map((p) => { -%>
       <%= p.name %>: this.<%- mapperToEntity(p, type) %>, data['<%= p.name %>']),
       <%_ }) -%>
