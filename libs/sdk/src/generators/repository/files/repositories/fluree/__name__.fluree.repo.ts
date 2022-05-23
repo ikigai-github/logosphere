@@ -4,9 +4,11 @@ import {
   compile, 
   ref, 
   select, 
+  selectOne,
   create, 
   update, 
   remove, 
+  FlureeSingleObject,
   FlureeClient } from '@logosphere/fluree';
 <% if (hasIndexedEnum(definition)) { -%>
   import {
@@ -27,11 +29,10 @@ export class <%= classify(name) %><%= classify(type) %>Repository implements I<%
   ){}
 
   public async exists(id: string): Promise<boolean> {
-    const query = select('identifier').where(`<%= camelize(name) %>/identifier = '${id}'`).build();
+    const query = selectOne('<%= camelize(name) %>/identifier').where(`<%= camelize(name) %>/identifier = '${id}'`).build();
     const fql = compile(query);
     const result = await this.fluree.query(fql);
-    return result.length > 0 &&
-      result[0].identifier === id;
+    return !!result && result['<%= camelize(name) %>/identifier'] === id;
   }
 
   public async delete(id: string): Promise<boolean> {
@@ -39,22 +40,36 @@ export class <%= classify(name) %><%= classify(type) %>Repository implements I<%
   } 
 
   public async findAll(): Promise<<%= classify(name) %>[]> {
-    return [];
+    const query = select('*').from('<%= camelize(name) %>').build();
+    const fql = compile(query);
+    const result = await this.fluree.query(fql);
+    return result.map((f: FlureeSingleObject) => this.mapper.toEntity(f));
   }
 
   public async findMany(ids: string[]): Promise<<%= classify(name) %>[]> {
-    return null;
+    let query; 
+    if (ids.length > 0) {
+      query = select('*').where(`<%= camelize(name) %>/identifier = '${ids[0]}'`);
+      if (ids.length > 1) {
+        ids.shift();
+        ids.map((id: string) => {
+          query = query.or(`<%= camelize(name) %>/identifier = '${id}'`)
+        })
+      }
+    }
+    const fql = compile(query.build());
+    const result = await this.fluree.query(fql);
+    return result.map((f: FlureeSingleObject) => this.mapper.toEntity(f)); 
   }
 
   public async findOne(id: string): Promise<<%= classify(name) %>> {
-    const query = select('*').where(`<%= camelize(name) %>/identifier = '${id}'`).build();
+    const query = selectOne('*').where(`<%= camelize(name) %>/identifier = '${id}'`).build();
     const fql = compile(query);
     const result = await this.fluree.query(fql);
-    if (result.length > 0) {
-      return this.mapper.toEntity(result[0]);
-    }
-    else {
-      return null
+    if (result) {
+      return this.mapper.toEntity(result);
+    } else {
+      return null;
     }
   }
 
