@@ -1,8 +1,13 @@
 import { FlureeClient } from '../fluree.client';
-import { FlureeObject, QuerySpec, isFlureeObject } from './query.schema';
+import {
+  FlureeObject,
+  QuerySpec,
+  isFlureeObject,
+  FlureeSingleObject,
+} from './query.schema';
 import { compile } from './query.compiler';
 
-type Mapper = (input: unknown) => unknown;
+export type FlureeMapper<T> = (input: FlureeSingleObject) => T;
 
 /**
  * Walks through a FlureeObject and removes the namespace part of the predicate.
@@ -10,9 +15,9 @@ type Mapper = (input: unknown) => unknown;
  * @param obj The Fluree object to remove namespacing from
  * @returns A FlureeObject with namespacing removed
  */
-export function removeNamespace(obj: FlureeObject): FlureeObject {
+export function flattenNames(obj: FlureeObject): FlureeObject {
   if (Array.isArray(obj)) {
-    return obj.map(removeNamespace) as FlureeObject;
+    return obj.map(flattenNames) as FlureeObject;
   }
 
   const newObject: FlureeObject = {
@@ -25,7 +30,7 @@ export function removeNamespace(obj: FlureeObject): FlureeObject {
     const newKey =
       predicate && !predicate.startsWith('_') ? predicate : collection;
     const value = obj[key];
-    newObject[newKey] = isFlureeObject(value) ? removeNamespace(value) : value;
+    newObject[newKey] = isFlureeObject(value) ? flattenNames(value) : value;
   }
 
   return newObject;
@@ -38,11 +43,11 @@ export function removeNamespace(obj: FlureeObject): FlureeObject {
  * @param mapper
  * @returns
  */
-export async function query(
+export async function query<T extends object>(
   client: FlureeClient,
   spec: QuerySpec,
-  mapper?: Mapper
-) {
+  mapper?: FlureeMapper<T>
+): Promise<T | T[] | FlureeObject> {
   const fql = compile(spec);
 
   const result: FlureeObject = await client.query(fql);
