@@ -62,7 +62,7 @@ function buildWhere(clauses: string[], operator?: FlureeWhereOperator): string {
  */
 export function compile(spec: QuerySpec): FlureeQuery {
   const predicates = spec.predicates.map(resolvePredicate);
-  const where = buildWhere(spec.where);
+  const where = buildWhere(spec.where, spec.whereOperator);
   const from = spec.from;
   const opts = spec.opts;
 

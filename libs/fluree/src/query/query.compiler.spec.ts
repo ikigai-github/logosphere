@@ -63,4 +63,18 @@ describe('Query Compiler', () => {
       where: 'person/job == "judge" AND person/firstName == "Judy"',
     });
   });
+
+  it('combine or clauses', () => {
+    const context = select('*')
+      .where('person/job == "judge"')
+      .or('person/job == "clerk"')
+      .build();
+
+    const fql = compile(context);
+
+    expect(fql).toEqual({
+      select: ['*'],
+      where: 'person/job == "judge" OR person/job == "clerk"',
+    });
+  });
 });

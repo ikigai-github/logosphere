@@ -48,7 +48,7 @@ interface OptionsStep extends BuildableStep {
 /**
  * After the select step a where clause or a from clause must be specified.
  */
-interface SelectStep {
+interface SelectStep extends AndStep, OrStep {
   /**
    * Adds the passed in from clause and moves on to the next step
    * @param clause The from clause to be added the current query specification
@@ -118,12 +118,14 @@ class QueryBuilderStep implements SelectStep, WhereStep {
   }
 
   and(clause: string): AndStep {
+    this.spec.where = this.spec.where ?? [];
     this.spec.where.push(clause);
     this.spec.whereOperator = 'AND';
     return this;
   }
 
   or(clause: string): OrStep {
+    this.spec.where = this.spec.where ?? [];
     this.spec.where.push(clause);
     this.spec.whereOperator = 'OR';
     return this;
