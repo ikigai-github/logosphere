@@ -190,18 +190,22 @@ export class FlureeClient {
       opts
     );
 
-    return {
-      transactionId: response.id,
-      blockNumber: response.block,
-      blockHash: response.hash,
-      timestamp: response.instant,
-      duration: processFlureeDuration(response.duration),
-      fuel: response.fuel,
-      auth: response.auth,
-      status: response.status,
-      bytes: response.bytes,
-      flakes: response.flakes.length,
-    };
+    if (response.status === 200) {
+      return {
+        transactionId: response.id,
+        blockNumber: response.block,
+        blockHash: response.hash,
+        timestamp: response.instant,
+        duration: processFlureeDuration(response.duration),
+        fuel: response.fuel,
+        auth: response.auth,
+        status: response.status,
+        bytes: response.bytes,
+        flakes: response.flakes.length,
+      };
+    } else {
+      throw new FlureeError(messages.TRANSACT_FAILED, response);
+    }
   }
 
   /**

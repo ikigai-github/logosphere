@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from "@nestjs/common";
-import { Mapper } from '@logosphere/domain';
+import { Mapper, MapperError } from '@logosphere/domain';
 import { <%= classify(name) %>Dto} from '../../dto';
 import { 
   <%= classify(name) %>,
@@ -28,14 +28,17 @@ export class  <%= classify(name) %><%=classify(type)%>Map extends Mapper<<%= cla
     const <%= camelize(name) %>OrError = <%= classify(name) %>.create({
       id: data.id,
       subjectId: data.subjectId,
-      createdAt: new Date(data.createdAt),
-      updatedAt: new Date(data.updatedAt),
+      createdAt: data.createdAt ? new Date(data.createdAt) : new Date(),
+      updatedAt: data.updatedAt ? new Date(data.updatedAt) : new Date(),
       <%_ definition.props.map((p) => { -%>
       <%= p.name %>: this.<%- mapperToEntity(p, type) %>, data['<%= p.name %>']),
       <%_ }) -%>
     });
-    <%= camelize(name) %>OrError.isFailure ? console.log(<%= camelize(name) %>OrError) : '';
-    return  <%= camelize(name) %>OrError.isSuccess ?  <%= camelize(name) %>OrError.getValue() : null;
+    if (<%= camelize(name)  %>OrError.isSuccess) {
+      return <%= camelize(name)  %>OrError.getValue();
+    } else {
+      throw new MapperError(JSON.stringify(<%= camelize(name)  %>OrError.error));
+    }
   }
 
   public fromEntity(<%= camelize(name) %>: <%= classify(name) %>): <%= classify(name) %>Dto {

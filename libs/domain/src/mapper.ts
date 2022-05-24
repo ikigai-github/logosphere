@@ -1,4 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { LogosphereError } from '@logosphere/errors';
+
+export class MapperError extends LogosphereError {
+  constructor(message: string, error?: any) {
+    super(message, error);
+  }
+}
 
 /**
  * Abstract class for mapping data between different components

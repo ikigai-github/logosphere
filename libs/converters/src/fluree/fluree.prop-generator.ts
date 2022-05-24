@@ -14,17 +14,13 @@ export class FlureePropGenerator extends PropGenerator {
     else return this._typeMap[prop.type] ? this._typeMap[prop.type] : prop.type;
   }
 
-  #isUnique(prop: Partial<Property>) {
-    return prop.name === c.IDENTIFIER;
-  }
-
   #common(prop: Partial<Property>) {
     return {
       _id: c.PREDICATE,
       name: `${this.collection}/${prop.name}`,
       doc: prop.description,
-      index: true,
-      unique: this.#isUnique(prop),
+      index: prop.isIndexed || false,
+      unique: prop.isUnique || false,
     };
   }
 
@@ -45,8 +41,10 @@ export class FlureePropGenerator extends PropGenerator {
     };
   }
   protected generateEnum(prop: Partial<Property>): FlureePredicate {
-    return {} as FlureePredicate;
-    `${prop}`;
+    return {
+      ...this.#common(prop),
+      type: c.STRING,
+    };
   }
   protected generateEntity(prop: Partial<Property>): FlureePredicate {
     return {

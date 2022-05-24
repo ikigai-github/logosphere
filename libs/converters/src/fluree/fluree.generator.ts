@@ -1,15 +1,15 @@
 import { isEmpty } from 'lodash';
-import { 
-  Definition, 
-  DefinitionType, 
-  CanonicalSchema, 
-  Property 
+import {
+  Definition,
+  DefinitionType,
+  CanonicalSchema,
+  Property,
 } from '../canonical';
 import { Generator } from '../abstract';
 import { FlureePropGenerator } from './fluree.prop-generator';
 import { constants as c } from './fluree.constants';
 
-import { FlureeItem } from './fluree.schema';
+import { FlureeItem, FlureePredicate } from './fluree.schema';
 
 export class FlureeGenerator extends Generator {
   protected generateEnum(def: Definition): void {
@@ -22,14 +22,40 @@ export class FlureeGenerator extends Generator {
     const items: FlureeItem[] = [];
     const propGenerator = new FlureePropGenerator(def.name);
 
-    // create collection
+    // collection
     items.push({
       _id: c.COLLECTION,
       name: def.name,
       doc: def.description,
     });
 
-    // create predicates
+    // common entity predicates
+    items.push({
+      _id: c.PREDICATE,
+      name: `${def.name}/${c.IDENTIFIER}`,
+      type: c.STRING,
+      doc: `${def.name} unique identifier`,
+      index: true,
+      unique: true,
+    } as FlureePredicate);
+
+    items.push({
+      _id: c.PREDICATE,
+      name: `${def.name}/${c.CREATED_AT}`,
+      type: c.INSTANT,
+      doc: `${def.name} creation time`,
+      index: true,
+    } as FlureePredicate);
+
+    items.push({
+      _id: c.PREDICATE,
+      name: `${def.name}/${c.UPDATED_AT}`,
+      type: c.INSTANT,
+      doc: `${def.name} last update time`,
+      index: true,
+    } as FlureePredicate);
+
+    // predicates from canonical schema
     def.props.forEach((prop: Property) => {
       if (prop.isEnabled) {
         items.push(propGenerator.generate(prop));

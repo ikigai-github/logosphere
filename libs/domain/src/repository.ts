@@ -1,3 +1,11 @@
+import { LogosphereError } from '@logosphere/errors';
+
+export class RepositoryError extends LogosphereError {
+  constructor(message: string, error?: any) {
+    super(message, error);
+  }
+}
+
 export interface Repository<T> {
   exists(id: string): Promise<boolean>;
   delete(id: string): Promise<boolean>;

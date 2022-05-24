@@ -20,7 +20,7 @@ describe('Fluree Schema Prop Generator', () => {
       type: c.BIGINT,
       doc: 'desc',
       unique: false,
-      index: true,
+      index: false,
     } as FlureePredicate);
   });
 
@@ -40,7 +40,7 @@ describe('Fluree Schema Prop Generator', () => {
       doc: 'desc',
       multi: true,
       unique: false,
-      index: true,
+      index: false,
     } as FlureePredicate);
   });
 
@@ -59,7 +59,7 @@ describe('Fluree Schema Prop Generator', () => {
       type: c.INSTANT,
       doc: 'unix time',
       unique: false,
-      index: true,
+      index: false,
     } as FlureePredicate);
   });
 
@@ -79,7 +79,7 @@ describe('Fluree Schema Prop Generator', () => {
       doc: 'desc',
       restrictCollection: 'artwork',
       unique: false,
-      index: true,
+      index: false,
     } as FlureePredicate);
   });
 
@@ -100,7 +100,7 @@ describe('Fluree Schema Prop Generator', () => {
       restrictCollection: 'artwork',
       multi: true,
       unique: false,
-      index: true,
+      index: false,
     } as FlureePredicate);
   });
 
@@ -119,7 +119,7 @@ describe('Fluree Schema Prop Generator', () => {
       type: c.STRING,
       doc: 'desc, identifier of artwork',
       unique: false,
-      index: true,
+      index: false,
     } as FlureePredicate);
   });
 
@@ -139,7 +139,7 @@ describe('Fluree Schema Prop Generator', () => {
       doc: 'desc, identifier of artwork',
       multi: true,
       unique: false,
-      index: true,
+      index: false,
     } as FlureePredicate);
   });
 });
