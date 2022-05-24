@@ -1,1 +1,1 @@
-export * as tsFormatter from './ts-formatter';
+export * from './prop-example';

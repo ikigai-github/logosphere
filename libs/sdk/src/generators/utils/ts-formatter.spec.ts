@@ -1,4 +1,4 @@
-import { Definition, DefinitionType, Property } from '../canonical';
+import { Definition, DefinitionType } from '@logosphere/converters';
 import * as tsFormatter from './ts-formatter';
 
 describe('TypeScript Formatter', () => {

@@ -54,6 +54,12 @@
       "schema": "./src/generators/enum-type/schema.json",
       "description": "enum type generator"
     },
+    "repository": {
+      "factory": "./src/generators/repository/repository",
+      "schema": "./src/generators/repository/schema.json",
+      "description": "Entity repositories generator",
+      "aliases": ["repo"]
+    },
     "mapper": {
       "factory": "./src/generators/mapper/mapper",
       "schema": "./src/generators/mapper/schema.json",
@@ -111,6 +117,12 @@
       "factory": "./src/generators/enum-type/enum-type",
       "schema": "./src/generators/enum-type/schema.json",
       "description": "enum type generator"
+    },
+    "repository": {
+      "factory": "./src/generators/repository/repository",
+      "schema": "./src/generators/repository/schema.json",
+      "description": "Entity repositories generator",
+      "aliases": ["repo"]
     },
     "mapper": {
       "factory": "./src/generators/mapper/mapper",

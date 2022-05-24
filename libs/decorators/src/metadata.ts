@@ -75,6 +75,8 @@ export class MetadataStorage {
             type: typename,
             isEnabled: meta.enabled,
             isRequired: meta.required,
+            isIndexed: meta.index,
+            isUnique: meta.unique,
             isPK: meta.primary,
             isReadOnly: meta.readOnly,
             isWriteOnly: meta.writeOnly,

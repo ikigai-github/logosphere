@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-imports */
 import * as path from 'path';
 import {
   formatFiles,
@@ -8,17 +9,18 @@ import {
   Tree,
 } from '@nrwl/devkit';
 
+import { strings } from '@angular-devkit/core';
+
 import {
   Definition,
   DefinitionType,
   canonicalSchemaLoader,
 } from '@logosphere/converters';
 import { tsFormatter } from '../utils';
-import { DtoGeneratorSchema } from './schema';
+import { RepositoryGeneratorSchema } from './schema';
 import { DEFAULT_CODEGEN_DIR } from '../../common';
-import { strings } from '@angular-devkit/core';
 
-interface NormalizedSchema extends DtoGeneratorSchema {
+interface NormalizedSchema extends RepositoryGeneratorSchema {
   projectName: string;
   projectRoot: string;
   projectDirectory: string;
@@ -26,13 +28,13 @@ interface NormalizedSchema extends DtoGeneratorSchema {
 
 function normalizeOptions(
   tree: Tree,
-  options: DtoGeneratorSchema
+  options: RepositoryGeneratorSchema
 ): NormalizedSchema {
   const module = names(options.module).fileName;
   const projectDirectory = options.directory
     ? `${names(options.directory).fileName}/${module}`
     : module;
-  const projectName = options.module; //projectDirectory.replace(new RegExp('/', 'g'), '-');
+  const projectName = options.module;
   const projectRoot = `${
     getWorkspaceLayout(tree).libsDir
   }/${DEFAULT_CODEGEN_DIR}/${options.module}/src`;
@@ -69,14 +71,14 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
     };
     generateFiles(
       tree,
-      path.join(__dirname, 'files'),
-      options.projectRoot,
+      path.join(__dirname, `files/repositories/${options.type}`),
+      `${options.projectRoot}/repositories/${options.type}`,
       defOptions
     );
   });
 }
 
-export default async function (tree: Tree, options: DtoGeneratorSchema) {
+export default async function (tree: Tree, options: RepositoryGeneratorSchema) {
   const normalizedOptions = normalizeOptions(tree, options);
   addFiles(tree, normalizedOptions);
   await formatFiles(tree);

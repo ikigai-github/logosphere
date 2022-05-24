@@ -1,15 +1,15 @@
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { Tree } from '@nrwl/devkit';
-import generator from './mapper';
+import generator from './repository';
 import { moduleGenerator } from '../module';
-import { MapperGeneratorSchema } from './schema';
+import { RepositoryGeneratorSchema } from './schema';
 
 describe('dto generator', () => {
   let tree: Tree;
-  const options: MapperGeneratorSchema = {
+  const options: RepositoryGeneratorSchema = {
     name: 'wallet',
     module: 'test-app',
-    type: 'dto',
+    type: 'fluree',
   };
 
   beforeEach(async () => {

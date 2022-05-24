@@ -13,8 +13,8 @@ import {
   Definition,
   DefinitionType,
   canonicalSchemaLoader,
-  tsFormatter,
 } from '@logosphere/converters';
+import { tsFormatter } from '../utils';
 import { MapperGeneratorSchema } from './schema';
 import { DEFAULT_CODEGEN_DIR } from '../../common';
 
@@ -69,8 +69,8 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
     };
     generateFiles(
       tree,
-      path.join(__dirname, `files/mappers/${options.persistence}`),
-      `${options.projectRoot}/mappers/${options.persistence}`,
+      path.join(__dirname, `files/mappers/${options.type}`),
+      `${options.projectRoot}/mappers/${options.type}`,
       defOptions
     );
   });
