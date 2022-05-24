@@ -64,6 +64,11 @@
       "factory": "./src/generators/mapper/mapper",
       "schema": "./src/generators/mapper/schema.json",
       "description": "Mapper generator"
+    },
+    "resolver": {
+      "factory": "./src/generators/resolver/resolver",
+      "schema": "./src/generators/resolver/schema.json",
+      "description": "Resolver generator"
     }
   },
   "generators": {
@@ -128,6 +133,11 @@
       "factory": "./src/generators/mapper/mapper",
       "schema": "./src/generators/mapper/schema.json",
       "description": "Mapper generator"
+    },
+    "resolver": {
+      "factory": "./src/generators/resolver/resolver",
+      "schema": "./src/generators/resolver/schema.json",
+      "description": "Resolver generator"
     }
   }
 }
