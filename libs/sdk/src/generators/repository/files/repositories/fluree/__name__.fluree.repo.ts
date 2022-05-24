@@ -10,6 +10,7 @@ import {
   remove, 
   FlureeSingleObject,
   FlureeClient } from '@logosphere/fluree';
+import { RepositoryError } from '@logosphere/domain';
 <% if (hasIndexedEnum(definition)) { -%>
   import {
     <% enumImports(definition).map((imp) => {-%>
@@ -54,6 +55,11 @@ export class <%= classify(name) %><%= classify(type) %>Repository implements I<%
   }
 
   public async findMany(ids: string[]): Promise<<%= classify(name) %>[]> {
+    
+    if (!ids || ids.length === 0) {
+      throw new RepositoryError('Empty array of ids for findMany method');
+    }
+    
     let query; 
     if (ids.length > 0) {
       query = select('*').where(`<%= camelize(name) %>/identifier = '${ids[0]}'`);
