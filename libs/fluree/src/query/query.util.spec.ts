@@ -1,9 +1,40 @@
 import { FlureeClient } from '../fluree.client';
-import { FlureeObject } from './query.schema';
+import {
+  FlureeObject,
+  FlureeSingleObject,
+  isFlureeSingleObject,
+} from './query.schema';
 import { select } from './query.builder';
-import { query, removeNamespace } from './query.util';
+import { query, flattenNames } from './query.util';
 
-const mockResult: FlureeObject = {
+interface MovieDto {
+  id: number;
+  title: string;
+}
+
+interface PersonDto {
+  id: number;
+  name: string;
+  movies?: MovieDto[];
+  spouse?: PersonDto;
+}
+
+function personMapper(result: FlureeSingleObject): PersonDto {
+  const { _id, name, movies, spouse } = flattenNames(
+    result
+  ) as FlureeSingleObject;
+
+  const spouseDto = spouse ? { id: spouse._id, name: spouse.name } : undefined;
+
+  return {
+    id: _id,
+    name,
+    movies: movies.map(({ _id, title }) => ({ id: _id, title })),
+    spouse: spouseDto,
+  };
+}
+
+const mockResult = {
   _id: 23423,
   'person/name': 'john',
   'movies/_person': [
@@ -14,11 +45,11 @@ const mockResult: FlureeObject = {
   ],
   'person/spouse': {
     _id: 34242,
-    name: 'jill',
+    'person/name': 'jill',
   },
 };
 
-const mappedResult: FlureeObject = {
+const mappedResult = {
   _id: 23423,
   name: 'john',
   movies: [
@@ -72,14 +103,23 @@ describe('Query Mapper', () => {
   it('should return mapped results', async () => {
     MockFlureeClient.mockImplementationOnce(mockQueryMethod(mockResult));
     const client = new MockFlureeClient({ url: 'test', ledger: 'test/test' });
-    const result = await query(client, spec, removeNamespace);
+    const result = await query(client, spec, flattenNames);
     expect(result).toEqual(mappedResult);
   });
 
   it('should return array mapped results', async () => {
     MockFlureeClient.mockImplementationOnce(mockQueryMethod([mockResult]));
     const client = new MockFlureeClient({ url: 'test', ledger: 'test/test' });
-    const result = await query(client, spec, removeNamespace);
+    const result = await query(client, spec, flattenNames);
     expect(result).toEqual([mappedResult]);
+  });
+
+  it('should return typed mapped results', async () => {
+    MockFlureeClient.mockImplementationOnce(mockQueryMethod([mockResult]));
+    const client = new MockFlureeClient({ url: 'test', ledger: 'test/test' });
+    const person = (await query(client, spec, personMapper)) as PersonDto[];
+
+    expect(person[0].id).toBe(23423);
+    expect(person[0].name).toBe('john');
   });
 });

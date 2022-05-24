@@ -92,7 +92,8 @@ export type FlureeQuery = FlureeMultiQuery | FlureeSingleQuery;
 /**
  * All Fluree objects will have an _id field at a minimum
  */
-export interface FlureeSingleObject extends Record<string, unknown> {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export interface FlureeSingleObject extends Record<string, any> {
   _id: number;
 }
 
@@ -105,7 +106,7 @@ export type FlureeMultiObject = FlureeSingleObject[];
 export type FlureeObject = FlureeSingleObject | FlureeMultiObject;
 
 /**
- * Type gaurd to chif if an object is a single fluree object
+ * Type guard to check if an object is a single fluree object
  * @param obj The object to perform the type guard on
  * @returns true if the object is a single Fluree Object
  */
