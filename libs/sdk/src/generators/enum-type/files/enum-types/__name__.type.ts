@@ -1,1 +1,1 @@
-export type <%= classify(name) %> = <%- definition.enum.map((e) => `'${e}'`).join(' | ') %>;
+export type <%= classify(name) %> = <%- definition.props.map((e) => `'${e.name}'`).join(' | ') %>;

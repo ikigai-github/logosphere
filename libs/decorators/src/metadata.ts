@@ -102,13 +102,15 @@ export class MetadataStorage {
     });
 
     this.enums.forEach((enumeration) => {
-      const values = enumeration.items.map((item) => item[0]);
+      const values = enumeration.items.map((item) => {
+        return { name: item[0], type: 'string' };
+      });
       definitions.push({
         name: enumeration.name,
         type: 'Enum',
         // TODO: Should these have a module?
         description: enumeration.description,
-        enum: values,
+        props: values,
       });
     });
 
