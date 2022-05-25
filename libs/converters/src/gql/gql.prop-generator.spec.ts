@@ -36,7 +36,7 @@ describe('GQL prop generator', () => {
     };
 
     const output = propGen.generate(prop);
-    expect(output).toBe('\tname: Float\n');
+    expect(output).toBe('\tname: Int\n');
   });
 
   it('should generate int scalar', () => {
