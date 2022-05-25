@@ -90,6 +90,14 @@ export class FlureeClient {
   }
 
   /**
+   * Changes the ledger the client operates with for queries and transactions
+   * @param ledger The ledger the client will use for queries and transactions
+   */
+  setLedger(ledger: string) {
+    this.#config.ledger = ledger;
+  }
+
+  /**
    * Fetches a list of ledgers assocated with the current connection
    * @returns An array of ledger names
    */
