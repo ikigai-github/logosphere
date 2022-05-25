@@ -3,8 +3,10 @@ import { Property } from '../canonical';
 import { PropGenerator } from '../abstract/prop-generator.abstract';
 
 export class GqlPropGenerator extends PropGenerator {
+  // TODO: add support for different number types
+  // https://ikigai-technologies.atlassian.net/browse/LOG-163
   private _typeMap = {
-    number: 'float',
+    number: 'int',
     integer: 'int',
   };
 

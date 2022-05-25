@@ -5,11 +5,48 @@ import {
   DefinitionType,
   Property,
 } from '../canonical';
+import { constants as c } from './gql.constants';
 
 import { GqlFederatedSchema } from './gql-federated.schema';
 
 export class GqlFederatedGenerator extends GqlGenerator {
   generate(schema: CanonicalSchema): GqlFederatedSchema[] {
+    // add common entity props
+    schema.definitions
+      .filter((def: Definition) => def.type !== DefinitionType.Enum)
+      .map((def: Definition) => {
+        def.props = [
+          {
+            name: c.ID,
+            type: c.STRING,
+            isEnabled: true,
+            isRequired: true,
+            isPK: true,
+            defType: DefinitionType.Scalar,
+          },
+          {
+            isEnabled: true,
+            name: c.SUBJECT_ID,
+            type: c.STRING,
+            defType: DefinitionType.Scalar,
+          },
+          ...def.props,
+          {
+            isEnabled: true,
+            name: c.CREATED_AT,
+            type: c.STRING,
+            defType: DefinitionType.Scalar,
+          },
+          {
+            isEnabled: true,
+            name: c.UPDATED_AT,
+            type: c.STRING,
+            defType: DefinitionType.Scalar,
+          },
+        ];
+      });
+
+    // filter out all external entities
     const defs = schema.definitions.map((def: Definition) => {
       return {
         props: def.props.filter(
