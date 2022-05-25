@@ -114,9 +114,9 @@ describe('The Metadata store', () => {
 
     expect(plants).toBeDefined();
     expect(plants.name).toBe('plants');
-    expect(plants.enum).toContain('Tree');
-    expect(plants.enum).toContain('Shrub');
-    expect(plants.enum).toContain('Grass');
+    expect(plants.props).toContainEqual({ name: 'Tree', type: 'string' });
+    expect(plants.props).toContainEqual({ name: 'Shrub', type: 'string' });
+    expect(plants.props).toContainEqual({ name: 'Grass', type: 'string' });
   });
 
   it('should correctly identify enums when type function is supplied', () => {
