@@ -5,7 +5,9 @@
  * @returns duration as number of milliseconds
  */
 export function processFlureeDuration(duration: string): number {
-  if (duration.indexOf('ms') > 0) {
+  if (duration === null || duration === undefined) {
+    return -1;
+  } else if (duration.indexOf('ms') > 0) {
     return +duration.replace('ms', '');
   } else if (duration.indexOf('s') > 0) {
     return +duration.replace('s', '') * 1000;
