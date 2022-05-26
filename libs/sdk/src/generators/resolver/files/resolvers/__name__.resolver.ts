@@ -24,8 +24,8 @@ export class <%= classify(name) %>Resolver {
   }
 
   @Query(() => [<%= classify(name) %>Dto])
-  async <%= camelize(name) %>FindMany(@Args ({ name: 'ids', type: () => ID }) ids: string[]): Promise<<%= classify(name) %>Dto[]> {
-    return (await this.repo.findMany(ids)).map((<%= camelize(name) %>: <%= classify(name) %>) =>
+  async <%= camelize(name) %>FindManyById(@Args ({ name: 'idList', type: () => ID }) idList: string[]): Promise<<%= classify(name) %>Dto[]> {
+    return (await this.repo.findManyById(idList)).map((<%= camelize(name) %>: <%= classify(name) %>) =>
       this.mapper.fromEntity(<%= camelize(name) %>)
     )
   }
@@ -36,16 +36,16 @@ export class <%= classify(name) %>Resolver {
   }
 
   @Query(() => <%= classify(name) %>)
-  async <%= camelize(name) %>FindOne(@Args({ name: 'id', type: () => ID }) id: string): Promise<<%= classify(name) %>Dto> {
+  async <%= camelize(name) %>findOneById(@Args({ name: 'id', type: () => ID }) id: string): Promise<<%= classify(name) %>Dto> {
     return this.mapper.fromEntity(
-      await this.repo.findOne(id)
+      await this.repo.findOneById(id)
     );
   }
 
   <% definition.props.filter((p) => p.isIndexed && !p.isUnique).map((p) => { -%>
     @Query(() => [<%= classify(name) %>Dto])
     async <%= camelize(name) %>FindAllBy<%= classify(p.name) %>(@Args({ name: '<%= camelize(p.name) %>', type: () => <%= p.type %> }) <%= camelize(p.name) %>: <%= entityProp(p).type %>): Promise<<%= classify(name) %>Dto[]> {
-      return (await this.repo.findAllByType(<%= camelize(p.name) %>)).map((<%= camelize(p.name) %>: <%= classify(name) %>) =>
+      return (await this.repo.findAllBy<%= classify(p.name) %>(<%= camelize(p.name) %>)).map((<%= camelize(p.name) %>: <%= classify(name) %>) =>
         this.mapper.fromEntity(<%= camelize(p.name) %>)
       )
     }
@@ -53,9 +53,9 @@ export class <%= classify(name) %>Resolver {
 
   <% definition.props.filter((p) => p.isUnique).map((p) => { -%>
     @Query(() => <%= classify(name) %>Dto)
-    async <%= camelize(name) %>FindOneBy<%= classify(p.name) %>(@Args({ name: '<%= camelize(p.name) %>', type: () => <%= classify(p.type) %> }) <%= camelize(p.name) %>: <%= entityProp(p).type %>): Promise<<%= classify(name) %>Dto> {
+    async <%= camelize(name) %>findOneBy<%= classify(p.name) %>(@Args({ name: '<%= camelize(p.name) %>', type: () => <%= classify(p.type) %> }) <%= camelize(p.name) %>: <%= entityProp(p).type %>): Promise<<%= classify(name) %>Dto> {
       return this.mapper.fromEntity(
-        await this.repo.findOneByName(name)
+        await this.repo.findOneBy<%= classify(p.name) %>(name)
       );
     }
   <% }) %>
