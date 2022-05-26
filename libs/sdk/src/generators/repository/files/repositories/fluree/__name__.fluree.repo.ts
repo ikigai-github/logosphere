@@ -37,7 +37,7 @@ export class <%= classify(name) %><%= classify(type) %>Repository implements I<%
   }
 
   public async delete(id: string): Promise<boolean> {
-    const existing = await this.findOne(id);
+    const existing = await this.findOneById(id);
     if (existing) {
       const transact = remove().id(+existing.subjectId).build();
       const response = await this.fluree.transact(transact);
@@ -54,30 +54,41 @@ export class <%= classify(name) %><%= classify(type) %>Repository implements I<%
     return result.map((f: FlureeSingleObject) => this.mapper.toEntity(f));
   }
 
-  public async findMany(ids: string[]): Promise<<%= classify(name) %>[]> {
+  public async findManyById(idList: string[]): Promise<<%= classify(name) %>[]> {
     
-    if (!ids || ids.length === 0) {
-      throw new RepositoryError('Empty array of ids for findMany method');
+    if (!idList || idList.length === 0) {
+      throw new RepositoryError('Empty array of ids for findManyById method');
     }
     
-    let query; 
-    if (ids.length > 0) {
-      query = select('*').where(`<%= camelize(name) %>/identifier = '${ids[0]}'`);
-      if (ids.length > 1) {
-        ids.shift();
-        ids.map((id: string) => {
-          query = query.or(`<%= camelize(name) %>/identifier = '${id}'`)
+    let spec; 
+    if (idList.length > 0) {
+      spec = select('*').where(`<%= camelize(name) %>/identifier = '${idList[0]}'`);
+      if (idList.length > 1) {
+        idList.shift();
+        idList.map((id: string) => {
+          spec = spec.or(`<%= camelize(name) %>/identifier = '${id}'`)
         })
       }
     }
-    const fql = compile(query.build());
+    const fql = compile(spec.build());
     const result = await this.fluree.query(fql);
     return result.map((f: FlureeSingleObject) => this.mapper.toEntity(f)); 
   }
 
-  public async findOne(id: string): Promise<<%= classify(name) %>> {
-    const query = selectOne('*').where(`<%= camelize(name) %>/identifier = '${id}'`).build();
-    const fql = compile(query);
+  public async findOneById(id: string): Promise<<%= classify(name) %>> {
+    const spec = selectOne('*').where(`<%= camelize(name) %>/identifier = '${id}'`).build();
+    const fql = compile(spec);
+    const result = await this.fluree.query(fql);
+    if (result) {
+      return this.mapper.toEntity(result);
+    } else {
+      return null;
+    }
+  }
+
+  public async findOneBySubjectId(subjectId: string): Promise<<%= classify(name) %>> {
+    const spec = selectOne('*').from(subjectId).build();
+    const fql = compile(spec);
     const result = await this.fluree.query(fql);
     if (result) {
       return this.mapper.toEntity(result);
@@ -87,22 +98,22 @@ export class <%= classify(name) %><%= classify(type) %>Repository implements I<%
   }
 
   public async save(<%= camelize(name) %>: <%= classify(name) %>): Promise<<%= classify(name) %>> {
-    let transact;
+    let spec;
     const data = this.mapper.fromEntity(<%= camelize(name) %>);
-    const existing = await this.findOne(<%= camelize(name) %>.id);
+    const existing = await this.findOneById(<%= camelize(name) %>.id);
     if (existing) {
       data._id = +existing.subjectId;
-      transact = update('<%= camelize(name) %>')
+      spec = update('<%= camelize(name) %>')
       .data(data).build();
     } else {
       data._id = `<%= camelize(name) %>$${data.id}`;
-      transact = create('<%= camelize(name) %>')
+      spec = create('<%= camelize(name) %>')
       .data(data).build();
     }
 
-    const response = await this.fluree.transact(transact);
+    const response = await this.fluree.transact(spec);
     if (response.status === 200) {
-      return await this.findOne(<%= camelize(name) %>.id);
+      return await this.findOneById(<%= camelize(name) %>.id);
     } else {
       return null;
     }
