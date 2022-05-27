@@ -1,3 +1,4 @@
+import { strings as s } from '@angular-devkit/core';
 import { GqlGenerator } from './gql.generator';
 import {
   CanonicalSchema,
@@ -6,10 +7,61 @@ import {
   Property,
 } from '../canonical';
 import { constants as c } from './gql.constants';
-
 import { GqlFederatedSchema } from './gql-federated.schema';
 
 export class GqlFederatedGenerator extends GqlGenerator {
+  #generateQueries(schema: CanonicalSchema): string {
+    let queryString = 'type Query {\n';
+    schema.definitions
+      .filter((def: Definition) => def.type === DefinitionType.Entity)
+      .map((def: Definition) => {
+        queryString += `\t${s.camelize(def.name)}Exists(id: ID): Boolean\n`;
+        queryString += `\t${s.camelize(def.name)}FindAll(id: ID): [${s.classify(
+          def.name
+        )}]\n`;
+        queryString += `\t${s.camelize(
+          def.name
+        )}FindOneById(id: ID): ${s.classify(def.name)}\n`;
+        queryString += `\t${s.camelize(
+          def.name
+        )}FindManyById(idList: [ID]): [${s.classify(def.name)}]\n`;
+        def.props
+          .filter((prop: Property) => prop.isUnique)
+          .map((prop: Property) => {
+            queryString += `\t${s.camelize(def.name)}FindOneBy${s.classify(
+              prop.name
+            )}(${s.camelize(prop.name)}: ${s.classify(
+              prop.type
+            )}): ${s.classify(def.name)}\n`;
+          });
+        def.props
+          .filter((prop: Property) => prop.isIndexed && !prop.isUnique)
+          .map((prop: Property) => {
+            queryString += `\t${s.camelize(def.name)}FindAllBy${s.classify(
+              prop.name
+            )}(${s.camelize(prop.name)}List: ${s.classify(
+              prop.type
+            )}): [${s.classify(def.name)}]\n`;
+          });
+      });
+    queryString += '}\n\n';
+    return queryString;
+  }
+
+  #generateMutations(schema: CanonicalSchema): string {
+    let mutationString = 'type Mutation {\n';
+    schema.definitions
+      .filter((def: Definition) => def.type === DefinitionType.Entity)
+      .map((def: Definition) => {
+        mutationString += `\t${s.camelize(def.name)}Save(${s.camelize(
+          def.name
+        )}: ${s.classify(def.name)}Input): ${s.classify(def.name)}\n`;
+        mutationString += `\t${s.camelize(def.name)}Delete(id: ID): Boolean\n`;
+      });
+    mutationString += '}\n\n';
+    return mutationString;
+  }
+
   generate(schema: CanonicalSchema): GqlFederatedSchema[] {
     // add common entity props
     schema.definitions
@@ -112,7 +164,10 @@ export class GqlFederatedGenerator extends GqlGenerator {
       const sch: CanonicalSchema = {
         definitions: moduleDefs[module] as Definition[],
       };
-      const gql = super.generate(sch);
+      let gql = super.generate(sch);
+      gql += this.#generateQueries(sch);
+      gql += this.#generateMutations(sch);
+
       gqlFederated.push({
         module,
         schema: gql,
