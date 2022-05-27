@@ -36,7 +36,7 @@ export class <%= classify(name) %>Resolver {
   }
 
   @Query(() => <%= classify(name) %>)
-  async <%= camelize(name) %>findOneById(@Args({ name: 'id', type: () => ID }) id: string): Promise<<%= classify(name) %>Dto> {
+  async <%= camelize(name) %>FindOneById(@Args({ name: 'id', type: () => ID }) id: string): Promise<<%= classify(name) %>Dto> {
     return this.mapper.fromEntity(
       await this.repo.findOneById(id)
     );
@@ -53,7 +53,7 @@ export class <%= classify(name) %>Resolver {
 
   <% definition.props.filter((p) => p.isUnique).map((p) => { -%>
     @Query(() => <%= classify(name) %>Dto)
-    async <%= camelize(name) %>findOneBy<%= classify(p.name) %>(@Args({ name: '<%= camelize(p.name) %>', type: () => <%= classify(p.type) %> }) <%= camelize(p.name) %>: <%= entityProp(p).type %>): Promise<<%= classify(name) %>Dto> {
+    async <%= camelize(name) %>FindOneBy<%= classify(p.name) %>(@Args({ name: '<%= camelize(p.name) %>', type: () => <%= classify(p.type) %> }) <%= camelize(p.name) %>: <%= entityProp(p).type %>): Promise<<%= classify(name) %>Dto> {
       return this.mapper.fromEntity(
         await this.repo.findOneBy<%= classify(p.name) %>(name)
       );
