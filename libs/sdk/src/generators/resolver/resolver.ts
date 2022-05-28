@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-imports */
 import * as path from 'path';
 import {
   formatFiles,
