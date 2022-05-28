@@ -10,7 +10,7 @@ export function addImport(
   return root
     .find(j.ImportDeclaration, {
       source: {
-        value: './resolvers',
+        value: options.importFile,
       },
     })
     .forEach((imp: j.ImportDeclaration) => {

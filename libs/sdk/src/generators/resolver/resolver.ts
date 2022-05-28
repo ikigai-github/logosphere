@@ -89,6 +89,7 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
     const transformOptions = {
       module: options.module,
       name: strings.classify(`${def.name}Resolver`),
+      importFile: './resolvers',
     };
     let output = applyTransform(
       { default: addImport, parser: 'ts' },
