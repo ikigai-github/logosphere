@@ -18,12 +18,15 @@ const getAllFiles = function (dirPath: string, arrayOfFiles?: string[]) {
   return arrayOfFiles;
 };
 
-export const canonicalSchemaLoader = (sourceDir?: string): CanonicalSchema => {
+export const canonicalSchemaLoader = (
+  module = '',
+  sourceDir?: string
+): CanonicalSchema => {
   const dir = sourceDir ? sourceDir : `${process.cwd()}/dist`;
-  const entityFiles = getAllFiles(dir).filter((file) =>
-    file.endsWith('model.js')
+  const model = getAllFiles(dir).filter((file) =>
+    file.endsWith(`${module}.model.js`)
   );
-  entityFiles.map((file: string) => {
+  model.map((file: string) => {
     eval(fs.readFileSync(file, 'utf-8'));
   });
 
