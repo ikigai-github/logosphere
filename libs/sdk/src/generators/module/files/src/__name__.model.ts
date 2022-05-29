@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {Entity, Prop} from '@logosphere/decorators';
 
-@Entity('<%= cameledName %>')
-class <%= className %>Entity {
+@Entity('<%= camelize(name) %>')
+class <%= classify(name) %>Entity {
   @Prop({
-    examples:['<%= dashedName %>-1', '<%= dashedName %>-2', '<%= dashedName %>-3'],
+    examples:['<%= dasherize(name) %>-1', '<%= dasherize(name) %>-2', '<%= dasherize(name) %>-3'],
   })
-  <%= cameledName %>: string;
+  <%= camelize(name) %>: string;
 }

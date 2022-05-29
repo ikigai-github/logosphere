@@ -1,11 +1,11 @@
 {
   "config": {
-    "name": "<%= cameledName %>",
+    "name": "<%= camelize(name) %>",
     "fluree": {
       "ledgerUrl": "http://localhost:8090",
       "queryUrl": "http://localhost:8090",
       "network": "local",
-      "db": "<%= cameledName %>"
+      "db": "<%= camelize(name) %>"
     }
   }
 }
