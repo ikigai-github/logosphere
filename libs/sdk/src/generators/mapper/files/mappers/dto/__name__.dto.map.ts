@@ -18,7 +18,7 @@ import {
     <% enumImports(definition).map((imp) => {-%>
     <%= imp %>,
     <%_ }) %>
-  } from '../../cb.model';
+  } from '../../<%= dasherize(module) %>.model';
 <%_ } %>
 
 

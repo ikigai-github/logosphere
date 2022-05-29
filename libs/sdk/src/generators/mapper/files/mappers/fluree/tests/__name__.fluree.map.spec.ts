@@ -5,7 +5,7 @@ import { <%= classify(name)%><%= classify(type) %>Map } from '../<%= dasherize(n
     <% enumImports(definition).map((imp) => {-%>
     <%= imp %>,
     <%_ }) %>
-  } from '../../../cb.model';
+  } from '../../../<%= dasherize(module) %>.model';
 <%_ } %>
 describe('<%= classify(name)%> <%= classify(type) %> Map', () => {
   let <%= camelize(name)%>Data;

@@ -6,7 +6,7 @@ import { <%= classify(name) %> } from '../../entities';
     <% enumImports(definition).map((imp) => {-%>
     <%= imp %>,
     <%_ }) %>
-  } from '../../cb.model';
+  } from '../../<%= dasherize(module) %>.model';
 <%_ } %>
 export interface I<%= classify(name) %>Repository extends Repository<<%= classify(name) %>> {
   <% definition.props.filter((p) => p.isUnique).map((p) => { -%>
