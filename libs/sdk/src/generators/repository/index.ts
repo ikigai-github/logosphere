@@ -1,0 +1,1 @@
+export { repositoryGenerator } from './repository';

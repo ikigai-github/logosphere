@@ -19,7 +19,7 @@ import {
 } from '@logosphere/converters';
 import { tsFormatter } from '../utils';
 import { MapperGeneratorSchema } from './schema';
-import { DEFAULT_CODEGEN_DIR } from '../../common';
+import { DEFAULT_CODEGEN_DIR, DEFAULT_FIXTURE_DEPTH } from '../../common';
 import { addImport, addProviderToModule } from '../utils/transforms';
 
 interface NormalizedSchema extends MapperGeneratorSchema {
@@ -45,6 +45,7 @@ function normalizeOptions(
 
   return {
     ...options,
+    fixtureDepth: options.fixtureDepth || DEFAULT_FIXTURE_DEPTH,
     projectName,
     projectRoot,
     projectDirectory,
@@ -104,8 +105,13 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
   });
 }
 
-export default async function (tree: Tree, options: MapperGeneratorSchema) {
+export async function mapperGenerator(
+  tree: Tree,
+  options: MapperGeneratorSchema
+) {
   const normalizedOptions = normalizeOptions(tree, options);
   addFiles(tree, normalizedOptions);
   await formatFiles(tree);
 }
+
+export default mapperGenerator;

@@ -30,8 +30,7 @@
     },
     "fixtureDepth": {
       "type": "number",
-      "description": "Depth of JSON data fixtures in unit tests",
-      "default": 1
+      "description": "Depth of JSON data fixtures in unit tests"
     },
     "type": {
       "type": "string",

@@ -1,0 +1,1 @@
+export { resolverGenerator } from './resolver';

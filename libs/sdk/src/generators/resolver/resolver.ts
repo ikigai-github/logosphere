@@ -107,8 +107,13 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
   });
 }
 
-export default async function (tree: Tree, options: ResolverGeneratorSchema) {
+export async function resolverGenerator(
+  tree: Tree,
+  options: ResolverGeneratorSchema
+) {
   const normalizedOptions = normalizeOptions(tree, options);
   addFiles(tree, normalizedOptions);
   await formatFiles(tree);
 }
+
+export default resolverGenerator;

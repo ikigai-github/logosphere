@@ -1,0 +1,1 @@
+export { dtoGenerator } from './dto';
