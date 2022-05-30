@@ -1,6 +1,6 @@
 [
   {
-    "collection": "<%= cameledName %>",
+    "collection": "<%= camelize(name) %>",
     "count": 3
   }
 ]
