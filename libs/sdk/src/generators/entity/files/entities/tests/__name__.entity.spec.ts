@@ -4,7 +4,7 @@ import { <%= classify(name)%> } from '../<%= dasherize(name) %>.entity';
     <% enumImports(definition).map((imp) => {-%>
     <%= imp %>,
     <%_ }) %>
-  } from '../../cb.model';
+  } from '../../<%= dasherize(module) %>.model';
 <%_ } %>
 <% entityImports(definition, '..').map((imp) => {-%>
   import { <%= imp.name %> } from '<%= imp.file %>';

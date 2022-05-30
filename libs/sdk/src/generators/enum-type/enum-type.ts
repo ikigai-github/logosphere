@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-imports */
 import * as path from 'path';
 import {
   formatFiles,
@@ -77,8 +78,12 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
   });
 }
 
-export default async function (tree: Tree, options: EnumTypeGeneratorSchema) {
+export async function enumTypeGenerator(
+  tree: Tree,
+  options: EnumTypeGeneratorSchema
+) {
   const normalizedOptions = normalizeOptions(tree, options);
   addFiles(tree, normalizedOptions);
   await formatFiles(tree);
 }
+export default enumTypeGenerator;

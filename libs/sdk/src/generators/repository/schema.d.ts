@@ -1,6 +1,6 @@
 import { Definition } from '@logosphere/converters';
 export interface RepositoryGeneratorSchema {
-  name: string;
+  name?: string;
   module: string;
   directory?: string;
   definition?: Definition;

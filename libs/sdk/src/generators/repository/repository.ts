@@ -108,8 +108,13 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
   });
 }
 
-export default async function (tree: Tree, options: RepositoryGeneratorSchema) {
+export async function repositoryGenerator(
+  tree: Tree,
+  options: RepositoryGeneratorSchema
+) {
   const normalizedOptions = normalizeOptions(tree, options);
   addFiles(tree, normalizedOptions);
   await formatFiles(tree);
 }
+
+export default repositoryGenerator;

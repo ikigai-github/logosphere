@@ -54,7 +54,10 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
   );
 }
 
-export default async function (tree: Tree, options: CanonicalGeneratorSchema) {
+export async function canonicalSchemaGenerator(
+  tree: Tree,
+  options: CanonicalGeneratorSchema
+) {
   const sourceSchema = canonicalSchemaLoader(options.module);
 
   const source = JSON.stringify(sourceSchema, null, 2);
@@ -66,3 +69,5 @@ export default async function (tree: Tree, options: CanonicalGeneratorSchema) {
   addFiles(tree, normalizedOptions);
   await formatFiles(tree);
 }
+
+export default canonicalSchemaGenerator;

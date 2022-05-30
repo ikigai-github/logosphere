@@ -16,7 +16,7 @@ import { RepositoryError } from '@logosphere/domain';
     <% enumImports(definition).map((imp) => {-%>
     <%= imp %>,
     <%_ }) %>
-  } from '../../cb.model';
+  } from '../../<%= dasherize(module) %>.model';
 <%_ } %>
 import { <%= classify(name) %> } from '../../entities';
 import { <%= classify(name) %>FlureeMap } from '../../mappers/fluree';

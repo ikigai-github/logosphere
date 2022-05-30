@@ -1,0 +1,1 @@
+export { gqlGenerator } from './gql';

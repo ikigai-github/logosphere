@@ -58,7 +58,7 @@ function addLibsFiles(tree: Tree, options: NormalizedSchema) {
   );
 }
 
-export default async function (tree: Tree, options: GqlGeneratorSchema) {
+export async function gqlGenerator(tree: Tree, options: GqlGeneratorSchema) {
   const sourceSchema = canonicalSchemaLoader(options.module);
   const converter = ConverterFactory.getConverter(
     SchemaType.Canonical,
@@ -75,3 +75,5 @@ export default async function (tree: Tree, options: GqlGeneratorSchema) {
     await formatFiles(tree);
   });
 }
+
+export default gqlGenerator;

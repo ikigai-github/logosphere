@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-imports */
 import * as path from 'path';
 import {
   formatFiles,
@@ -76,8 +77,10 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
   });
 }
 
-export default async function (tree: Tree, options: DtoGeneratorSchema) {
+export async function dtoGenerator(tree: Tree, options: DtoGeneratorSchema) {
   const normalizedOptions = normalizeOptions(tree, options);
   addFiles(tree, normalizedOptions);
   await formatFiles(tree);
 }
+
+export default dtoGenerator;

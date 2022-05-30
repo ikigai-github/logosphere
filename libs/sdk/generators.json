@@ -69,6 +69,11 @@
       "factory": "./src/generators/resolver/resolver",
       "schema": "./src/generators/resolver/schema.json",
       "description": "Resolver generator"
+    },
+    "api": {
+      "factory": "./src/generators/api/api",
+      "schema": "./src/generators/api/schema.json",
+      "description": "API generator"
     }
   },
   "generators": {
@@ -138,6 +143,11 @@
       "factory": "./src/generators/resolver/resolver",
       "schema": "./src/generators/resolver/schema.json",
       "description": "Resolver generator"
+    },
+    "api": {
+      "factory": "./src/generators/api/api",
+      "schema": "./src/generators/api/schema.json",
+      "description": "API generator"
     }
   }
 }

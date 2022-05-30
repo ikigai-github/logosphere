@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-imports */
 import * as path from 'path';
 import {
   formatFiles,
@@ -10,10 +11,8 @@ import {
 import { strings } from '@angular-devkit/core';
 
 import {
-  ConverterFactory,
   Definition,
   DefinitionType,
-  SchemaType,
   canonicalSchemaLoader,
 } from '@logosphere/converters';
 import { tsFormatter } from '../utils';
@@ -78,8 +77,13 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
   });
 }
 
-export default async function (tree: Tree, options: EntityGeneratorSchema) {
+export async function entityGenerator(
+  tree: Tree,
+  options: EntityGeneratorSchema
+) {
   const normalizedOptions = normalizeOptions(tree, options);
   addFiles(tree, normalizedOptions);
   await formatFiles(tree);
 }
+
+export default entityGenerator;

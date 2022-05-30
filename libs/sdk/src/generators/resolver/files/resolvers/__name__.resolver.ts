@@ -8,7 +8,7 @@ import { <%= classify(name) %>DtoMap } from '../mappers/dto';
     <% enumImports(definition).map((imp) => {-%>
     <%= imp %>,
     <%_ }) %>
-  } from '../cb.model';
+  } from '../<%= dasherize(module) %>.model';
 <%_ } %>
 
 @Resolver(() =>  <%= classify(name) %>)

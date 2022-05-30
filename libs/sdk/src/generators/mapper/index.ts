@@ -1,0 +1,1 @@
+export { mapperGenerator } from './mapper';

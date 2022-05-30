@@ -1,0 +1,1 @@
+export { entityGenerator } from './entity';

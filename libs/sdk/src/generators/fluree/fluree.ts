@@ -58,7 +58,10 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
   );
 }
 
-export default async function (tree: Tree, options: FlureeGeneratorSchema) {
+export async function flureeGenerator(
+  tree: Tree,
+  options: FlureeGeneratorSchema
+) {
   const sourceSchema = canonicalSchemaLoader(options.module);
   const converter = ConverterFactory.getConverter(
     SchemaType.Canonical,
@@ -73,3 +76,5 @@ export default async function (tree: Tree, options: FlureeGeneratorSchema) {
   addFiles(tree, normalizedOptions);
   await formatFiles(tree);
 }
+
+export default flureeGenerator;
