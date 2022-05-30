@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-imports */
 import {
   formatFiles,
   generateFiles,
@@ -6,14 +7,14 @@ import {
   offsetFromRoot,
   Tree,
 } from '@nrwl/devkit';
+import { strings } from '@angular-devkit/core';
 import { libraryGenerator } from '@nrwl/node';
-import { strings } from '@angular-devkit/core/src';
 import * as path from 'path';
 import { NodeLibraryGeneratorSchema } from './schema';
-import { 
-  ModuleBoundaryTag, 
+import {
+  ModuleBoundaryTag,
   DEFAULT_CODEGEN_DIR,
-  DEFAULT_COMPILER
+  DEFAULT_COMPILER,
 } from '../../common';
 
 interface NormalizedSchema extends NodeLibraryGeneratorSchema {
@@ -22,12 +23,12 @@ interface NormalizedSchema extends NodeLibraryGeneratorSchema {
   projectRoot: string;
   projectDirectory: string;
   parsedTags: string[];
-  className: string;
-  cameledName: string;
-  dashedName: string;
 }
 
-function normalizeOptions(tree: Tree, options: NodeLibraryGeneratorSchema): NormalizedSchema {
+function normalizeOptions(
+  tree: Tree,
+  options: NodeLibraryGeneratorSchema
+): NormalizedSchema {
   const name = names(options.name).fileName;
   const projectDirectory = options.directory
     ? `${options.directory}/${options.name}`
@@ -40,34 +41,36 @@ function normalizeOptions(tree: Tree, options: NodeLibraryGeneratorSchema): Norm
     ? options.tags.split(',').map((s) => s.trim())
     : [];
 
-  const className = strings.classify(options.name);
-  const dashedName = strings.dasherize(options.name);
-  const cameledName = strings.camelize(options.name);
-
   return {
     ...options,
+    ...strings,
     npmScope,
     projectName,
     projectRoot,
     projectDirectory,
     parsedTags,
-    className,
-    dashedName,
-    cameledName
   };
 }
 
 function addFiles(tree: Tree, options: NormalizedSchema) {
-    const templateOptions = {
-      ...options,
-      ...names(options.name),
-      offsetFromRoot: offsetFromRoot(options.projectRoot),
-      template: ''
-    };
-    generateFiles(tree, path.join(__dirname, 'files'), options.projectRoot, templateOptions);
+  const templateOptions = {
+    ...options,
+    ...names(options.name),
+    offsetFromRoot: offsetFromRoot(options.projectRoot),
+    template: '',
+  };
+  generateFiles(
+    tree,
+    path.join(__dirname, 'files'),
+    options.projectRoot,
+    templateOptions
+  );
 }
 
-export async function moduleGenerator (tree: Tree, options: NodeLibraryGeneratorSchema) {
+export async function moduleGenerator(
+  tree: Tree,
+  options: NodeLibraryGeneratorSchema
+) {
   options.buildable = true;
   options.compiler = DEFAULT_COMPILER;
   options.directory = DEFAULT_CODEGEN_DIR;
@@ -75,8 +78,13 @@ export async function moduleGenerator (tree: Tree, options: NodeLibraryGenerator
   const normalizedOptions = normalizeOptions(tree, options);
   options.importPath = `@${normalizedOptions.npmScope}/${normalizedOptions.projectName}`;
   await libraryGenerator(tree, options);
- 
   addFiles(tree, normalizedOptions);
+  tree.delete(
+    `libs/${DEFAULT_CODEGEN_DIR}/${options.name}/src/lib/codegen-${options.name}.ts`
+  );
+  tree.delete(
+    `libs/${DEFAULT_CODEGEN_DIR}/${options.name}/src/lib/codegen-${options.name}.spec.ts`
+  );
   await formatFiles(tree);
 }
 
