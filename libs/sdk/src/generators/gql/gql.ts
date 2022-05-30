@@ -59,7 +59,7 @@ function addLibsFiles(tree: Tree, options: NormalizedSchema) {
 }
 
 export async function gqlGenerator(tree: Tree, options: GqlGeneratorSchema) {
-  const sourceSchema = canonicalSchemaLoader();
+  const sourceSchema = canonicalSchemaLoader(options.module);
   const converter = ConverterFactory.getConverter(
     SchemaType.Canonical,
     SchemaType.Gql

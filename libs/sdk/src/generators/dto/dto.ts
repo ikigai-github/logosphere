@@ -47,7 +47,7 @@ function normalizeOptions(
 }
 
 function addFiles(tree: Tree, options: NormalizedSchema) {
-  const sourceSchema = canonicalSchemaLoader();
+  const sourceSchema = canonicalSchemaLoader(options.module);
   const definitions = sourceSchema.definitions.filter(
     (def: Definition) => def.type === DefinitionType.Entity
   );

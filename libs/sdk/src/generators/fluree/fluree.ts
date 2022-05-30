@@ -62,7 +62,7 @@ export async function flureeGenerator(
   tree: Tree,
   options: FlureeGeneratorSchema
 ) {
-  const sourceSchema = canonicalSchemaLoader();
+  const sourceSchema = canonicalSchemaLoader(options.module);
   const converter = ConverterFactory.getConverter(
     SchemaType.Canonical,
     SchemaType.Fluree

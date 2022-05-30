@@ -58,7 +58,7 @@ export async function canonicalSchemaGenerator(
   tree: Tree,
   options: CanonicalGeneratorSchema
 ) {
-  const sourceSchema = canonicalSchemaLoader();
+  const sourceSchema = canonicalSchemaLoader(options.module);
 
   const source = JSON.stringify(sourceSchema, null, 2);
   options = {
