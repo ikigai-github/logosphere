@@ -73,6 +73,7 @@ export function addDependencies(tree: Tree): GeneratorCallback {
       '@nrwl/js': nxVersion,
       '@nrwl/nest': nxVersion,
       'babel-loader': '8.0.2',
+      jscodeshift: '0.13.1',
       webpack: '5.0.0',
     }
   );
