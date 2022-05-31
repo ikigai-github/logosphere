@@ -35,6 +35,7 @@ export interface Definition {
   type: DefinitionType;
   module?: string;
   description?: string;
+  isNft?: boolean;
   props: Partial<Property>[];
 }
 
