@@ -1,0 +1,11 @@
+mutation <%= camelize(name) %>Update($<%= camelize(name) %>: <%= classify(name) %>Input!){
+  <%= camelize(name) %>Save(<%= camelize(name) %>: $<%= camelize(name) %>){
+    id,
+    subjectId,
+    <%_ definition.props.filter((p) => p.defType !== 'Entity' && p.defType !== 'EntityArray').map((p) => { -%>
+    <%= camelize(p.name) %>,
+    <%_ }) -%>
+    createdAt,
+    updatedAt
+  }
+}

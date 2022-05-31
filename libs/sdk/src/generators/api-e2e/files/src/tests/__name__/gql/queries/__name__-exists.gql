@@ -1,0 +1,3 @@
+query <%= camelize(name) %>Exists($id: ID!){
+  <%= camelize(name) %>Exists(id: $id %>)
+}

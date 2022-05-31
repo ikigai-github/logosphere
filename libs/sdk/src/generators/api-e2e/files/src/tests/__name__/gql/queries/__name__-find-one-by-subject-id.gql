@@ -1,0 +1,11 @@
+query <%= camelize(name) %>FindOneBySubjectId($subjectId: String!){
+  <%= camelize(name) %>FindOneBySubjectId(subjectId: $subjectId %>){
+    id,
+    subjectId,
+    <%_ definition.props.filter((p) => p.defType !== 'Entity' && p.defType !== 'EntityArray').map((p) => { -%>
+    <%= camelize(p.name) %>,
+    <%_ }) -%>
+    createdAt,
+    updatedAt
+  }
+}

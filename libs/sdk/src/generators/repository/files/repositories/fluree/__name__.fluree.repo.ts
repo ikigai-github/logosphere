@@ -87,7 +87,7 @@ export class <%= classify(name) %><%= classify(type) %>Repository implements I<%
   }
 
   public async findOneBySubjectId(subjectId: string): Promise<<%= classify(name) %>> {
-    const spec = selectOne('*').from(subjectId).build();
+    const spec = selectOne('*').from(+subjectId).build();
     const fql = compile(spec);
     const result = await this.fluree.query(fql);
     if (result) {

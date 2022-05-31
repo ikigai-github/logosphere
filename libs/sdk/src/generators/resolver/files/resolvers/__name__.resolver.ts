@@ -42,6 +42,13 @@ export class <%= classify(name) %>Resolver {
     );
   }
 
+  @Query(() => <%= classify(name) %>)
+  async <%= camelize(name) %>FindOneBySubjectId(@Args({ name: 'subjectId', type: () => String }) subjectId: string): Promise<<%= classify(name) %>Dto> {
+    return this.mapper.fromEntity(
+      await this.repo.findOneBySubjectId(subjectId)
+    );
+  }
+
   <% definition.props.filter((p) => p.isIndexed && !p.isUnique).map((p) => { -%>
     @Query(() => [<%= classify(name) %>Dto])
     async <%= camelize(name) %>FindAllBy<%= classify(p.name) %>(@Args({ name: '<%= camelize(p.name) %>', type: () => <%= p.type %> }) <%= camelize(p.name) %>: <%= entityProp(p).type %>): Promise<<%= classify(name) %>Dto[]> {

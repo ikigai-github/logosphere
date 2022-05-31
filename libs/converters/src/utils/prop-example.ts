@@ -38,7 +38,7 @@ export function propExample(prop: Property, random = false) {
           ret = random ? getRandom([true, false]) : true;
           break;
         default:
-          ret = '';
+          ret = undefined;
       }
       break;
     case DefinitionType.Enum:
@@ -46,7 +46,7 @@ export function propExample(prop: Property, random = false) {
       ret = val[0];
       break;
     default:
-      ret = '';
+      ret = undefined;
   }
   return prop.defType === DefinitionType.ScalarArray ||
     prop.defType === DefinitionType.EnumArray

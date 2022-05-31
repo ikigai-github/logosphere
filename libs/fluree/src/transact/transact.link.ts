@@ -16,7 +16,11 @@ interface FlureeLinkDataNode {
 }
 
 export function isFlureeLinkNode(node: unknown) {
-  return typeof node === 'object' && (node as FlureeLinkNode).$$kind === 'link';
+  return (
+    node &&
+    typeof node === 'object' &&
+    (node as FlureeLinkNode).$$kind === 'link'
+  );
 }
 
 class FlureeLinkBuilder implements FlureeLinkNode, FlureeLinkDataNode {
