@@ -1,5 +1,5 @@
-import { Tree } from '@nrwl/devkit';
-import { DEFAULT_COMPILER } from '../../common';
+import { Tree, getProjects } from '@nrwl/devkit';
+import { DEFAULT_COMPILER, DEFAULT_CODEGEN_DIR } from '../../common';
 import { ApiGeneratorSchema } from './schema';
 
 import { moduleGenerator } from '../module';
@@ -12,14 +12,18 @@ import { gqlGenerator } from '../gql';
 import { mapperGenerator } from '../mapper';
 import { repositoryGenerator } from '../repository';
 import { resolverGenerator } from '../resolver';
+import { apiE2eTestGenerator } from '../api-e2e';
 
 export async function apiGenerator(tree: Tree, options: ApiGeneratorSchema) {
-  const module = options.name;
+  const module = options.module;
 
-  await moduleGenerator(tree, {
-    name: options.name,
-    compiler: DEFAULT_COMPILER,
-  });
+  if (!getProjects(tree).has(`${DEFAULT_CODEGEN_DIR}-${module}`)) {
+    await moduleGenerator(tree, {
+      name: module,
+      compiler: DEFAULT_COMPILER,
+    });
+  }
+
   await canonicalSchemaGenerator(tree, { module });
   await dtoGenerator(tree, { module });
   await entityGenerator(tree, { module });
@@ -43,6 +47,7 @@ export async function apiGenerator(tree: Tree, options: ApiGeneratorSchema) {
     type: 'fluree',
   });
   await resolverGenerator(tree, { module });
+  await apiE2eTestGenerator(tree, { module });
 }
 
 export default apiGenerator;

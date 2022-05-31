@@ -7,7 +7,7 @@ export interface NftFile {
 export interface NftLogosphere {
   ledgerId: string;
   subjectId: string;
-  txId: string;
+  txId?: string;
 }
 
 export interface Nft {

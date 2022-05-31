@@ -60,6 +60,11 @@ export class GqlFederatedGenerator extends GqlGenerator {
           def.name
         )}: ${s.classify(def.name)}Input): ${s.classify(def.name)}\n`;
         mutationString += `\t${s.camelize(def.name)}Delete(id: ID): Boolean\n`;
+        if (def.isNft) {
+          mutationString += `\t${s.camelize(def.name)}MintNft(${s.camelize(
+            def.name
+          )}: ${s.classify(def.name)}Input): ${s.classify(def.name)}\n`;
+        }
       });
     mutationString += '}\n\n';
     return mutationString;

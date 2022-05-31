@@ -27,6 +27,7 @@ export function Entity(
     const metadata: EntityMetadata = {
       target,
       module: options.module,
+      nft: options.nft || false,
       name: name || toCamelCase(target.name),
       root: options.root || (target as TypeFunc),
       version: options.version || 1,

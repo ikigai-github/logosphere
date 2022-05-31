@@ -9,5 +9,6 @@ export type EntityMetadata = CommonMetadata & {
   layer: StorageLayer;
   module?: string;
   description?: string;
+  nft?: boolean;
   root: TypeFunc;
 };

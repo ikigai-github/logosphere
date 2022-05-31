@@ -9,6 +9,7 @@ import { EntityMetadata } from './entity';
 import { PropMetadataMap, resolvePropType } from './prop';
 import { isDefined } from './utils';
 import { EnumMetadata } from './enum/enum.metadata';
+import { DefinitionType } from './common';
 
 export enum MetadataKeys {
   /** Get the Typescript assigned Type at runtime */
@@ -94,6 +95,85 @@ export class MetadataStorage {
             defType,
           });
         }
+
+        if (entity.nft) {
+          props.push({
+            name: 'nftIpfsCid',
+            type: 'string',
+            isEnabled: true,
+            isRequired: false,
+            isIndexed: true,
+            isUnique: false,
+            isPK: false,
+            isReadOnly: false,
+            isWriteOnly: false,
+            description: 'CID from IPFS',
+            examples: ['QmPrhyaEVcavi3XuP7WHBcD2n8xcUK6mGcF1u6AchXYbgn'],
+            defType: DefinitionType.Scalar,
+          });
+
+          props.push({
+            name: 'nftCardanoTxId',
+            type: 'string',
+            isEnabled: true,
+            isRequired: false,
+            isIndexed: true,
+            isUnique: true,
+            isPK: false,
+            isReadOnly: false,
+            isWriteOnly: false,
+            description: 'Cardano transaction ID',
+            examples: [
+              '664274fa17646981774ac9a5ab5f79d4229788ee5d78bb6e3af351f9b25e2ac3',
+            ],
+            defType: DefinitionType.Scalar,
+          });
+
+          props.push({
+            name: 'nftName',
+            type: 'string',
+            isEnabled: true,
+            isRequired: false,
+            isIndexed: true,
+            isUnique: false,
+            isPK: false,
+            isReadOnly: false,
+            isWriteOnly: false,
+            description: 'Cardano NFT name',
+            examples: ['NFT Name'],
+            defType: DefinitionType.Scalar,
+          });
+
+          props.push({
+            name: 'nftDescription',
+            type: 'string',
+            isEnabled: true,
+            isRequired: false,
+            isIndexed: true,
+            isUnique: false,
+            isPK: false,
+            isReadOnly: false,
+            isWriteOnly: false,
+            description: 'Cardano NFT description',
+            examples: ['NFT Description'],
+            defType: DefinitionType.Scalar,
+          });
+
+          props.push({
+            name: 'nftAssetName',
+            type: 'string',
+            isEnabled: true,
+            isRequired: false,
+            isIndexed: true,
+            isUnique: false,
+            isPK: false,
+            isReadOnly: false,
+            isWriteOnly: false,
+            description: 'Cardano NFT asset name',
+            examples: ['NFT Asset Name'],
+            defType: DefinitionType.Scalar,
+          });
+        }
       }
 
       definitions.push({
@@ -101,6 +181,7 @@ export class MetadataStorage {
         type: 'Entity',
         module: entity.module,
         description: entity.description,
+        isNft: entity.nft,
         props,
       });
     });
