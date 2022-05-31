@@ -24,6 +24,9 @@ export class GqlFederatedGenerator extends GqlGenerator {
         )}FindOneById(id: ID): ${s.classify(def.name)}\n`;
         queryString += `\t${s.camelize(
           def.name
+        )}FindOneBySubjectId(subjectId: String): ${s.classify(def.name)}\n`;
+        queryString += `\t${s.camelize(
+          def.name
         )}FindManyById(idList: [ID]): [${s.classify(def.name)}]\n`;
         def.props
           .filter((prop: Property) => prop.isUnique)
@@ -39,7 +42,7 @@ export class GqlFederatedGenerator extends GqlGenerator {
           .map((prop: Property) => {
             queryString += `\t${s.camelize(def.name)}FindAllBy${s.classify(
               prop.name
-            )}(${s.camelize(prop.name)}List: ${s.classify(
+            )}(${s.camelize(prop.name)}: ${s.classify(
               prop.type
             )}): [${s.classify(def.name)}]\n`;
           });
@@ -72,7 +75,6 @@ export class GqlFederatedGenerator extends GqlGenerator {
             name: c.ID,
             type: c.STRING,
             isEnabled: true,
-            isRequired: true,
             isPK: true,
             defType: DefinitionType.Scalar,
           },

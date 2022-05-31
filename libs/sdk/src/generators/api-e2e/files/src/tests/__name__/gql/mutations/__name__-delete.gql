@@ -1,0 +1,3 @@
+mutation <%= camelize(name) %>Delete($id: ID!){
+  <%= camelize(name) %>Delete(id: $id %>)
+}

@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-imports */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Definition,
@@ -372,10 +373,11 @@ export function flureeDataFixture(
 export function dtoDataFixture(
   defs: Definition[],
   rootDefName: string,
-  fixtureDepth = defaults.FIXTURE_MAX_DEPTH
+  fixtureDepth = defaults.FIXTURE_MAX_DEPTH,
+  gqlInput = false
 ) {
   return JSON.stringify(
-    dtoData(defs, rootDefName, false, fixtureDepth),
+    dtoData(defs, rootDefName, false, fixtureDepth, gqlInput),
     null,
     2
   );

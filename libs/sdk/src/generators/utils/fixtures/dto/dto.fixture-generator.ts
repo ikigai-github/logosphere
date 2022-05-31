@@ -10,18 +10,22 @@ function generateDtoData(
   currentDef: Definition,
   random = false,
   maxDepth = 1,
-  currentDepth = 1
+  currentDepth = 1,
+  gqlInput = false
 ): any {
   const data = {};
-  data[p.SUBJECT_ID] = f.SUBJECT_ID;
-  data[p.ID] = f.ID;
-  data[p.CREATED_AT] = f.CREATED_AT;
-  data[p.UPDATED_AT] = f.CREATED_AT;
+  if (!gqlInput) {
+    data[p.SUBJECT_ID] = f.SUBJECT_ID;
+    data[p.ID] = f.ID;
+    data[p.CREATED_AT] = f.CREATED_AT;
+    data[p.UPDATED_AT] = f.CREATED_AT;
+  }
 
   currentDef.props.map((prop: Property) => {
     if (
-      prop.defType === DefinitionType.Entity ||
-      prop.defType === DefinitionType.EntityArray
+      (prop.defType === DefinitionType.Entity ||
+        prop.defType === DefinitionType.EntityArray) &&
+      !gqlInput
     ) {
       if (currentDepth <= maxDepth) {
         const refDef = defs.find((def: Definition) => def.name === prop.type);
@@ -30,7 +34,8 @@ function generateDtoData(
           refDef,
           random,
           maxDepth,
-          currentDepth + 1
+          currentDepth + 1,
+          gqlInput
         );
         data[prop.name] =
           prop.defType === DefinitionType.Entity ? value : [value];
@@ -57,8 +62,9 @@ export function dtoData(
   defs: Definition[],
   rootDefName: string,
   random = false,
-  maxDepth = 1
+  maxDepth = 1,
+  gqlInput = false
 ) {
   const rootDef = defs.find((d: Definition) => d.name === rootDefName);
-  return generateDtoData(defs, rootDef, random, maxDepth, 1);
+  return generateDtoData(defs, rootDef, random, maxDepth, 1, gqlInput);
 }
