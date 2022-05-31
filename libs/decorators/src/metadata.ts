@@ -34,11 +34,15 @@ export class MetadataStorage {
   private enums: EnumMetadata[] = [];
 
   addEntity(metadata: EntityMetadata) {
-    this.entities.push(metadata);
+    if (!this.entities.find((entity) => entity.name === metadata.name)) {
+      this.entities.push(metadata);
+    }
   }
 
   addEnum(metadata: EnumMetadata) {
-    this.enums.push(metadata);
+    if (!this.enums.find((enumeration) => enumeration.name === metadata.name)) {
+      this.enums.push(metadata);
+    }
   }
 
   getEnumByType<T extends object = object>(type: T) {
