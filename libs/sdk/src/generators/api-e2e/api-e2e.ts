@@ -1,7 +1,6 @@
 /* eslint-disable no-restricted-imports */
 import * as path from 'path';
 import {
-  addProjectConfiguration,
   formatFiles,
   generateFiles,
   getWorkspaceLayout,
@@ -22,7 +21,6 @@ import { ApiE2eGeneratorSchema } from './schema';
 import { applicationGenerator } from '../application';
 import { initGenerator } from '../init';
 import { renameTestTarget } from './utils';
-import { workspaceFileName } from '.pnpm/nx@14.1.5_typescript@4.6.2/node_modules/nx/src/project-graph/file-utils';
 
 export interface NormalizedSchema extends ApiE2eGeneratorSchema {
   projectName: string;

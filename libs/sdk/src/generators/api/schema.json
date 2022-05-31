@@ -5,14 +5,14 @@
   "title": "",
   "type": "object",
   "properties": {
-    "name": {
+    "module": {
       "type": "string",
       "description": "",
       "$default": {
         "$source": "argv",
         "index": 0
       },
-      "x-prompt": "What name would you like to use?"
+      "x-prompt": "What module would you like to generate API for?"
     },
     "tags": {
       "type": "string",
@@ -25,5 +25,5 @@
       "alias": "d"
     }
   },
-  "required": ["name"]
+  "required": ["module"]
 }

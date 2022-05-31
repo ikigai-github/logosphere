@@ -1,5 +1,5 @@
 export interface ApiGeneratorSchema {
-  name: string;
+  module: string;
   tags?: string;
   directory?: string;
 }

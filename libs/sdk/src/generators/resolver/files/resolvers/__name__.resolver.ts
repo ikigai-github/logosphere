@@ -117,14 +117,16 @@ export class <%= classify(name) %>Resolver {
         subjectId: saved<%= classify(name) %>.subjectId
       },
     });
+
+    const updated<%= classify(name) %> =  <%= classify(name) %>.create(
+      {
+        ...saved<%= classify(name) %>.props, 
+        nftCardanoTxId: submittedNft.txId 
+      }
+    ).getValue();
     
     return this.mapper.fromEntity(
-      <%= classify(name) %>.create(
-        {
-          ...saved<%= classify(name) %>.props, 
-          nftCardanoTxId: submittedNft.txId 
-        }
-      ).getValue()
+      await this.repo.save(updated<%= classify(name) %>)
     );
   }
   <%_ } -%>
