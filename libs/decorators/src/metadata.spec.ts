@@ -44,6 +44,45 @@ describe('The Metadata store', () => {
     expect(enumArrayTypeInfo.typename).toBe('TestEnum');
   });
 
+  it('should not add duplicate metadata entries for the same declaration', () => {
+    const createDeclaration = () => {
+      enum SingleEnum {
+        FIRST = 0,
+        SECOND = 'SECOND',
+      }
+
+      registerEnum(SingleEnum, 'SingleEnum');
+
+      @Entity('SingleEntity')
+      class SingleEntity {
+        git;
+        @Prop()
+        aString: string;
+
+        @Prop({ type: () => SingleEnum })
+        aEnum: SingleEnum;
+      }
+    };
+
+    // Invoke twice to cause class declaration to be evaluated twice
+    createDeclaration();
+    createDeclaration();
+
+    const schema = getMetadataStorage().buildSchema();
+
+    const entities = schema.definitions.filter(
+      (definition) => definition.name === 'SingleEntity'
+    );
+
+    expect(entities.length).toBe(1);
+
+    const enums = schema.definitions.filter(
+      (definition) => definition.name === 'SingleEnum'
+    );
+
+    expect(enums.length).toBe(1);
+  });
+
   it('should default the name of a reference entity to the name of the entity', () => {
     @Entity('match_this')
     class ExampleMatchEntity {
