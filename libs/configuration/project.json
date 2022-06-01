@@ -26,6 +26,19 @@
         "jestConfig": "libs/configuration/jest.config.ts",
         "passWithNoTests": true
       }
+    },
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "preset": "conventional"
+      }
+    },
+    "deploy": {
+      "builder": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "restricted",
+        "buildTarget": "production"
+      }
     }
   },
   "tags": ["scope:shared", "type:lib", "kind:support"]
