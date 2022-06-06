@@ -17,7 +17,7 @@
     "@commitlint/cli": "16.2.4",
     "@commitlint/config-conventional": "17.0.0",
     "@fluree/crypto-base": "0.1.6",
-    "@jscutlery/semver": "^2.24.2",
+    "@jscutlery/semver": "2.25.2",
     "@nestjs/schematics": "8.0.11",
     "@nestjs/testing": "8.4.5",
     "@nrwl/angular": "14.1.5",

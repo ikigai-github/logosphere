@@ -109,7 +109,7 @@ export class <%= classify(name) %>Resolver {
         {
           name: <%= camelize(name) %>.nftName,
           mediaType: 'image/*',
-          src: `ipfs://${bison.nftIpfsCid}`,
+          src: `ipfs://${<%= camelize(name) %>.nftIpfsCid}`,
         },
       ],
       logosphere: {
