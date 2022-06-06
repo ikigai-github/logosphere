@@ -78,7 +78,7 @@ export function addDependencies(tree: Tree): GeneratorCallback {
       '@babel/preset-env': '7.0.0',
       '@logosphere/configuration': '0.1.0',
       '@logosphere/readers': '0.1.0',
-      '@logosphere/sdk': '0.1.0',
+      '@logosphere/sdk': '0.1.1',
       '@nestjs/schematics': nestJsSchematicsVersion,
       '@nestjs/testing': NEST_VERSION,
       '@nrwl/js': nxVersion,
