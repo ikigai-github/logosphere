@@ -8,6 +8,7 @@ export interface FlureeItem {
 
 export interface FlureeCollection extends FlureeItem {
   version?: string;
+  predicates?: FlureePredicate[];
 }
 
 export interface FlureePredicate extends FlureeItem {

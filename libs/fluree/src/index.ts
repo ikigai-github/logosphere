@@ -5,6 +5,7 @@ export * from './fluree.client';
 export * from './fluree.config';
 export * from './fluree.constants';
 export * from './fluree.module';
+export * from './fluree.errors';
 export * from './query';
 export * from './queries';
 export * from './transact';

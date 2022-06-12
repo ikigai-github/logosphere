@@ -7,7 +7,7 @@ import {
 } from '../canonical';
 import { Generator } from '../abstract';
 import { FlureePropGenerator } from './fluree.prop-generator';
-import { constants as c } from './fluree.constants';
+import { constants as c, types as t } from './fluree.constants';
 
 import { FlureeItem, FlureePredicate } from './fluree.schema';
 
@@ -33,7 +33,7 @@ export class FlureeGenerator extends Generator {
     items.push({
       _id: c.PREDICATE,
       name: `${def.name}/${c.IDENTIFIER}`,
-      type: c.STRING,
+      type: t.STRING,
       doc: `${def.name} unique identifier`,
       index: true,
       unique: true,
@@ -42,7 +42,7 @@ export class FlureeGenerator extends Generator {
     items.push({
       _id: c.PREDICATE,
       name: `${def.name}/${c.CREATED_AT}`,
-      type: c.INSTANT,
+      type: t.INSTANT,
       doc: `${def.name} creation time`,
       index: true,
     } as FlureePredicate);
@@ -50,7 +50,7 @@ export class FlureeGenerator extends Generator {
     items.push({
       _id: c.PREDICATE,
       name: `${def.name}/${c.UPDATED_AT}`,
-      type: c.INSTANT,
+      type: t.INSTANT,
       doc: `${def.name} last update time`,
       index: true,
     } as FlureePredicate);

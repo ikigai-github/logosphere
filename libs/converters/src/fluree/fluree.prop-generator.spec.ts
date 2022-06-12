@@ -1,7 +1,7 @@
 import { FlureePropGenerator } from './fluree.prop-generator';
 import { Property, DefinitionType } from '../canonical';
 import { FlureePredicate } from './fluree.schema';
-import { constants as c } from './fluree.constants';
+import { constants as fc, types as ft } from './fluree.constants';
 
 describe('Fluree Schema Prop Generator', () => {
   const propGen = new FlureePropGenerator('user');
@@ -15,9 +15,9 @@ describe('Fluree Schema Prop Generator', () => {
 
     const output = propGen.generate(prop);
     expect(output).toStrictEqual({
-      _id: c.PREDICATE,
+      _id: fc.PREDICATE,
       name: 'user/name',
-      type: c.BIGINT,
+      type: ft.BIGINT,
       doc: 'desc',
       unique: false,
       index: false,
@@ -34,9 +34,9 @@ describe('Fluree Schema Prop Generator', () => {
 
     const output = propGen.generate(prop);
     expect(output).toStrictEqual({
-      _id: c.PREDICATE,
+      _id: fc.PREDICATE,
       name: 'user/name',
-      type: c.BIGINT,
+      type: ft.BIGINT,
       doc: 'desc',
       multi: true,
       unique: false,
@@ -54,9 +54,9 @@ describe('Fluree Schema Prop Generator', () => {
 
     const output = propGen.generate(prop);
     expect(output).toStrictEqual({
-      _id: c.PREDICATE,
+      _id: fc.PREDICATE,
       name: 'user/name',
-      type: c.INSTANT,
+      type: ft.INSTANT,
       doc: 'unix time',
       unique: false,
       index: false,
@@ -73,9 +73,9 @@ describe('Fluree Schema Prop Generator', () => {
 
     const output = propGen.generate(prop);
     expect(output).toStrictEqual({
-      _id: c.PREDICATE,
+      _id: fc.PREDICATE,
       name: 'user/artwork',
-      type: c.REF,
+      type: fc.REF,
       doc: 'desc',
       restrictCollection: 'artwork',
       unique: false,
@@ -93,9 +93,9 @@ describe('Fluree Schema Prop Generator', () => {
 
     const output = propGen.generate(prop);
     expect(output).toStrictEqual({
-      _id: c.PREDICATE,
+      _id: fc.PREDICATE,
       name: 'user/artwork',
-      type: c.REF,
+      type: fc.REF,
       doc: 'desc',
       restrictCollection: 'artwork',
       multi: true,
@@ -114,9 +114,9 @@ describe('Fluree Schema Prop Generator', () => {
 
     const output = propGen.generate(prop);
     expect(output).toStrictEqual({
-      _id: c.PREDICATE,
+      _id: fc.PREDICATE,
       name: 'user/artwork',
-      type: c.STRING,
+      type: ft.STRING,
       doc: 'desc, identifier of artwork',
       unique: false,
       index: false,
@@ -133,9 +133,9 @@ describe('Fluree Schema Prop Generator', () => {
 
     const output = propGen.generate(prop);
     expect(output).toStrictEqual({
-      _id: c.PREDICATE,
+      _id: fc.PREDICATE,
       name: 'user/artwork',
-      type: c.STRING,
+      type: ft.STRING,
       doc: 'desc, identifier of artwork',
       multi: true,
       unique: false,

@@ -1,16 +1,16 @@
 import { Property } from '../canonical';
 import { PropGenerator } from '../abstract';
 import { FlureePredicate } from './fluree.schema';
-import { constants as c } from './fluree.constants';
+import { constants as c, types as t } from './fluree.constants';
 export class FlureePropGenerator extends PropGenerator {
   private _typeMap = {
-    number: c.BIGINT,
-    integer: c.BIGINT,
+    number: t.BIGINT,
+    integer: t.BIGINT,
   };
 
   #scalar(prop: Partial<Property>): string {
     if (prop.description && prop.description.indexOf(c.TIME) > -1)
-      return c.INSTANT;
+      return t.INSTANT;
     else return this._typeMap[prop.type] ? this._typeMap[prop.type] : prop.type;
   }
 
@@ -43,7 +43,7 @@ export class FlureePropGenerator extends PropGenerator {
   protected generateEnum(prop: Partial<Property>): FlureePredicate {
     return {
       ...this.#common(prop),
-      type: c.STRING,
+      type: t.STRING,
     };
   }
   protected generateEntity(prop: Partial<Property>): FlureePredicate {
@@ -56,7 +56,7 @@ export class FlureePropGenerator extends PropGenerator {
   protected generateExternalEntity(prop: Partial<Property>): FlureePredicate {
     return {
       ...this.#common(prop),
-      type: c.STRING,
+      type: t.STRING,
       doc: this.#externalDoc(prop),
     };
   }
@@ -84,7 +84,7 @@ export class FlureePropGenerator extends PropGenerator {
   ): FlureePredicate {
     return {
       ...this.#common(prop),
-      type: c.STRING,
+      type: t.STRING,
       doc: this.#externalDoc(prop),
       multi: true,
     };

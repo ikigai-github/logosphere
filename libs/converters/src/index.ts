@@ -7,3 +7,4 @@ export * from './federated.schema';
 export * from './gql';
 export * from './dto';
 export * from './utils';
+export * from './fluree';

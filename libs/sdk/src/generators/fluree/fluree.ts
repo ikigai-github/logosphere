@@ -7,7 +7,6 @@ import {
   offsetFromRoot,
   Tree,
 } from '@nrwl/devkit';
-
 import {
   ConverterFactory,
   SchemaType,
@@ -15,6 +14,23 @@ import {
 } from '@logosphere/converters';
 import { FlureeGeneratorSchema } from './schema';
 import { DEFAULT_CODEGEN_DIR } from '../../common';
+import {
+  FlureeClient,
+  FlureeError,
+  compile,
+  select,
+  messages,
+  flattenNames,
+} from '@logosphere/fluree';
+import {
+  FlureeSchema,
+  FlureeCollection,
+  FlureePredicate,
+  FlureeSchemaParser,
+  CanonicalSchemaGenerator,
+  Converter,
+  flureeConstants as fc,
+} from '@logosphere/converters';
 
 interface NormalizedSchema extends FlureeGeneratorSchema {
   projectName: string;
@@ -75,6 +91,62 @@ export async function flureeGenerator(
   const normalizedOptions = normalizeOptions(tree, options);
   addFiles(tree, normalizedOptions);
   await formatFiles(tree);
+
+  const ledger = process.env.FLUREE_LEDGER || `local/${options.module}`;
+  const fluree = new FlureeClient({
+    url: process.env.FLUREE_URL || 'http://localhost:8090',
+    ledger,
+  });
+  const ledgers = await fluree.listLedgers();
+  if (!ledgers.find((l: string) => l === ledger)) {
+    console.log(`Creating Fluree ${ledger} ledger for the module`);
+    const response = await fluree.createLedger(ledger);
+    if (response.status !== 200) {
+      throw new FlureeError(messages.CREATE_LEDGER_FAILED);
+    } else {
+      console.log(`Ledger ${ledger} created`);
+    }
+  }
+
+  const collectionSpec = compile(select().from('_collection').build());
+  const collections = await fluree.query(collectionSpec);
+
+  const predicateSpec = compile(select().from('_predicate').build());
+  const predicates = await fluree.query(predicateSpec);
+  const colNameKey = `${fc.COLLECTION}/${fc.NAME}`;
+  const predNameKey = `${fc.PREDICATE}/${fc.NAME}`;
+
+  const existingFlureeSchema: FlureeSchema = {
+    definitions: [
+      ...collections
+        //filter out system collections, starting with _
+        .filter((collection) => collection[colNameKey][0] !== '_')
+        .map((collection) => {
+          return {
+            ...flattenNames(collection),
+            predicates: predicates
+              .filter(
+                (predicate) =>
+                  predicate[predNameKey].split('/')[0] ===
+                  collection[colNameKey]
+              )
+              .map((predicate) => {
+                const flat = flattenNames(predicate);
+                flat[fc.NAME] = flat[fc.NAME].replace(
+                  `${collection[colNameKey].split('/')[0]}/`,
+                  ''
+                );
+                return flat;
+              }),
+          };
+        }),
+    ],
+  };
+
+  const flureeParser = new FlureeSchemaParser();
+  const canonicalSchemaFromFluree = flureeParser.parse(existingFlureeSchema);
+
+  console.log(JSON.stringify(canonicalSchemaFromFluree, null, 2));
 }
 
 export default flureeGenerator;
