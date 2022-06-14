@@ -23,17 +23,18 @@ export interface FlureePredicate extends FlureeItem {
   txSpec?: any[];
   txSpecDoc?: string;
   restrictCollection?: string;
-  restrictTag?: string;
+  restrictTag?: boolean;
   encrypted?: boolean;
   fullText?: boolean;
 }
 
-export interface FlureeSchema {
-  definitions: FlureeItem[];
+export interface FlureeTag {
+  _id: string;
+  id: string;
+  doc?: string;
 }
 
-export interface FlureeQuery {
-  select: string[];
-  from: string[] | string;
-  where?: string[];
+export interface FlureeSchema {
+  definitions: FlureeItem[];
+  tags?: FlureeTag[];
 }

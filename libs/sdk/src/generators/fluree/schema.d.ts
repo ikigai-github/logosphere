@@ -1,6 +1,7 @@
 export interface FlureeGeneratorSchema {
-    module: string;
-    tags?: string;
-    directory?: string;
-    source?: string;
+  module: string;
+  tags?: string;
+  directory?: string;
+  source?: string;
+  skipLedger?: boolean;
 }

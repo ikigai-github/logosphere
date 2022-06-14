@@ -15,6 +15,7 @@ export const constants = {
   RULE: '_rule',
   SPEC: 'spec',
   SPEC_DOC: 'specDoc',
+  TAG: '_tag',
   TIME: 'time',
   UPDATED_AT: 'updatedAt',
   USER: '_user',
@@ -33,6 +34,7 @@ export const types = {
   INT: 'int',
   JSON: 'json',
   LONG: 'long',
+  TAG: 'tag',
   URI: 'uri',
   UUID: 'uuid',
 };

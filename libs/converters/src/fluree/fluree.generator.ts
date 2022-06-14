@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { isEmpty } from 'lodash';
 import {
   Definition,
@@ -8,14 +9,13 @@ import {
 import { Generator } from '../abstract';
 import { FlureePropGenerator } from './fluree.prop-generator';
 import { constants as c, types as t } from './fluree.constants';
-
-import { FlureeItem, FlureePredicate } from './fluree.schema';
+import { FlureeItem, FlureePredicate, FlureeTag } from './fluree.schema';
+import { strings as s } from '@angular-devkit/core';
+import { PropertySignature } from 'ts-morph';
 
 export class FlureeGenerator extends Generator {
   protected generateEnum(def: Definition): void {
-    // we don't need to create collections for enums in Fluree
-    // then enum values will be recorded as scalar strings
-    `${def}`;
+    // enums are generated in the generate() method override
   }
 
   protected generateEntity(def: Definition): FlureeItem[] {
@@ -73,19 +73,47 @@ export class FlureeGenerator extends Generator {
   }
 
   generate(schema: CanonicalSchema): string {
-    const flureeItems: FlureeItem[] = [];
+    const items: FlureeItem[] = [];
+    const tags: FlureeTag[] = [];
     schema.definitions.forEach((def: Definition) => {
       switch (def.type) {
         case DefinitionType.Entity:
-          flureeItems.push(...this.generateEntity(def));
+          items.push(...this.generateEntity(def));
           break;
         default:
           break;
       }
     });
 
+    schema.definitions
+      .filter((def: Definition) => def.type === DefinitionType.Entity)
+      .forEach((def: Definition) => {
+        def.props
+          .filter(
+            (prop: Property) =>
+              prop.defType === DefinitionType.Enum ||
+              prop.defType === DefinitionType.EnumArray
+          )
+          .forEach((prop: Property) => {
+            const enm = schema.definitions.find(
+              (def: Definition) => def.name === prop.type
+            );
+            if (enm) {
+              enm.props.forEach((enumProp: Property) => {
+                tags.push({
+                  _id: c.TAG,
+                  id: `${def.name}/${prop.name}:${enumProp.name}`,
+                });
+              });
+            }
+          });
+      });
+
     return JSON.stringify(
-      flureeItems.filter((item: FlureeItem) => !isEmpty(item)),
+      [
+        ...items.filter((item: FlureeItem) => !isEmpty(item)),
+        ...tags.filter((tag: FlureeTag) => !isEmpty(tag)),
+      ],
       null,
       2
     );
