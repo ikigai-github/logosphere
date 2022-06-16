@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.2.0](https://github.com/ikigai-github/logosphere/compare/fluree-0.1.0...fluree-0.2.0) (2022-06-16)
+
+### Features
+
+- **log-188:** fluree parser to canonical schema ([990238f](https://github.com/ikigai-github/logosphere/commit/990238f375ef7ec4ade88c72bb3519d140d8578d))
+- **log-188:** fluree schema update ([ba741eb](https://github.com/ikigai-github/logosphere/commit/ba741eb43e48576ab294d89dad63389d35b8dc42))
+
 ## 0.1.0 (2022-06-01)
 
 ### Features
