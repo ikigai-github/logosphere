@@ -1,16 +1,21 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface FlureeItem {
-  _id: string;
-  name: string;
+  _id: string | number;
   doc?: string;
-  spec?: any[];
-  specDoc?: string;
 }
 
 export interface FlureeCollection extends FlureeItem {
+  name: string;
+  spec?: any[];
+  specDoc?: string;
   version?: string;
+  predicates?: FlureePredicate[];
 }
 
 export interface FlureePredicate extends FlureeItem {
+  name: string;
+  spec?: any[];
+  specDoc?: string;
   type: string;
   unique?: boolean;
   multi?: boolean;
@@ -22,17 +27,16 @@ export interface FlureePredicate extends FlureeItem {
   txSpec?: any[];
   txSpecDoc?: string;
   restrictCollection?: string;
-  restrictTag?: string;
+  restrictTag?: boolean;
   encrypted?: boolean;
   fullText?: boolean;
+  tags?: FlureeTag[];
+}
+
+export interface FlureeTag extends FlureeItem {
+  id: string;
 }
 
 export interface FlureeSchema {
-  definitions: FlureeItem[];
-}
-
-export interface FlureeQuery {
-  select: string[];
-  from: string[] | string;
-  where?: string[];
+  collections: FlureeCollection[];
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as fluree from '@fluree/flureenjs';
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
@@ -228,7 +229,39 @@ export class FlureeClient {
       );
       return response;
     } catch (error) {
-      throw new FlureeError(messages.CREATE_DB_FAILED, error);
+      throw new FlureeError(messages.COMMAND_FAILED, error);
+    }
+  }
+
+  /**
+   * Transacts array of raw transactions
+   * @param transact Array of transactions
+   * @returns response
+   */
+  async transactRaw(transact: any[]) {
+    try {
+      const response = await axios.post(
+        `${this.#config.url}/fdb/${this.#config.ledger}/transact`,
+        transact
+      );
+      if (response.status === 200) {
+        return {
+          transactionId: response.data.id,
+          blockNumber: response.data.block,
+          blockHash: response.data.hash,
+          timestamp: response.data.instant,
+          duration: processFlureeDuration(response.data.duration),
+          fuel: response.data.fuel,
+          auth: response.data.auth,
+          status: response.status,
+          bytes: response.data.bytes,
+          flakes: response.data.flakes.length,
+        };
+      } else {
+        throw new FlureeError(messages.TRANSACT_FAILED, response);
+      }
+    } catch (error) {
+      throw new FlureeError(messages.TRANSACT_FAILED, error);
     }
   }
 

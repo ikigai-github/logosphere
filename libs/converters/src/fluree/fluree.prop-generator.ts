@@ -1,23 +1,25 @@
 import { Property } from '../canonical';
 import { PropGenerator } from '../abstract';
 import { FlureePredicate } from './fluree.schema';
-import { constants as c } from './fluree.constants';
+import { constants as c, types as t } from './fluree.constants';
+import { strings as s } from '@angular-devkit/core';
+
 export class FlureePropGenerator extends PropGenerator {
   private _typeMap = {
-    number: c.BIGINT,
-    integer: c.BIGINT,
+    number: t.BIGINT,
+    integer: t.BIGINT,
   };
 
   #scalar(prop: Partial<Property>): string {
     if (prop.description && prop.description.indexOf(c.TIME) > -1)
-      return c.INSTANT;
+      return t.INSTANT;
     else return this._typeMap[prop.type] ? this._typeMap[prop.type] : prop.type;
   }
 
   #common(prop: Partial<Property>) {
     return {
       _id: c.PREDICATE,
-      name: `${this.collection}/${prop.name}`,
+      name: prop.name,
       doc: prop.description,
       index: prop.isIndexed || false,
       unique: prop.isUnique || false,
@@ -43,7 +45,8 @@ export class FlureePropGenerator extends PropGenerator {
   protected generateEnum(prop: Partial<Property>): FlureePredicate {
     return {
       ...this.#common(prop),
-      type: c.STRING,
+      type: t.TAG,
+      restrictTag: true,
     };
   }
   protected generateEntity(prop: Partial<Property>): FlureePredicate {
@@ -56,7 +59,7 @@ export class FlureePropGenerator extends PropGenerator {
   protected generateExternalEntity(prop: Partial<Property>): FlureePredicate {
     return {
       ...this.#common(prop),
-      type: c.STRING,
+      type: t.STRING,
       doc: this.#externalDoc(prop),
     };
   }
@@ -68,8 +71,12 @@ export class FlureePropGenerator extends PropGenerator {
     };
   }
   protected generateEnumArray(prop: Partial<Property>): FlureePredicate {
-    return {} as FlureePredicate;
-    `${prop}`;
+    return {
+      ...this.#common(prop),
+      type: t.TAG,
+      restrictTag: true,
+      multi: true,
+    };
   }
   protected generateEntityArray(prop: Partial<Property>): FlureePredicate {
     return {
@@ -84,7 +91,7 @@ export class FlureePropGenerator extends PropGenerator {
   ): FlureePredicate {
     return {
       ...this.#common(prop),
-      type: c.STRING,
+      type: t.STRING,
       doc: this.#externalDoc(prop),
       multi: true,
     };

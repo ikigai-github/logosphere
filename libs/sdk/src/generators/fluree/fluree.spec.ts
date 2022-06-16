@@ -7,17 +7,20 @@ import { FlureeGeneratorSchema } from './schema';
 
 describe('fluree-schema generator', () => {
   let tree: Tree;
-  const options: FlureeGeneratorSchema = { module: 'test-sdk' };
+  const options: FlureeGeneratorSchema = {
+    module: 'test-sdk',
+    skipLedger: true,
+  };
 
-  beforeEach( async () => {
+  beforeEach(async () => {
     tree = createTreeWithEmptyWorkspace();
-    await moduleGenerator(tree, { 
+    await moduleGenerator(tree, {
       name: 'test-app',
-      compiler: 'tsc'
-    })
+      compiler: 'tsc',
+    });
   });
 
   it('should run successfully', async () => {
     await generator(tree, options);
-  })
+  });
 });

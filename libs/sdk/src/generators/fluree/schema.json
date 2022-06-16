@@ -24,6 +24,10 @@
     "source": {
       "type": "string",
       "description": "Generated schema for Fluree "
+    },
+    "skipLedger": {
+      "type": "boolean",
+      "description": "Skip ledger creation/update"
     }
   },
   "required": ["module"]

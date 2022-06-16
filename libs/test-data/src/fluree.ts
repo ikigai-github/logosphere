@@ -17,9 +17,9 @@ import {
   FlureeQuery,
   Predicates,
   FlureeCollection,
-  predicates,
+  predicateQuery,
   deprecatePredicate,
-  CREATED_AT,
+  flureePredicates as fp,
 } from '@logosphere/fluree';
 import { FileUtil, isArray } from '@logosphere/utils';
 
@@ -198,7 +198,7 @@ export default class FlureeSchema {
     const response = await this.dao.query(
       this.config.fluree.ledgerUrl,
       `${this.config.fluree.network}/${this.config.fluree.db}`,
-      predicates(collection)
+      predicateQuery(collection)
     );
     return response.reduce((acc, entry) => {
       acc.push(entry.substring(entry.indexOf('/') + 1, entry.length));
@@ -209,7 +209,7 @@ export default class FlureeSchema {
   async init(dump: boolean) {
     try {
       // create database if it doesn't exist
-      const dbs: string[] = await this.dao.listDBs(
+      const dbs: string[] = await this.dao.listLedgers(
         this.config.fluree.ledgerUrl
       );
       if (
@@ -218,7 +218,7 @@ export default class FlureeSchema {
             db === `${this.config.fluree.network}/${this.config.fluree.db}`
         )
       ) {
-        await this.dao.createDB(
+        await this.dao.createLedger(
           this.config.fluree.ledgerUrl,
           `${this.config.fluree.network}/${this.config.fluree.db}`
         );
@@ -462,8 +462,8 @@ export default class FlureeSchema {
     data[IDENTIFIER] = sha3_256(JSON.stringify(data));
     data[Predicates._ID] = `${entity}$${data[IDENTIFIER]}`;
 
-    if (schema.props.find((prop: Property) => prop.name === CREATED_AT)) {
-      data[CREATED_AT] = Date.now();
+    if (schema.props.find((prop: Property) => prop.name === fp.CREATED_AT)) {
+      data[fp.CREATED_AT] = Date.now();
     }
 
     if (isPending) {

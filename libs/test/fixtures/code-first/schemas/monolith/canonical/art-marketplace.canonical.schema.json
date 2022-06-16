@@ -129,6 +129,23 @@
           "examples": ["Babingo Dreams", "Babingo Nightmares"]
         },
         {
+          "name": "imageSize",
+          "type": "ImageSize",
+          "isEnabled": true,
+          "isRequired": true,
+          "isIndexed": true,
+          "isUnique": false,
+          "isPK": false,
+          "isReadOnly": false,
+          "isWriteOnly": false,
+          "examples": [
+            ["SMALL", 0],
+            ["MEDIUM", 1],
+            ["LARGE", 2]
+          ],
+          "defType": "Enum"
+        },
+        {
           "name": "description",
           "type": "string",
           "isEnabled": true,
@@ -327,6 +344,24 @@
           "isReadOnly": false,
           "isWriteOnly": false,
           "defType": "Entity"
+        }
+      ]
+    },
+    {
+      "name": "ImageSize",
+      "type": "Enum",
+      "props": [
+        {
+          "name": "SMALL",
+          "type": "string"
+        },
+        {
+          "name": "MEDIUM",
+          "type": "string"
+        },
+        {
+          "name": "LARGE",
+          "type": "string"
         }
       ]
     }

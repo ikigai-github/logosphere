@@ -6,7 +6,10 @@ import { ApiGeneratorSchema } from './schema';
 
 describe('api generator', () => {
   let appTree: Tree;
-  const options: ApiGeneratorSchema = { module: 'test' };
+  const options: ApiGeneratorSchema = {
+    module: 'test',
+    skipFlureeLedger: true,
+  };
 
   beforeEach(() => {
     appTree = createTreeWithEmptyWorkspace();
