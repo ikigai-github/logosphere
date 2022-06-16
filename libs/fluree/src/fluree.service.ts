@@ -27,7 +27,7 @@ export class FlureeService {
     } else if (duration.indexOf('h') > 0) {
       return +duration.replace('h', '') * 1000 * 60 * 60;
     } else {
-      return 0
+      return 0;
     }
   }
 
@@ -43,7 +43,7 @@ export class FlureeService {
    * @param endpoint : Fluree endpoint URL (http://localhost:8090)
    * @returns array of databases in the format [{network}/{database}]
    */
-  async listDBs(endpoint: string): Promise<string[]> {
+  async listLedgers(endpoint: string): Promise<string[]> {
     //const mod = this._config.modules.find((m: ModuleConfiguration) => m.name === module);
     try {
       const response = await axios.post(api(endpoint).listDbs);
@@ -62,7 +62,7 @@ export class FlureeService {
    * @param db : name of the database in format {network}/{database}
    * @returns : ID of the database
    */
-  async createDB(endpoint: string, db: string): Promise<string> {
+  async createLedger(endpoint: string, db: string): Promise<string> {
     if (db.split('/').length !== 2) {
       throw new FlureeError(m.INVALID_DB_FORMAT);
     }

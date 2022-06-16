@@ -27,7 +27,7 @@
     },
     "skipLedger": {
       "type": "boolean",
-      "description": "Skip ledger creation"
+      "description": "Skip ledger creation/update"
     }
   },
   "required": ["module"]

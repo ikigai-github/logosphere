@@ -16,7 +16,7 @@ describe('Fluree Schema Prop Generator', () => {
     const output = propGen.generate(prop);
     expect(output).toStrictEqual({
       _id: fc.PREDICATE,
-      name: 'user/name',
+      name: 'name',
       type: ft.BIGINT,
       doc: 'desc',
       unique: false,
@@ -35,7 +35,7 @@ describe('Fluree Schema Prop Generator', () => {
     const output = propGen.generate(prop);
     expect(output).toStrictEqual({
       _id: fc.PREDICATE,
-      name: 'user/name',
+      name: 'name',
       type: ft.BIGINT,
       doc: 'desc',
       multi: true,
@@ -55,7 +55,7 @@ describe('Fluree Schema Prop Generator', () => {
     const output = propGen.generate(prop);
     expect(output).toStrictEqual({
       _id: fc.PREDICATE,
-      name: 'user/name',
+      name: 'name',
       type: ft.INSTANT,
       doc: 'unix time',
       unique: false,
@@ -74,7 +74,7 @@ describe('Fluree Schema Prop Generator', () => {
     const output = propGen.generate(prop);
     expect(output).toStrictEqual({
       _id: fc.PREDICATE,
-      name: 'user/artwork',
+      name: 'artwork',
       type: fc.REF,
       doc: 'desc',
       restrictCollection: 'artwork',
@@ -94,7 +94,7 @@ describe('Fluree Schema Prop Generator', () => {
     const output = propGen.generate(prop);
     expect(output).toStrictEqual({
       _id: fc.PREDICATE,
-      name: 'user/artwork',
+      name: 'artwork',
       type: fc.REF,
       doc: 'desc',
       restrictCollection: 'artwork',
@@ -115,7 +115,7 @@ describe('Fluree Schema Prop Generator', () => {
     const output = propGen.generate(prop);
     expect(output).toStrictEqual({
       _id: fc.PREDICATE,
-      name: 'user/artwork',
+      name: 'artwork',
       type: ft.STRING,
       doc: 'desc, identifier of artwork',
       unique: false,
@@ -134,7 +134,7 @@ describe('Fluree Schema Prop Generator', () => {
     const output = propGen.generate(prop);
     expect(output).toStrictEqual({
       _id: fc.PREDICATE,
-      name: 'user/artwork',
+      name: 'artwork',
       type: ft.STRING,
       doc: 'desc, identifier of artwork',
       multi: true,

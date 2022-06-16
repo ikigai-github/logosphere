@@ -19,7 +19,7 @@ export class FlureePropGenerator extends PropGenerator {
   #common(prop: Partial<Property>) {
     return {
       _id: c.PREDICATE,
-      name: `${this.collection}/${prop.name}`,
+      name: prop.name,
       doc: prop.description,
       index: prop.isIndexed || false,
       unique: prop.isUnique || false,

@@ -27,7 +27,7 @@ export function Prop(options?: PropOptions): PropertyDecorator {
       target: constructor,
       type,
       name,
-      index: isDefined(options.index) ? options.index : false,
+      index: isDefined(options.index) ? options.index : true,
       enabled: isDefined(options.enabled) ? options.enabled : true,
       primary: isDefined(options.primary) ? options.primary : false,
       unique: isDefined(options.unique) ? options.unique : false,

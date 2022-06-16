@@ -16,22 +16,18 @@ import { FlureeGeneratorSchema } from './schema';
 import { DEFAULT_CODEGEN_DIR } from '../../common';
 import {
   FlureeClient,
-  FlureeError,
-  compile,
-  select,
+  flureeDefaults as fd,
   messages,
-  flattenNames,
+  FlureeError,
 } from '@logosphere/fluree';
 import {
   FlureeSchema,
-  FlureeCollection,
-  FlureePredicate,
-  FlureeSchemaParser,
-  CanonicalSchemaGenerator,
-  Converter,
   flureeConstants as fc,
+  flureeSchemaLoader,
+  flureeSchemaDiff,
+  flureeSchemaTransact,
 } from '@logosphere/converters';
-import { waitForDebugger } from 'inspector';
+import { createLedger } from './utils';
 
 interface NormalizedSchema extends FlureeGeneratorSchema {
   projectName: string;
@@ -79,81 +75,35 @@ export async function flureeGenerator(
   tree: Tree,
   options: FlureeGeneratorSchema
 ) {
-  const sourceSchema = canonicalSchemaLoader(options.module);
+  const canonicalSchema = canonicalSchemaLoader(options.module);
   const converter = ConverterFactory.getConverter(
     SchemaType.Canonical,
     SchemaType.Fluree
   );
-  const source = converter.convert(sourceSchema);
+  const newSchema: FlureeSchema = converter.convert(canonicalSchema);
   options = {
     ...options,
-    source,
+    source: JSON.stringify(flureeSchemaTransact(newSchema), null, 2),
   };
   const normalizedOptions = normalizeOptions(tree, options);
   addFiles(tree, normalizedOptions);
   await formatFiles(tree);
   if (!options.skipLedger) {
-    const ledger = process.env.FLUREE_LEDGER || `local/${options.module}`;
+    await createLedger(options.module);
+    const currentSchema = await flureeSchemaLoader(options.module);
+    const diffSchema = flureeSchemaDiff(currentSchema, newSchema);
+    console.log('Updating ledger schema');
     const fluree = new FlureeClient({
-      url: process.env.FLUREE_URL || 'http://localhost:8090',
-      ledger,
+      url: process.env.FLUREE_URL || fd.FLUREE_URL,
+      ledger:
+        process.env.FLUREE_LEDGER || `${fd.FLUREE_NETWORK}/${options.module}`,
     });
-    const ledgers = await fluree.listLedgers();
-    if (!ledgers.find((l: string) => l === ledger)) {
-      console.log(`Creating Fluree ${ledger} ledger for the module`);
-      const response = await fluree.createLedger(ledger);
-      for (let i = 0; i < 5; i++) {
-        process.stdout.write('.');
-        await new Promise((f) => setTimeout(f, 1000));
-      }
-      process.stdout.write('\n');
-
-      if (response.status !== 200) {
-        throw new FlureeError(messages.CREATE_LEDGER_FAILED);
-      } else {
-        console.log(`Ledger ${ledger} created`);
-      }
+    const response = await fluree.transactRaw(flureeSchemaTransact(diffSchema));
+    if (response.status === 200) {
+      console.log('Fluree ledger schema has been updated');
+    } else {
+      throw new FlureeError(messages.TRANSACT_FAILED);
     }
-
-    const collectionSpec = compile(select().from('_collection').build());
-    const collections = await fluree.query(collectionSpec);
-
-    const predicateSpec = compile(select().from('_predicate').build());
-    const predicates = await fluree.query(predicateSpec);
-    const colNameKey = `${fc.COLLECTION}/${fc.NAME}`;
-    const predNameKey = `${fc.PREDICATE}/${fc.NAME}`;
-
-    const existingFlureeSchema: FlureeSchema = {
-      definitions: [
-        ...collections
-          //filter out system collections, starting with _
-          .filter((collection) => collection[colNameKey][0] !== '_')
-          .map((collection) => {
-            return {
-              ...flattenNames(collection),
-              predicates: predicates
-                .filter(
-                  (predicate) =>
-                    predicate[predNameKey].split('/')[0] ===
-                    collection[colNameKey]
-                )
-                .map((predicate) => {
-                  const flat = flattenNames(predicate);
-                  flat[fc.NAME] = flat[fc.NAME].replace(
-                    `${collection[colNameKey].split('/')[0]}/`,
-                    ''
-                  );
-                  return flat;
-                }),
-            };
-          }),
-      ],
-    };
-
-    const flureeParser = new FlureeSchemaParser();
-    const canonicalSchemaFromFluree = flureeParser.parse(existingFlureeSchema);
-
-    console.log(JSON.stringify(canonicalSchemaFromFluree, null, 2));
   }
 }
 

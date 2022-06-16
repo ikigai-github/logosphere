@@ -19,7 +19,7 @@ export class FlureeSchemaParser extends Parser {
 
   protected getDefs(schema: FlureeSchema): Definition[] {
     const defs: Definition[] = [];
-    schema.definitions.map((collection: FlureeCollection) => {
+    schema.collections.map((collection: FlureeCollection) => {
       defs.push({
         name: collection.name,
         type: DefinitionType.Entity,

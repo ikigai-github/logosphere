@@ -4,17 +4,21 @@ import { JsonSchemaParser } from '../json-schema';
 
 describe('Fluree Generator', () => {
   it('should generate Fluree collections schema', () => {
-    const parser = new JsonSchemaParser();
-    const jsonSchema = JSON.parse(
+    const canonicalSchema = JSON.parse(
       fs.readFileSync(
-        `${__dirname}/../../../test/fixtures/schema-first/schemas/monolith/json-schema.json`,
+        `${__dirname}/../../../test/fixtures/code-first/schemas/monolith/canonical/art-marketplace.canonical.schema.json`,
         'utf-8'
       )
     );
-    const canonical = parser.parse(jsonSchema);
     const generator = new FlureeGenerator();
-    const fql = generator.generate(canonical);
-    expect(fql).toBeDefined();
-    expect(fql.length > 0).toBe(true);
+    const flureeSchema = generator.generate(canonicalSchema);
+    const expectedSchema = JSON.parse(
+      fs.readFileSync(
+        `${__dirname}/../../../test/fixtures/code-first/schemas/monolith/fluree/art-marketplace.fluree.schema.json`,
+        'utf-8'
+      )
+    );
+    expect(flureeSchema).toBeDefined();
+    expect(flureeSchema).toStrictEqual(expectedSchema);
   });
 });
