@@ -10,7 +10,8 @@
         "outputPath": "dist/<%= root %>",
         "main": "<%= root %>/src/main.ts",
         "tsConfig": "<%= root %>/tsconfig.app.json",
-        "assets": ["<%= root %>/src/assets"]
+        "assets": ["<%= root %>/src/assets"],
+        "generatePackageJson": true
       },
       "configurations": {
         "production": {
@@ -30,6 +31,13 @@
       "executor": "@nrwl/node:node",
       "options": {
         "buildTarget": "<%= name %>:build"
+      }
+    },
+     "docker": {
+      "executor":"@nx-tools/nx-docker:build",
+      "options": {
+        "context": "dist",
+        "tags": ["logosphere/<%= name %>:latest"]
       }
     },
     "lint": {
