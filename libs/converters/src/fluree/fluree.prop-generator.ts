@@ -1,24 +1,27 @@
 import { Property } from '../canonical';
 import { PropGenerator } from '../abstract';
-import { FlureePredicate } from './fluree.schema';
-import { constants as c, types as t } from './fluree.constants';
-import { strings as s } from '@angular-devkit/core';
+import {
+  FlureePredicate,
+  flureeSystem as f,
+  flureeTypes as ft,
+  flureePredicates as fp,
+} from '@logosphere/fluree';
 
 export class FlureePropGenerator extends PropGenerator {
   private _typeMap = {
-    number: t.BIGINT,
-    integer: t.BIGINT,
+    number: ft.BIGINT,
+    integer: ft.BIGINT,
   };
 
   #scalar(prop: Partial<Property>): string {
-    if (prop.description && prop.description.indexOf(c.TIME) > -1)
-      return t.INSTANT;
+    if (prop.description && prop.description.indexOf(fp.TIME) > -1)
+      return ft.INSTANT;
     else return this._typeMap[prop.type] ? this._typeMap[prop.type] : prop.type;
   }
 
   #common(prop: Partial<Property>) {
     return {
-      _id: c.PREDICATE,
+      _id: f.PREDICATE,
       name: prop.name,
       doc: prop.description,
       index: prop.isIndexed || false,
@@ -45,21 +48,21 @@ export class FlureePropGenerator extends PropGenerator {
   protected generateEnum(prop: Partial<Property>): FlureePredicate {
     return {
       ...this.#common(prop),
-      type: t.TAG,
+      type: ft.TAG,
       restrictTag: true,
     };
   }
   protected generateEntity(prop: Partial<Property>): FlureePredicate {
     return {
       ...this.#common(prop),
-      type: c.REF,
+      type: ft.REF,
       restrictCollection: prop.type,
     };
   }
   protected generateExternalEntity(prop: Partial<Property>): FlureePredicate {
     return {
       ...this.#common(prop),
-      type: t.STRING,
+      type: ft.STRING,
       doc: this.#externalDoc(prop),
     };
   }
@@ -73,7 +76,7 @@ export class FlureePropGenerator extends PropGenerator {
   protected generateEnumArray(prop: Partial<Property>): FlureePredicate {
     return {
       ...this.#common(prop),
-      type: t.TAG,
+      type: ft.TAG,
       restrictTag: true,
       multi: true,
     };
@@ -81,7 +84,7 @@ export class FlureePropGenerator extends PropGenerator {
   protected generateEntityArray(prop: Partial<Property>): FlureePredicate {
     return {
       ...this.#common(prop),
-      type: c.REF,
+      type: ft.REF,
       restrictCollection: prop.type,
       multi: true,
     };
@@ -91,7 +94,7 @@ export class FlureePropGenerator extends PropGenerator {
   ): FlureePredicate {
     return {
       ...this.#common(prop),
-      type: t.STRING,
+      type: ft.STRING,
       doc: this.#externalDoc(prop),
       multi: true,
     };

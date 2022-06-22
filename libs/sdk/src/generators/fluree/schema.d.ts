@@ -3,5 +3,5 @@ export interface FlureeGeneratorSchema {
   tags?: string;
   directory?: string;
   source?: string;
-  skipLedger?: boolean;
+  skipLedgerUpdate?: boolean;
 }

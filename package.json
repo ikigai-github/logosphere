@@ -12,6 +12,7 @@
   "private": true,
   "devDependencies": {
     "@angular-devkit/core": "13.3.4",
+    "@angular-devkit/schematics": "13.3.4",
     "@babel/core": "7.0.1",
     "@babel/preset-env": "7.0.0",
     "@commitlint/cli": "16.2.4",
@@ -73,6 +74,7 @@
     "class-validator": "0.13.2",
     "core-js": "3.22.5",
     "fastify": "3.17.0",
+    "fs-extra": "10.1.0",
     "graphql": "16.5.0",
     "js-sha3": "0.8.0",
     "lodash": "4.17.21",

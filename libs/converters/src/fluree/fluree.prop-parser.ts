@@ -5,8 +5,11 @@ import {
   canonicalTypes as ct,
 } from '../canonical';
 import { PropParser } from '../abstract';
-import { FlureePredicate } from './fluree.schema';
-import { constants as fc, types as ft } from './fluree.constants';
+import {
+  FlureePredicate,
+  flureePredicates as fp,
+  flureeTypes as ft,
+} from '@logosphere/fluree';
 import { strings as s } from '@angular-devkit/core';
 
 /***
@@ -49,7 +52,7 @@ export class FlureeSchemaPropParser extends PropParser {
   }
 
   protected type(predicate: FlureePredicate): string {
-    return predicate.type === fc.REF
+    return predicate.type === ft.REF
       ? s.classify(predicate.restrictCollection)
       : this.#typeMap[predicate.type];
   }
@@ -63,7 +66,7 @@ export class FlureeSchemaPropParser extends PropParser {
   }
 
   protected isPK(predicate: FlureePredicate): boolean {
-    return predicate.name === fc.IDENTIFIER;
+    return predicate.name === fp.IDENTIFIER;
   }
 
   protected isReadonly(predicate: FlureePredicate): boolean {

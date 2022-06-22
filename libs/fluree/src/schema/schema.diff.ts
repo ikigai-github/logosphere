@@ -4,9 +4,9 @@ import {
   FlureeSchema,
   FlureePredicate,
   FlureeTag,
-} from './fluree.schema';
+} from './schema.interfaces';
 
-export function flureeSchemaDiff(
+export function schemaDiff(
   currentSchema: FlureeSchema,
   updatedSchema: FlureeSchema
 ): FlureeSchema {

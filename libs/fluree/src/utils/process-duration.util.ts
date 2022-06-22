@@ -4,7 +4,7 @@
  * @param duration : duration in format of 15ms, 15s, 15m, 15h etc
  * @returns duration as number of milliseconds
  */
-export function processFlureeDuration(duration: string): number {
+export function processDuration(duration: string): number {
   if (duration === null || duration === undefined) {
     return -1;
   } else if (duration.indexOf('ms') > 0) {

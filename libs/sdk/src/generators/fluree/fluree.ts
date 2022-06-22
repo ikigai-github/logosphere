@@ -15,19 +15,10 @@ import {
 import { FlureeGeneratorSchema } from './schema';
 import { DEFAULT_CODEGEN_DIR } from '../../common';
 import {
-  FlureeClient,
-  flureeDefaults as fd,
-  messages,
-  FlureeError,
-} from '@logosphere/fluree';
-import {
   FlureeSchema,
-  flureeConstants as fc,
-  flureeSchemaLoader,
-  flureeSchemaDiff,
-  flureeSchemaTransact,
-} from '@logosphere/converters';
-import { createLedger } from './utils';
+  applySchemaDiff,
+  schemaTransact,
+} from '@logosphere/fluree';
 
 interface NormalizedSchema extends FlureeGeneratorSchema {
   projectName: string;
@@ -83,27 +74,14 @@ export async function flureeGenerator(
   const newSchema: FlureeSchema = converter.convert(canonicalSchema);
   options = {
     ...options,
-    source: JSON.stringify(flureeSchemaTransact(newSchema), null, 2),
+    source: JSON.stringify(schemaTransact(newSchema), null, 2),
   };
   const normalizedOptions = normalizeOptions(tree, options);
   addFiles(tree, normalizedOptions);
   await formatFiles(tree);
-  if (!options.skipLedger) {
-    await createLedger(options.module);
-    const currentSchema = await flureeSchemaLoader(options.module);
-    const diffSchema = flureeSchemaDiff(currentSchema, newSchema);
-    console.log('Updating ledger schema');
-    const fluree = new FlureeClient({
-      url: process.env.FLUREE_URL || fd.FLUREE_URL,
-      ledger:
-        process.env.FLUREE_LEDGER || `${fd.FLUREE_NETWORK}/${options.module}`,
-    });
-    const response = await fluree.transactRaw(flureeSchemaTransact(diffSchema));
-    if (response.status === 200) {
-      console.log('Fluree ledger schema has been updated');
-    } else {
-      throw new FlureeError(messages.TRANSACT_FAILED);
-    }
+  if (!options.skipLedgerUpdate) {
+    const ledger = process.env.FLUREE_LEDGER || `local/${options.module}`;
+    await applySchemaDiff(ledger, newSchema);
   }
 }
 

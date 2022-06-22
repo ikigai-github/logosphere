@@ -8,13 +8,5 @@
   "schematics": "./generators.json",
   "ng-update": {
     "requirements": {}
-  },
-  "dependencies": {
-    "@nrwl/devkit": "*",
-    "@nrwl/linter": "*",
-    "@nrwl/node": "*",
-    "@nrwl/js": "*",
-    "@nrwl/jest": "*",
-    "@nestjs/schematics": "^8.0.0"
   }
 }

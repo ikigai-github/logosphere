@@ -1,5 +1,5 @@
-import { FlureeSchema } from './fluree.schema';
-import { flureeSchemaDiff } from './fluree.schema.diff';
+import { FlureeSchema } from './schema.interfaces';
+import { schemaDiff } from './schema.diff';
 
 describe('Fluree schema diff', () => {
   it('should take diff of new schema from existing schema', () => {
@@ -86,7 +86,7 @@ describe('Fluree schema diff', () => {
         },
       ],
     };
-    const diffSchema = flureeSchemaDiff(currentSchema, updatedSchema);
+    const diffSchema = schemaDiff(currentSchema, updatedSchema);
     expect(diffSchema).toStrictEqual({
       collections: [
         {
