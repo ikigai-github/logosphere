@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.3.0](https://github.com/ikigai-github/logosphere/compare/fluree-0.2.0...fluree-0.3.0) (2022-06-23)
+
+### Features
+
+- **log-196:** add hierarchical Fluree schema file to generator ([e4e2719](https://github.com/ikigai-github/logosphere/commit/e4e2719d0dfeb6019bfb7497463976cac02efe63))
+
 ## [0.2.0](https://github.com/ikigai-github/logosphere/compare/fluree-0.1.0...fluree-0.2.0) (2022-06-16)
 
 ### Features
