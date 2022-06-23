@@ -12,6 +12,8 @@ async function bootstrap() {
     new FastifyAdapter()
   );
   app.useGlobalPipes(new ValidationPipe());
-  await app.listen(3000);
+  const ledger = process.env.FLUREE_LEDGER || 'local/<%= name %>';
+  await applySchemaDiffFromFile(ledger, '<%= name %>-fluree-schema.json');
+  await app.listen(3000, '0.0.0.0');
 }
 bootstrap();

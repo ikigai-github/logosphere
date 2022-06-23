@@ -4,28 +4,26 @@ import {
   select,
   flattenNames,
 } from '@logosphere/fluree';
-import { constants as fc } from './fluree.constants';
-import { FlureeSchema } from './fluree.schema';
+import { system as sc } from '../fluree.constants';
+import { FlureeSchema } from './schema.interfaces';
 
-export async function flureeSchemaLoader(
-  module: string
-): Promise<FlureeSchema> {
+export async function schemaLoader(module: string): Promise<FlureeSchema> {
   const fluree = new FlureeClient({
     url: process.env.FLUREE_URL || 'http://localhost:8090',
     ledger: process.env.FLUREE_LEDGER || `local/${module}`,
   });
 
-  const collectionSpec = compile(select().from(fc.COLLECTION).build());
+  const collectionSpec = compile(select().from(sc.COLLECTION).build());
   const collections = await fluree.query(collectionSpec);
-  const colNameKey = `${fc.COLLECTION}/${fc.NAME}`;
+  const colNameKey = `${sc.COLLECTION}/${sc.NAME}`;
 
-  const predicateSpec = compile(select().from(fc.PREDICATE).build());
+  const predicateSpec = compile(select().from(sc.PREDICATE).build());
   const predicates = await fluree.query(predicateSpec);
-  const predNameKey = `${fc.PREDICATE}/${fc.NAME}`;
+  const predNameKey = `${sc.PREDICATE}/${sc.NAME}`;
 
-  const tagSpec = compile(select().from(fc.TAG).build());
+  const tagSpec = compile(select().from(sc.TAG).build());
   const tags = await fluree.query(tagSpec);
-  const tagNameKey = `${fc.TAG}/${fc.ID}`;
+  const tagNameKey = `${sc.TAG}/${sc.ID}`;
 
   const schema: FlureeSchema = {
     collections: [

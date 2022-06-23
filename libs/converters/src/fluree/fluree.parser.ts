@@ -6,7 +6,7 @@ import {
   FlureeSchema,
   FlureeCollection,
   FlureePredicate,
-} from './fluree.schema';
+} from '@logosphere/fluree';
 
 export class FlureeSchemaParser extends Parser {
   #mapDefType(predicate: FlureePredicate): DefinitionType {

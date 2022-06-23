@@ -1,14 +1,18 @@
-import { FlureePredicate } from './fluree.schema';
-import { constants as c, types as t } from './fluree.constants';
+import {
+  FlureePredicate,
+  flureeSystem as f,
+  flureeTypes as ft,
+  flureePredicates as fp,
+} from '@logosphere/fluree';
 import { canonicalTypes as ct, DefinitionType } from '../canonical';
 import { FlureeSchemaPropParser } from './fluree.prop-parser';
 
 describe('Fluree prop parser', () => {
   it('should parse scalar prop to canonical schema', () => {
     const predicate: FlureePredicate = {
-      _id: c.PREDICATE,
+      _id: f.PREDICATE,
       name: 'test',
-      type: t.STRING,
+      type: ft.STRING,
     };
 
     const parser = new FlureeSchemaPropParser(predicate.name);
@@ -20,9 +24,9 @@ describe('Fluree prop parser', () => {
 
   it('should parse scalar array prop to canonical schema', () => {
     const predicate: FlureePredicate = {
-      _id: c.PREDICATE,
+      _id: f.PREDICATE,
       name: 'test',
-      type: t.STRING,
+      type: ft.STRING,
       multi: true,
     };
 
@@ -35,9 +39,9 @@ describe('Fluree prop parser', () => {
 
   it('should parse entity prop to canonical schema', () => {
     const predicate: FlureePredicate = {
-      _id: c.PREDICATE,
+      _id: f.PREDICATE,
       name: 'test',
-      type: c.REF,
+      type: ft.REF,
       restrictCollection: 'other',
     };
 
@@ -50,9 +54,9 @@ describe('Fluree prop parser', () => {
 
   it('should parse entity array prop to canonical schema', () => {
     const predicate: FlureePredicate = {
-      _id: c.PREDICATE,
+      _id: f.PREDICATE,
       name: 'test',
-      type: c.REF,
+      type: ft.REF,
       restrictCollection: 'other',
       multi: true,
     };
@@ -66,9 +70,9 @@ describe('Fluree prop parser', () => {
 
   it('should parse identifier prop to canonical schema', () => {
     const predicate: FlureePredicate = {
-      _id: c.PREDICATE,
-      name: c.IDENTIFIER,
-      type: t.STRING,
+      _id: f.PREDICATE,
+      name: fp.IDENTIFIER,
+      type: ft.STRING,
     };
 
     const parser = new FlureeSchemaPropParser(predicate.name);

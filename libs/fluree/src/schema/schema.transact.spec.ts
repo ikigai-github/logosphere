@@ -1,5 +1,5 @@
-import { FlureeSchema } from './fluree.schema';
-import { flureeSchemaTransact } from './fluree.schema.transact';
+import { FlureeSchema } from './schema.interfaces';
+import { schemaTransact } from './schema.transact';
 
 describe('Fluree schema diff', () => {
   it('should create FQL transact from Fluree schema', () => {
@@ -35,7 +35,7 @@ describe('Fluree schema diff', () => {
         },
       ],
     };
-    const transact = flureeSchemaTransact(schema);
+    const transact = schemaTransact(schema);
     expect(transact).toStrictEqual([
       {
         _id: '_collection',

@@ -16,7 +16,7 @@ import {
   FlureeTransactionResponse,
 } from './fluree-response.interface';
 
-import { processFlureeDuration } from './fluree.util';
+import { processDuration } from './utils';
 
 @Injectable()
 export class FlureeClient {
@@ -205,7 +205,7 @@ export class FlureeClient {
         blockNumber: response.block,
         blockHash: response.hash,
         timestamp: response.instant,
-        duration: processFlureeDuration(response.duration),
+        duration: processDuration(response.duration),
         fuel: response.fuel,
         auth: response.auth,
         status: response.status,
@@ -250,7 +250,7 @@ export class FlureeClient {
           blockNumber: response.data.block,
           blockHash: response.data.hash,
           timestamp: response.data.instant,
-          duration: processFlureeDuration(response.data.duration),
+          duration: processDuration(response.data.duration),
           fuel: response.data.fuel,
           auth: response.data.auth,
           status: response.status,

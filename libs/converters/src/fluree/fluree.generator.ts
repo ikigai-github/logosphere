@@ -8,16 +8,16 @@ import {
 } from '../canonical';
 import { Generator } from '../abstract';
 import { FlureePropGenerator } from './fluree.prop-generator';
-import { constants as c, types as t } from './fluree.constants';
+import {} from '@logosphere/fluree';
 import {
-  FlureeItem,
   FlureeCollection,
   FlureePredicate,
   FlureeTag,
   FlureeSchema,
-} from './fluree.schema';
-import { strings as s } from '@angular-devkit/core';
-import { cp } from 'fs';
+  flureeSystem as f,
+  flureeTypes as ft,
+  flureePredicates as fp,
+} from '@logosphere/fluree';
 
 export class FlureeGenerator extends Generator {
   private _schema: CanonicalSchema;
@@ -28,7 +28,7 @@ export class FlureeGenerator extends Generator {
 
   protected generateEntity(def: Definition): FlureeCollection {
     const collection: FlureeCollection = {
-      _id: c.COLLECTION,
+      _id: f.COLLECTION,
       name: def.name,
       doc: def.description,
     };
@@ -38,26 +38,26 @@ export class FlureeGenerator extends Generator {
 
     // common entity predicates
     predicates.push({
-      _id: c.PREDICATE,
-      name: c.IDENTIFIER,
-      type: t.STRING,
+      _id: f.PREDICATE,
+      name: fp.IDENTIFIER,
+      type: ft.STRING,
       doc: `${def.name} unique identifier`,
       index: true,
       unique: true,
     } as FlureePredicate);
 
     predicates.push({
-      _id: c.PREDICATE,
-      name: c.CREATED_AT,
-      type: t.INSTANT,
+      _id: f.PREDICATE,
+      name: fp.CREATED_AT,
+      type: ft.INSTANT,
       doc: `${def.name} creation time`,
       index: true,
     } as FlureePredicate);
 
     predicates.push({
-      _id: c.PREDICATE,
-      name: c.UPDATED_AT,
-      type: t.INSTANT,
+      _id: f.PREDICATE,
+      name: fp.UPDATED_AT,
+      type: ft.INSTANT,
       doc: `${def.name} last update time`,
       index: true,
     } as FlureePredicate);
@@ -75,7 +75,7 @@ export class FlureeGenerator extends Generator {
           if (enumDef) {
             enumDef.props.forEach((enumProp: Property) => {
               tags.push({
-                _id: c.TAG,
+                _id: f.TAG,
                 id: enumProp.name,
                 doc: enumProp.description,
               });

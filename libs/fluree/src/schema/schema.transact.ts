@@ -4,9 +4,9 @@ import {
   FlureeCollection,
   FlureePredicate,
   FlureeTag,
-} from './fluree.schema';
+} from './schema.interfaces';
 
-export function flureeSchemaTransact(
+export function schemaTransact(
   schema: FlureeSchema
 ): (FlureeCollection | FlureePredicate | FlureeTag)[] {
   const transact: (FlureeCollection | FlureePredicate | FlureeTag)[] = [];
