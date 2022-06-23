@@ -21,9 +21,13 @@
       "description": "A directory where the project is placed",
       "alias": "d"
     },
-    "source": {
+    "schemaSource": {
       "type": "string",
-      "description": "Generated schema for Fluree "
+      "description": "Generated schema for Fluree"
+    },
+    "schemaTransactSource": {
+      "type": "string",
+      "description": "Generated schema transact for Fluree"
     },
     "skipLedgerUpdate": {
       "type": "boolean",

@@ -36,6 +36,8 @@ export async function applySchemaDiffFromFile(
   ledger: string,
   schemaPath: string
 ) {
-  const schema = JSON.parse(fs.readFileSync(schemaPath, 'utf-8'));
-  await applySchemaDiff(ledger, schema);
+  if (fs.existsSync(schemaPath)) {
+    const schema = JSON.parse(fs.readFileSync(schemaPath, 'utf-8'));
+    await applySchemaDiff(ledger, schema);
+  }
 }

@@ -74,7 +74,8 @@ export async function flureeGenerator(
   const newSchema: FlureeSchema = converter.convert(canonicalSchema);
   options = {
     ...options,
-    source: JSON.stringify(schemaTransact(newSchema), null, 2),
+    schemaSource: JSON.stringify(newSchema, null, 2),
+    schemaTransactSource: JSON.stringify(schemaTransact(newSchema), null, 2),
   };
   const normalizedOptions = normalizeOptions(tree, options);
   addFiles(tree, normalizedOptions);
