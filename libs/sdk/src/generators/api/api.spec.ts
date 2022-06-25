@@ -8,7 +8,7 @@ describe('api generator', () => {
   let appTree: Tree;
   const options: ApiGeneratorSchema = {
     module: 'test',
-    skipFlureeLedger: true,
+    flureeLedger: false,
   };
 
   beforeEach(() => {
@@ -17,7 +17,7 @@ describe('api generator', () => {
 
   it('should run successfully', async () => {
     await generator(appTree, options);
-    const config = readProjectConfiguration(appTree, 'codegen-test');
+    const config = readProjectConfiguration(appTree, 'test');
     expect(config).toBeDefined();
   });
 });

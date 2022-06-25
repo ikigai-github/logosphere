@@ -80,7 +80,7 @@ export async function flureeGenerator(
   const normalizedOptions = normalizeOptions(tree, options);
   addFiles(tree, normalizedOptions);
   await formatFiles(tree);
-  if (!options.skipLedgerUpdate) {
+  if (options.flureeLedger) {
     const ledger = process.env.FLUREE_LEDGER || `local/${options.module}`;
     await applySchemaDiff(ledger, newSchema);
   }

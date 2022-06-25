@@ -29,9 +29,9 @@
       "type": "string",
       "description": "Generated schema transact for Fluree"
     },
-    "skipLedgerUpdate": {
+    "flureeLedger": {
       "type": "boolean",
-      "description": "Skip ledger creation/update"
+      "description": "Create / update Fluree ledger"
     }
   },
   "required": ["module"]

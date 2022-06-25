@@ -24,9 +24,9 @@
       "description": "A directory where the project is placed",
       "alias": "d"
     },
-    "skipFlureeLedger": {
+    "flureeLedger": {
       "type": "boolean",
-      "description": "Skip Fluree ledger creation/update"
+      "description": "Create / update fluree ledger"
     }
   },
   "required": ["module"]
