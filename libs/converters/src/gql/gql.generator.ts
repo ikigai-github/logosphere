@@ -32,16 +32,16 @@ export class GqlGenerator extends Generator {
     // scalar fields or enums)
     schemaString += `input ${pascalCase(def.name)}Input {\n`;
     def.props
-      .filter(
-        (prop: Property) =>
-          prop.defType !== DefinitionType.Entity &&
-          prop.defType !== DefinitionType.EntityArray &&
-          prop.defType !== DefinitionType.ExternalEntity &&
-          prop.defType !== DefinitionType.ExternalEntityArray
-      )
+      // .filter(
+      //   (prop: Property) =>
+      //     prop.defType !== DefinitionType.Entity &&
+      //     prop.defType !== DefinitionType.EntityArray &&
+      //     prop.defType !== DefinitionType.ExternalEntity &&
+      //     prop.defType !== DefinitionType.ExternalEntityArray
+      // )
       .forEach((prop: Property) => {
         if (prop.isEnabled) {
-          schemaString += propGenerator.generate(prop);
+          schemaString += propGenerator.generate(prop, true);
         }
       });
 
