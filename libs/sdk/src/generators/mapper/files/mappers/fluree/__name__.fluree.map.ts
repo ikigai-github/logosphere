@@ -42,7 +42,7 @@ export class  <%= classify(name) %><%=classify(type)%>Map extends Mapper<<%= cla
 
   public fromEntity(<%= camelize(name) %>: <%= classify(name) %>): any {
     return {
-      _id: Number(<%= camelize(name) %>.subjectId),
+      _id: <%= camelize(name) %>.subjectId ? Number(<%= camelize(name) %>.subjectId) : `<%= camelize(name) %>$${<%= camelize(name) %>.id}`,
       '<%= camelize(name) %>/identifier': <%= camelize(name) %>.id,
       '<%= camelize(name) %>/createdAt': Number(<%= camelize(name) %>.createdAt),
       '<%= camelize(name) %>/updatedAt': Number(<%= camelize(name) %>.updatedAt),
