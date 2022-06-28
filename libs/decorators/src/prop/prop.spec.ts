@@ -111,7 +111,7 @@ describe('The Prop decorator', () => {
 
     expect(metadata.target).toBe(DefaultTypeTest);
     expect((metadata.name as StringFunc)()).toBe('aString');
-    expect(metadata.index).toBe(true);
+    expect(metadata.index).toBe(false);
     expect(metadata.enabled).toBe(true);
     expect(metadata.primary).toBe(false);
     expect(metadata.unique).toBe(false);

@@ -22,7 +22,7 @@ export abstract class PropParser {
     this._name = name;
   }
 
-  parse(propSchema: any): Partial<Property> {
+  parse(propSchema: any): Property {
     return {
       name: this._name,
       type: this.type(propSchema),

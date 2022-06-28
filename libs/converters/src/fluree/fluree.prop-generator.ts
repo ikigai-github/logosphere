@@ -13,13 +13,13 @@ export class FlureePropGenerator extends PropGenerator {
     integer: ft.BIGINT,
   };
 
-  #scalar(prop: Partial<Property>): string {
+  #scalar(prop: Property): string {
     if (prop.description && prop.description.indexOf(fp.TIME) > -1)
       return ft.INSTANT;
     else return this._typeMap[prop.type] ? this._typeMap[prop.type] : prop.type;
   }
 
-  #common(prop: Partial<Property>) {
+  #common(prop: Property) {
     return {
       _id: f.PREDICATE,
       name: prop.name,
@@ -29,7 +29,7 @@ export class FlureePropGenerator extends PropGenerator {
     };
   }
 
-  #externalDoc(prop: Partial<Property>) {
+  #externalDoc(prop: Property) {
     return `${prop.description ? prop.description + ', ' : ''}identifier of ${
       prop.type
     }`;
@@ -39,41 +39,41 @@ export class FlureePropGenerator extends PropGenerator {
     super();
   }
 
-  protected generateScalar(prop: Partial<Property>): FlureePredicate {
+  protected generateScalar(prop: Property): FlureePredicate {
     return {
       ...this.#common(prop),
       type: this.#scalar(prop),
     };
   }
-  protected generateEnum(prop: Partial<Property>): FlureePredicate {
+  protected generateEnum(prop: Property): FlureePredicate {
     return {
       ...this.#common(prop),
       type: ft.TAG,
       restrictTag: true,
     };
   }
-  protected generateEntity(prop: Partial<Property>): FlureePredicate {
+  protected generateEntity(prop: Property): FlureePredicate {
     return {
       ...this.#common(prop),
       type: ft.REF,
       restrictCollection: prop.type,
     };
   }
-  protected generateExternalEntity(prop: Partial<Property>): FlureePredicate {
+  protected generateExternalEntity(prop: Property): FlureePredicate {
     return {
       ...this.#common(prop),
       type: ft.STRING,
       doc: this.#externalDoc(prop),
     };
   }
-  protected generateScalarArray(prop: Partial<Property>): FlureePredicate {
+  protected generateScalarArray(prop: Property): FlureePredicate {
     return {
       ...this.#common(prop),
       type: this.#scalar(prop),
       multi: true,
     };
   }
-  protected generateEnumArray(prop: Partial<Property>): FlureePredicate {
+  protected generateEnumArray(prop: Property): FlureePredicate {
     return {
       ...this.#common(prop),
       type: ft.TAG,
@@ -81,7 +81,7 @@ export class FlureePropGenerator extends PropGenerator {
       multi: true,
     };
   }
-  protected generateEntityArray(prop: Partial<Property>): FlureePredicate {
+  protected generateEntityArray(prop: Property): FlureePredicate {
     return {
       ...this.#common(prop),
       type: ft.REF,
@@ -89,9 +89,7 @@ export class FlureePropGenerator extends PropGenerator {
       multi: true,
     };
   }
-  protected generateExternalEntityArray(
-    prop: Partial<Property>
-  ): FlureePredicate {
+  protected generateExternalEntityArray(prop: Property): FlureePredicate {
     return {
       ...this.#common(prop),
       type: ft.STRING,
@@ -100,7 +98,7 @@ export class FlureePropGenerator extends PropGenerator {
     };
   }
 
-  generate(prop: Partial<Property>): FlureePredicate {
+  generate(prop: Property): FlureePredicate {
     return super.generate(prop) as FlureePredicate;
   }
 }

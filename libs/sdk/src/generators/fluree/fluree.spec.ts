@@ -9,7 +9,7 @@ describe('fluree-schema generator', () => {
   let tree: Tree;
   const options: FlureeGeneratorSchema = {
     module: 'test-sdk',
-    skipLedgerUpdate: true,
+    flureeLedger: false,
   };
 
   beforeEach(async () => {

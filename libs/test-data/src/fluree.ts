@@ -358,7 +358,7 @@ export default class FlureeSchema {
     }
   }
 
-  public extractValue(type: string, prop: Partial<Property>) {
+  public extractValue(type: string, prop: Property) {
     if (type === STRING) {
       if (prop.examples !== undefined) {
         const value =
@@ -558,8 +558,8 @@ export default class FlureeSchema {
       type: STRING,
     };
 
-    const prop: Partial<Property> = entitySchema.props.find(
-      (prop: Partial<Property>) => prop.name === predicateName
+    const prop: Property = entitySchema.props.find(
+      (prop: Property) => prop.name === predicateName
     );
     if (prop.defType === DefinitionType.EntityArray) {
       predicate.type = COLLECTION_REF;
