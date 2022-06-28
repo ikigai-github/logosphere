@@ -12,7 +12,9 @@ import { libraryGenerator } from '@nrwl/node';
 import * as path from 'path';
 import { NodeLibraryGeneratorSchema } from './schema';
 import {
-  ModuleBoundaryTag,
+  scopeTag as scope,
+  typeTag as type,
+  kindTag as kind,
   DEFAULT_CODEGEN_DIR,
   DEFAULT_COMPILER,
 } from '../../common';
@@ -74,7 +76,7 @@ export async function moduleGenerator(
   options.buildable = true;
   options.compiler = DEFAULT_COMPILER;
   options.directory = DEFAULT_CODEGEN_DIR;
-  options.tags = ModuleBoundaryTag.Shared;
+  options.tags = [scope.shared, type.lib, kind.feature].join(',');
   const normalizedOptions = normalizeOptions(tree, options);
   options.importPath = `@${normalizedOptions.npmScope}/${normalizedOptions.projectName}`;
   await libraryGenerator(tree, options);

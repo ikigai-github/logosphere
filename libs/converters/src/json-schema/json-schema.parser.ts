@@ -41,11 +41,12 @@ export class JsonSchemaParser extends Parser {
         return this.#isEnum(resolved[defKey]);
       })
       .forEach((defKey: string) => {
-        const props: Partial<Property>[] = [];
+        const props: Property[] = [];
         Object.keys(resolved[defKey][c.ENUM]).map((propKey: string) => {
           props.push({
             name: resolved[defKey][c.ENUM][propKey],
             type: c.STRING,
+            defType: DefinitionType.Scalar,
           });
         });
         defs.push({
@@ -62,7 +63,7 @@ export class JsonSchemaParser extends Parser {
         return this.#isEntity(resolved[defKey]);
       })
       .forEach((defKey: string) => {
-        const props: Partial<Property>[] = [];
+        const props: Property[] = [];
 
         // add identifier
         props.push({

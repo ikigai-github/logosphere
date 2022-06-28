@@ -24,7 +24,7 @@ import { asserts, defaults } from './constants';
 export const flureeFx = flureeFixtures;
 export const dtoFx = dtoFixtures;
 
-function typeFormat(prop: Partial<Property>, objectType = '') {
+function typeFormat(prop: Property, objectType = '') {
   switch (prop.defType) {
     case DefinitionType.Scalar:
       return strings.camelize(prop.type);
@@ -43,7 +43,7 @@ function typeFormat(prop: Partial<Property>, objectType = '') {
   }
 }
 
-function nameFormat(prop: Partial<Property>) {
+function nameFormat(prop: Property) {
   return prop.isRequired ? prop.name : `${prop.name}?`;
 }
 
@@ -62,7 +62,7 @@ function first(arr: any[]): number {
  * @param prop Canonical schema property
  * @returns Formatted DTO
  */
-export function dtoProp(prop: Partial<Property>) {
+export function dtoProp(prop: Property) {
   return {
     name: nameFormat(prop),
     type: typeFormat(prop, 'dto'),
@@ -74,7 +74,7 @@ export function dtoProp(prop: Partial<Property>) {
  * @param prop Canonical schema property
  * @returns Formatted property
  */
-export function entityProp(prop: Partial<Property>) {
+export function entityProp(prop: Property) {
   return {
     name: nameFormat(prop),
     type: typeFormat(prop),

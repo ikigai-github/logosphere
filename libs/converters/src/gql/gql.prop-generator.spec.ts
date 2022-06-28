@@ -5,7 +5,7 @@ describe('GQL prop generator', () => {
   const propGen = new GqlPropGenerator();
 
   it('should generate enum', () => {
-    const prop: Partial<Property> = {
+    const prop: Property = {
       name: 'name',
       type: 'type',
       isRequired: true,
@@ -17,7 +17,7 @@ describe('GQL prop generator', () => {
   });
 
   it('should generate entity', () => {
-    const prop: Partial<Property> = {
+    const prop: Property = {
       name: 'name',
       type: 'type',
       isRequired: true,
@@ -29,7 +29,7 @@ describe('GQL prop generator', () => {
   });
 
   it('should generate float scalar', () => {
-    const prop: Partial<Property> = {
+    const prop: Property = {
       name: 'name',
       type: 'number',
       defType: DefinitionType.Scalar,
@@ -40,7 +40,7 @@ describe('GQL prop generator', () => {
   });
 
   it('should generate int scalar', () => {
-    const prop: Partial<Property> = {
+    const prop: Property = {
       name: 'name',
       type: 'integer',
       defType: DefinitionType.Scalar,
@@ -51,7 +51,7 @@ describe('GQL prop generator', () => {
   });
 
   it('should generate ID', () => {
-    const prop: Partial<Property> = {
+    const prop: Property = {
       name: 'identifier',
       type: 'string',
       defType: DefinitionType.Scalar,
@@ -64,7 +64,7 @@ describe('GQL prop generator', () => {
   });
 
   it('should generate scalar array', () => {
-    const prop: Partial<Property> = {
+    const prop: Property = {
       name: 'name',
       type: 'string',
       defType: DefinitionType.ScalarArray,
@@ -75,7 +75,7 @@ describe('GQL prop generator', () => {
   });
 
   it('should generate type array', () => {
-    const prop: Partial<Property> = {
+    const prop: Property = {
       name: 'name',
       type: 'type',
       defType: DefinitionType.EntityArray,
@@ -86,7 +86,7 @@ describe('GQL prop generator', () => {
   });
 
   it('should generate enum array', () => {
-    const prop: Partial<Property> = {
+    const prop: Property = {
       name: 'name',
       type: 'enumType',
       defType: DefinitionType.EnumArray,

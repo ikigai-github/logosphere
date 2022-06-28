@@ -1,10 +1,10 @@
-export const nxVersion = '*';
+export const nxVersion = '14.3.6';
 
 export const nestJsVersion7 = '^7.0.0';
 export const nestJsVersion8 = '^8.0.0';
 
-export const nestJsApolloVersion = '^10.0.0'
-export const nestJsGraphQLVersion = '^10.0.0'
+export const nestJsApolloVersion = '^10.0.0';
+export const nestJsGraphQLVersion = '^10.0.0';
 
 export const nestJsSchematicsVersion = '^8.0.0';
 

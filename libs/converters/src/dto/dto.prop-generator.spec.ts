@@ -4,7 +4,7 @@ describe('DTO Prop Generator', () => {
   const propGenerator = new DtoPropGenerator();
 
   it('should generate scalar', () => {
-    const prop: Partial<Property> = {
+    const prop: Property = {
       name: 'name',
       type: 'type',
       defType: DefinitionType.Scalar,
@@ -14,7 +14,7 @@ describe('DTO Prop Generator', () => {
   });
 
   it('should generate enum', () => {
-    const prop: Partial<Property> = {
+    const prop: Property = {
       name: 'name',
       type: 'type',
       defType: DefinitionType.Enum,
@@ -24,7 +24,7 @@ describe('DTO Prop Generator', () => {
   });
 
   it('should generate entity', () => {
-    const prop: Partial<Property> = {
+    const prop: Property = {
       name: 'name',
       type: 'type',
       defType: DefinitionType.Entity,
@@ -34,7 +34,7 @@ describe('DTO Prop Generator', () => {
   });
 
   it('should generate scalar array', () => {
-    const prop: Partial<Property> = {
+    const prop: Property = {
       name: 'name',
       type: 'type',
       defType: DefinitionType.ScalarArray,
@@ -44,7 +44,7 @@ describe('DTO Prop Generator', () => {
   });
 
   it('should generate enum array', () => {
-    const prop: Partial<Property> = {
+    const prop: Property = {
       name: 'name',
       type: 'type',
       defType: DefinitionType.EnumArray,
@@ -54,7 +54,7 @@ describe('DTO Prop Generator', () => {
   });
 
   it('should generate entity array', () => {
-    const prop: Partial<Property> = {
+    const prop: Property = {
       name: 'name',
       type: 'type',
       defType: DefinitionType.EntityArray,

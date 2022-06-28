@@ -10,7 +10,7 @@ import {
 describe('Fluree Schema Prop Generator', () => {
   const propGen = new FlureePropGenerator('user');
   it('should generate bigint scalar', () => {
-    const prop: Partial<Property> = {
+    const prop: Property = {
       name: 'name',
       type: 'number',
       description: 'desc',
@@ -29,7 +29,7 @@ describe('Fluree Schema Prop Generator', () => {
   });
 
   it('should generate bigint scalar array', () => {
-    const prop: Partial<Property> = {
+    const prop: Property = {
       name: 'name',
       type: 'number',
       description: 'desc',
@@ -49,7 +49,7 @@ describe('Fluree Schema Prop Generator', () => {
   });
 
   it('should generate instant', () => {
-    const prop: Partial<Property> = {
+    const prop: Property = {
       name: 'name',
       type: 'number',
       description: 'unix time',
@@ -68,7 +68,7 @@ describe('Fluree Schema Prop Generator', () => {
   });
 
   it('should generate entity', () => {
-    const prop: Partial<Property> = {
+    const prop: Property = {
       name: 'artwork',
       type: 'artwork',
       description: 'desc',
@@ -88,7 +88,7 @@ describe('Fluree Schema Prop Generator', () => {
   });
 
   it('should generate entity array', () => {
-    const prop: Partial<Property> = {
+    const prop: Property = {
       name: 'artwork',
       type: 'artwork',
       description: 'desc',
@@ -109,7 +109,7 @@ describe('Fluree Schema Prop Generator', () => {
   });
 
   it('should generate external entity', () => {
-    const prop: Partial<Property> = {
+    const prop: Property = {
       name: 'artwork',
       type: 'artwork',
       description: 'desc',
@@ -128,7 +128,7 @@ describe('Fluree Schema Prop Generator', () => {
   });
 
   it('should generate external entity array', () => {
-    const prop: Partial<Property> = {
+    const prop: Property = {
       name: 'artwork',
       type: 'artwork',
       description: 'desc',

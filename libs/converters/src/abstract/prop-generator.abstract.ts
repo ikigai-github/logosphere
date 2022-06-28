@@ -1,14 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { DefinitionType, Property } from '../canonical/canonical.schema';
 export abstract class PropGenerator {
-  protected abstract generateScalar(prop: Partial<Property>): any;
-  protected abstract generateEnum(prop: Partial<Property>): any;
-  protected abstract generateEntity(prop: Partial<Property>): any;
-  protected abstract generateExternalEntity(prop: Partial<Property>): any;
-  protected abstract generateScalarArray(prop: Partial<Property>): any;
-  protected abstract generateEnumArray(prop: Partial<Property>): any;
-  protected abstract generateEntityArray(prop: Partial<Property>): any;
-  protected abstract generateExternalEntityArray(prop: Partial<Property>): any;
-  generate(prop: Partial<Property>): any {
+  protected abstract generateScalar(prop: Property): any;
+  protected abstract generateEnum(prop: Property): any;
+  protected abstract generateEntity(prop: Property): any;
+  protected abstract generateExternalEntity(prop: Property): any;
+  protected abstract generateScalarArray(prop: Property): any;
+  protected abstract generateEnumArray(prop: Property): any;
+  protected abstract generateEntityArray(prop: Property): any;
+  protected abstract generateExternalEntityArray(prop: Property): any;
+  generate(prop: Property): any {
     switch (prop.defType) {
       case DefinitionType.Scalar:
         return this.generateScalar(prop);

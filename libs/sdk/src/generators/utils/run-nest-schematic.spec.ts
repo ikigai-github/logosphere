@@ -36,11 +36,15 @@ describe('runNestSchematic utility', () => {
     'service',
   ];
 
-  test.each(testTypes)('%p should run successfully', async (type) => {
-    await expect(
-      runNestSchematic(tree, type, options)
-    ).resolves.not.toThrowError();
-  });
+  test.each(testTypes)(
+    '%p should run successfully',
+    async (type) => {
+      await expect(
+        runNestSchematic(tree, type, options)
+      ).resolves.not.toThrowError();
+    },
+    100000
+  );
 
   describe('--skipFormat', () => {
     it('should format files by default', async () => {
@@ -49,7 +53,7 @@ describe('runNestSchematic utility', () => {
       await runNestSchematic(tree, 'class', options);
 
       expect(devkit.formatFiles).toHaveBeenCalled();
-    });
+    }, 100000);
 
     it('should not format files when --skipFormat=true', async () => {
       jest.spyOn(devkit, 'formatFiles');
@@ -57,6 +61,6 @@ describe('runNestSchematic utility', () => {
       await runNestSchematic(tree, 'class', { ...options, skipFormat: true });
 
       expect(devkit.formatFiles).not.toHaveBeenCalled();
-    });
+    }, 100000);
   });
 });

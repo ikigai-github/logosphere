@@ -2,7 +2,7 @@ import { Tree, getProjects } from '@nrwl/devkit';
 import { DEFAULT_COMPILER, DEFAULT_CODEGEN_DIR } from '../../common';
 import { ApiGeneratorSchema } from './schema';
 
-import { moduleGenerator } from '../module';
+import { applicationGenerator } from '../application';
 import { canonicalSchemaGenerator } from '../canonical';
 import { dtoGenerator } from '../dto';
 import { entityGenerator } from '../entity';
@@ -17,10 +17,9 @@ import { apiE2eTestGenerator } from '../api-e2e';
 export async function apiGenerator(tree: Tree, options: ApiGeneratorSchema) {
   const module = options.module;
 
-  if (!getProjects(tree).has(`${DEFAULT_CODEGEN_DIR}-${module}`)) {
-    await moduleGenerator(tree, {
+  if (!getProjects(tree).has(module)) {
+    await applicationGenerator(tree, {
       name: module,
-      compiler: DEFAULT_COMPILER,
     });
   }
 
@@ -30,7 +29,7 @@ export async function apiGenerator(tree: Tree, options: ApiGeneratorSchema) {
   await enumTypeGenerator(tree, { module });
   await flureeGenerator(tree, {
     module,
-    skipLedgerUpdate: options.skipFlureeLedger || false,
+    flureeLedger: options.flureeLedger || false,
   });
   await gqlGenerator(tree, { module });
   await mapperGenerator(tree, {

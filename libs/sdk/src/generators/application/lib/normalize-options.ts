@@ -3,7 +3,7 @@ import { getWorkspaceLayout, joinPathFragments, names } from '@nrwl/devkit';
 import { Linter } from '@nrwl/linter';
 import type { Schema as NodeApplicationGeneratorOptions } from '@nrwl/node/src/generators/application/schema';
 import type { ApplicationGeneratorOptions, NormalizedOptions } from '../schema';
-import { ModuleBoundaryTag } from '../../../common';
+import { scopeTag as scope } from '../../../common';
 export function normalizeOptions(
   tree: Tree,
   options: ApplicationGeneratorOptions
@@ -18,10 +18,10 @@ export function normalizeOptions(
   );
 
   const className = names(options.name).className;
-  options.tags =  options.tags = options.tags 
-  ? options.tags.concat(ModuleBoundaryTag.Client)
-  : ModuleBoundaryTag.Client;
-  
+  options.tags = options.tags = options.tags
+    ? options.tags.concat(scope.api)
+    : scope.api;
+
   return {
     ...options,
     className,
@@ -34,7 +34,6 @@ export function normalizeOptions(
 export function toNodeApplicationGeneratorOptions(
   options: NormalizedOptions
 ): NodeApplicationGeneratorOptions {
-
   return {
     name: options.name,
     directory: options.directory,

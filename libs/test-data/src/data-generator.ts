@@ -36,7 +36,7 @@ export default class TestDataGenerator {
       .join('');
   }
 
-  #value(prop: Partial<Property>, options?: any) {
+  #value(prop: Property, options?: any) {
     let value =
       options && options[prop.name]
         ? options[prop.name]

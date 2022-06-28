@@ -1,5 +1,6 @@
+import * as _ from 'lodash';
 import { pascalCase } from 'pascal-case';
-import { Property } from '../canonical';
+import { Property, DefinitionType } from '../canonical';
 import { PropGenerator } from '../abstract/prop-generator.abstract';
 
 export class GqlPropGenerator extends PropGenerator {
@@ -60,5 +61,21 @@ export class GqlPropGenerator extends PropGenerator {
     return `\t${prop.name}: [${pascalCase(prop.type)}]${
       prop.isRequired ? '!' : ''
     }\n`;
+  }
+
+  public generate(prop: Property, forInput = false): string {
+    if (
+      forInput &&
+      (prop.defType === DefinitionType.Entity ||
+        prop.defType === DefinitionType.EntityArray ||
+        prop.defType === DefinitionType.ExternalEntity ||
+        prop.defType === DefinitionType.ExternalEntityArray)
+    ) {
+      const inputProp = _.cloneDeep(prop);
+      inputProp.type = `${prop.type}Input`;
+      return super.generate(inputProp);
+    } else {
+      return super.generate(prop);
+    }
   }
 }
