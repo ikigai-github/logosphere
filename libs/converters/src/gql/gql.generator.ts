@@ -31,19 +31,11 @@ export class GqlGenerator extends Generator {
     // input type (used in mutations and supposed to have only
     // scalar fields or enums)
     schemaString += `input ${pascalCase(def.name)}Input {\n`;
-    def.props
-      // .filter(
-      //   (prop: Property) =>
-      //     prop.defType !== DefinitionType.Entity &&
-      //     prop.defType !== DefinitionType.EntityArray &&
-      //     prop.defType !== DefinitionType.ExternalEntity &&
-      //     prop.defType !== DefinitionType.ExternalEntityArray
-      // )
-      .forEach((prop: Property) => {
-        if (prop.isEnabled) {
-          schemaString += propGenerator.generate(prop, true);
-        }
-      });
+    def.props.forEach((prop: Property) => {
+      if (prop.isEnabled) {
+        schemaString += propGenerator.generate(prop, true);
+      }
+    });
 
     schemaString += '}\n\n';
 
