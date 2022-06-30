@@ -9,7 +9,9 @@ import {
   update, 
   remove, 
   FlureeSingleObject,
-  FlureeClient } from '@logosphere/fluree';
+  FlureeClient,
+  gqlSelectionSetToFql
+} from '@logosphere/fluree';
 import { RepositoryError } from '@logosphere/domain';
 <% if (hasIndexedEnum(definition)) { -%>
   import {
@@ -47,14 +49,17 @@ export class <%= classify(name) %><%= classify(type) %>Repository implements I<%
     }
   } 
 
-  public async findAll(): Promise<<%= classify(name) %>[]> {
-    const query = select('*').from('<%= camelize(name) %>').build();
-    const fql = compile(query);
+  public async findAll(selectionSetList?: string[]): Promise<<%= classify(name) %>[]> {
+    const select = gqlSelectionSetToFql(selectionSetList); 
+    const fql = {
+      select,
+      from: '<%= camelize(name) %>'
+    };
     const result = await this.fluree.query(fql);
     return result.map((f: FlureeSingleObject) => this.mapper.toEntity(f));
   }
 
-  public async findManyById(idList: string[]): Promise<<%= classify(name) %>[]> {
+  public async findManyById(idList: string[], selectionSetList?: string[]): Promise<<%= classify(name) %>[]> {
     
     if (!idList || idList.length === 0) {
       throw new RepositoryError('Empty array of ids for findManyById method');
@@ -71,13 +76,15 @@ export class <%= classify(name) %><%= classify(type) %>Repository implements I<%
       }
     }
     const fql = compile(spec.build());
+    fql.select = gqlSelectionSetToFql(selectionSetList);
     const result = await this.fluree.query(fql);
     return result.map((f: FlureeSingleObject) => this.mapper.toEntity(f)); 
   }
 
-  public async findOneById(id: string): Promise<<%= classify(name) %>> {
+  public async findOneById(id: string, selectionSetList?: string[]): Promise<<%= classify(name) %>> {
     const spec = selectOne('*').where(`<%= camelize(name) %>/identifier = '${id}'`).build();
     const fql = compile(spec);
+    fql.selectOne = gqlSelectionSetToFql(selectionSetList);
     const result = await this.fluree.query(fql);
     if (result) {
       return this.mapper.toEntity(result);
@@ -86,9 +93,10 @@ export class <%= classify(name) %><%= classify(type) %>Repository implements I<%
     }
   }
 
-  public async findOneBySubjectId(subjectId: string): Promise<<%= classify(name) %>> {
+  public async findOneBySubjectId(subjectId: string, selectionSetList?: string[]): Promise<<%= classify(name) %>> {
     const spec = selectOne('*').from(+subjectId).build();
     const fql = compile(spec);
+    fql.selectOne = gqlSelectionSetToFql(selectionSetList);
     const result = await this.fluree.query(fql);
     if (result) {
       return this.mapper.toEntity(result);
@@ -97,10 +105,10 @@ export class <%= classify(name) %><%= classify(type) %>Repository implements I<%
     }
   }
 
-  public async save(<%= camelize(name) %>: <%= classify(name) %>): Promise<<%= classify(name) %>> {
+  public async save(<%= camelize(name) %>: <%= classify(name) %>, selectionSetList?: string[]): Promise<<%= classify(name) %>> {
     let spec;
     const data = this.mapper.fromEntity(<%= camelize(name) %>);
-    const existing = await this.findOneById(<%= camelize(name) %>.id);
+    const existing = await this.findOneById(<%= camelize(name) %>.id, selectionSetList);
     if (existing) {
       data._id = +existing.subjectId;
       spec = update('<%= camelize(name) %>')
@@ -111,20 +119,21 @@ export class <%= classify(name) %><%= classify(type) %>Repository implements I<%
       .data(data).build();
     }
 
-    const response = await this.fluree.transact(spec);
+    const response = await this.fluree.transact(JSON.parse(JSON.stringify(spec)));
     if (response.status === 200) {
-      return await this.findOneById(<%= camelize(name) %>.id);
+      return await this.findOneById(<%= camelize(name) %>.id, selectionSetList);
     } else {
       return null;
     }
   }
 
 <% definition.props.filter((p) => p.isUnique).map((p) => { -%>
-  public async findOneBy<%= classify(p.name) %>(<%= camelize(p.name) %>: <%= entityProp(p).type %> ): Promise<<%= classify(name) %>>{
+  public async findOneBy<%= classify(p.name) %>(<%= camelize(p.name) %>: <%= entityProp(p).type %>, selectionSetList?: string[]): Promise<<%= classify(name) %>>{
     const query = selectOne('*')
       .where(`<%= camelize(name) %>/<%= camelize(p.name) %> = '${<%= camelize(p.name) %>}'`)
       .build();
     const fql = compile(query);
+    fql.selectOne = gqlSelectionSetToFql(selectionSetList);
     const result = await this.fluree.query(fql);
     if (result) {
       return this.mapper.toEntity(result);
@@ -134,9 +143,10 @@ export class <%= classify(name) %><%= classify(type) %>Repository implements I<%
   };
 <% }) %>
 <% definition.props.filter((p) => p.isIndexed && !p.isUnique).map((p) => { -%>
-  public async findAllBy<%= classify(p.name) %>(<%= camelize(p.name) %>: <%= entityProp(p).type %> ): Promise<<%= classify(name)%>[]>{
+  public async findAllBy<%= classify(p.name) %>(<%= camelize(p.name) %>: <%= entityProp(p).type %>, selectionSetList?: string[] ): Promise<<%= classify(name)%>[]>{
     const query = select('*').where(`<%= camelize(name) %>/<%= camelize(p.name) %> = '${<%= camelize(p.name) %>}'`).build();
     const fql = compile(query);
+    fql.select = gqlSelectionSetToFql(selectionSetList);
     const result = await this.fluree.query(fql);
     if (result && result.length > 0) {
       return result.map((f: FlureeSingleObject) => this.mapper.toEntity(f));

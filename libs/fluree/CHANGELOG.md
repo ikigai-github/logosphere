@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.3.1](https://github.com/ikigai-github/logosphere/compare/fluree-0.3.0...fluree-0.3.1) (2022-06-30)
+
+### Bug Fixes
+
+- **log-200:** fluree queries to traverse gql selection list ([a782970](https://github.com/ikigai-github/logosphere/commit/a7829709ebfa6a01c4766120426ee2de26fcf655))
+
 ## [0.3.0](https://github.com/ikigai-github/logosphere/compare/fluree-0.2.0...fluree-0.3.0) (2022-06-23)
 
 ### Features

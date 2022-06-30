@@ -2,6 +2,14 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.3.1](https://github.com/ikigai-github/logosphere/compare/sdk-0.3.0...sdk-0.3.1) (2022-06-30)
+
+### Bug Fixes
+
+- **log-198:** assigning correct subjectId in fluree mappers ([7d11446](https://github.com/ikigai-github/logosphere/commit/7d11446decee4fd8ad5146c42ea3252ee918b9d4))
+- **log-198:** fixing flow of the new project generation from scratch ([10d49fc](https://github.com/ikigai-github/logosphere/commit/10d49fc30ab6c30fe9fde293a269e2f67a5f2a6c))
+- **log-200:** fluree queries to traverse gql selection list ([a782970](https://github.com/ikigai-github/logosphere/commit/a7829709ebfa6a01c4766120426ee2de26fcf655))
+
 ## [0.3.0](https://github.com/ikigai-github/logosphere/compare/sdk-0.2.0...sdk-0.3.0) (2022-06-23)
 
 ### Features

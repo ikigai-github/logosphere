@@ -64,18 +64,29 @@ describe('GraphQL to FlureeQL', () => {
                 'username',
                 'displayName',
                 {
-                  profileImageVariants: ['size', 'url'],
+                  profileImageVariants: [
+                    'size',
+                    'url',
+                    'createdAt',
+                    'updatedAt',
+                  ],
                 },
+                'createdAt',
+                'updatedAt',
               ],
             },
+            'createdAt',
+            'updatedAt',
           ],
         },
         {
           artwork: [
             'title',
             {
-              imageVariants: ['size', 'url'],
+              imageVariants: ['size', 'url', 'createdAt', 'updatedAt'],
             },
+            'createdAt',
+            'updatedAt',
           ],
         },
         {
@@ -84,10 +95,14 @@ describe('GraphQL to FlureeQL', () => {
             'displayName',
             'isFollowed',
             {
-              profileImageVariants: ['size', 'url'],
+              profileImageVariants: ['size', 'url', 'createdAt', 'updatedAt'],
             },
+            'createdAt',
+            'updatedAt',
           ],
         },
+        'createdAt',
+        'updatedAt',
       ])
     );
   });

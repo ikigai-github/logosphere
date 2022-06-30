@@ -28,7 +28,7 @@ describe('application generator', () => {
     expect(
       tree.exists(`apps/${appDirectory}/src/app/app.module.ts`)
     ).toBeTruthy();
-  });
+  }, 100000);
 
   it('should configure tsconfig correctly', async () => {
     await applicationGenerator(tree, { name: appName });
@@ -44,7 +44,7 @@ describe('application generator', () => {
       '**/*.spec.ts',
       '**/*.test.ts',
     ]);
-  });
+  }, 100000);
 
   describe('--skipFormat', () => {
     it('should format files', async () => {
@@ -53,7 +53,7 @@ describe('application generator', () => {
       await applicationGenerator(tree, { name: appName });
 
       expect(devkit.formatFiles).toHaveBeenCalled();
-    });
+    }, 100000);
 
     it('should not format files when --skipFormat=true', async () => {
       jest.spyOn(devkit, 'formatFiles');
@@ -61,7 +61,7 @@ describe('application generator', () => {
       await applicationGenerator(tree, { name: appName, skipFormat: true });
 
       expect(devkit.formatFiles).not.toHaveBeenCalled();
-    });
+    }, 100000);
   });
 
   describe('NestJS versions', () => {
@@ -74,7 +74,7 @@ describe('application generator', () => {
       expect(pkg.devDependencies['@nestjs/schematics']).toBe(
         nestJsSchematicsVersion
       );
-    });
+    }, 100000);
 
     it(`should use NestJs 8 for Angular + RxJS 7 (${rxjsVersion7}) workspace`, async () => {
       await angularApplicationGenerator(tree, { name: 'angular-app' });
@@ -92,7 +92,7 @@ describe('application generator', () => {
       expect(pkg.devDependencies['@nestjs/schematics']).toBe(
         nestJsSchematicsVersion
       );
-    });
+    }, 100000);
 
     it('should use NestJs 8 for Angular + RxJS 7 (7.4.0) workspace', async () => {
       await angularApplicationGenerator(tree, { name: 'angular-app' });
@@ -110,7 +110,7 @@ describe('application generator', () => {
       expect(pkg.devDependencies['@nestjs/schematics']).toBe(
         nestJsSchematicsVersion
       );
-    });
+    }, 100000);
 
     it('should use NestJs 7 for Angular + RxJS 6 workspace', async () => {
       await angularApplicationGenerator(tree, { name: 'angular-app' });
@@ -130,6 +130,6 @@ describe('application generator', () => {
       expect(pkg.devDependencies['@nestjs/schematics']).toBe(
         nestJsSchematicsVersion
       );
-    });
+    }, 100000);
   });
 });
