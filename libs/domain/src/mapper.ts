@@ -32,7 +32,7 @@ export abstract class Mapper<T> {
    * @returns Converted value into type
    */
   protected scalar<S>(type: { (v: any): S }, val: any) {
-    return type(val);
+    return val ? type(val) : undefined;
   }
 
   /**
@@ -47,7 +47,7 @@ export abstract class Mapper<T> {
     if (vals && vals instanceof Array) {
       return vals.map((val: any) => this.scalar(type, val));
     } else {
-      return null;
+      return undefined;
     }
   }
 
@@ -87,7 +87,7 @@ export abstract class Mapper<T> {
     if (keys && keys instanceof Array) {
       return keys.map((key: string) => this.enum(e, key));
     } else {
-      return null;
+      return undefined;
     }
   }
 
@@ -105,7 +105,7 @@ export abstract class Mapper<T> {
       const m = new mapper();
       return m.toEntity(data);
     } else {
-      return null;
+      return undefined;
     }
   }
 
@@ -123,7 +123,7 @@ export abstract class Mapper<T> {
       const m = new mapper();
       return dataArray.map((data: any) => m.toEntity(data));
     } else {
-      return null;
+      return undefined;
     }
   }
 
@@ -141,7 +141,7 @@ export abstract class Mapper<T> {
       const m = new mapper();
       return m.fromEntity(entity);
     } else {
-      return null;
+      return undefined;
     }
   }
 
@@ -159,7 +159,7 @@ export abstract class Mapper<T> {
       const m = new mapper();
       return entityArray.map((entity: E) => m.fromEntity(entity));
     } else {
-      return null;
+      return undefined;
     }
   }
 }

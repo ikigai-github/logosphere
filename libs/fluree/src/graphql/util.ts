@@ -1,5 +1,6 @@
 import * as _ from 'lodash';
-import { SEPARATOR_SLASH, TYPENAME } from './const';
+import { SEPARATOR_SLASH, TYPENAME, SUBJECT_ID, ID } from './const';
+import { predicates as p } from '../fluree.constants';
 
 export type FlureeQLFragment = string | object;
 
@@ -12,11 +13,26 @@ function objectToFql(
 ): FlureeQLFragment[] {
   Object.keys(obj).map((key: string) => {
     if (Object.keys(obj[key]).length === 0) {
-      fqlFragment.push(key);
+      switch (key) {
+        case ID:
+          fqlFragment.push(p.IDENTIFIER);
+          break;
+        case SUBJECT_ID:
+          fqlFragment.push(p._ID);
+          break;
+        default:
+          fqlFragment.push(key);
+      }
     } else {
       fqlFragment.push({ [key]: objectToFql(obj[key], []) });
     }
   });
+  if (!fqlFragment.find((predicate: string) => predicate === p.CREATED_AT)) {
+    fqlFragment.push(p.CREATED_AT);
+  }
+  if (!fqlFragment.find((predicate: string) => predicate === p.UPDATED_AT)) {
+    fqlFragment.push(p.UPDATED_AT);
+  }
   return fqlFragment;
 }
 

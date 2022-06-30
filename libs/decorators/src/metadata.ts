@@ -118,7 +118,7 @@ export class MetadataStorage {
             isEnabled: true,
             isRequired: false,
             isIndexed: true,
-            isUnique: true,
+            isUnique: false,
             isPK: false,
             isReadOnly: false,
             isWriteOnly: false,

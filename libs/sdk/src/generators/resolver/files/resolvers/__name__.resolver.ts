@@ -1,7 +1,9 @@
-import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Args, ID, Mutation, Query, Resolver, Info } from '@nestjs/graphql';
 <%_ if(definition.isNft) { -%>
   import { MintService } from '@logosphere/cardano';
 <%_ } -%>
+import { parseInfo } from '@logosphere/fluree';
 import { <%= classify(name) %> } from '../entities';
 import { <%= classify(name) %>FlureeRepository } from '../repositories/fluree';
 import { <%= classify(name) %>Dto } from '../dto';
@@ -26,15 +28,15 @@ export class <%= classify(name) %>Resolver {
   ) {}
 
   @Query(() => [<%= classify(name) %>Dto])
-  async <%= camelize(name) %>FindAll(): Promise<<%= classify(name) %>Dto[]> {
-    return (await this.repo.findAll()).map((<%= camelize(name) %>: <%= classify(name) %>) =>
+  async <%= camelize(name) %>FindAll(@Info() info: any): Promise<<%= classify(name) %>Dto[]> {
+    return (await this.repo.findAll(parseInfo(info).info.selectionSetList)).map((<%= camelize(name) %>: <%= classify(name) %>) =>
       this.mapper.fromEntity(<%= camelize(name) %>)
     )
   }
 
   @Query(() => [<%= classify(name) %>Dto])
-  async <%= camelize(name) %>FindManyById(@Args ({ name: 'idList', type: () => ID }) idList: string[]): Promise<<%= classify(name) %>Dto[]> {
-    return (await this.repo.findManyById(idList)).map((<%= camelize(name) %>: <%= classify(name) %>) =>
+  async <%= camelize(name) %>FindManyById(@Args ({ name: 'idList', type: () => ID }) idList: string[], @Info() info: any): Promise<<%= classify(name) %>Dto[]> {
+    return (await this.repo.findManyById(idList, parseInfo(info).info.selectionSetList)).map((<%= camelize(name) %>: <%= classify(name) %>) =>
       this.mapper.fromEntity(<%= camelize(name) %>)
     )
   }
@@ -45,23 +47,23 @@ export class <%= classify(name) %>Resolver {
   }
 
   @Query(() => <%= classify(name) %>)
-  async <%= camelize(name) %>FindOneById(@Args({ name: 'id', type: () => ID }) id: string): Promise<<%= classify(name) %>Dto> {
+  async <%= camelize(name) %>FindOneById(@Args({ name: 'id', type: () => ID }) id: string, @Info() info: any): Promise<<%= classify(name) %>Dto> {
     return this.mapper.fromEntity(
-      await this.repo.findOneById(id)
+      await this.repo.findOneById(id, parseInfo(info).info.selectionSetList)
     );
   }
 
   @Query(() => <%= classify(name) %>)
-  async <%= camelize(name) %>FindOneBySubjectId(@Args({ name: 'subjectId', type: () => String }) subjectId: string): Promise<<%= classify(name) %>Dto> {
+  async <%= camelize(name) %>FindOneBySubjectId(@Args({ name: 'subjectId', type: () => String }) subjectId: string, @Info() info: any): Promise<<%= classify(name) %>Dto> {
     return this.mapper.fromEntity(
-      await this.repo.findOneBySubjectId(subjectId)
+      await this.repo.findOneBySubjectId(subjectId, parseInfo(info).info.selectionSetList)
     );
   }
 
   <% definition.props.filter((p) => p.isIndexed && !p.isUnique).map((p) => { -%>
     @Query(() => [<%= classify(name) %>Dto])
-    async <%= camelize(name) %>FindAllBy<%= classify(p.name) %>(@Args({ name: '<%= camelize(p.name) %>', type: () => <%= classify(p.type) %> }) <%= camelize(p.name) %>: <%= entityProp(p).type %>): Promise<<%= classify(name) %>Dto[]> {
-      return (await this.repo.findAllBy<%= classify(p.name) %>(<%= camelize(p.name) %>)).map((<%= camelize(p.name) %>: <%= classify(name) %>) =>
+    async <%= camelize(name) %>FindAllBy<%= classify(p.name) %>(@Args({ name: '<%= camelize(p.name) %>', type: () => <%= classify(p.type) %> }) <%= camelize(p.name) %>: <%= entityProp(p).type %>, @Info() info: any): Promise<<%= classify(name) %>Dto[]> {
+      return (await this.repo.findAllBy<%= classify(p.name) %>(<%= camelize(p.name) %>, parseInfo(info).info.selectionSetList)).map((<%= camelize(p.name) %>: <%= classify(name) %>) =>
         this.mapper.fromEntity(<%= camelize(p.name) %>)
       )
     }
@@ -69,18 +71,18 @@ export class <%= classify(name) %>Resolver {
 
   <% definition.props.filter((p) => p.isUnique).map((p) => { -%>
     @Query(() => <%= classify(name) %>Dto)
-    async <%= camelize(name) %>FindOneBy<%= classify(p.name) %>(@Args({ name: '<%= camelize(p.name) %>', type: () => <%= classify(p.type) %> }) <%= camelize(p.name) %>: <%= entityProp(p).type %>): Promise<<%= classify(name) %>Dto> {
+    async <%= camelize(name) %>FindOneBy<%= classify(p.name) %>(@Args({ name: '<%= camelize(p.name) %>', type: () => <%= classify(p.type) %> }) <%= camelize(p.name) %>: <%= entityProp(p).type %>, @Info() info: any): Promise<<%= classify(name) %>Dto> {
       return this.mapper.fromEntity(
-        await this.repo.findOneBy<%= classify(p.name) %>(<%= camelize(p.name) %>)
+        await this.repo.findOneBy<%= classify(p.name) %>(<%= camelize(p.name) %>, parseInfo(info).info.selectionSetList)
       );
     }
   <% }) %>
 
   @Mutation(() => <%= classify(name) %>Dto)
-  async <%= camelize(name) %>Save(@Args({ name: '<%= camelize(name) %>', type: () => <%= classify(name) %>Dto }) <%= camelize(name) %>: <%= classify(name) %>Dto): Promise<<%= classify(name) %>Dto> {
+  async <%= camelize(name) %>Save(@Args({ name: '<%= camelize(name) %>', type: () => <%= classify(name) %>Dto }) <%= camelize(name) %>: <%= classify(name) %>Dto, @Info() info: any): Promise<<%= classify(name) %>Dto> {
     const <%= camelize(name) %>Entity = this.mapper.toEntity(<%= camelize(name) %>);
     return this.mapper.fromEntity(
-      await this.repo.save(<%= camelize(name) %>Entity)
+      await this.repo.save(<%= camelize(name) %>Entity, parseInfo(info).info.selectionSetList)
     );
   }
 
@@ -91,9 +93,9 @@ export class <%= classify(name) %>Resolver {
 
   <%_ if(definition.isNft) { %>
   @Mutation(() => <%= classify(name) %>Dto)
-  async <%= camelize(name) %>MintNft(@Args({ name: '<%= camelize(name) %>', type: () => <%= classify(name) %>Dto }) <%= camelize(name) %>: <%= classify(name) %>Dto): Promise<<%= classify(name) %>Dto> {
+  async <%= camelize(name) %>MintNft(@Args({ name: '<%= camelize(name) %>', type: () => <%= classify(name) %>Dto }) <%= camelize(name) %>: <%= classify(name) %>Dto, @Info() info: any): Promise<<%= classify(name) %>Dto> {
     const <%= camelize(name) %>Entity = this.mapper.toEntity(<%= camelize(name) %>);
-    const saved<%= classify(name) %> = await this.repo.save(<%= camelize(name) %>Entity);
+    const saved<%= classify(name) %> = await this.repo.save(<%= camelize(name) %>Entity, parseInfo(info).info.selectionSetList);
 
     const submittedNft = await this.mintService.mint(
       process.env.CARDANO_WALLET_ID, 
@@ -126,7 +128,7 @@ export class <%= classify(name) %>Resolver {
     ).getValue();
     
     return this.mapper.fromEntity(
-      await this.repo.save(updated<%= classify(name) %>)
+      await this.repo.save(updated<%= classify(name) %>, parseInfo(info).info.selectionSetList)
     );
   }
   <%_ } -%>
