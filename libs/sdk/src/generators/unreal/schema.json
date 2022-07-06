@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "Unreal Engine Plugin C++",
+  "title": "",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the C++ object"
+    },
+    "module": {
+      "type": "string",
+      "description": "Module for which UE objects should be generated",
+      "x-prompt": "What module is it for?",
+      "alias": "m"
+    },
+    "directory": {
+      "type": "string",
+      "description": "A directory where the dto is placed",
+      "alias": "d"
+    },
+    "definition": {
+      "type": "object",
+      "description": "Canonical schema definition (single object)"
+    },
+    "index": {
+      "type": "array",
+      "description": "Canonical schema definitions to index"
+    }
+  },
+  "required": ["module"]
+}
