@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.3.1](https://github.com/ikigai-github/logosphere/compare/fluree-0.3.0...fluree-0.3.1) (2022-07-08)
+
+### Bug Fixes
+
+- **log-202:** update flureenjs to 1.0.4 to resolve slow query issue ([cf2a233](https://github.com/ikigai-github/logosphere/commit/cf2a2333045a7c2750b8e0e2cd893772c8ee78fd))
+
 ## [0.3.0](https://github.com/ikigai-github/logosphere/compare/fluree-0.2.0...fluree-0.3.0) (2022-06-23)
 
 ### Features
