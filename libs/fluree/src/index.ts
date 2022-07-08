@@ -12,6 +12,7 @@ export {
 } from './fluree.constants';
 export * from './fluree.module';
 export * from './fluree.errors';
+export * from './graphql';
 export * from './query';
 export * from './schema';
 export * from './transact';

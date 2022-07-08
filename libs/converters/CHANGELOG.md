@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.2.2](https://github.com/ikigai-github/logosphere/compare/converters-0.2.1...converters-0.2.2) (2022-06-30)
+
+### Bug Fixes
+
+- **log-198:** adding referenced inputs ([2a7534d](https://github.com/ikigai-github/logosphere/commit/2a7534dc4edd0154e9a1730aa8d23b22432b701b))
+
 ### [0.2.1](https://github.com/ikigai-github/logosphere/compare/converters-0.2.0...converters-0.2.1) (2022-06-23)
 
 ## [0.2.0](https://github.com/ikigai-github/logosphere/compare/converters-0.1.0...converters-0.2.0) (2022-06-16)
