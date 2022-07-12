@@ -25,8 +25,8 @@ export class FlureeClient {
   #config: FlureeConfig;
 
   /**
-   * Automatically tries to connect to the database to fail fast if confiration is invalid.
-   * @param config The fluree database connection config
+   * Automatically tries to connect to the database to fail fast if configuration is invalid.
+   * @param config The Fluree database connection config
    */
   constructor(
     @Inject(flureeConfig.KEY) config: ConfigType<typeof flureeConfig>
@@ -43,6 +43,7 @@ export class FlureeClient {
   private async reconnect() {
     const connecting = this.#connecting;
     if (!connecting) {
+      // console.log("Closing current connection and reconnecting to Fluree database.");
       this.close();
 
       this.#connecting = fluree
@@ -52,6 +53,7 @@ export class FlureeClient {
         .then((connection) => {
           this.#connection = connection;
           this.#connecting = null;
+          // console.log("Succesfully connected to Fluree database.")
           return connection;
         })
         .catch((error) => {
@@ -72,7 +74,10 @@ export class FlureeClient {
    */
   private async connection() {
     let connection = this.#connection;
-    if (!connection) connection = await this.reconnect();
+    if (!connection) {
+      // console.log("There is not an active connection so reconnecting to Fluree database");
+      connection = await this.reconnect();
+    }
     return connection;
   }
 
