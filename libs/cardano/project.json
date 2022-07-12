@@ -10,7 +10,10 @@
         "tsConfig": "libs/cardano/tsconfig.lib.json",
         "packageJson": "libs/cardano/package.json",
         "main": "libs/cardano/src/index.ts",
-        "assets": ["libs/cardano/*.md"]
+        "assets": [
+          "libs/cardano/*.md",
+          "libs/cardano/src/mint/config.testnet.json"
+        ]
       }
     },
     "lint": {
