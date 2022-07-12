@@ -1,17 +1,10 @@
 #pragma once
 
-#include "model/<%= name %>.h"
+#include "gameobjects/<%= name %>.h"
 #include "LogosphereSubsystem.h"
 #include "LogosphereTransactor.h"
 
 #include "<%= name %>Transactor.generated.h"
-
-// TODO: enable back once it's tested and generalize
-// to remove references to CB project
-// https://ikigai-technologies.atlassian.net/browse/LOG-207
-
-// Create the LogCryptoBisons log category.
-// CBLOGOSPHERE_API DECLARE_LOG_CATEGORY_EXTERN(LogCryptoBisons, Log, All);
 
 // Any actor may utilize the Logosphere subsystem.
 // Inheriting from ALogosphereTransactor gives actors additional flexibility and helper functions.

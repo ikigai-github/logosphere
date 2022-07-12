@@ -1,15 +1,13 @@
-#include "<%= name %>Transactor.h"
+#include "transactors/<%= name %>Transactor.h"
 
 #include "LogosphereSubsystem.h"
 #include "gql/LogosphereRequest.h"
 
-#include "model/<%= name %>.h"
-#include "mappers/<%= name %>Mapper.cpp"
+#include "gameobjects/<%= name %>.h"
+#include "mappers/<%= name %>Mapper.h"
 
-// TODO: enable back once it's tested
-// https://ikigai-technologies.atlassian.net/browse/LOG-207
 
-// CBLOGOSPHERE_API DEFINE_LOG_CATEGORY(LogCryptoBisons);
+<%= module.toUpperCase() %>LOGOSPHERE_API DECLARE_LOG_CATEGORY_EXTERN(<%= classify(module) %>LogosphereApi, Log, All);
 
 // This function should be executed as a callback after a request of ReceiveFindOneById is sent via ExecuteTransaction.
 F<%= name %> A<%= name %>Transactor::Receive<%= name %>FindOneById(ULogosphereRequest const * Request)
@@ -21,6 +19,7 @@ F<%= name %> A<%= name %>Transactor::Receive<%= name %>FindOneById(ULogosphereRe
 // The data that the responses receive is dictated by the schema.
 F<%= name %> A<%= name %>Transactor::Receive<%= name %>Save(ULogosphereRequest const * Request)
 {
+	UE_LOG(<%= classify(module) %>LogosphereApi, Display, TEXT("Received <%= name %>Save Response"));
 	return RequestToUnrealObject<Mutation::<%= name %>SaveField, <%= name %>, F<%= name %>>(Request, <%= name %>ToF<%= name %>);
 }
 
@@ -44,12 +43,16 @@ void A<%= name %>Transactor::Request<%= name %>FindOneById()
 {
 	LogosphereSubsystem = GetLogosphereSubsystem();
 
+	UE_LOG(<%= classify(module) %>LogosphereApi, Display, TEXT("Sending <%= name %>FindOneById  Request"));
+
 	LogosphereSubsystem->ExecuteTransaction<Query::<%= name %>FindOneByIdField>(ResponseHandler, TCHAR_TO_ANSI(*<%= name %>Id));
 }
 
 void A<%= name %>Transactor::Request<%= name %>Save()
 {
 	LogosphereSubsystem = GetLogosphereSubsystem();
+	
+	UE_LOG(<%= classify(module) %>LogosphereApi, Display, TEXT("Sending <%= name %>Save  Request"));
 
 	LogosphereSubsystem->ExecuteTransaction<Mutation::<%= name %>SaveField>(ResponseHandler, <%= name %>Input);
 }
@@ -59,11 +62,14 @@ void A<%= name %>Transactor::Request<%= name %>MintNft()
 {
 	LogosphereSubsystem = GetLogosphereSubsystem();
 
+	UE_LOG(<%= classify(module) %>LogosphereApi, Display, TEXT("Sending <%= name %>MintNft  Request"));
+
 	LogosphereSubsystem->ExecuteTransaction<Mutation::<%= name %>MintNftField>(ResponseHandler, <%= name %>Input);
 }
 
 F<%= name %> A<%= name %>Transactor::Receive<%= name %>MintNft(ULogosphereRequest const * Request)
 {
+	UE_LOG(<%= classify(module) %>LogosphereApi, Display, TEXT("Received <%= name %>MintNft Response"));
 	return RequestToUnrealObject<Mutation::<%= name %>MintNftField, <%= name %>, F<%= name %>>(Request, <%= name %>ToF<%= name %>);
 }
 <%_ } -%>

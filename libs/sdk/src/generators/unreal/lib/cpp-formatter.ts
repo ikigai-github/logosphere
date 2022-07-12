@@ -105,9 +105,9 @@ export function propToF(prop: Property) {
         prop.name
       }),`;
     case DefinitionType.EntityArray:
-      return `${s.classify(prop.type)}Conversion(v.${prop.name}),`;
+      return `${s.classify(prop.type)}ModelToUnreal(v.${prop.name}),`;
     case DefinitionType.ScalarArray:
-      return `${s.classify(prop.name)}Conversion(v.${prop.name}),`;
+      return `${s.classify(prop.name)}ModelToUnreal(v.${prop.name}),`;
     default:
       switch (prop.type) {
         case ts.NUMBER:
@@ -121,19 +121,19 @@ export function propToF(prop: Property) {
 export function propToInput(prop: Property) {
   switch (prop.defType) {
     case DefinitionType.Entity:
-      return `F${s.classify(prop.type)}To${s.classify(prop.type)}Input(Input.${
+      return `F${s.classify(prop.type)}To${s.classify(prop.type)}Input(input.${
         prop.name
       }),`;
     case DefinitionType.EntityArray:
-      return `${s.classify(prop.type)}ToModel(Input.${prop.name}),`;
+      return `${s.classify(prop.type)}UnrealToModel(input.${prop.name}),`;
     case DefinitionType.ScalarArray:
-      return `${s.classify(prop.name)}ToModel(Input.${prop.name}),`;
+      return `${s.classify(prop.name)}UnrealToModel(input.${prop.name}),`;
     default:
       switch (prop.type) {
         case ts.NUMBER:
-          return `std::make_optional(Input.${prop.name}),`;
+          return `input.${prop.name},`;
         default:
-          return `std::make_optional(TCHAR_TO_UTF8(*Input.${prop.name})),`;
+          return `ConvertUnrealString(input.${prop.name}),`;
       }
   }
 }
