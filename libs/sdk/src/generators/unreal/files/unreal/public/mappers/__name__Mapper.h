@@ -47,7 +47,7 @@ static F<%= name %> <%= name %>ToF<%= name %>(std::optional<<%= name %>> const& 
 		v.id.value_or("").c_str(),
 		v.subjectId.value_or("").c_str(),
 		<%_ definition.props.map((prop) => { -%>
-		<%= propToF(prop) %>
+		<%- propToF(prop) %>
 		<%_ }); -%>
 		v.createdAt.value_or("").c_str(),
 		v.updatedAt.value_or("").c_str(),
@@ -60,7 +60,7 @@ static <%= name %>Input F<%= name %>To<%= name %>Input(F<%= name %> const& input
 		ConvertUnrealString(input.id),
 		ConvertUnrealString(input.subjectId),
 		<%_ definition.props.map((prop) => { -%>
-		<%= propToInput(prop) %>
+		<%- propToInput(prop) %>
 		<%_ }); -%>
 		ConvertUnrealString(input.createdAt),
 		ConvertUnrealString(input.updatedAt),
