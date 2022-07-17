@@ -67,7 +67,9 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
   index.map(async (def: Definition) => {
     const defOptions = {
       ...templateOptions,
-      name: names(def.name).className,
+      name: options.namePrefix
+        ? `${names(options.namePrefix).className}${names(def.name).className}`
+        : names(def.name).className,
       definition: def,
     };
     generateFiles(
