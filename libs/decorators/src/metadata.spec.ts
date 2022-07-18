@@ -104,7 +104,7 @@ describe('The Metadata store', () => {
 
     expect(match).toBeDefined();
 
-    const ref = match.props.find((prop) => prop.name === 'match_this');
+    const ref = match.props.find((prop) => prop.name === 'aMatch');
 
     expect(ref).toBeDefined();
   });
