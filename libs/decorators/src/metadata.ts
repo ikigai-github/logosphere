@@ -66,17 +66,8 @@ export class MetadataStorage {
       if (propMetaMap) {
         for (const meta of propMetaMap.values()) {
           const { typename, defType, items } = resolvePropType(meta);
-
-          if (!isDefined(defType)) {
-            const name =
-              meta.name instanceof Function ? meta.name() : meta.name;
-            throw Error(
-              `Could not determine definition type for property ${name} on entity ${meta.target.name}`
-            );
-          }
-
           props.push({
-            name: meta.name instanceof Function ? meta.name() : meta.name,
+            name: meta.name,
             type: typename,
             isEnabled: meta.enabled,
             isRequired: meta.required,

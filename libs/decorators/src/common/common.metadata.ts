@@ -1,13 +1,11 @@
 // Metadata shared by multiple decorators
-export type StringFunc = () => string;
-
 export interface TargetMetadata {
   // eslint-disable-next-line @typescript-eslint/ban-types
   target: Function;
 }
 
 export interface NameMetadata {
-  name: string | StringFunc;
+  name: string;
 }
 
 export interface DocMetadata {
