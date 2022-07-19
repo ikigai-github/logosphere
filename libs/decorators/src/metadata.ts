@@ -64,11 +64,10 @@ export class MetadataStorage {
 
       const props = [];
       if (propMetaMap) {
-        for (const key of propMetaMap.keys()) {
-          const meta = propMetaMap.get(key);
+        for (const meta of propMetaMap.values()) {
           const { typename, defType, items } = resolvePropType(meta);
           props.push({
-            name: !(meta.name instanceof Function) ? meta.name : key,
+            name: meta.name,
             type: typename,
             isEnabled: meta.enabled,
             isRequired: meta.required,
