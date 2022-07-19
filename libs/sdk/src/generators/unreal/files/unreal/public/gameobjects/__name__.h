@@ -7,7 +7,7 @@
 
 <%_ if (isEntity(definition)) { -%>
 USTRUCT(BlueprintType)
-struct F<%= name %>
+struct F<%= namePrefix.toUpperCase() %><%= name %>
 {
   GENERATED_BODY()
 
@@ -19,7 +19,7 @@ struct F<%= name %>
 
   <%_ definition.props.forEach((prop) => { -%>
   UPROPERTY(Blueprint<% if (prop.isReadOnly) { %>ReadOnly<% } else if (prop.isWriteOnly) { %>WriteOnly<% } else {%>ReadWrite<% } %>)
-  <%- typeMap(definitions, prop) %> <%= prop.name %>;
+  <%- typeMap(definitions, prop, namePrefix.toUpperCase()) %> <%= prop.name %>;
 
   <%_ }) -%>
   UPROPERTY(BlueprintReadWrite)
@@ -33,7 +33,7 @@ struct F<%= name %>
 
 <%_ if (isEnum(definition)) { -%>
 UENUM(BlueprintType)
-enum class E<%= name %> : uint8 {
+enum class E<%= namePrefix.toUpperCase() %><%= name %> : uint8 {
 <%_ definition.props.forEach((prop) => { -%>
   <%= prop.name %>,
 <%_ }) -%>

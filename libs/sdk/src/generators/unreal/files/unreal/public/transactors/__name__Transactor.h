@@ -19,14 +19,14 @@ public:
 	void Request<%= name %>FindOneById();
 
 	UFUNCTION(BlueprintCallable)
-	F<%= name %> Receive<%= name %>FindOneById(ULogosphereRequest const * Request);
+	F<%= namePrefix.toUpperCase() %><%= name %> Receive<%= name %>FindOneById(ULogosphereRequest const * Request);
 
 	// Request/Receive lifecycle for Mutation => <%= name %>Save.
 	UFUNCTION(BlueprintCallable)
 	void Request<%= name %>Save();
 
 	UFUNCTION(BlueprintCallable)
-	F<%= name %> Receive<%= name %>Save(ULogosphereRequest const * Request);
+	F<%= namePrefix.toUpperCase() %><%= name %> Receive<%= name %>Save(ULogosphereRequest const * Request);
 
 	<%_ if (definition.isNft) { -%>
 	// Request/Receive lifecycle for Mutation => <%= name %>MintNft.
@@ -34,7 +34,7 @@ public:
 	void Request<%= name %>MintNft();
 
 	UFUNCTION(BlueprintCallable)
-	F<%= name %> Receive<%= name %>MintNft(ULogosphereRequest const * Request);
+	F<%= namePrefix.toUpperCase() %><%= name %> Receive<%= name %>MintNft(ULogosphereRequest const * Request);
 	<%_ } -%>
 
 	// Helper functions for blueprint input.
@@ -42,10 +42,10 @@ public:
 	void Set<%= name %>Id(FString <%= name %>Id);
 
 	UFUNCTION(BlueprintCallable)
-	void Set<%= name %>Input(F<%= name %> <%= name %>);
+	void Set<%= name %>Input(F<%= namePrefix.toUpperCase() %><%= name %> <%= name %>);
 
 	UPROPERTY()
 	FString <%= name %>Id;
 
-	<%= name %>Input <%= name %>Input;
+	ls::<%= name %>Input <%= name %>Input;
 };

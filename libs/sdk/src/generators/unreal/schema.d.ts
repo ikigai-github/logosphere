@@ -5,4 +5,5 @@ export interface UnrealEngineGeneratorSchema {
   directory?: string;
   definition?: Definition;
   index?: Definition[];
+  namePrefix?: string;
 }

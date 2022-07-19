@@ -27,6 +27,10 @@
     "index": {
       "type": "array",
       "description": "Canonical schema definitions to index"
+    },
+    "namePrefix": {
+      "type": "string",
+      "description": "Prefix for generated classes to avoid conflicts"
     }
   },
   "required": ["module"]
