@@ -34,7 +34,11 @@ export function isKeyValueProp(definitions: Definition[], prop: Property) {
   );
 }
 
-export function typeMap(definitions: Definition[], prop: Property): string {
+export function typeMap(
+  definitions: Definition[],
+  prop: Property,
+  namePrefix = ''
+): string {
   switch (prop.type) {
     case ts.STRING:
       return prop.defType === DefinitionType.ScalarArray
@@ -54,13 +58,13 @@ export function typeMap(definitions: Definition[], prop: Property): string {
       } else {
         switch (prop.defType) {
           case DefinitionType.Entity:
-            return `F${s.classify(prop.type)}`;
+            return `F${namePrefix}${s.classify(prop.type)}`;
           case DefinitionType.EntityArray:
-            return `TArray<F${s.classify(prop.type)}>`;
+            return `TArray<F${namePrefix}${s.classify(prop.type)}>`;
           case DefinitionType.Enum:
             return `E${s.classify(prop.type)}`;
           case DefinitionType.EnumArray:
-            return `TArray<E${s.classify(prop.type)}>`;
+            return `TArray<E${namePrefix}${s.classify(prop.type)}>`;
 
           default:
             return s.classify(prop.type);
@@ -98,12 +102,12 @@ export function imports(definitions: Definition[], def: Definition) {
   }
 }
 
-export function propToF(prop: Property) {
+export function propToF(prop: Property, namePrefix = '') {
   switch (prop.defType) {
     case DefinitionType.Entity:
-      return `${s.classify(prop.type)}ToF${s.classify(prop.type)}(v.${
-        prop.name
-      }),`;
+      return `${s.classify(prop.type)}ToF${namePrefix}${s.classify(
+        prop.type
+      )}(v.${prop.name}),`;
     case DefinitionType.EntityArray:
       return `${s.classify(prop.type)}ModelToUnreal(v.${prop.name}),`;
     case DefinitionType.ScalarArray:
@@ -118,12 +122,12 @@ export function propToF(prop: Property) {
   }
 }
 
-export function propToInput(prop: Property) {
+export function propToInput(prop: Property, namePrefix = '') {
   switch (prop.defType) {
     case DefinitionType.Entity:
-      return `F${s.classify(prop.type)}To${s.classify(prop.type)}Input(input.${
-        prop.name
-      }),`;
+      return `F${namePrefix}${s.classify(prop.type)}To${s.classify(
+        prop.type
+      )}Input(input.${prop.name}),`;
     case DefinitionType.EntityArray:
       return `${s.classify(prop.type)}UnrealToModel(input.${prop.name}),`;
     case DefinitionType.ScalarArray:

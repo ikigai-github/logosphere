@@ -62,14 +62,13 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
     template: '',
     index,
     definitions: sourceSchema.definitions,
+    namePrefix: options.namePrefix ? options.namePrefix : '',
   };
 
   index.map(async (def: Definition) => {
     const defOptions = {
       ...templateOptions,
-      name: options.namePrefix
-        ? `${names(options.namePrefix).className}${names(def.name).className}`
-        : names(def.name).className,
+      name: names(def.name).className,
       definition: def,
     };
     generateFiles(
@@ -85,6 +84,7 @@ export async function unrealEngineGenerator(
   tree: Tree,
   options: UnrealEngineGeneratorSchema
 ) {
+  console.log(`Name Prefix: ${options.namePrefix}`);
   const normalizedOptions = normalizeOptions(tree, options);
   addFiles(tree, normalizedOptions);
   await formatFiles(tree);
