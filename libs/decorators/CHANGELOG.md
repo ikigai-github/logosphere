@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.2.2](https://github.com/ikigai-github/logosphere/compare/decorators-0.2.1...decorators-0.2.2) (2022-07-19)
+
+### Bug Fixes
+
+- **log-211:** codegen name is taken from type ([bbb1230](https://github.com/ikigai-github/logosphere/commit/bbb1230065cc114376d569a51f6e8d81bc55ce06))
+
 ### [0.2.1](https://github.com/ikigai-github/logosphere/compare/decorators-0.2.0...decorators-0.2.1) (2022-06-30)
 
 ### Bug Fixes
