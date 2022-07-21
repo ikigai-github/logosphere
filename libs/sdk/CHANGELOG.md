@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.4.1](https://github.com/ikigai-github/logosphere/compare/sdk-0.4.0...sdk-0.4.1) (2022-07-21)
+
+### Bug Fixes
+
+- **log-212:** docker fixes and version bumps ([14686de](https://github.com/ikigai-github/logosphere/commit/14686de6b7a84b893d90522ac81447961e4e206b))
+
 ## [0.4.0](https://github.com/ikigai-github/logosphere/compare/sdk-0.3.1...sdk-0.4.0) (2022-07-19)
 
 ### Features
