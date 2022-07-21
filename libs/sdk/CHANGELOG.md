@@ -2,6 +2,24 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.4.1](https://github.com/ikigai-github/logosphere/compare/sdk-0.4.0...sdk-0.4.1) (2022-07-21)
+
+### Bug Fixes
+
+- **log-212:** docker fixes and version bumps ([14686de](https://github.com/ikigai-github/logosphere/commit/14686de6b7a84b893d90522ac81447961e4e206b))
+
+## [0.4.0](https://github.com/ikigai-github/logosphere/compare/sdk-0.3.1...sdk-0.4.0) (2022-07-19)
+
+### Features
+
+- **log-204:** mapper helpers functions ([aa6d82e](https://github.com/ikigai-github/logosphere/commit/aa6d82edfea9e574c55af7ad74449428159ccfab))
+- **log-204:** unreal engine generator ([a1b7114](https://github.com/ikigai-github/logosphere/commit/a1b711486e125f7857211f2b2199a8015448d554))
+- **log-210:** name prefix ([41ceef7](https://github.com/ikigai-github/logosphere/commit/41ceef7eabccff0f850a533733e93ef9f55e532f))
+
+### Bug Fixes
+
+- **log-204:** fixing indentation in mappers ([d03fb8a](https://github.com/ikigai-github/logosphere/commit/d03fb8a19b616b938f8a04a943d50718643355a8))
+
 ### [0.3.1](https://github.com/ikigai-github/logosphere/compare/sdk-0.3.0...sdk-0.3.1) (2022-06-30)
 
 ### Bug Fixes
