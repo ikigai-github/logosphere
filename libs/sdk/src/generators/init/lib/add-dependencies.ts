@@ -72,6 +72,7 @@ export function addDependencies(tree: Tree): GeneratorCallback {
       'shallow-equal': '1.2.1',
       'sleep-promise': '9.1.0',
       tslib: '2.4.0',
+      'ts-morph': '14.0.0',
       'typescript-string-operations': '1.4.1',
       uuid: '8.3.2',
     },
@@ -96,7 +97,6 @@ export function addDependencies(tree: Tree): GeneratorCallback {
       jscodeshift: '0.13.1',
       'pascal-case': '3.1.2',
       path: '0.12.7',
-      'ts-morph': '14.0.0',
       webpack: '5.0.0',
     }
   );

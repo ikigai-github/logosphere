@@ -12,21 +12,22 @@ services:
       FLUREE_URL: http://fluree-ledger:8090
       FLUREE_LEDGER: local/<%= name %>
       FLUREE_AUTO_UPDATE_SCHEMA: ${FLUREE_AUTO_UPDATE_SCHEMA}
+      CARDANO_WALLET_URL: http://cardano-wallet:8090/v2
       CARDANO_WALLET_ID: ${CARDANO_WALLET_ID}
       CARDANO_WALLET_MNEMONIC: ${CARDANO_WALLET_MNEMONIC}
       CARDANO_WALLET_ADDRESS: ${CARDANO_WALLET_ADDRESS}
   fluree-ledger:
-    image: fluree/ledger:latest
+    image: fluree/ledger:1.0.3
     ports:
       - '8090:8090'
     volumes:
       - ${DOCKER_VOLUMES_PATH}/fluree:/var/lib/fluree
   cardano-node:
-    image: inputoutput/cardano-node:1.34.1
+    image: inputoutput/cardano-node:1.35.0
     environment:
       NETWORK: ${CARDANO_NETWORK}
     volumes:
-      - ./volumes/cardano-node/${CARDANO_NETWORK}:/data
+      - ${DOCKER_VOLUMES_PATH}/cardano-node/${CARDANO_NETWORK}:/data
       - node-ipc:/ipc
     restart: on-failure
     logging:
@@ -36,11 +37,11 @@ services:
         max-file: "10"
         max-size: "50m"
   cardano-wallet:
-    image: inputoutput/cardano-wallet:2022.4.27
+    image: inputoutput/cardano-wallet:2022.7.1
     depends_on:
       - cardano-node
     volumes:
-      - ./volumes/cardano-wallet/${CARDANO_NETWORK}/db:/wallet-db
+      - ${DOCKER_VOLUMES_PATH}/cardano-wallet/${CARDANO_NETWORK}/db:/wallet-db
       - node-ipc:/ipc
     ports:
       - 7070:8090
