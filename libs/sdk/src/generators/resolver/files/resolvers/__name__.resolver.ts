@@ -95,7 +95,7 @@ export class <%= classify(name) %>Resolver {
   @Mutation(() => <%= classify(name) %>Dto)
   async <%= camelize(name) %>MintNft(@Args({ name: '<%= camelize(name) %>', type: () => <%= classify(name) %>Dto }) <%= camelize(name) %>: <%= classify(name) %>Dto, @Info() info: any): Promise<<%= classify(name) %>Dto> {
     const <%= camelize(name) %>Entity = this.mapper.toEntity(<%= camelize(name) %>);
-    const saved<%= classify(name) %> = await this.repo.save(<%= camelize(name) %>Entity, parseInfo(info).info.selectionSetList);
+    const saved<%= classify(name) %> = await this.repo.save(<%= camelize(name) %>Entity, ['id', 'subjectId', 'createdAt', 'updatedAt']);
 
     const submittedNft = await this.mintService.mint(
       process.env.CARDANO_WALLET_ID, 
@@ -126,9 +126,11 @@ export class <%= classify(name) %>Resolver {
         nftCardanoTxId: submittedNft.txId 
       }
     ).getValue();
+
+    await this.repo.save(updated<%= classify(name) %>, ['id', 'subjectId', 'nftCardanoTxId', 'createdAt', 'updatedAt'])
     
     return this.mapper.fromEntity(
-      await this.repo.save(updated<%= classify(name) %>, parseInfo(info).info.selectionSetList)
+      await this.repo.findOneById(updated<%= classify(name) %>.id, parseInfo(info).info.selectionSetList)
     );
   }
   <%_ } -%>
