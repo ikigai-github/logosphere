@@ -23,9 +23,8 @@ function generateDtoData(
 
   currentDef.props.map((prop: Property) => {
     if (
-      (prop.defType === DefinitionType.Entity ||
-        prop.defType === DefinitionType.EntityArray) &&
-      !gqlInput
+      prop.defType === DefinitionType.Entity ||
+      prop.defType === DefinitionType.EntityArray
     ) {
       if (currentDepth <= maxDepth) {
         const refDef = defs.find((def: Definition) => def.name === prop.type);

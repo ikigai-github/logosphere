@@ -16,7 +16,7 @@ import {
 } from '@logosphere/converters';
 import { strings } from '@angular-devkit/core';
 import { DEFAULT_FIXTURE_DEPTH } from '../../common';
-import { tsFormatter } from '../utils';
+import { tsFormatter, gqlFormatter } from '../utils';
 import { ApiE2eGeneratorSchema } from './schema';
 import { applicationGenerator } from '../application';
 import { initGenerator } from '../init';
@@ -63,6 +63,7 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
     ...options,
     ...strings,
     ...tsFormatter,
+    ...gqlFormatter,
     ...names(options.projectDirectory),
     offsetFromRoot: offsetFromRoot(options.projectRoot),
     npmScope: getWorkspaceLayout(tree).npmScope,
