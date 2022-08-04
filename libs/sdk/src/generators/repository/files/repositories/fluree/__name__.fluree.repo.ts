@@ -10,8 +10,11 @@ import {
   remove, 
   FlureeSingleObject,
   FlureeClient,
-  gqlSelectionSetToFql
+  gqlSelectionSetToFql,
+  processUpdateTransactSpec,
+  reconcileArrays
 } from '@logosphere/fluree';
+import { copySubjectId } from '@logosphere/utils';
 import { RepositoryError } from '@logosphere/domain';
 <% if (hasIndexedEnum(definition)) { -%>
   import {
@@ -110,11 +113,13 @@ export class <%= classify(name) %><%= classify(type) %>Repository implements I<%
     const data = this.mapper.fromEntity(<%= camelize(name) %>);
     const existing = await this.findOneById(<%= camelize(name) %>.id, selectionSetList);
     if (existing) {
-      data._id = +existing.subjectId;
-      spec = update('<%= camelize(name) %>')
-      .data(data).build();
+      const existingData = this.mapper.fromEntity(existing);
+      const resolvedData = copySubjectId(existingData, data, 'identifier', '_id');
+      const updatedSpec = processUpdateTransactSpec(update('<%= camelize(name) %>').data(resolvedData).build());
+      const existingSpec = processUpdateTransactSpec(update('<%= camelize(name) %>').data(existingData).build());
+      spec = reconcileArrays(updatedSpec, existingSpec);
     } else {
-      data._id = `<%= camelize(name) %>$${data.id}`;
+      data._id = `<%= camelize(name) %>$${<%= camelize(name) %>.id}`;
       spec = create('<%= camelize(name) %>')
       .data(data).build();
     }
