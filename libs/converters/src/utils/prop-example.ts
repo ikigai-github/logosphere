@@ -24,15 +24,22 @@ export function propExample(prop: Property, random = false) {
     case DefinitionType.ScalarArray:
       switch (prop.type) {
         case 'string':
-          ret = val
-            ? val
-            : rs.generate({
-                length: prop.maxLength,
-                charset: 'alphabetic',
-              });
+          if (val) {
+            ret = prop.isUnique
+              ? `${val}${rs.generate({
+                  length: prop.maxLength,
+                  charset: 'alphabetic',
+                })}`
+              : val;
+          } else {
+            ret = rs.generate({
+              length: prop.maxLength,
+              charset: 'alphabetic',
+            });
+          }
           break;
         case 'number':
-          ret = val ? +val : Math.floor(Math.random() * 10);
+          ret = Math.floor(Math.random() * 10);
           break;
         case 'boolean':
           ret = random ? getRandom([true, false]) : true;

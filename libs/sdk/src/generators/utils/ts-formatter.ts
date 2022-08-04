@@ -390,11 +390,27 @@ export function dtoDataFixture(
  */
 export function assert(prop: Property): string {
   switch (prop.defType) {
+    case DefinitionType.Entity:
     case DefinitionType.EntityArray:
     case DefinitionType.EnumArray:
     case DefinitionType.ScalarArray:
       return asserts.TO_STRICT_EQUAL;
     default:
       return asserts.TO_BE;
+  }
+}
+
+/**
+ * Asserting DTO in E2E tests
+ * @param prop Canonical schema property
+ * @returns assertion string
+ */
+export function assertDtoE2e(prop: Property, name: string): string {
+  switch (prop.defType) {
+    case DefinitionType.Entity:
+    case DefinitionType.EntityArray:
+      return `dtoRemoveSystemFields(${name})`;
+    default:
+      return name;
   }
 }

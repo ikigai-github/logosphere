@@ -1,10 +1,7 @@
 import { FileSystemReader } from '@logosphere/readers';
-import { gqlExec } from '@logosphere/utils';
+import { gqlExec, dtoRemoveSystemFields } from '@logosphere/utils';
 import { ID } from '@nestjs/graphql';
-import { <%= classify(name) %>Dto,
-  <% if (hasIndexedEnum(definition)) { -%>
-    enumTypes
-  <%_ } %>
+import { <%= classify(name) %>Dto
 } from '@<%= npmScope %>/codegen-<%= dasherize(module) %>';
 
 describe('<%= name %> E2E test', () => {
@@ -16,7 +13,7 @@ describe('<%= name %> E2E test', () => {
  
   beforeAll(async () => {
     reader = new FileSystemReader(`${__dirname}/gql`);
-    <%= camelize(name) %> =  <%- dtoDataFixture(index, definition.name, 1, true) %>
+    <%= camelize(name) %> =  <%- dtoDataFixture(index, definition.name, fixtureDepth, true) %>
   });
 
   it('should create <%= name %>', async () => {
@@ -32,7 +29,7 @@ describe('<%= name %> E2E test', () => {
     expect(ret.createdAt).toBeDefined();
     expect(ret.updatedAt).toBeDefined();
     <%_ definition.props.map((p) => { -%>
-        expect(ret.<%= p.name %>).<%= assert(p) %>(<%= camelize(name) %>.<%=p.name %>);
+        expect(<%= assertDtoE2e(p, `ret.${p.name}`) %>).<%= assert(p) %>(<%= camelize(name) %>.<%= p.name %>);
     <%_ }) -%>
   }, 300000);
 
@@ -47,7 +44,7 @@ describe('<%= name %> E2E test', () => {
     expect(ret.createdAt).toBeDefined();
     expect(ret.updatedAt).toBeDefined();
     <%_ definition.props.map((p) => { -%>
-        expect(ret.<%= p.name %>).<%= assert(p) %>(<%= camelize(name) %>.<%=p.name %>);
+      expect(<%= assertDtoE2e(p, `ret.${p.name}`) %>).<%= assert(p) %>(<%= camelize(name) %>.<%= p.name %>);
     <%_ }) -%>
   }, 300000);
 
@@ -56,13 +53,13 @@ describe('<%= name %> E2E test', () => {
     const response = await gqlExec(<%= camelize(name) %>FindAll);
     expect(response.data).toBeDefined();
     expect(response.data.<%= camelize(name) %>FindAll).toBeDefined();
-    expect(response.data.<%= camelize(name) %>FindAll).toHaveLength(1);
+    expect(response.data.<%= camelize(name) %>FindAll.length > 0).toBeTruthy();
     const ret = response.data.<%= camelize(name) %>FindAll[0];
     expect(ret.subjectId).toBeDefined();
     expect(ret.createdAt).toBeDefined();
     expect(ret.updatedAt).toBeDefined();
     <%_ definition.props.map((p) => { -%>
-        expect(ret.<%= p.name %>).<%= assert(p) %>(<%= camelize(name) %>.<%=p.name %>);
+      expect(<%= assertDtoE2e(p, `ret.${p.name}`) %>).<%= assert(p) %>(<%= camelize(name) %>.<%= p.name %>);
     <%_ }) -%>
   });
 
@@ -85,7 +82,7 @@ describe('<%= name %> E2E test', () => {
     expect(ret.createdAt).toBeDefined();
     expect(ret.updatedAt).toBeDefined();
     <%_ definition.props.map((p) => { -%>
-        expect(ret.<%= p.name %>).<%= assert(p) %>(<%= camelize(name) %>.<%=p.name %>);
+      expect(<%= assertDtoE2e(p, `ret.${p.name}`) %>).<%= assert(p) %>(<%= camelize(name) %>.<%= p.name %>);
     <%_ }) -%>
   });
 
@@ -99,7 +96,7 @@ describe('<%= name %> E2E test', () => {
     expect(ret.createdAt).toBeDefined();
     expect(ret.updatedAt).toBeDefined();
     <%_ definition.props.map((p) => { -%>
-        expect(ret.<%= p.name %>).<%= assert(p) %>(<%= camelize(name) %>.<%=p.name %>);
+      expect(<%= assertDtoE2e(p, `ret.${p.name}`) %>).<%= assert(p) %>(<%= camelize(name) %>.<%= p.name %>);
     <%_ }) -%>
   });
 
@@ -114,7 +111,7 @@ describe('<%= name %> E2E test', () => {
     expect(ret.createdAt).toBeDefined();
     expect(ret.updatedAt).toBeDefined();
     <%_ definition.props.map((p) => { -%>
-        expect(ret.<%= p.name %>).<%= assert(p) %>(<%= camelize(name) %>.<%=p.name %>);
+      expect(<%= assertDtoE2e(p, `ret.${p.name}`) %>).<%= assert(p) %>(<%= camelize(name) %>.<%= p.name %>);
     <%_ }) -%>
   });
 
@@ -122,15 +119,7 @@ describe('<%= name %> E2E test', () => {
     it('should find one <%= name %> by <%= p.name %>', async () => {
       const <%= camelize(name) %>FindOneBy<%=classify(p.name)%> = `
       query <%= camelize(name) %>FindOneBy<%=classify(p.name)%>($<%= camelize(p.name) %>: <%= classify(p.type) %>!){
-        <%= camelize(name) %>FindOneBy<%=classify(p.name)%>(<%= camelize(p.name) %>: $<%= camelize(p.name) %>){
-          id,
-          subjectId,
-          <%_ definition.props.filter((p) => p.defType !== 'Entity' && p.defType !== 'EntityArray').map((p) => { -%>
-          <%= camelize(p.name) %>,
-          <%_ }) -%>
-          createdAt,
-          updatedAt
-        }
+        <%= camelize(name) %>FindOneBy<%=classify(p.name)%>(<%= camelize(p.name) %>: $<%= camelize(p.name) %>)<%= gql(index, definition.name, fixtureDepth) %>
       }
       `;
       const response = await gqlExec(<%= camelize(name) %>FindOneBy<%=classify(p.name)%>, { <%= camelize(p.name) %>: <%= camelize(name) %>.<%= camelize(p.name) %> });
@@ -141,7 +130,7 @@ describe('<%= name %> E2E test', () => {
       expect(ret.createdAt).toBeDefined();
       expect(ret.updatedAt).toBeDefined();
       <%_ definition.props.map((p) => { -%>
-          expect(ret.<%= p.name %>).<%= assert(p) %>(<%= camelize(name) %>.<%=p.name %>);
+        expect(<%= assertDtoE2e(p, `ret.${p.name}`) %>).<%= assert(p) %>(<%= camelize(name) %>.<%= p.name %>);
       <%_ }) -%>
     });
     
@@ -151,15 +140,7 @@ describe('<%= name %> E2E test', () => {
     it('should find all <%= name %> by <%= p.name %>', async () => {
       const <%= camelize(name) %>FindAllBy<%=classify(p.name)%> = `
       query <%= camelize(name) %>FindAllBy<%=classify(p.name)%>($<%= camelize(p.name) %>: <%= classify(p.type) %>!){
-        <%= camelize(name) %>FindAllBy<%=classify(p.name)%>(<%= camelize(p.name) %>: $<%= camelize(p.name) %>){
-          id,
-          subjectId,
-          <%_ definition.props.filter((p) => p.defType !== 'Entity' && p.defType !== 'EntityArray').map((p) => { -%>
-          <%= camelize(p.name) %>,
-          <%_ }) -%>
-          createdAt,
-          updatedAt
-        }
+        <%= camelize(name) %>FindAllBy<%=classify(p.name)%>(<%= camelize(p.name) %>: $<%= camelize(p.name) %>)<%= gql(index, definition.name, fixtureDepth) %>
       }
       `;
       const response = await gqlExec(<%= camelize(name) %>FindAllBy<%=classify(p.name)%>, { <%= camelize(p.name) %>: <%= camelize(name) %>.<%= camelize(p.name) %> });
@@ -171,7 +152,7 @@ describe('<%= name %> E2E test', () => {
       expect(ret.createdAt).toBeDefined();
       expect(ret.updatedAt).toBeDefined();
       <%_ definition.props.map((p) => { -%>
-          expect(ret.<%= p.name %>).<%= assert(p) %>(<%= camelize(name) %>.<%=p.name %>);
+        expect(<%= assertDtoE2e(p, `ret.${p.name}`) %>).<%= assert(p) %>(<%= camelize(name) %>.<%= p.name %>);
       <%_ }) -%>
     });
       
