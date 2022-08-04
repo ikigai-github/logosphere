@@ -23,7 +23,7 @@ services:
     volumes:
       - ${DOCKER_VOLUMES_PATH}/fluree:/var/lib/fluree
   cardano-node:
-    image: inputoutput/cardano-node:1.35.0
+    image: inputoutput/cardano-node:1.35.2
     environment:
       NETWORK: ${CARDANO_NETWORK}
     volumes:
