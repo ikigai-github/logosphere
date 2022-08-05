@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   FlureeExistingTransactIdentifier,
   FlureePredicateKey,
@@ -7,6 +8,8 @@ import {
   FlureeTransaction,
   isFlureeExistingTransactObject,
 } from './transact.schema';
+
+import { isScalarArray } from '@logosphere/utils';
 
 /**
  * An update Transact pair can be either a predicate value or a subject id
@@ -162,4 +165,58 @@ export function update(
   predicate?: FlureePredicateKey
 ): FlureeUpdateTransactDataStep {
   return new FlureeUpdateTransactBuilder(predicate);
+}
+
+/**
+ * Flattens the hierarchical nested transact JSON which works in Fluree
+ * for inserts, but doesn't work for updates.
+ * @param spec Transact spec
+ * @returns Flat transact spec
+ */
+export function processUpdateTransactSpec(spec: any[]): any[] {
+  let flat = [];
+  spec.map((t: any) => {
+    const tr = {};
+    Object.keys(t).map((key: string) => {
+      if (typeof t[key] === 'object' && !Array.isArray(t[key])) {
+        flat = flat.concat(processUpdateTransactSpec([t[key]]));
+      } else if (Array.isArray(t[key]) && !isScalarArray(t[key])) {
+        t[key].map((a: any) => {
+          if (typeof a === 'object') {
+            flat = flat.concat(processUpdateTransactSpec([a]));
+          }
+        });
+      } else {
+        tr[key] = t[key];
+      }
+    });
+    flat.push(tr);
+  });
+  return flat;
+}
+
+/**
+ * Fluree has a "feature", when update transact doesn't delete items from arrays / multi predicates
+ * The workaround is to explicitly delete them with _delete statement
+ * @param updateSpec Update transact spec
+ * @param existingSpec Existing spec. Reflects the current state of the ledger
+ * @returns updated spec with reconciled multi-predicates / arrays
+ */
+export function reconcileArrays(updateSpec: any[], existingSpec: any[]): any[] {
+  existingSpec.map((t: any) => {
+    Object.keys(t).map((key: string) => {
+      if (isScalarArray(t[key])) {
+        const newSpec = updateSpec.find((tr: any) => tr['_id'] === t['_id']);
+        const newArr = newSpec[key];
+        const existingArr = t[key];
+        const deleted = existingArr.filter((item) => newArr.indexOf(item) < 0);
+        updateSpec.push({
+          _id: t['_id'],
+          _action: 'delete',
+          [key]: deleted,
+        });
+      }
+    });
+  });
+  return updateSpec;
 }
