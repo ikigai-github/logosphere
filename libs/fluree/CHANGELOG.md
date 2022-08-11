@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.4.2](https://github.com/ikigai-github/logosphere/compare/fluree-0.4.1...fluree-0.4.2) (2022-08-05)
+
+### Bug Fixes
+
+- **log-213:** fluree update transaction fixes ([a784675](https://github.com/ikigai-github/logosphere/commit/a784675c8b90f588def4898b95c30cd485ad7630))
+
 ### [0.4.1](https://github.com/ikigai-github/logosphere/compare/fluree-0.4.0...fluree-0.4.1) (2022-07-19)
 
 ### [0.3.1](https://github.com/ikigai-github/logosphere/compare/fluree-0.3.0...fluree-0.3.1) (2022-06-30)

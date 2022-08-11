@@ -2,6 +2,14 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.4.2](https://github.com/ikigai-github/logosphere/compare/sdk-0.4.1...sdk-0.4.2) (2022-08-05)
+
+### Bug Fixes
+
+- **log-213:** fluree update transaction fixes ([a784675](https://github.com/ikigai-github/logosphere/commit/a784675c8b90f588def4898b95c30cd485ad7630))
+- **log-214:** fixing returning referenced objects in minting mutation ([efc8258](https://github.com/ikigai-github/logosphere/commit/efc8258ea7ba29a4f93827a4f638071a09afd1ea))
+- **log-215:** e2e tests fix + handling optional query selection in repos ([f6904ae](https://github.com/ikigai-github/logosphere/commit/f6904ae050532ed62f27a2193b7cb87f76798048))
+
 ### [0.4.1](https://github.com/ikigai-github/logosphere/compare/sdk-0.4.0...sdk-0.4.1) (2022-07-21)
 
 ### Bug Fixes

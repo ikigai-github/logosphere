@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-imports */
-import * as j from 'jscodeshift';
+import j from 'jscodeshift';
 
 export function addImport(
   file: j.FileInfo,
