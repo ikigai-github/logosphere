@@ -46,6 +46,7 @@ export function addDependencies(tree: Tree): GeneratorCallback {
       '@logosphere/domain': '0.1.1',
       '@logosphere/errors': '0.1.0',
       '@logosphere/fluree': '0.4.2',
+      '@logosphere/utils': '0.1.1',
       '@nestjs/apollo': nestJsApolloVersion,
       '@nestjs/common': NEST_VERSION,
       '@nestjs/config': '2.0.0',

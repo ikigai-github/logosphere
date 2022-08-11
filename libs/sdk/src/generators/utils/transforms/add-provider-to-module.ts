@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-imports */
-import * as j from 'jscodeshift';
+import j from 'jscodeshift';
 
 import { strings as s } from '@angular-devkit/core';
 
