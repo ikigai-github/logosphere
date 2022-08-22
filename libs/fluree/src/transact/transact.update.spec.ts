@@ -166,8 +166,6 @@ describe('Update transaction builder', () => {
     const createTransact = [];
 
     processUpdateTransactSpec(raw, updateTransact, createTransact);
-    console.log(`Update Transact: ${JSON.stringify(updateTransact, null, 2)}`);
-    console.log(`Create Transact: ${JSON.stringify(createTransact, null, 2)}`);
 
     expect(createTransact).toStrictEqual([
       {
