@@ -115,9 +115,28 @@ export class <%= classify(name) %><%= classify(type) %>Repository implements I<%
     if (existing) {
       const existingData = this.mapper.fromEntity(existing);
       const resolvedData = copySubjectId(existingData, data, 'identifier', '_id');
-      const updatedSpec = processUpdateTransactSpec(update('<%= camelize(name) %>').data(resolvedData).build());
-      const existingSpec = processUpdateTransactSpec(update('<%= camelize(name) %>').data(existingData).build());
-      spec = reconcileArrays(updatedSpec, existingSpec);
+
+      const updateTransact = [];
+      const createTransact = [];
+
+      processUpdateTransactSpec(update('<%= camelize(name) %>').data(resolvedData).build(), updateTransact, createTransact);
+
+      if (createTransact.length > 0) {
+        const response = await this.fluree.transact(
+          createTransact
+        );
+
+        if (response.status === 200) {
+          console.log('Dependent create transaction has completed successfully');
+        } else {
+          console.log('Dependent create transaction failed');
+          console.log(JSON.stringify(createTransact, null, 2));
+        }
+      }
+      
+      const existingSpec = [];
+      processUpdateTransactSpec(update('<%= camelize(name) %>').data(existingData).build(), existingSpec);
+      spec = reconcileArrays(updateTransact, existingSpec);
     } else {
       data._id = `<%= camelize(name) %>$${<%= camelize(name) %>.id}`;
       spec = create('<%= camelize(name) %>')
@@ -128,6 +147,8 @@ export class <%= classify(name) %><%= classify(type) %>Repository implements I<%
     if (response.status === 200) {
       return await this.findOneById(<%= camelize(name) %>.id, selectionSetList);
     } else {
+      console.log('Transaction failed');
+      console.log(JSON.stringify(spec, null, 2));
       return null;
     }
   }

@@ -29,13 +29,14 @@ export function copySubjectId(
                 key === id ||
                 (key.split('/').length > 1 && key.split('/')[1] === id)
             ) || id;
-          console.log(` arr _id: ${_arrId}`);
-          return copySubjectId(
-            existing[key].find((exs: any) => exs[_arrId] === upd[_arrId]),
-            upd,
-            id,
-            subjectId
+          const ex = existing[key].find(
+            (exs: any) => exs[_arrId] === upd[_arrId]
           );
+          if (ex) {
+            return copySubjectId(ex, upd, id, subjectId);
+          } else {
+            return upd;
+          }
         });
       }
     });
