@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.1.2](https://github.com/ikigai-github/logosphere/compare/utils-0.1.1...utils-0.1.2) (2022-08-23)
+
+### Bug Fixes
+
+- **log-213:** splitting update and dependent create transacts on update ([e133d86](https://github.com/ikigai-github/logosphere/commit/e133d8621b74cab0ee307ef4df7398685c5b12f5))
+
 ### [0.1.1](https://github.com/ikigai-github/logosphere/compare/utils-0.1.0...utils-0.1.1) (2022-08-08)
 
 ### Bug Fixes
