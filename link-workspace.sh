@@ -21,7 +21,6 @@ pnpm link ../logosphere/dist/libs/converters
 pnpm link ../logosphere/dist/libs/decorators
 pnpm link ../logosphere/dist/libs/domain
 pnpm link ../logosphere/dist/libs/errors
-pnpm link ../logosphere/dist/libs/model
 pnpm link ../logosphere/dist/libs/readers
 pnpm link ../logosphere/dist/libs/sdk
 pnpm link ../logosphere/dist/libs/fluree

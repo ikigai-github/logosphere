@@ -167,32 +167,59 @@ export function update(
   return new FlureeUpdateTransactBuilder(predicate);
 }
 
+function createRef(id: string) {
+  if (typeof id === 'string' && id.indexOf('$') > -1) {
+    const arrId = id.split('$');
+    return [`${arrId[0]}/identifier`, arrId[1]];
+  } else {
+    return id;
+  }
+}
+
 /**
  * Flattens the hierarchical nested transact JSON which works in Fluree
  * for inserts, but doesn't work for updates.
  * @param spec Transact spec
  * @returns Flat transact spec
  */
-export function processUpdateTransactSpec(spec: any[]): any[] {
-  let flat = [];
+export function processUpdateTransactSpec(
+  spec: any[],
+  updateTransact = [],
+  createTransact = []
+) {
   spec.map((t: any) => {
     const tr = {};
     Object.keys(t).map((key: string) => {
-      if (typeof t[key] === 'object' && !Array.isArray(t[key])) {
-        flat = flat.concat(processUpdateTransactSpec([t[key]]));
+      if (
+        typeof t[key] === 'object' &&
+        !Array.isArray(t[key]) &&
+        typeof t[key]['_id'] === 'number'
+      ) {
+        processUpdateTransactSpec([t[key]], updateTransact, createTransact);
+        tr[key] = createRef(t[key]['_id']);
       } else if (Array.isArray(t[key]) && !isScalarArray(t[key])) {
         t[key].map((a: any) => {
           if (typeof a === 'object') {
-            flat = flat.concat(processUpdateTransactSpec([a]));
+            processUpdateTransactSpec([a], updateTransact, createTransact);
           }
         });
+        tr[key] = t[key].map((a: any) => createRef(a['_id']));
+      } else if (
+        typeof t[key] === 'object' &&
+        !Array.isArray(t[key]) &&
+        typeof t[key]['_id'] === 'string' &&
+        t[key]['_id'].indexOf('$') > -1
+      ) {
+        tr[key] = createRef(t[key]['_id']);
+        createTransact.push(t[key]);
       } else {
         tr[key] = t[key];
       }
     });
-    flat.push(tr);
+    typeof tr['_id'] === 'number'
+      ? updateTransact.push(tr)
+      : createTransact.push(tr);
   });
-  return flat;
 }
 
 /**
@@ -207,14 +234,20 @@ export function reconcileArrays(updateSpec: any[], existingSpec: any[]): any[] {
     Object.keys(t).map((key: string) => {
       if (isScalarArray(t[key])) {
         const newSpec = updateSpec.find((tr: any) => tr['_id'] === t['_id']);
-        const newArr = newSpec[key];
-        const existingArr = t[key];
-        const deleted = existingArr.filter((item) => newArr.indexOf(item) < 0);
-        updateSpec.push({
-          _id: t['_id'],
-          _action: 'delete',
-          [key]: deleted,
-        });
+        if (newSpec) {
+          const newArr = newSpec[key];
+          const existingArr = t[key];
+          const deleted = existingArr.filter(
+            (item) => newArr.indexOf(item) < 0
+          );
+          if (deleted) {
+            updateSpec.push({
+              _id: t['_id'],
+              _action: 'delete',
+              [key]: deleted,
+            });
+          }
+        }
       }
     });
   });
