@@ -72,6 +72,30 @@ export async function flureeGenerator(
     SchemaType.Fluree
   );
   const newSchema: FlureeSchema = converter.convert(canonicalSchema);
+  newSchema.collections.push({
+    _id: '_collection',
+    name: '_user',
+    predicates: [
+      {
+        _id: '_predicate',
+        name: 'password',
+        type: 'string',
+        doc: 'Hashed user password',
+      },
+      {
+        _id: '_predicate',
+        name: 'salt',
+        type: 'string',
+        doc: 'Password salt',
+      },
+      {
+        _id: '_predicate',
+        name: 'cardanoPublicKey',
+        type: 'string',
+        doc: 'User wallet public key on Cardano',
+      },
+    ],
+  });
   options = {
     ...options,
     schemaSource: JSON.stringify(newSchema, null, 2),

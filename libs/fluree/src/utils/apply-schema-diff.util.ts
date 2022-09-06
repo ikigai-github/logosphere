@@ -1,5 +1,5 @@
 import * as fs from 'fs-extra';
-import { createLedger } from '../utils';
+import { createLedger } from './create-ledger.util';
 import { defaults as fd } from '../fluree.constants';
 import { FlureeClient } from '../fluree.client';
 import { FlureeError, messages } from '../fluree.errors';

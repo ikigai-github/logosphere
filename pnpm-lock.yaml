@@ -11,6 +11,7 @@ importers:
       '@commitlint/config-conventional': 17.0.0
       '@emurgo/cardano-serialization-lib-nodejs': 8.0.0
       '@fluree/crypto-base': 0.1.6
+      '@fluree/crypto-utils': 1.10.0
       '@fluree/flureenjs': 1.0.4
       '@jscutlery/semver': 2.25.2
       '@nestjs/apollo': 10.0.17
@@ -125,6 +126,7 @@ importers:
       '@commitlint/cli': 16.2.4
       '@commitlint/config-conventional': 17.0.0
       '@fluree/crypto-base': 0.1.6
+      '@fluree/crypto-utils': 1.10.0
       '@jscutlery/semver': 2.25.2_@nrwl+devkit@14.1.5
       '@nestjs/schematics': 9.0.1_typescript@4.6.2
       '@nestjs/testing': 9.0.1_ff60cc94aab74820876cb982ad1bcd55
@@ -2220,6 +2222,15 @@ packages:
     dependencies:
       scrypt-js: 2.0.4
       sha3: 2.0.6
+    dev: true
+
+  /@fluree/crypto-utils/1.10.0:
+    resolution:
+      {
+        integrity: sha512-4QSbBDIzsGlTsuHHTFPCuG04o+gW45UuluEAm546CAiBsz63LEbi2D+Vl/VzBp1uug6K9GPuev6B2hXBzDFmrg==,
+      }
+    dependencies:
+      '@fluree/crypto-base': 0.1.6
     dev: true
 
   /@fluree/flureenjs/1.0.4:

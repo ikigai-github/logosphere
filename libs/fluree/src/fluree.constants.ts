@@ -15,6 +15,7 @@ export const defaults = {
 
 export const system = {
   _ID: '_id',
+  ADD: 'add',
   AUTH: '_auth',
   COLLECTION: '_collection',
   ID: 'id',

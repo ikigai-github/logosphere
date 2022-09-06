@@ -50,6 +50,9 @@ describe('Cardano Module', () => {
     expect(result.id).toHaveLength(40);
     walletId = result.id;
     expect(result.mnemonic).toBeDefined();
+    expect(result.address).toBeDefined();
+    expect(result.privateKey).toBeDefined();
+    expect(result.publicKey).toBeDefined();
     // TODO: this can be changed to use the constant, once bug https://github.com/nrwl/nx/issues/9319 is resolved
     // expect(result.mnemonic.split(' ').length).toBe(constants.MNEMONIC_PHRASE_LENGTH);
     expect(result.mnemonic.split(' ').length).toBe(15);

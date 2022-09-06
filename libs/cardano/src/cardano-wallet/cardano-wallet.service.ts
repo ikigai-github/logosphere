@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import {
@@ -23,11 +24,20 @@ import { constants } from './cardano-wallet.constants';
 
 import { String } from 'typescript-string-operations';
 import { sha3_256 } from 'js-sha3';
+import { AddressesApi } from 'cardano-wallet-js/dist/api';
 
 export interface CardanoWallet {
   id: string;
   name: string;
-  mnemonic: string;
+  mnemonic?: string;
+  privateKey?: string;
+  publicKey?: string;
+  address: string;
+}
+
+export interface CardanoKeys {
+  privateKey: string;
+  publicKey: string;
 }
 
 @Injectable()
@@ -85,17 +95,33 @@ export class CardanoWalletService {
       const recoveryPhrase = Seed.generateRecoveryPhrase(
         constants.MNEMONIC_PHRASE_LENGTH
       );
+
       const mnemonicSentence = Seed.toMnemonicList(recoveryPhrase);
+      const privateKey = Seed.deriveRootKey(mnemonicSentence);
+      const publicKey = privateKey.to_public();
+
+      const privateKeyHex = Buffer.from(privateKey.as_bytes()).toString('hex');
+      const publicKeyHex = Buffer.from(publicKey.as_bytes()).toString('hex');
+
       const wallet = await this.#walletServer.createOrRestoreShelleyWallet(
         name,
         mnemonicSentence,
         passphrase
       );
 
+      const response = await wallet.addressesApi.listAddresses(wallet.id);
+      const address =
+        response && response.data && response.data.length > 0
+          ? response.data[0].id
+          : '';
+
       return {
         id: wallet.id,
         name: wallet.name,
         mnemonic: recoveryPhrase,
+        publicKey: publicKeyHex,
+        privateKey: privateKeyHex,
+        address,
       };
     } catch (error) {
       console.log(error);
@@ -137,6 +163,56 @@ export class CardanoWalletService {
 
     try {
       return await this.#walletServer.getShelleyWallet(walletId);
+    } catch (error) {
+      throw new CardanoWalletError(walletMessages.GET_WALLET_FAILED, error);
+    }
+  }
+
+  async getCardanoWallet(
+    walletId: string,
+    mnemonic: string
+  ): Promise<CardanoWallet> {
+    if (String.IsNullOrWhiteSpace(walletId)) {
+      throw new CardanoWalletError(walletMessages.MISSING_WALLET_ID);
+    }
+
+    try {
+      const wallet = await this.#walletServer.getShelleyWallet(walletId);
+      const response = await wallet.addressesApi.listAddresses(wallet.id);
+      const address =
+        response && response.data && response.data.length > 0
+          ? response.data[0].id
+          : '';
+
+      let cardanoWallet: CardanoWallet = {
+        id: wallet.id,
+        name: wallet.name,
+        address,
+      };
+      if (mnemonic) {
+        let mnemonicArr = [];
+        if (mnemonic.indexOf(',') > -1) {
+          mnemonicArr = mnemonic.split(',');
+        } else if (mnemonic.indexOf(' ') > -1) {
+          mnemonicArr = mnemonic.split(' ');
+        }
+
+        const privateKey = Seed.deriveRootKey(mnemonicArr);
+        const publicKey = privateKey.to_public();
+
+        const privateKeyHex = Buffer.from(privateKey.as_bytes()).toString(
+          'hex'
+        );
+        const publicKeyHex = Buffer.from(publicKey.as_bytes()).toString('hex');
+
+        cardanoWallet = {
+          ...cardanoWallet,
+          privateKey: privateKeyHex,
+          publicKey: publicKeyHex,
+          mnemonic,
+        };
+      }
+      return cardanoWallet;
     } catch (error) {
       throw new CardanoWalletError(walletMessages.GET_WALLET_FAILED, error);
     }
@@ -215,5 +291,60 @@ export class CardanoWalletService {
    */
   async submitTx(tx: string): Promise<string> {
     return await this.#walletServer.submitTx(tx);
+  }
+
+  async createWalletFromPubKey(
+    name: string,
+    cardanoPublicKey: string
+  ): Promise<CardanoWallet> {
+    const response = await axios.post(`${this.#config.url}/wallets`, {
+      name,
+      account_public_key: cardanoPublicKey,
+    });
+
+    if (response.status === 201) {
+      const wallet = response.data;
+      const shelleyWallet = await this.#walletServer.getShelleyWallet(
+        wallet.id
+      );
+      const addressResponse = await shelleyWallet.addressesApi.listAddresses(
+        wallet.id
+      );
+      const address =
+        addressResponse &&
+        addressResponse.data &&
+        addressResponse.data.length > 0
+          ? addressResponse.data[0].id
+          : '';
+
+      return {
+        id: wallet.id,
+        name: wallet.name,
+        address,
+      };
+    } else {
+      throw new CardanoWalletError(
+        walletMessages.CREATE_WALLET_FAILED,
+        `Creating wallet failed with status: ${response.status}`
+      );
+    }
+  }
+
+  generateKeys(): CardanoKeys {
+    const recoveryPhrase = Seed.generateRecoveryPhrase(
+      constants.MNEMONIC_PHRASE_LENGTH
+    );
+
+    const mnemonicSentence = Seed.toMnemonicList(recoveryPhrase);
+    const privateKey = Seed.deriveRootKey(mnemonicSentence);
+    const publicKey = privateKey.to_public();
+
+    const privateKeyHex = Buffer.from(privateKey.as_bytes()).toString('hex');
+    const publicKeyHex = Buffer.from(publicKey.as_bytes()).toString('hex');
+
+    return {
+      privateKey: privateKeyHex,
+      publicKey: publicKeyHex,
+    };
   }
 }

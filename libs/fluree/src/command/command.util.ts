@@ -1,17 +1,8 @@
 import { FlureeTransaction } from '../transact';
-import { configure } from 'safe-stable-stringify';
-import { randomBytes, createHash } from 'crypto';
-import { FlureeCommand, FlureeSignableCommand } from './command.schema';
 
-/**
- * Stable stringify needed for ensuring equivalent serialized JSON
- * always produces the same string.
- */
-const stringify = configure({
-  bigint: true,
-  circularValue: undefined,
-  deterministic: true,
-});
+import { randomBytes } from 'crypto';
+import { FlureeCommand, FlureeSignableCommand } from './command.schema';
+import { hash, stringify } from '../utils';
 
 /**
  * For now a command expiry is always just 10 minutes from its creation
@@ -38,7 +29,7 @@ export function command(
     type: 'tx',
     db: ledger.toLowerCase(),
     nonce: randomBytes(4).readUInt32BE(),
-    txidOnly: true,
+    txidOnly: false,
     expire: Math.floor(new Date().getTime()) + EXPIRY_OFFSET_MS,
     tx,
     auth,
@@ -64,7 +55,7 @@ export function signableCommand(
   fuel?: number
 ): FlureeSignableCommand {
   const cmd = command(ledger, tx, auth, deps, fuel);
-  const serialized = serialize(cmd);
+  const serialized = serializeCommand(cmd);
   return {
     command: cmd,
     serialized: serialized,
@@ -73,21 +64,12 @@ export function signableCommand(
 }
 
 /**
- * Hashes the a string using sha256 and returns it as a hex string
- * @param serializedCommand A Fluree command that has been serialized as a string
- * @returns The sha256 hash of the passed in serialized command string as a hex string
- */
-export function hash(serializedCommand: string): string {
-  return createHash('sha256').update(serializedCommand).digest('hex');
-}
-
-/**
  * Takes a Fluree command object and serializes to a normalized string using a
  * deterministic JSON stringify function.
  * @param command The command to serialize into a string
  * @returns a normalized and serialized representation of the command
  */
-export function serialize(command: FlureeCommand): string {
+export function serializeCommand(command: FlureeCommand): string {
   const { txidOnly, ...rest } = command;
   return stringify({ 'txid-only': txidOnly, ...rest }).normalize('NFKC');
 }
@@ -97,7 +79,7 @@ export function serialize(command: FlureeCommand): string {
  * @param command The serialized command string
  * @returns A Fluree command map created from deserializeing the command string
  */
-export function deserialize(command: string): FlureeCommand {
+export function deserializeCommand(command: string): FlureeCommand {
   const deserialized = JSON.parse(command);
   const txidOnly = deserialized['txid-only'];
   delete deserialized['txid-only'];

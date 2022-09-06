@@ -4,8 +4,11 @@ import {
   NativeScript,
   Seed,
   ScriptAny,
+  PrivateKey,
   TokenWallet,
+  ApiCoinSelection,
 } from 'cardano-wallet-js';
+
 import { Injectable, Inject } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { mintConfig, MintConfig } from './mint.config';
@@ -14,6 +17,15 @@ import { Nft } from './nft.dto';
 import { CardanoWalletService } from '../cardano-wallet';
 
 import * as config from './config.testnet.json';
+import * as trx from './tx.json';
+
+export interface CardanoTx {
+  coinSelection: ApiCoinSelection;
+  ttl: number;
+  tokens: TokenWallet[];
+  signingKeys: PrivateKey[];
+  data: any;
+}
 
 @Injectable()
 export class MintService {
@@ -49,7 +61,11 @@ export class MintService {
     this.#walletService = walletService;
   }
 
-  async mint(walletId: string, mnemonic: string, nft: Nft): Promise<Nft> {
+  async buildTx(
+    walletId: string,
+    mnemonic: string,
+    nft: Nft
+  ): Promise<CardanoTx> {
     try {
       const wallet = await this.#walletService.getWallet(walletId);
       const addresses = [(await wallet.getAddresses())[0]];
@@ -71,9 +87,6 @@ export class MintService {
       // configure
       const asset = new AssetWallet(policyId, nft.assetName, 1);
       const tokens = [new TokenWallet(asset, script, [keyPair])];
-      const scripts = tokens.map(
-        (t) => t.script || NativeScript.new_script_any(new ScriptAny())
-      );
 
       // get min ada for address holding tokens
       const minAda = Seed.getMinUtxoValueWithAssets([asset], config);
@@ -109,7 +122,6 @@ export class MintService {
             ...(t.scriptKeyPairs || []).map((k) => k.privateKey.to_raw_key())
           )
         );
-      const metadata = Seed.buildTransactionMetadata(data);
 
       // the wallet currently doesn't support including tokens not previuosly minted
       // so we need to include it manually.
@@ -127,6 +139,25 @@ export class MintService {
         return output;
       });
 
+      const tx = {
+        coinSelection,
+        ttl,
+        tokens,
+        signingKeys,
+        data,
+      };
+
+      return tx;
+    } catch (error) {
+      throw new MintError(mintMessages.TX_BUILD_FAILED, error);
+    }
+  }
+
+  async mint(walletId: string, mnemonic: string, nft: Nft): Promise<Nft> {
+    try {
+      const { coinSelection, ttl, tokens, signingKeys, data } =
+        await this.buildTx(walletId, mnemonic, nft);
+
       // construct tx
       const txBody = Seed.buildTransactionWithToken(
         coinSelection,
@@ -136,6 +167,12 @@ export class MintService {
         { data: data, config: config }
       );
 
+      const scripts = tokens.map(
+        (t) => t.script || NativeScript.new_script_any(new ScriptAny())
+      );
+
+      const metadata = Seed.buildTransactionMetadata(data);
+
       // sign the tx
       const tx = Seed.sign(txBody, signingKeys, metadata, scripts);
 
@@ -143,6 +180,10 @@ export class MintService {
       const signed = Buffer.from(tx.to_bytes()).toString('hex');
 
       const txId = await this.#walletService.submitTx(signed);
+
+      // const txId = await this.#walletService.submitTx(trx.cborHex);
+
+      console.log(`Submitted Tx ID: ${txId}`);
 
       nft.txId = txId;
       return nft;

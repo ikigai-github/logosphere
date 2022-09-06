@@ -16,8 +16,11 @@ export const walletMessages = Object.freeze({
 export class CardanoWalletError extends LogosphereError {
   constructor(message: string, error?: any) {
     console.log(`Error: ${JSON.stringify(error)}`);
-    const details =
-      error.data && error.data.message ? error.data.message : error.message;
+    const details = error
+      ? error.data && error.data.message
+        ? error.data.message
+        : error.message
+      : '';
     super(`${message}: ${details}`, error);
   }
 }

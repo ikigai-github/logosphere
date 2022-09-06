@@ -1,6 +1,6 @@
 import { create } from '../transact';
-import { command, serialize, hash, signableCommand } from './command.util';
-
+import { command, serializeCommand, signableCommand } from './command.util';
+import { hash } from '../utils';
 describe('Fluree command utils', () => {
   it('should create a valid command', () => {
     const tx = create('person').data({ name: 'test ' }).build();
@@ -14,7 +14,7 @@ describe('Fluree command utils', () => {
     expect(cmd.nonce).toBeDefined();
     expect(cmd.type).toBe('tx');
     expect(cmd.deps).toBeUndefined();
-    expect(cmd.txidOnly).toBeTruthy();
+    expect(cmd.txidOnly).toBeFalsy();
   });
 
   it('should create a stable signable command', () => {
@@ -23,7 +23,7 @@ describe('Fluree command utils', () => {
     const { type, ...rest } = signable.command;
     // Normal JSON.stringify would output a different string for this copy
     const commandCopy = { ...rest, type };
-    const serializedCopy = serialize(commandCopy);
+    const serializedCopy = serializeCommand(commandCopy);
     const hashedCopy = hash(serializedCopy);
     expect(signable.command).toEqual(commandCopy);
     expect(signable.serialized).toBe(serializedCopy);

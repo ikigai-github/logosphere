@@ -2,6 +2,7 @@ import { LogosphereError } from '@logosphere/errors';
 
 export const mintMessages = Object.freeze({
   MINT_FAILED: 'Failed to mint NFT',
+  TX_BUILD_FAILED: 'Failed to build transaction',
 });
 
 export class MintError extends LogosphereError {

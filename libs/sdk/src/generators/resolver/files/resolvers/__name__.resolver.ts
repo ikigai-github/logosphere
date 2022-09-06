@@ -133,6 +133,37 @@ export class <%= classify(name) %>Resolver {
       await this.repo.findOneById(updated<%= classify(name) %>.id, parseInfo(info).info.selectionSetList)
     );
   }
+
+  @Mutation(() => String)
+  async <%= camelize(name) %>MintNftTx(@Args({ name: '<%= camelize(name) %>', type: () => <%= classify(name) %>Dto }) <%= camelize(name) %>: <%= classify(name) %>Dto, @Info() info: any): Promise<string> {
+    const <%= camelize(name) %>Entity = this.mapper.toEntity(<%= camelize(name) %>);
+    const saved<%= classify(name) %> = await this.repo.save(<%= camelize(name) %>Entity, ['id', 'subjectId', 'createdAt', 'updatedAt']);
+
+    const tx = await this.mintService.buildTx(
+      process.env.CARDANO_WALLET_ID, 
+      process.env.CARDANO_WALLET_MNEMONIC, {
+      name: <%= camelize(name) %>.nftName,
+      description: <%= camelize(name) %>.nftDescription,
+      assetName: <%= camelize(name) %>.nftAssetName,
+      standard: '721',
+      mediaType: 'image/*',
+      version: '1.0',
+      thumbnailIpfsCid: `ipfs://${<%= camelize(name) %>.nftIpfsCid}`, 
+      files: [
+        {
+          name: <%= camelize(name) %>.nftName,
+          mediaType: 'image/*',
+          src: `ipfs://${<%= camelize(name) %>.nftIpfsCid}`,
+        },
+      ],
+      logosphere: {
+        ledgerId: process.env.FLUREE_LEDGER,
+        subjectId: saved<%= classify(name) %>.subjectId
+      },
+    });
+
+    return JSON.stringify(tx);
+  }
   <%_ } -%>
 
 
