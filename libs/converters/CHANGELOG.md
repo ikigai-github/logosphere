@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.3.0](https://github.com/ikigai-github/logosphere/compare/converters-0.2.3...converters-0.3.0) (2022-10-07)
+
+### Features
+
+- **api:** fluree closed api ([27e3dd2](https://github.com/ikigai-github/logosphere/commit/27e3dd2507c3e775eb97a81416f8dca30f7a60e9))
+
 ### [0.2.3](https://github.com/ikigai-github/logosphere/compare/converters-0.2.2...converters-0.2.3) (2022-08-05)
 
 ### Bug Fixes
