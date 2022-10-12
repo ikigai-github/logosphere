@@ -297,36 +297,45 @@ export class CardanoWalletService {
     name: string,
     cardanoPublicKey: string
   ): Promise<CardanoWallet> {
-    const response = await axios.post(`${this.#config.url}/wallets`, {
-      name,
-      account_public_key: cardanoPublicKey,
-    });
+    try {
+      const response = await axios.post(`${this.#config.url}/wallets`, {
+        name,
+        account_public_key: cardanoPublicKey,
+      });
 
-    if (response.status === 201) {
-      const wallet = response.data;
-      const shelleyWallet = await this.#walletServer.getShelleyWallet(
-        wallet.id
-      );
-      const addressResponse = await shelleyWallet.addressesApi.listAddresses(
-        wallet.id
-      );
-      const address =
-        addressResponse &&
-        addressResponse.data &&
-        addressResponse.data.length > 0
-          ? addressResponse.data[0].id
-          : '';
+      if (response.status === 201) {
+        const wallet = response.data;
+        const shelleyWallet = await this.#walletServer.getShelleyWallet(
+          wallet.id
+        );
+        const addressResponse = await shelleyWallet.addressesApi.listAddresses(
+          wallet.id
+        );
+        const address =
+          addressResponse &&
+          addressResponse.data &&
+          addressResponse.data.length > 0
+            ? addressResponse.data[0].id
+            : '';
 
-      return {
-        id: wallet.id,
-        name: wallet.name,
-        address,
-      };
-    } else {
-      throw new CardanoWalletError(
-        walletMessages.CREATE_WALLET_FAILED,
-        `Creating wallet failed with status: ${response.status}`
-      );
+        return {
+          id: wallet.id,
+          name: wallet.name,
+          address,
+        };
+      } else {
+        throw new CardanoWalletError(
+          walletMessages.CREATE_WALLET_FAILED,
+          `Creating wallet failed with status: ${response.status}`
+        );
+      }
+    } catch (error) {
+      const err = JSON.parse(JSON.stringify(error));
+      if (err.status == 409) {
+        throw new CardanoWalletError(walletMessages.WALLET_EXISTS);
+      } else {
+        throw new CardanoWalletError(error.message);
+      }
     }
   }
 

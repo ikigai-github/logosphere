@@ -11,6 +11,7 @@ export const walletMessages = Object.freeze({
   RENAME_WALLET_FAILED: 'Failed to rename wallet',
   GET_BALANCE_FAILED: 'Failed to retrieve wallet balance',
   GET_ADDRESSES_FAILED: 'Failed to retrieve wallet addresses',
+  WALLET_EXISTS: 'Wallet already exists',
 });
 
 export class CardanoWalletError extends LogosphereError {
