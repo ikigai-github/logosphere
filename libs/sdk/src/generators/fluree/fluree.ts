@@ -94,6 +94,12 @@ export async function flureeGenerator(
         type: 'string',
         doc: 'User wallet public key on Cardano',
       },
+      {
+        _id: '_predicate',
+        name: 'walletId',
+        type: 'string',
+        doc: 'User wallet ID on Cardano',
+      },
     ],
   });
   options = {
