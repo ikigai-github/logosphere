@@ -49,9 +49,11 @@ export class GqlFederatedGenerator extends GqlGenerator {
       });
     queryString += '\tgetWalletBalance(walletId: String): Float\n';
     queryString += '\tgetWallet(walletId: String, mnemonic: String): Wallet\n';
-    queryString += '\tgenerateKeys: WalletKeyPair\n';
-    queryString += '\tloginUser(username: String, password: String): String\n';
+    queryString += '\tgenerateKeys(username: String): WalletKeyPair\n';
+    queryString +=
+      '\tloginUser(username: String, password: String): UserAuth\n';
     queryString += '\tgetLastTxId(username: String): String\n';
+    queryString += '\tgetUserWallet(username: String): Wallet\n';
     queryString += '}\n\n';
     return queryString;
   }
@@ -191,16 +193,16 @@ export class GqlFederatedGenerator extends GqlGenerator {
         definitions: moduleDefs[module] as Definition[],
       };
       let gql = super.generate(sch);
-      gql += `
-type Wallet {
-  name: String
-  passphrase: String
-  id: String 
-  publicKey: String 
-  privateKey: String 
-  mnemonic: String
-  address: String
-}\n`;
+      //       gql += `
+      // type Wallet {
+      //   name: String
+      //   passphrase: String
+      //   id: String
+      //   publicKey: String
+      //   privateKey: String
+      //   mnemonic: String
+      //   address: String
+      // }\n`;
       gql += `
 type WalletKeyPair {
   privateKey: String

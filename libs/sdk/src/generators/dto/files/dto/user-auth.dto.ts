@@ -3,4 +3,5 @@ export class UserAuthDto {
   cardanoPublicKey?: string;
   authId?: string;
   token?: string;
+  walletId?: string;
 }
