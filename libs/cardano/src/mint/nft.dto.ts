@@ -8,6 +8,8 @@ export interface NftLogosphere {
   ledgerId: string;
   subjectId: string;
   txId?: string;
+  entity?: string;
+  logosphereId?: string;
 }
 
 export interface Nft {

@@ -23,7 +23,7 @@ export interface CardanoTx {
   coinSelection: ApiCoinSelection;
   ttl: number;
   tokens: TokenWallet[];
-  signingKeys: PrivateKey[];
+  signingKeys?: PrivateKey[];
   data: any;
 }
 
@@ -61,11 +61,33 @@ export class MintService {
     this.#walletService = walletService;
   }
 
-  async buildTx(
-    walletId: string,
-    mnemonic: string,
-    nft: Nft
-  ): Promise<CardanoTx> {
+  #createSigningKeys(
+    coinSelection: ApiCoinSelection,
+    tokens: TokenWallet[],
+    mnemonic: string
+  ) {
+    const rootKey = Seed.deriveRootKey(mnemonic.split(','));
+
+    const signingKeys = coinSelection.inputs.map((i) => {
+      const privateKey = Seed.deriveKey(
+        rootKey,
+        i.derivation_path
+      ).to_raw_key();
+      return privateKey;
+    });
+
+    // add policy signing keys
+    tokens
+      .filter((t) => t.scriptKeyPairs)
+      .forEach((t) =>
+        signingKeys.push(
+          ...(t.scriptKeyPairs || []).map((k) => k.privateKey.to_raw_key())
+        )
+      );
+    return signingKeys;
+  }
+
+  async buildTx(walletId: string, nft: Nft): Promise<CardanoTx> {
     try {
       const wallet = await this.#walletService.getWallet(walletId);
       const addresses = [(await wallet.getAddresses())[0]];
@@ -103,26 +125,6 @@ export class MintService {
         data
       );
 
-      // add signing keys
-      const rootKey = Seed.deriveRootKey(mnemonic.split(','));
-
-      const signingKeys = coinSelection.inputs.map((i) => {
-        const privateKey = Seed.deriveKey(
-          rootKey,
-          i.derivation_path
-        ).to_raw_key();
-        return privateKey;
-      });
-
-      // add policy signing keys
-      tokens
-        .filter((t) => t.scriptKeyPairs)
-        .forEach((t) =>
-          signingKeys.push(
-            ...(t.scriptKeyPairs || []).map((k) => k.privateKey.to_raw_key())
-          )
-        );
-
       // the wallet currently doesn't support including tokens not previuosly minted
       // so we need to include it manually.
       coinSelection.outputs = coinSelection.outputs.map((output) => {
@@ -143,7 +145,6 @@ export class MintService {
         coinSelection,
         ttl,
         tokens,
-        signingKeys,
         data,
       };
 
@@ -155,8 +156,16 @@ export class MintService {
 
   async mint(walletId: string, mnemonic: string, nft: Nft): Promise<Nft> {
     try {
-      const { coinSelection, ttl, tokens, signingKeys, data } =
-        await this.buildTx(walletId, mnemonic, nft);
+      const { coinSelection, ttl, tokens, data } = await this.buildTx(
+        walletId,
+        nft
+      );
+
+      const signingKeys = this.#createSigningKeys(
+        coinSelection,
+        tokens,
+        mnemonic
+      );
 
       // construct tx
       const txBody = Seed.buildTransactionWithToken(
