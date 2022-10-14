@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.3.1](https://github.com/ikigai-github/logosphere/compare/cardano-0.3.0...cardano-0.3.1) (2022-10-14)
+
+### Bug Fixes
+
+- **cardano:** return mnemonic with generated keys ([4435089](https://github.com/ikigai-github/logosphere/commit/44350896a9fc1cba1d974588fea98926c2e69957))
+
 ## [0.3.0](https://github.com/ikigai-github/logosphere/compare/cardano-0.2.0...cardano-0.3.0) (2022-10-14)
 
 ### Features
