@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.3.0](https://github.com/ikigai-github/logosphere/compare/cardano-0.2.0...cardano-0.3.0) (2022-10-14)
+
+### Features
+
+- **cardano:** non-custodial minting transaction ([609997f](https://github.com/ikigai-github/logosphere/commit/609997f2f7ea2f31866b405c3d3543fedfc531ed))
+
 ## [0.2.0](https://github.com/ikigai-github/logosphere/compare/cardano-0.1.0...cardano-0.2.0) (2022-10-07)
 
 ### Features
