@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.4.1](https://github.com/ikigai-github/logosphere/compare/converters-0.4.0...converters-0.4.1) (2022-10-14)
+
+### Bug Fixes
+
+- **cardano:** return mnemonic with generated keys ([4435089](https://github.com/ikigai-github/logosphere/commit/44350896a9fc1cba1d974588fea98926c2e69957))
+
 ## [0.4.0](https://github.com/ikigai-github/logosphere/compare/converters-0.3.0...converters-0.4.0) (2022-10-14)
 
 ### Features
