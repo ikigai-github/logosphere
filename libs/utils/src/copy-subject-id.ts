@@ -29,9 +29,10 @@ export function copySubjectId(
                 key === id ||
                 (key.split('/').length > 1 && key.split('/')[1] === id)
             ) || id;
-          const ex = existing[key].find(
-            (exs: any) => exs[_arrId] === upd[_arrId]
-          );
+          const ex = existing[key]
+            ? existing[key].find((exs: any) => exs[_arrId] === upd[_arrId])
+            : undefined;
+
           if (ex) {
             return copySubjectId(ex, upd, id, subjectId);
           } else {
