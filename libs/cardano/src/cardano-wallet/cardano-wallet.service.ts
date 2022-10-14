@@ -38,6 +38,7 @@ export interface CardanoWallet {
 export interface CardanoKeys {
   privateKey: string;
   publicKey: string;
+  mnemonic: string;
 }
 
 @Injectable()
@@ -354,6 +355,7 @@ export class CardanoWalletService {
     return {
       privateKey: privateKeyHex,
       publicKey: publicKeyHex,
+      mnemonic: mnemonicSentence.join(','),
     };
   }
 }
