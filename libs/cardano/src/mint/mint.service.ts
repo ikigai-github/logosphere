@@ -1,6 +1,6 @@
 import {
   AssetWallet,
-  Config,
+  AddressWallet,
   NativeScript,
   Seed,
   ScriptAny,
@@ -198,6 +198,65 @@ export class MintService {
       return nft;
     } catch (error) {
       throw new MintError(mintMessages.MINT_FAILED, error);
+    }
+  }
+
+  async transferAsset(
+    policyId: string,
+    address: string,
+    walletId: string
+  ): Promise<string> {
+    try {
+      const addresses = [new AddressWallet(address)];
+
+      const assetName: string = process.env.ASSET_NAME || '';
+
+      const asset = new AssetWallet(policyId, assetName, 1);
+
+      const assets: { [key: string]: [AssetWallet] } = {};
+      assets[addresses[0].id] = [asset];
+
+      const minUtxo = Seed.getMinUtxoValueWithAssets([asset], config);
+      const wallet = await this.#walletService.getShelleyWallet(walletId);
+
+      const data = ['send tokens'];
+      const coinSelection = await wallet.getCoinSelection(
+        addresses,
+        [minUtxo],
+        data,
+        assets
+      );
+      const info = await this.#walletService.getNetworkInformation();
+
+      const mnemonic: string = process.env.CARDANO_WALLET_MNEMONIC;
+
+      const rootKey = Seed.deriveRootKey(mnemonic.split(','));
+      const signingKeys = coinSelection.inputs.map((i) => {
+        const privateKey = Seed.deriveKey(
+          rootKey,
+          i.derivation_path
+        ).to_raw_key();
+        return privateKey;
+      });
+
+      const metadata = Seed.buildTransactionMetadata(data);
+      const txBuild = Seed.buildTransaction(
+        coinSelection,
+        info.node_tip.absolute_slot_number * 12000,
+        { metadata: metadata, config: config }
+      );
+      const txBody = Seed.sign(txBuild, signingKeys, metadata);
+      const signed = Buffer.from(txBody.to_bytes()).toString('hex');
+      const txId = await this.#walletService.submitTx(signed);
+      console.log(
+        `Asset successfully transfered to : [${address}]. Transaction id : [${txId}]`
+      );
+      return txId;
+    } catch (error) {
+      throw new MintError(
+        `Failed to transfer assets to address ${address}`,
+        error.message
+      );
     }
   }
 }

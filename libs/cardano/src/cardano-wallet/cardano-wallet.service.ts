@@ -15,6 +15,7 @@ import {
   ApiNetworkInformation,
   TransactionWallet,
 } from 'cardano-wallet-js';
+
 import {
   cardanoWalletConfig,
   CardanoWalletConfig,
@@ -23,8 +24,6 @@ import { CardanoWalletError, walletMessages } from './cardano-wallet.errors';
 import { constants } from './cardano-wallet.constants';
 
 import { String } from 'typescript-string-operations';
-import { sha3_256 } from 'js-sha3';
-import { AddressesApi } from 'cardano-wallet-js/dist/api';
 
 export interface CardanoWallet {
   id: string;
@@ -338,6 +337,10 @@ export class CardanoWalletService {
         throw new CardanoWalletError(error.message);
       }
     }
+  }
+
+  async getShelleyWallet(walletId: string) {
+    return await this.#walletServer.getShelleyWallet(walletId);
   }
 
   generateKeys(): CardanoKeys {
