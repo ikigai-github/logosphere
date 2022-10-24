@@ -116,7 +116,10 @@ export class MintService {
 
       // get ttl info
       const info = await this.#walletService.getNetworkInformation();
-      const ttl = info.node_tip.absolute_slot_number * 12000;
+
+      const ttl =
+        info.node_tip.absolute_slot_number +
+        Number(process.env.CARDANO_NFT_LOCKED_AFTER_NUM_SLOTS || 1000);
 
       // get coin selection structure (without the assets)
       const coinSelection = await wallet.getCoinSelection(
