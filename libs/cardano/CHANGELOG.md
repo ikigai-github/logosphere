@@ -2,6 +2,18 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.4.0](https://github.com/ikigai-github/logosphere/compare/cardano-0.3.1...cardano-0.4.0) (2022-10-25)
+
+### Features
+
+- **minting:** env variable for adjusting timelock value ([25ee500](https://github.com/ikigai-github/logosphere/commit/25ee5003a0cf5101dde2ad0014e5a9949dc57ca5))
+- **minting:** fee adjustment ([ce8ae30](https://github.com/ikigai-github/logosphere/commit/ce8ae309daa6cddfe2a5bf98fa948aac96e646aa))
+- **minting:** transferring assets ([1ff1557](https://github.com/ikigai-github/logosphere/commit/1ff1557b1d82d51964664f825e2c046a14b95c62))
+
+### Bug Fixes
+
+- **minting:** non-custodial wallet creation ([5f9e9c6](https://github.com/ikigai-github/logosphere/commit/5f9e9c6fd6b377e2ff7aaacc751294ea566c754c))
+
 ### [0.3.1](https://github.com/ikigai-github/logosphere/compare/cardano-0.3.0...cardano-0.3.1) (2022-10-14)
 
 ### Bug Fixes
