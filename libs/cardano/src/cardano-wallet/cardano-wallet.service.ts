@@ -37,6 +37,7 @@ export interface CardanoWallet {
 export interface CardanoKeys {
   privateKey: string;
   publicKey: string;
+  accountPublicKey: string;
   mnemonic: string;
 }
 
@@ -349,15 +350,23 @@ export class CardanoWalletService {
     );
 
     const mnemonicSentence = Seed.toMnemonicList(recoveryPhrase);
-    const privateKey = Seed.deriveRootKey(mnemonicSentence);
-    const publicKey = privateKey.to_public();
+    const rootKey = Seed.deriveRootKey(mnemonicSentence);
+    const rootPublicKey = rootKey.to_public();
+    const accountPrivateKey = Seed.deriveAccountKey(rootKey, 0);
+    const accountPublicKey = accountPrivateKey.to_public();
 
-    const privateKeyHex = Buffer.from(privateKey.as_bytes()).toString('hex');
-    const publicKeyHex = Buffer.from(publicKey.as_bytes()).toString('hex');
+    const rootKeyHex = Buffer.from(rootKey.as_bytes()).toString('hex');
+    const rootPublicKeyHex = Buffer.from(rootPublicKey.as_bytes()).toString(
+      'hex'
+    );
+    const accountPublicKeyHex = Buffer.from(
+      accountPublicKey.as_bytes()
+    ).toString('hex');
 
     return {
-      privateKey: privateKeyHex,
-      publicKey: publicKeyHex,
+      privateKey: rootKeyHex,
+      publicKey: rootPublicKeyHex,
+      accountPublicKey: accountPublicKeyHex,
       mnemonic: mnemonicSentence.join(','),
     };
   }

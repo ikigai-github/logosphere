@@ -152,7 +152,9 @@ export class MintService {
 
       return tx;
     } catch (error) {
-      throw new MintError(mintMessages.TX_BUILD_FAILED, error);
+      if (error.message.indexOf('403') > -1)
+        throw new MintError(mintMessages.WALLET_NOT_FUNDED, error);
+      else throw new MintError(mintMessages.TX_BUILD_FAILED, error);
     }
   }
 
