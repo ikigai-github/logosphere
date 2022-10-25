@@ -111,7 +111,9 @@ export class MintService {
       const tokens = [new TokenWallet(asset, script, [keyPair])];
 
       // get min ada for address holding tokens
-      const minAda = Seed.getMinUtxoValueWithAssets([asset], config);
+      const minAda =
+        Seed.getMinUtxoValueWithAssets([asset], config) +
+        Number(process.env.CARDANO_FEE_ADJUSTMENT || 100);
       const amounts = [minAda];
 
       // get ttl info
@@ -219,7 +221,9 @@ export class MintService {
       const assets: { [key: string]: [AssetWallet] } = {};
       assets[addresses[0].id] = [asset];
 
-      const minUtxo = Seed.getMinUtxoValueWithAssets([asset], config);
+      const minUtxo =
+        Seed.getMinUtxoValueWithAssets([asset], config) +
+        Number(process.env.CARDANO_FEE_ADJUSTMENT || 100);
       const wallet = await this.#walletService.getShelleyWallet(walletId);
 
       const data = ['send tokens'];
