@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import {
@@ -14,6 +14,7 @@ import {
   ApiNetworkParameters,
   ApiNetworkInformation,
   TransactionWallet,
+  min_ada_required,
 } from 'cardano-wallet-js';
 
 import {
@@ -304,6 +305,7 @@ export class CardanoWalletService {
         account_public_key: cardanoPublicKey,
       });
 
+      console.log(`Response Status: ${response.status}`);
       if (response.status === 201) {
         const wallet = response.data;
         const shelleyWallet = await this.#walletServer.getShelleyWallet(
@@ -324,18 +326,15 @@ export class CardanoWalletService {
           name: wallet.name,
           address,
         };
-      } else {
-        throw new CardanoWalletError(
-          walletMessages.CREATE_WALLET_FAILED,
-          `Creating wallet failed with status: ${response.status}`
-        );
       }
     } catch (error) {
-      const err = JSON.parse(JSON.stringify(error));
-      if (err.status == 409) {
-        throw new CardanoWalletError(walletMessages.WALLET_EXISTS);
+      const err = error.toJSON();
+      if (err.status === 409) {
+        console.log(`Wallet already exists`);
+        // TODO: find ways of linking existing wallet
+        // retrieve walletId of existing wallet by account_public_key
       } else {
-        throw new CardanoWalletError(error.message);
+        throw new CardanoWalletError(err.message, err);
       }
     }
   }
