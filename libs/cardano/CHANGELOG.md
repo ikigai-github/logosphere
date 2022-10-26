@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.4.1](https://github.com/ikigai-github/logosphere/compare/cardano-0.4.0...cardano-0.4.1) (2022-10-26)
+
+### Bug Fixes
+
+- **wallet:** handling conflict on existing wallet ([1679e98](https://github.com/ikigai-github/logosphere/commit/1679e986754a12da64cd41a5adb6ac693b889cd5))
+
 ## [0.4.0](https://github.com/ikigai-github/logosphere/compare/cardano-0.3.1...cardano-0.4.0) (2022-10-25)
 
 ### Features
