@@ -207,6 +207,7 @@ export class GqlFederatedGenerator extends GqlGenerator {
 type WalletKeyPair {
   privateKey: String
   publicKey: String
+  accountPublicKey: String
   mnemonic: String
 }\n`;
       gql += `

@@ -25,21 +25,18 @@ export function propExample(prop: Property, random = false) {
       switch (prop.type) {
         case 'string':
           if (val) {
-            ret = prop.isUnique
-              ? `${val}${rs.generate({
+            ret = val;
+          } else {
+            ret = random
+              ? rs.generate({
                   length: prop.maxLength,
                   charset: 'alphabetic',
-                })}`
-              : val;
-          } else {
-            ret = rs.generate({
-              length: prop.maxLength,
-              charset: 'alphabetic',
-            });
+                })
+              : 'abcdefg';
           }
           break;
         case 'number':
-          ret = Math.floor(Math.random() * 10);
+          ret = random ? Math.floor(Math.random() * 10) : 1;
           break;
         case 'boolean':
           ret = random ? getRandom([true, false]) : true;
