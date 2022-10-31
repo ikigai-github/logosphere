@@ -87,7 +87,11 @@ export class MintService {
     return signingKeys;
   }
 
-  async buildTx(walletId: string, nft: Nft): Promise<CardanoTx> {
+  async buildTx(
+    walletId: string,
+    nft: Nft,
+    policyId?: string
+  ): Promise<CardanoTx> {
     try {
       const wallet = await this.#walletService.getWallet(walletId);
       const addresses = [(await wallet.getAddresses())[0]];
@@ -98,8 +102,8 @@ export class MintService {
       const keyHash = Seed.getKeyHash(policyVKey);
       const script = Seed.buildSingleIssuerScript(keyHash);
       const scriptHash = Seed.getScriptHash(script);
-      const policyId = Seed.getPolicyId(scriptHash);
-      nft.policyId = policyId;
+      const genPolicyId = Seed.getPolicyId(scriptHash);
+      nft.policyId = policyId ? policyId : genPolicyId;
 
       // prepare token as metadata standard
       const data = {};
