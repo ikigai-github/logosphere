@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.5.0](https://github.com/ikigai-github/logosphere/compare/cardano-0.4.1...cardano-0.5.0) (2022-10-31)
+
+### Features
+
+- **minting:** passing policy ID ([0fb4ca0](https://github.com/ikigai-github/logosphere/commit/0fb4ca02acf7d8f2537c0070b72f20eb3f5eac87))
+
 ### [0.4.1](https://github.com/ikigai-github/logosphere/compare/cardano-0.4.0...cardano-0.4.1) (2022-10-26)
 
 ### Bug Fixes
