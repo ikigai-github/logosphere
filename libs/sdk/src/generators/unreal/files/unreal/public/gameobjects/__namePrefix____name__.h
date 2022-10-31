@@ -1,9 +1,9 @@
 #pragma once
 
 <% imports(definitions, definition).map((imp) => {-%>
-#include "<%= imp.name %>.h"
+#include "<%= namePrefix%><%= imp.name %>.h"
 <%_ }) -%>
-#include "<%= name %>.generated.h"
+#include "<%= namePrefix %><%= name %>.generated.h"
 
 <%_ if (isEntity(definition)) { -%>
 USTRUCT(BlueprintType)

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "helpers/GeneratedConstants.h"
-#include "gameobjects/<%= name %>.h"
+#include "gameobjects/<%= namePrefix %><%= name %>.h"
 <% imports(definitions, definition).map((imp) => {-%>
 #include "mappers/<%= imp.name %>Mapper.h"
 <%_ }) -%>
@@ -35,10 +35,11 @@ static std::optional<std::vector<std::optional<std::string>>> <%= classify(arr.n
 static F<%= namePrefix.toUpperCase() %><%= name %> <%= name %>ToF<%= namePrefix.toUpperCase() %><%= name %>(std::optional<ls::<%= name %>> const& Input)
 {
 	ls::<%= name %> v;
-	try {
+	if (Input.has_value()) 
+	{
 		v = Input.value();
 	}
-	catch(const std::bad_optional_access)
+	else
 	{
 		return F<%= namePrefix.toUpperCase() %><%= name %>();
 	}

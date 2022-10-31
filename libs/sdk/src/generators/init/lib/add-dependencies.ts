@@ -41,6 +41,8 @@ export function addDependencies(tree: Tree): GeneratorCallback {
     {
       '@emurgo/cardano-serialization-lib-nodejs': '8.0.0',
       '@fluree/flureenjs': '1.0.4',
+      '@fluree/crypto-base': '0.1.6',
+      '@fluree/crypto-utils': '1.10.0',
       '@logosphere/cardano': '0.1.1',
       '@logosphere/decorators': '0.2.2',
       '@logosphere/domain': '0.1.1',

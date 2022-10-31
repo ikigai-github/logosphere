@@ -19,6 +19,7 @@ import {
   applySchemaDiff,
   schemaTransact,
 } from '@logosphere/fluree';
+import { truncate } from 'lodash';
 
 interface NormalizedSchema extends FlureeGeneratorSchema {
   projectName: string;
@@ -72,6 +73,115 @@ export async function flureeGenerator(
     SchemaType.Fluree
   );
   const newSchema: FlureeSchema = converter.convert(canonicalSchema);
+
+  // newSchema.collections.push({
+  //   _id: '_collection',
+  //   name: 'walletAsset',
+  //   predicates: [
+  //     {
+  //       _id: '_predicate',
+  //       name: 'name',
+  //       type: 'string',
+  //       doc: 'Name of the asset',
+  //     },
+  //     {
+  //       _id: '_predicate',
+  //       name: 'policyId',
+  //       type: 'string',
+  //       doc: 'Policy of the asset',
+  //     },
+  //     {
+  //       _id: '_predicate',
+  //       name: 'quantity',
+  //       type: 'int',
+  //       doc: 'Quantity of the asset',
+  //     },
+  //     {
+  //       _id: '_predicate',
+  //       name: 'metadata',
+  //       type: 'json',
+  //       doc: 'Metadata of the asset',
+  //     },
+  //     {
+  //       _id: '_predicate',
+  //       name: 'subjectId',
+  //       type: 'int',
+  //       doc: 'Fluree subject ID associated with the asset',
+  //     },
+  //   ],
+  // });
+
+  // newSchema.collections.push({
+  //   _id: '_collection',
+  //   name: 'wallet',
+  //   predicates: [
+  //     {
+  //       _id: '_predicate',
+  //       name: 'walletId',
+  //       type: 'string',
+  //       index: true,
+  //       unique: true,
+  //       doc: 'ID of the wallet',
+  //     },
+  //     {
+  //       _id: '_predicate',
+  //       name: 'address',
+  //       type: 'string',
+  //       index: true,
+  //       unique: true,
+  //       doc: 'Address of the wallet',
+  //     },
+  //     {
+  //       _id: '_predicate',
+  //       name: 'publicKey',
+  //       type: 'string',
+  //       index: true,
+  //       unique: true,
+  //       doc: 'Public key of the wallet',
+  //     },
+  //     {
+  //       _id: '_predicate',
+  //       name: 'assets',
+  //       type: 'ref',
+  //       restrictCollection: 'walletAsset',
+  //       multi: true,
+  //       doc: 'Wallet assets',
+  //     },
+  //   ],
+  // });
+
+  newSchema.collections.push({
+    _id: '_collection',
+    name: '_user',
+    predicates: [
+      {
+        _id: '_predicate',
+        name: 'password',
+        type: 'string',
+        doc: 'Hashed user password',
+      },
+      {
+        _id: '_predicate',
+        name: 'salt',
+        type: 'string',
+        doc: 'Password salt',
+      },
+      {
+        _id: '_predicate',
+        name: 'cardanoPublicKey',
+        type: 'string',
+        doc: 'User wallet public key on Cardano',
+      },
+      // {
+      //   _id: '_predicate',
+      //   name: 'wallet',
+      //   type: 'ref',
+      //   restrictCollection: 'wallet',
+      //   doc: 'User wallet on Cardano',
+      // },
+    ],
+  });
+
   options = {
     ...options,
     schemaSource: JSON.stringify(newSchema, null, 2),

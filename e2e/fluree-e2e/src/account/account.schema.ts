@@ -1,5 +1,5 @@
 import { FlureeClient } from '@logosphere/fluree';
-import { account_id_from_public } from '@fluree/crypto-base';
+import { account_id_from_private } from '@fluree/crypto-base';
 import { createECDH } from 'crypto';
 
 /**
@@ -34,7 +34,8 @@ export async function createAccount(
   // const authIdBuffer = Buffer.concat([prefixed, checksum]);
   // const myAuthId = base58(authIdBuffer);
 
-  const authId = account_id_from_public(publicKey);
+  const authId = account_id_from_private(process.env.FLUREE_SIGNING_KEY); //account_id_from_public(publicKey);
+  console.log(`Auth ID: ${authId}`);
 
   const result = await client.transact([
     {

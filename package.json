@@ -18,6 +18,7 @@
     "@commitlint/cli": "16.2.4",
     "@commitlint/config-conventional": "17.0.0",
     "@fluree/crypto-base": "0.1.6",
+    "@fluree/crypto-utils": "1.10.0",
     "@jscutlery/semver": "2.25.2",
     "@nestjs/schematics": "9.0.1",
     "@nestjs/testing": "9.0.1",

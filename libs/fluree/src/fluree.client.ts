@@ -1,7 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as fluree from '@fluree/flureenjs';
+import { sign_message } from '@fluree/crypto-base';
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
+import { createHash } from 'crypto';
+import {
+  getSinFromPublicKey,
+  signQuery,
+  signTransaction,
+  signRequest,
+} from '@fluree/crypto-utils';
 import axios from 'axios';
 import { flureeConfig, FlureeConfig } from './fluree.config';
 import { FlureeError, messages } from './fluree.errors';
@@ -15,6 +23,11 @@ import {
   FlureeQueryResponse,
   FlureeTransactionResponse,
 } from './fluree-response.interface';
+import { system as s } from './fluree.constants';
+
+import { serializeQuery } from './query/query.util';
+
+import { signableCommand } from './command/command.util';
 
 import { processDuration } from './utils';
 
@@ -178,8 +191,26 @@ export class FlureeClient {
     try {
       const connection = await this.connection();
       const channel = await fluree.db(connection, this.#config.ledger);
-      return await fluree.query(channel, fql);
+      if (process.env.FLUREE_OPEN_API === 'false') {
+        const serializedQuery = serializeQuery(fql);
+        const opts = signQuery(
+          process.env.FLUREE_ROOT_PRIVATE_KEY,
+          serializedQuery,
+          'query',
+          this.#config.ledger
+        );
+
+        const response = await axios.post(
+          `${this.#config.url}/fdb/${this.#config.ledger}/query`,
+          serializedQuery,
+          opts
+        );
+        return response.data as FlureeQueryResponse;
+      } else {
+        return await fluree.query(channel, fql);
+      }
     } catch (error: unknown) {
+      console.log(`FQL: ${JSON.stringify(fql, null, 2)}`);
       throw new FlureeError(messages.QUERY_FAILED, error);
     }
   }
@@ -197,12 +228,23 @@ export class FlureeClient {
     opts?: object
   ): Promise<FlureeTransactionResponse> {
     const connection = await this.connection();
-    const response = await fluree.transact(
-      connection,
-      this.#config.ledger,
-      tx,
-      opts
-    );
+    let response;
+    if (process.env.FLUREE_OPEN_API === 'true') {
+      response = await fluree.transact(
+        connection,
+        this.#config.ledger,
+        tx,
+        opts
+      );
+    } else {
+      const { hash, serialized } = signableCommand(
+        this.#config.ledger,
+        tx,
+        process.env.FLUREE_ROOT_AUTH_ID
+      );
+      const sig = sign_message(serialized, process.env.FLUREE_ROOT_PRIVATE_KEY);
+      response = await this.command(serialized, sig);
+    }
 
     if (response.status === 200) {
       return {
@@ -215,7 +257,7 @@ export class FlureeClient {
         auth: response.auth,
         status: response.status,
         bytes: response.bytes,
-        flakes: response.flakes.length,
+        flakes: response.flakes ? response.flakes.length : 0,
       };
     } else {
       throw new FlureeError(messages.TRANSACT_FAILED, response);
@@ -245,10 +287,38 @@ export class FlureeClient {
    */
   async transactRaw(transact: any[]) {
     try {
-      const response = await axios.post(
-        `${this.#config.url}/fdb/${this.#config.ledger}/transact`,
-        transact
-      );
+      let response;
+      if (process.env.FLUREEE_OPEN_API === 'true') {
+        response = await axios.post(
+          `${this.#config.url}/fdb/${this.#config.ledger}/transact`,
+          transact
+        );
+      } else {
+        const signAuthId = process.env.FLUREE_ROOT_AUTH_ID;
+        let command = signTransaction(
+          signAuthId,
+          this.#config.ledger,
+          Date.now() + 10000,
+          100000,
+          1,
+          process.env.FLUREE_ROOT_PRIVATE_KEY,
+          JSON.stringify(transact),
+          null
+        );
+
+        command = { ...command, 'txid-only': false };
+
+        const opts = {
+          headers: { 'Content-Type': 'application/json' },
+        };
+
+        response = await axios.post(
+          `${this.#config.url}/fdb/${this.#config.ledger}/command`,
+          JSON.stringify(command),
+          opts
+        );
+      }
+
       if (response.status === 200) {
         return {
           transactionId: response.data.id,
@@ -297,5 +367,75 @@ export class FlureeClient {
 
       this.#connection = null;
     }
+  }
+
+  async createUserAuth(publicKey: string, role: string): Promise<string> {
+    const authId = String(getSinFromPublicKey(publicKey));
+    const tx = [
+      {
+        _id: s.AUTH,
+        _action: 'add',
+        id: authId,
+        roles: [[`${s.ROLE}/${s.ID}`, role]],
+      },
+    ];
+
+    const response = await this.transactRaw(tx);
+
+    if (response.status !== 200) {
+      throw new FlureeError(`Failed to create account for ${publicKey}}`);
+    }
+
+    return authId;
+  }
+
+  async createPassword(username: string, password: string): Promise<string> {
+    const signAuthId = process.env.FLUREE_ROOT_AUTH_ID;
+    const tx = JSON.stringify({
+      user: username,
+      password: createHash('sha256').update(password).digest('hex'),
+      auth: signAuthId,
+    });
+
+    const opts = signRequest(
+      'POST',
+      `${this.#config.url}/fdb/${this.#config.ledger}/pw/generate`,
+      tx,
+      process.env.FLUREE_ROOT_PRIVATE_KEY,
+      signAuthId
+    );
+
+    const response = await axios.post(
+      `${this.#config.url}/fdb/${this.#config.ledger}/pw/generate`,
+      tx,
+      opts
+    );
+
+    return response.data;
+  }
+
+  async loginUser(username: string, password: string): Promise<string> {
+    const signAuthId = process.env.FLUREE_ROOT_AUTH_ID;
+    const tx = JSON.stringify({
+      user: username,
+      password: createHash('sha256').update(password).digest('hex'),
+      auth: signAuthId,
+    });
+
+    const opts = signRequest(
+      'POST',
+      `${this.#config.url}/fdb/${this.#config.ledger}/pw/login`,
+      tx,
+      process.env.FLUREE_ROOT_PRIVATE_KEY,
+      signAuthId
+    );
+
+    const response = await axios.post(
+      `${this.#config.url}/fdb/${this.#config.ledger}/pw/login`,
+      tx,
+      opts
+    );
+
+    return response.data;
   }
 }

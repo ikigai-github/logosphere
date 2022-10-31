@@ -1,5 +1,9 @@
+import { stringify } from '../utils';
+import { sign_message } from '@fluree/crypto-base';
+import { getSinFromPrivateKey, signQuery as sign } from '@fluree/crypto-utils';
 import { FlureeClient } from '../fluree.client';
 import {
+  FlureeQuery,
   FlureeObject,
   QuerySpec,
   isFlureeObject,
@@ -60,4 +64,23 @@ export async function query<T extends object>(
   }
 
   return result;
+}
+
+/**
+ * Takes a Fluree query object and serializes to a normalized string using a
+ * deterministic JSON stringify function.
+ * @param query The query to serialize into a string
+ * @returns a normalized and serialized representation of the query
+ */
+export function serializeQuery(query: FlureeQuery): string {
+  return stringify(query).normalize('NFKC');
+}
+
+/**
+ * Converts a serialized query string back into a Fluree query map
+ * @param query The serialized command string
+ * @returns A Fluree query map created from deserializeing the query string
+ */
+export function deserializeQuery(query: string): FlureeQuery {
+  return JSON.parse(query);
 }

@@ -2,6 +2,21 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.6.1](https://github.com/ikigai-github/logosphere/compare/sdk-0.6.0...sdk-0.6.1) (2022-10-31)
+
+## [0.6.0](https://github.com/ikigai-github/logosphere/compare/sdk-0.5.0...sdk-0.6.0) (2022-10-14)
+
+### Features
+
+- **fluree:** wallet collection ([dba923f](https://github.com/ikigai-github/logosphere/commit/dba923f8d69b24159cac5f95a8a6708fd7111b73))
+- **model:** wallet and user entities ([5fcf8dc](https://github.com/ikigai-github/logosphere/commit/5fcf8dcdd69d39dcf063bd7aa8b07cdf71b0357f))
+
+## [0.5.0](https://github.com/ikigai-github/logosphere/compare/sdk-0.4.3...sdk-0.5.0) (2022-10-07)
+
+### Features
+
+- **api:** fluree closed api ([27e3dd2](https://github.com/ikigai-github/logosphere/commit/27e3dd2507c3e775eb97a81416f8dca30f7a60e9))
+
 ### [0.4.3](https://github.com/ikigai-github/logosphere/compare/sdk-0.4.2...sdk-0.4.3) (2022-08-23)
 
 ### Bug Fixes

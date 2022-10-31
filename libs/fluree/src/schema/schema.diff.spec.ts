@@ -33,6 +33,17 @@ describe('Fluree schema diff', () => {
             },
           ],
         },
+        {
+          _id: '_collection',
+          name: '_user',
+          predicates: [
+            {
+              _id: '_predicate',
+              name: 'username',
+              type: 'string',
+            },
+          ],
+        },
       ],
     };
 
@@ -84,6 +95,22 @@ describe('Fluree schema diff', () => {
             },
           ],
         },
+        {
+          _id: '_collection',
+          name: '_user',
+          predicates: [
+            {
+              _id: '_predicate',
+              name: 'username',
+              type: 'string',
+            },
+            {
+              _id: '_predicate',
+              name: 'password',
+              type: 'string',
+            },
+          ],
+        },
       ],
     };
     const diffSchema = schemaDiff(currentSchema, updatedSchema);
@@ -131,6 +158,22 @@ describe('Fluree schema diff', () => {
             {
               _id: '_predicate',
               name: 'stringPredicate',
+              type: 'string',
+            },
+          ],
+        },
+        {
+          _id: '_collection',
+          name: '_user',
+          predicates: [
+            {
+              _id: '_predicate',
+              name: 'username',
+              type: 'string',
+            },
+            {
+              _id: '_predicate',
+              name: 'password',
               type: 'string',
             },
           ],

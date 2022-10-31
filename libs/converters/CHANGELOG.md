@@ -2,6 +2,26 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.4.2](https://github.com/ikigai-github/logosphere/compare/converters-0.4.1...converters-0.4.2) (2022-10-31)
+
+### [0.4.1](https://github.com/ikigai-github/logosphere/compare/converters-0.4.0...converters-0.4.1) (2022-10-14)
+
+### Bug Fixes
+
+- **cardano:** return mnemonic with generated keys ([4435089](https://github.com/ikigai-github/logosphere/commit/44350896a9fc1cba1d974588fea98926c2e69957))
+
+## [0.4.0](https://github.com/ikigai-github/logosphere/compare/converters-0.3.0...converters-0.4.0) (2022-10-14)
+
+### Features
+
+- **model:** wallet and user entities ([5fcf8dc](https://github.com/ikigai-github/logosphere/commit/5fcf8dcdd69d39dcf063bd7aa8b07cdf71b0357f))
+
+## [0.3.0](https://github.com/ikigai-github/logosphere/compare/converters-0.2.3...converters-0.3.0) (2022-10-07)
+
+### Features
+
+- **api:** fluree closed api ([27e3dd2](https://github.com/ikigai-github/logosphere/commit/27e3dd2507c3e775eb97a81416f8dca30f7a60e9))
+
 ### [0.2.3](https://github.com/ikigai-github/logosphere/compare/converters-0.2.2...converters-0.2.3) (2022-08-05)
 
 ### Bug Fixes

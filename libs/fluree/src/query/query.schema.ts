@@ -73,10 +73,47 @@ export interface FlureeQueryBase {
   opts?: FlureeQueryOptions;
 }
 
+export interface FlureeSignableQueryBase {
+  query: FlureeQuery;
+  serialized: string;
+  hash: string;
+}
+
+export interface FlureeQueryBaseHash {
+  query: string;
+  hash: string;
+}
+
+export interface FlureeSignedQueryBase {
+  hash: string;
+  signature: string;
+}
+
 /**
  * A Fluree query that uses the 'select' key. This implies the result will be an array of Fluree Objects
  */
 export interface FlureeMultiQuery extends FlureeQueryBase {
+  select: (string | object)[];
+}
+
+/**
+ * A Fluree query that uses the 'select' key, which can be signed. This implies the result will be an array of Fluree Objects
+ */
+export interface FlureeSignableMultiQuery extends FlureeSignableQueryBase {
+  select: (string | object)[];
+}
+
+/**
+ * A Fluree query that uses the 'select' key, which is signed. This implies the result will be an array of Fluree Objects
+ */
+export interface FlureeSignedMultiQuery extends FlureeSignedQueryBase {
+  select: (string | object)[];
+}
+
+/**
+ * A hash of a Fluree query that uses the 'select' key. This implies the result will be an array of Fluree Objects
+ */
+export interface FlureeMultiQueryHash extends FlureeQueryBaseHash {
   select: (string | object)[];
 }
 
@@ -87,7 +124,36 @@ export interface FlureeSingleQuery extends FlureeQueryBase {
   selectOne: (string | object)[];
 }
 
-export type FlureeQuery = FlureeMultiQuery | FlureeSingleQuery;
+/**
+ * A Fluree query that uses the 'selectOne' key, which can be signed. This implies the result will be a single Fluree Object.
+ */
+export interface FlureeSignableSingleQuery extends FlureeSignableQueryBase {
+  selectOne: (string | object)[];
+}
+
+/**
+ * A Fluree query that uses the 'selectOne' key, which is signed. This implies the result will be a single Fluree Object.
+ */
+export interface FlureeSignedSingleQuery extends FlureeSignedQueryBase {
+  selectOne: (string | object)[];
+}
+
+/**
+ * A hash of a Fluree query that uses the 'selectOne' key. This implies the result will be a single Fluree Object.
+ */
+export interface FlureeSingleQueryHash extends FlureeQueryBaseHash {
+  selectOne: (string | object)[];
+}
+
+export type FlureeQuery =
+  | FlureeMultiQuery
+  | FlureeSignableMultiQuery
+  | FlureeSignedMultiQuery
+  | FlureeMultiQueryHash
+  | FlureeSingleQuery
+  | FlureeSignableSingleQuery
+  | FlureeSignedSingleQuery
+  | FlureeSingleQueryHash;
 
 /**
  * All Fluree objects will have an _id field at a minimum
@@ -186,4 +252,5 @@ export interface QuerySpec {
   whereOperator?: FlureeWhereOperator;
   block?: number;
   opts?: FlureeQueryOptions;
+  auth?: string;
 }

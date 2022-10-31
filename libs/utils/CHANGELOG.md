@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.1.3](https://github.com/ikigai-github/logosphere/compare/utils-0.1.2...utils-0.1.3) (2022-10-14)
+
+### Bug Fixes
+
+- **fluree:** bug on updating subjectId in update transaction for arrays ([dec449b](https://github.com/ikigai-github/logosphere/commit/dec449bccfd9b2fd7d9a8d5f5a5a2b36cca2a69a))
+
 ### [0.1.2](https://github.com/ikigai-github/logosphere/compare/utils-0.1.1...utils-0.1.2) (2022-08-23)
 
 ### Bug Fixes

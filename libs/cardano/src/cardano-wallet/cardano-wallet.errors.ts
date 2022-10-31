@@ -11,13 +11,17 @@ export const walletMessages = Object.freeze({
   RENAME_WALLET_FAILED: 'Failed to rename wallet',
   GET_BALANCE_FAILED: 'Failed to retrieve wallet balance',
   GET_ADDRESSES_FAILED: 'Failed to retrieve wallet addresses',
+  WALLET_EXISTS: 'Wallet already exists',
 });
 
 export class CardanoWalletError extends LogosphereError {
   constructor(message: string, error?: any) {
     console.log(`Error: ${JSON.stringify(error)}`);
-    const details =
-      error.data && error.data.message ? error.data.message : error.message;
+    const details = error
+      ? error.data && error.data.message
+        ? error.data.message
+        : error.message
+      : '';
     super(`${message}: ${details}`, error);
   }
 }

@@ -1,9 +1,9 @@
 #include "transactors/<%= name %>Transactor.h"
 
 #include "LogosphereSubsystem.h"
-#include "gql/LogosphereRequest.h"
+#include "api/LogosphereRequest.h"
 
-#include "gameobjects/<%= name %>.h"
+#include "gameobjects/<%= namePrefix %><%= name %>.h"
 #include "mappers/<%= name %>Mapper.h"
 
 
@@ -39,13 +39,13 @@ void A<%= name %>Transactor::Set<%= name %>Input(F<%= namePrefix.toUpperCase() %
 // 1. type (query/mutation and operation)
 // 2. ResponseHandler (responsible for calling back to us)
 // 3. Input variables as defined in the schema
-void A<%= name %>Transactor::Request<%= name %>FindOneById()
+void A<%= name %>Transactor::Request<%= name %>FindOneById(FString const& Id)
 {
 	LogosphereSubsystem = GetLogosphereSubsystem();
 
 	UE_LOG(<%= classify(module) %>LogosphereApi, Display, TEXT("Sending <%= name %>FindOneById  Request"));
 
-	LogosphereSubsystem->ExecuteTransaction<ls::Query::<%= name %>FindOneByIdField>(ResponseHandler, TCHAR_TO_ANSI(*<%= name %>Id));
+	LogosphereSubsystem->ExecuteTransaction<ls::Query::<%= name %>FindOneByIdField>(ResponseHandler, TCHAR_TO_UTF8(*Id));
 }
 
 void A<%= name %>Transactor::Request<%= name %>Save()
@@ -72,4 +72,20 @@ F<%= namePrefix.toUpperCase() %><%= name %> A<%= name %>Transactor::Receive<%= n
 	UE_LOG(<%= classify(module) %>LogosphereApi, Display, TEXT("Received <%= name %>MintNft Response"));
 	return RequestToUnrealObject<ls::Mutation::<%= name %>MintNftField, ls::<%= name %>, F<%= namePrefix.toUpperCase() %><%= name %>>(Request, <%= name %>ToF<%= namePrefix.toUpperCase() %><%= name %>);
 }
+
+void A<%= name %>Transactor::Request<%= name %>MintNftTx()
+{
+	LogosphereSubsystem = GetLogosphereSubsystem();
+
+	UE_LOG(CbLogosphereApi, Display, TEXT("Sending <%= name %>MintNftTx Request"));
+
+	LogosphereSubsystem->ExecuteTransaction<ls::Mutation::<%= name %>MintNftTxField>(ResponseHandler, <%= name %>Input);
+}
+
+FString A<%= name %>Transactor::Receive<%= name %>MintNftTx(ULogosphereRequest const* Request)
+{
+	UE_LOG(CbLogosphereApi, Display, TEXT("Received <%= name %>MintNftTx Response"));
+	return RequestToUnrealObject<ls::Mutation::<%= name %>MintNftTxField, std::string, FString>(Request, StdStringToFString);
+}
+
 <%_ } -%>

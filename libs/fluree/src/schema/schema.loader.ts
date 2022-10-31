@@ -29,7 +29,7 @@ export async function schemaLoader(module: string): Promise<FlureeSchema> {
     collections: [
       ...collections
         //filter out system collections, starting with _
-        .filter((collection) => collection[colNameKey][0] !== '_')
+        //.filter((collection) => collection[colNameKey][0] !== '_')
         .map((collection) => {
           return {
             ...flattenNames(collection),

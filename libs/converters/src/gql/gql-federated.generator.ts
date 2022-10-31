@@ -47,6 +47,13 @@ export class GqlFederatedGenerator extends GqlGenerator {
             )}): [${s.classify(def.name)}]\n`;
           });
       });
+    queryString += '\tgetWalletBalance(walletId: String): Float\n';
+    queryString += '\tgetWallet(walletId: String, mnemonic: String): Wallet\n';
+    queryString += '\tgenerateKeys(username: String): WalletKeyPair\n';
+    queryString +=
+      '\tloginUser(username: String, password: String): UserAuth\n';
+    queryString += '\tgetLastTxId(username: String): String\n';
+    queryString += '\tgetUserWallet(username: String): Wallet\n';
     queryString += '}\n\n';
     return queryString;
   }
@@ -64,8 +71,22 @@ export class GqlFederatedGenerator extends GqlGenerator {
           mutationString += `\t${s.camelize(def.name)}MintNft(${s.camelize(
             def.name
           )}: ${s.classify(def.name)}Input): ${s.classify(def.name)}\n`;
+          mutationString += `\t${s.camelize(def.name)}MintNftTx(${s.camelize(
+            def.name
+          )}: ${s.classify(def.name)}Input): String\n`;
         }
       });
+    mutationString +=
+      '\tcreateWallet(name: String, passphrase: String): Wallet\n';
+    mutationString +=
+      '\tcreateWalletFromPubKey(username: String, cardanoPublicKey: String): Wallet\n';
+    mutationString +=
+      '\tcreateUserAuth(publicKey: String, role: String): UserAuth\n';
+    mutationString +=
+      '\tcreatePassword(username: String, password: String): String\n';
+    mutationString +=
+      '\tcreateUser(username: String, password: String, role: String): UserAuth\n';
+    mutationString += '\tsubmitTx(txCborHex: String): String\n';
     mutationString += '}\n\n';
     return mutationString;
   }
@@ -172,6 +193,30 @@ export class GqlFederatedGenerator extends GqlGenerator {
         definitions: moduleDefs[module] as Definition[],
       };
       let gql = super.generate(sch);
+      //       gql += `
+      // type Wallet {
+      //   name: String
+      //   passphrase: String
+      //   id: String
+      //   publicKey: String
+      //   privateKey: String
+      //   mnemonic: String
+      //   address: String
+      // }\n`;
+      gql += `
+type WalletKeyPair {
+  privateKey: String
+  publicKey: String
+  accountPublicKey: String
+  mnemonic: String
+}\n`;
+      gql += `
+type UserAuth {
+  username: String
+  cardanoPublicKey: String
+  authId: String
+  token: String
+}\n\n`;
       gql += this.#generateQueries(sch);
       gql += this.#generateMutations(sch);
 

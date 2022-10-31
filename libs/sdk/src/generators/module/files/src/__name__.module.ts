@@ -10,8 +10,13 @@ import {
   cardanoWalletConfig,
   mintConfig,
 } from '@logosphere/cardano';
-import {} from './repositories/fluree';
-import {} from './resolvers';
+import {
+  UserAuthFlureeRepository
+} from './repositories/fluree';
+import { 
+  WalletResolver,
+  UserAuthResolver
+} from './resolvers';
 import {} from './mappers/fluree';
 import {} from './mappers/dto';
 
@@ -24,7 +29,10 @@ import {} from './mappers/dto';
   providers: [
     FlureeClient,
     CardanoWalletService,
-    MintService
+    MintService,
+    UserAuthFlureeRepository,
+    WalletResolver,
+    UserAuthResolver
   ],
   exports: []
 })
