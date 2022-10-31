@@ -1,6 +1,6 @@
 {
   "name": "@logosphere/sdk",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "The Nx Plugin for Logosphere SDK",
   "main": "./src/index.js",
   "typings": "./index.d.ts",

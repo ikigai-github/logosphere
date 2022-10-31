@@ -2,6 +2,8 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.6.1](https://github.com/ikigai-github/logosphere/compare/sdk-0.6.0...sdk-0.6.1) (2022-10-31)
+
 ## [0.6.0](https://github.com/ikigai-github/logosphere/compare/sdk-0.5.0...sdk-0.6.0) (2022-10-14)
 
 ### Features
