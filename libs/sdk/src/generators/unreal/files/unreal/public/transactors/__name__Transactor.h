@@ -1,6 +1,6 @@
 #pragma once
 
-#include "gameobjects/<%= name %>.h"
+#include "gameobjects/<%= namePrefix %><%= name %>.h"
 #include "LogosphereSubsystem.h"
 #include "LogosphereTransactor.h"
 
@@ -16,7 +16,7 @@ class CBLOGOSPHERE_API A<%= name %>Transactor : public ALogosphereTransactor
 public:
 	// Request/Receive lifecycle for Query => <%= name %>FindOneById.
 	UFUNCTION(BlueprintCallable)
-	void Request<%= name %>FindOneById();
+	void Request<%= name %>FindOneById(FString const& Id);
 
 	UFUNCTION(BlueprintCallable)
 	F<%= namePrefix.toUpperCase() %><%= name %> Receive<%= name %>FindOneById(ULogosphereRequest const * Request);
@@ -35,6 +35,12 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	F<%= namePrefix.toUpperCase() %><%= name %> Receive<%= name %>MintNft(ULogosphereRequest const * Request);
+
+	UFUNCTION(BlueprintCallable)
+	void Request<%= name %>MintNftTx();
+
+	UFUNCTION(BlueprintCallable)
+	FString Receive<%= name %>MintNftTx(ULogosphereRequest const * Request);
 	<%_ } -%>
 
 	// Helper functions for blueprint input.
