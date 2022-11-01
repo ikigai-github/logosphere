@@ -17,7 +17,8 @@ import { Nft } from './nft.dto';
 import { CardanoWalletService } from '../cardano-wallet';
 
 import * as config from './config.testnet.json';
-import * as trx from './tx.json';
+
+const METADATA_LABEL = 721;
 
 export interface CardanoTx {
   coinSelection: ApiCoinSelection;
@@ -107,7 +108,7 @@ export class MintService {
       // prepare token as metadata standard
       const data = {};
       const preparedToken = this.#prepareTokenData(nft);
-      data[721] = preparedToken;
+      data[METADATA_LABEL] = preparedToken;
 
       // configure
       const asset = new AssetWallet(nft.policyId, nft.assetName, 1);
