@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.5.1](https://github.com/ikigai-github/logosphere/compare/cardano-0.5.0...cardano-0.5.1) (2022-11-01)
+
+### Bug Fixes
+
+- **minting:** changing metadata label to 721 for NFTs ([274f1ae](https://github.com/ikigai-github/logosphere/commit/274f1ae2fb241df39925f72fe4e86bf4bd08723b))
+
 ## [0.5.0](https://github.com/ikigai-github/logosphere/compare/cardano-0.4.1...cardano-0.5.0) (2022-10-31)
 
 ### Features
