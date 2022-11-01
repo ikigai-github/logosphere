@@ -44,7 +44,6 @@ export class MintService {
           logosphere: nft.logosphere,
         },
       },
-      version: nft.version,
     };
   }
 
@@ -108,10 +107,10 @@ export class MintService {
       // prepare token as metadata standard
       const data = {};
       const preparedToken = this.#prepareTokenData(nft);
-      data[0] = preparedToken;
+      data[721] = preparedToken;
 
       // configure
-      const asset = new AssetWallet(policyId, nft.assetName, 1);
+      const asset = new AssetWallet(nft.policyId, nft.assetName, 1);
       const tokens = [new TokenWallet(asset, script, [keyPair])];
 
       // get min ada for address holding tokens
