@@ -7,7 +7,19 @@ pnpm install
 
 echo ""
 echo "<<< Building Logosphere SDK libraries >>>"
-pnpm nx affected:build
+pnpm nx build cardano
+pnpm nx  build configuration
+pnpm nx  build converters
+pnpm nx  build decorators
+pnpm nx  build domain
+pnpm nx  build errors
+pnpm nx  build fluree
+pnpm nx  build ipfs
+pnpm nx  build media
+pnpm nx  build readers
+pnpm nx  build sdk
+pnpm nx  build test-data
+pnpm nx  build utils
 
 workspace=$1
 pushd ../${workspace}
