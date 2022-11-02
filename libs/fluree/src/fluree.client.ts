@@ -1,3 +1,4 @@
+/* eslint-disable no-extra-boolean-cast */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as fluree from '@fluree/flureenjs';
 import { sign_message } from '@fluree/crypto-base';
@@ -288,7 +289,7 @@ export class FlureeClient {
   async transactRaw(transact: any[]) {
     try {
       let response;
-      if (process.env.FLUREEE_OPEN_API === 'true') {
+      if (!!process.env.FLUREE_OPEN_API) {
         response = await axios.post(
           `${this.#config.url}/fdb/${this.#config.ledger}/transact`,
           transact
