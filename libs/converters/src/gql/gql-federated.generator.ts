@@ -10,6 +10,11 @@ import { constants as c } from './gql.constants';
 import { GqlFederatedSchema } from './gql-federated.schema';
 
 export class GqlFederatedGenerator extends GqlGenerator {
+  private _typeMap = {
+    number: 'int',
+    integer: 'int',
+  };
+
   #generateQueries(schema: CanonicalSchema): string {
     let queryString = 'type Query {\n';
     schema.definitions
@@ -34,7 +39,7 @@ export class GqlFederatedGenerator extends GqlGenerator {
             queryString += `\t${s.camelize(def.name)}FindOneBy${s.classify(
               prop.name
             )}(${s.camelize(prop.name)}: ${s.classify(
-              prop.type
+              this._typeMap[prop.type] || prop.type
             )}): ${s.classify(def.name)}\n`;
           });
         def.props
@@ -43,7 +48,7 @@ export class GqlFederatedGenerator extends GqlGenerator {
             queryString += `\t${s.camelize(def.name)}FindAllBy${s.classify(
               prop.name
             )}(${s.camelize(prop.name)}: ${s.classify(
-              prop.type
+              this._typeMap[prop.type] || prop.type
             )}): [${s.classify(def.name)}]\n`;
           });
       });

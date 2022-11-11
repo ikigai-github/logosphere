@@ -288,7 +288,7 @@ export class FlureeClient {
   async transactRaw(transact: any[]) {
     try {
       let response;
-      if (process.env.FLUREEE_OPEN_API === 'true') {
+      if (process.env.FLUREE_OPEN_API === 'true') {
         response = await axios.post(
           `${this.#config.url}/fdb/${this.#config.ledger}/transact`,
           transact
