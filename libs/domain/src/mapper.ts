@@ -32,7 +32,7 @@ export abstract class Mapper<T> {
    * @returns Converted value into type
    */
   protected scalar<S>(type: { (v: any): S }, val: any) {
-    return val ? type(val) : undefined;
+    return val !== undefined ? type(val) : undefined;
   }
 
   /**

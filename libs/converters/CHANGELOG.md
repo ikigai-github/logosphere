@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.4.3](https://github.com/ikigai-github/logosphere/compare/converters-0.4.2...converters-0.4.3) (2022-11-14)
+
+### Bug Fixes
+
+- **sdk:** bug fixes ([c9d03bf](https://github.com/ikigai-github/logosphere/commit/c9d03bfbdffc2b4440102fa643ba1c5bd5580915))
+
 ### [0.4.2](https://github.com/ikigai-github/logosphere/compare/converters-0.4.1...converters-0.4.2) (2022-10-31)
 
 ### [0.4.1](https://github.com/ikigai-github/logosphere/compare/converters-0.4.0...converters-0.4.1) (2022-10-14)

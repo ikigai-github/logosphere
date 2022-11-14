@@ -7,10 +7,10 @@ import {
 import { system as sc } from '../fluree.constants';
 import { FlureeSchema } from './schema.interfaces';
 
-export async function schemaLoader(module: string): Promise<FlureeSchema> {
+export async function schemaLoader(ledger: string): Promise<FlureeSchema> {
   const fluree = new FlureeClient({
     url: process.env.FLUREE_URL || 'http://localhost:8090',
-    ledger: process.env.FLUREE_LEDGER || `local/${module}`,
+    ledger: process.env.FLUREE_LEDGER || ledger,
   });
 
   const collectionSpec = compile(select().from(sc.COLLECTION).build());
