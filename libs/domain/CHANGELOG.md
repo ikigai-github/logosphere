@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.1.2](https://github.com/ikigai-github/logosphere/compare/domain-0.1.1...domain-0.1.2) (2022-11-14)
+
+### Bug Fixes
+
+- **sdk:** bug fixes ([c9d03bf](https://github.com/ikigai-github/logosphere/commit/c9d03bfbdffc2b4440102fa643ba1c5bd5580915))
+
 ### [0.1.1](https://github.com/ikigai-github/logosphere/compare/domain-0.1.0...domain-0.1.1) (2022-06-30)
 
 ### Bug Fixes
