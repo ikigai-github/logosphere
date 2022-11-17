@@ -5,26 +5,31 @@ RUN corepack enable && \
 ARG NPM_TOKEN
 
 WORKDIR /app
-COPY ./apps/<%= name %> /app
-COPY ./libs/codegen/<%= name %>/src/gql /app
-COPY ./libs/codegen/<%= name %>/src/fluree /app
+COPY ./apps/<%= name %> /app/
+COPY ./libs/codegen/<%= name %>/src/gql /app/
+COPY ./libs/codegen/<%= name %>/src/fluree /app/
 RUN echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc && \
     pnpm install --production && \
     pnpm install tslib && \
     pnpm install @fluree/crypto-base@0.1.6 && \
     pnpm install @fluree/crypto-utils@1.10.0 && \
-    pnpm link libs/cardano && \
-    pnpm link libs/configuration && \
-    pnpm link libs/converters && \
-    pnpm link libs/decorators && \
-    pnpm link libs/domain && \
-    pnpm link libs/errors && \
-    pnpm link libs/readers && \
-    pnpm link libs/sdk && \
-    pnpm link libs/fluree && \
-    pnpm link libs/test-data && \
-    pnpm link libs/utils && \
     rm -f .npmrc
+
+WORKDIR /app
+COPY ./logosphere_dist_libs /app/node_modules/logosphere_dist_libs
+## TODO: create a script that we'd copy and execute, to have a more concise Docker file
+RUN \
+    pnpm link logosphere_dist_libs/cardano && \
+    pnpm link logosphere_dist_libs/configuration && \
+    pnpm link logosphere_dist_libs/converters && \
+    pnpm link logosphere_dist_libs/decorators && \
+    pnpm link logosphere_dist_libs/domain && \
+    pnpm link logosphere_dist_libs/errors && \
+    pnpm link logosphere_dist_libs/readers && \
+    pnpm link logosphere_dist_libs/sdk && \
+    pnpm link logosphere_dist_libs/fluree && \
+    pnpm link logosphere_dist_libs/test-data && \
+    pnpm link logosphere_dist_libs/utils
 
 FROM node:lts-alpine 
 RUN  apk update && \
