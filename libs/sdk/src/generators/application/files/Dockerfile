@@ -1,6 +1,6 @@
 FROM node:lts-alpine AS builder
 RUN corepack enable && \
-    corepack prepare pnpm@6.32.11 --activate
+    corepack prepare pnpm@6.35.0 --activate
 
 ARG NPM_TOKEN
 
