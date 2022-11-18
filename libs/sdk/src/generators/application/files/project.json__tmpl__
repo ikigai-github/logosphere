@@ -40,6 +40,29 @@
         "tags": ["logosphere/<%= name %>:latest"]
       }
     },
+    "docker-local": {
+      "executor": "@nx-tools/nx-docker:build",
+      "options": {
+        "context": "dist",
+        "tags": ["logosphere/<%= name %>:latest"],
+        "file": "apps/<%= name %>/Dockerfile.local"
+      },
+      "dependsOn": [{ "projects": "self", "target": "copy-logosphere-local" }]
+    },
+    "copy-logosphere-local": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "cp -RL ../logosphere/dist/libs dist/logosphere_dist_libs"
+          },
+          {
+            "command": "echo  🚚 : ../logosphere/dist/libs copied to ./dist/logosphere_dist_libs"
+          }
+        ],
+        "parallel": false
+      }
+    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["dist/<%= root %>"],
