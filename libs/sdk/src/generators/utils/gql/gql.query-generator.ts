@@ -1,4 +1,4 @@
-import { Definition, DefinitionType, Property } from '@logosphere/converters';
+import { Definition, DefinitionType, Property } from '@logosphere/ddd';
 import { system as s } from './gql.query-generator.constants';
 
 function generateGqlQuery(

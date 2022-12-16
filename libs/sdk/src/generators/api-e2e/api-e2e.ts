@@ -13,7 +13,7 @@ import {
   Definition,
   DefinitionType,
   canonicalSchemaLoader,
-} from '@logosphere/converters';
+} from '@logosphere/ddd';
 import { strings } from '@angular-devkit/core';
 import { DEFAULT_FIXTURE_DEPTH } from '../../common';
 import { tsFormatter, gqlFormatter } from '../utils';

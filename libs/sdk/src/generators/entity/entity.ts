@@ -14,7 +14,7 @@ import {
   Definition,
   DefinitionType,
   canonicalSchemaLoader,
-} from '@logosphere/converters';
+} from '@logosphere/ddd';
 import { tsFormatter } from '../utils';
 import { EntityGeneratorSchema } from './schema';
 import { DEFAULT_CODEGEN_DIR } from '../../common';

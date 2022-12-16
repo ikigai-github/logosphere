@@ -11,7 +11,7 @@ import {
   ConverterFactory,
   SchemaType,
   canonicalSchemaLoader,
-} from '@logosphere/converters';
+} from '@logosphere/ddd';
 import { FlureeGeneratorSchema } from './schema';
 import { DEFAULT_CODEGEN_DIR } from '../../common';
 import {

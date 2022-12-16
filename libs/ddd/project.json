@@ -1,0 +1,34 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/ddd/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/ddd/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/ddd"],
+      "options": {
+        "jestConfig": "libs/ddd/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/ddd",
+        "tsConfig": "libs/ddd/tsconfig.lib.json",
+        "packageJson": "libs/ddd/package.json",
+        "main": "libs/ddd/src/index.ts",
+        "assets": ["libs/ddd/*.md"]
+      }
+    }
+  },
+  "tags": []
+}

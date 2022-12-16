@@ -1,9 +1,9 @@
-import { Definition, DefinitionType, Property } from '@logosphere/converters';
+import { Definition, DefinitionType, Property } from '@logosphere/ddd';
 import {
   fixtures as f,
   predicates as p,
 } from './dto.fixture-generator.constants';
-import { propExample } from '@logosphere/converters';
+import { propExample } from '@logosphere/ddd';
 
 function generateDtoData(
   defs: Definition[],

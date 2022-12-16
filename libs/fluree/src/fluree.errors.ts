@@ -1,5 +1,4 @@
-import { LogosphereError } from '@logosphere/errors';
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const messages = Object.freeze({
   TRANSACT_FAILED: 'Fluree transact failed',
   QUERY_FAILED: 'Fluree query failed',
@@ -14,9 +13,10 @@ export const messages = Object.freeze({
   TX_WAIT_FAILED: 'Failed waiting for transaction to complete',
 });
 
-export class FlureeError extends LogosphereError {
-  constructor(message: string, error?) {
+export class FlureeError extends Error {
+  constructor(message: string, error?: any) {
+    super(message);
     const details = error?.response?.data?.message ?? '';
-    super(`${message}: ${details}`, error);
+    this.message = `${message}${details ? ': ' + details : ''}`;
   }
 }

@@ -15,7 +15,7 @@ import {
   Definition,
   canonicalSchemaLoader,
   DefinitionType,
-} from '@logosphere/converters';
+} from '@logosphere/ddd';
 import { UnrealEngineGeneratorSchema } from './schema';
 import { DEFAULT_CODEGEN_DIR } from '../../common';
 import { isKeyValueDef, cppFormatter } from './lib';
