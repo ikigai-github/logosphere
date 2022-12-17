@@ -9,11 +9,10 @@ import {
   offsetFromRoot,
   Tree,
 } from '@nrwl/devkit';
-import {
-  Definition,
-  DefinitionType,
-  canonicalSchemaLoader,
-} from '@logosphere/ddd';
+import { Definition, DefinitionType } from '@logosphere/schema';
+
+import { canonicalSchemaLoader } from '@logosphere/model';
+
 import { strings } from '@angular-devkit/core';
 import { DEFAULT_FIXTURE_DEPTH } from '../../common';
 import { tsFormatter, gqlFormatter } from '../utils';

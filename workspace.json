@@ -3,13 +3,14 @@
   "projects": {
     "cardano": "libs/cardano",
     "cardano-e2e": "e2e/cardano-e2e",
-    "ddd": "libs/ddd",
     "fluree": "libs/fluree",
     "fluree-e2e": "e2e/fluree-e2e",
     "ipfs": "libs/ipfs",
     "ipfs-e2e": "e2e/ipfs-e2e",
     "media": "libs/media",
     "media-e2e": "e2e/media-e2e",
+    "model": "libs/model",
+    "schema": "libs/schema",
     "sdk": "libs/sdk",
     "sdk-e2e": "e2e/sdk-e2e"
   }

@@ -1,0 +1,301 @@
+{
+  "modelName": "user",
+  "collections": [],
+  "buckets": [],
+  "views": [],
+  "relationships": [],
+  "users": [],
+  "diagramViews": [],
+  "idToNameHashTable": {
+    "9b895d70-65f0-11ec-bb96-bff80ff94019": "user",
+    "a3bf9180-65f0-11ec-bb96-bff80ff94019": "username",
+    "addf1f00-65f0-11ec-bb96-bff80ff94019": "handle",
+    "c0ebad70-65f0-11ec-bb96-bff80ff94019": "wallet",
+    "ca0367e0-65f0-11ec-bb96-bff80ff94019": "address",
+    "d779e890-65f0-11ec-bb96-bff80ff94019": "owner",
+    "06648f20-65f1-11ec-bb96-bff80ff94019": "wallets",
+    "0ae7b730-65fa-11ec-bb96-bff80ff94019": "nfts",
+    "4806b030-65fa-11ec-bb96-bff80ff94019": "artworks",
+    "932b86b0-65fc-11ec-bb96-bff80ff94019": "listings",
+    "b952ad50-65fc-11ec-bb96-bff80ff94019": "bids"
+  },
+  "definitions": {
+    "type": "definitions",
+    "properties": [
+      {
+        "name": "user",
+        "hackoladeMeta": {},
+        "isActivated": true,
+        "type": "document",
+        "properties": [
+          {
+            "name": "username",
+            "hackoladeMeta": {},
+            "isActivated": true,
+            "type": "string",
+            "properties": [],
+            "GUID": "a3bf9180-65f0-11ec-bb96-bff80ff94019",
+            "description": "Unique username that user can pick for themselves. "
+          },
+          {
+            "name": "handle",
+            "hackoladeMeta": {},
+            "isActivated": true,
+            "type": "string",
+            "properties": [],
+            "GUID": "addf1f00-65f0-11ec-bb96-bff80ff94019",
+            "description": "Handle, such as from adahandle.io"
+          },
+          {
+            "name": "wallets",
+            "hackoladeMeta": {},
+            "isActivated": true,
+            "type": "array",
+            "properties": [
+              {
+                "GUID": "c3625e00-710d-11ec-a5b0-db9d7e993846",
+                "type": "reference",
+                "$ref": "#model/definitions/wallet",
+                "refType": "model",
+                "ref": "c0ebad70-65f0-11ec-bb96-bff80ff94019",
+                "refIdPath": [
+                  "9087ad50-65f0-11ec-bb96-bff80ff94019",
+                  "9087d460-65f0-11ec-bb96-bff80ff94019",
+                  "c0ebad70-65f0-11ec-bb96-bff80ff94019"
+                ],
+                "isActivated": true,
+                "displayName": "wallet",
+                "hackoladeMeta": {},
+                "arrayItem": true
+              }
+            ],
+            "additionalItems": true,
+            "GUID": "06648f20-65f1-11ec-bb96-bff80ff94019",
+            "description": "Wallets that belong to the user"
+          },
+          {
+            "name": "nfts",
+            "hackoladeMeta": {},
+            "isActivated": true,
+            "type": "array",
+            "properties": [
+              {
+                "hackoladeMeta": {},
+                "isActivated": true,
+                "type": "any",
+                "properties": [],
+                "GUID": "0aee46e0-65fa-11ec-bb96-bff80ff94019",
+                "arrayItem": true,
+                "arrayParentType": "array",
+                "default": "minting.hck.json#nft",
+                "displayName": "nft",
+                "error": {}
+              }
+            ],
+            "additionalItems": true,
+            "GUID": "0ae7b730-65fa-11ec-bb96-bff80ff94019",
+            "description": "NFTs that the user is an owner of"
+          },
+          {
+            "name": "artworks",
+            "hackoladeMeta": {},
+            "isActivated": true,
+            "type": "array",
+            "properties": [
+              {
+                "hackoladeMeta": {},
+                "isActivated": true,
+                "type": "any",
+                "properties": [],
+                "GUID": "480d66f0-65fa-11ec-bb96-bff80ff94019",
+                "arrayItem": true,
+                "arrayParentType": "array",
+                "displayName": "artwork",
+                "default": "minting.hck.json#artwork"
+              }
+            ],
+            "additionalItems": true,
+            "GUID": "4806b030-65fa-11ec-bb96-bff80ff94019",
+            "description": "Artworks that user is an owner of"
+          },
+          {
+            "name": "listings",
+            "hackoladeMeta": {},
+            "isActivated": true,
+            "type": "array",
+            "properties": [
+              {
+                "hackoladeMeta": {},
+                "isActivated": true,
+                "type": "any",
+                "properties": [],
+                "GUID": "933327d0-65fc-11ec-bb96-bff80ff94019",
+                "arrayItem": true,
+                "arrayParentType": "array",
+                "displayName": "listing",
+                "default": "auction.hck.json#listing"
+              }
+            ],
+            "additionalItems": true,
+            "GUID": "932b86b0-65fc-11ec-bb96-bff80ff94019",
+            "description": "Auction listings that the user is an owner of"
+          },
+          {
+            "name": "bids",
+            "hackoladeMeta": {},
+            "isActivated": true,
+            "type": "array",
+            "properties": [
+              {
+                "hackoladeMeta": {},
+                "isActivated": true,
+                "type": "any",
+                "properties": [],
+                "GUID": "b957dd70-65fc-11ec-bb96-bff80ff94019",
+                "arrayItem": true,
+                "arrayParentType": "array",
+                "displayName": "bid",
+                "default": "auction.hck.json#bid"
+              }
+            ],
+            "additionalItems": true,
+            "GUID": "b952ad50-65fc-11ec-bb96-bff80ff94019",
+            "description": "Active bids that the user placed on an auction"
+          }
+        ],
+        "additionalProperties": false,
+        "GUID": "9b895d70-65f0-11ec-bb96-bff80ff94019",
+        "definitionRefs": [
+          [
+            "9087ad50-65f0-11ec-bb96-bff80ff94019",
+            "9087d460-65f0-11ec-bb96-bff80ff94019",
+            "c0ebad70-65f0-11ec-bb96-bff80ff94019",
+            "d779e890-65f0-11ec-bb96-bff80ff94019"
+          ],
+          [
+            "9087ad50-65f0-11ec-bb96-bff80ff94019",
+            "9087d460-65f0-11ec-bb96-bff80ff94019",
+            "9b895d70-65f0-11ec-bb96-bff80ff94019",
+            "06648f20-65f1-11ec-bb96-bff80ff94019",
+            "1e799be0-65f2-11ec-bb96-bff80ff94019",
+            "408d3611-65f2-11ec-bb96-bff80ff94019"
+          ]
+        ],
+        "description": "User of the NFT marketplace"
+      },
+      {
+        "name": "wallet",
+        "hackoladeMeta": {},
+        "isActivated": true,
+        "type": "document",
+        "properties": [
+          {
+            "name": "address",
+            "hackoladeMeta": {},
+            "isActivated": true,
+            "type": "string",
+            "properties": [],
+            "GUID": "ca0367e0-65f0-11ec-bb96-bff80ff94019",
+            "description": "Address of the wallet"
+          },
+          {
+            "GUID": "d779e890-65f0-11ec-bb96-bff80ff94019",
+            "name": "owner",
+            "type": "reference",
+            "$ref": "#model/definitions/user",
+            "refType": "model",
+            "ref": "9b895d70-65f0-11ec-bb96-bff80ff94019",
+            "refIdPath": [
+              "9087ad50-65f0-11ec-bb96-bff80ff94019",
+              "9087d460-65f0-11ec-bb96-bff80ff94019",
+              "9b895d70-65f0-11ec-bb96-bff80ff94019"
+            ],
+            "isActivated": true,
+            "error": {
+              "isActivated": false
+            }
+          }
+        ],
+        "additionalProperties": false,
+        "GUID": "c0ebad70-65f0-11ec-bb96-bff80ff94019",
+        "definitionRefs": [
+          [
+            "9087ad50-65f0-11ec-bb96-bff80ff94019",
+            "9087d460-65f0-11ec-bb96-bff80ff94019",
+            "9b895d70-65f0-11ec-bb96-bff80ff94019",
+            "06648f20-65f1-11ec-bb96-bff80ff94019",
+            "c3625e00-710d-11ec-a5b0-db9d7e993846"
+          ]
+        ],
+        "description": "An ADA crypto wallet, custodial or non-custodial"
+      }
+    ],
+    "GUID": "9087d460-65f0-11ec-bb96-bff80ff94019"
+  },
+  "polyglotDefinitions": {
+    "type": "polyglotDefinitions",
+    "properties": [],
+    "GUID": "9087d462-65f0-11ec-bb96-bff80ff94019"
+  },
+  "externalDefinitions": {
+    "type": "externalDefinitions",
+    "properties": [],
+    "GUID": "9087d461-65f0-11ec-bb96-bff80ff94019"
+  },
+  "sources": [],
+  "decorativeSymbols": [],
+  "dbVendor": "JSON",
+  "dbVersion": "2020-12",
+  "appTarget": "JSON",
+  "creationTS": "2021-12-26T02:07:23.301Z",
+  "GUID": "9087ad50-65f0-11ec-bb96-bff80ff94019",
+  "isLineageEnabled": false,
+  "hackoladeMeta": {
+    "validationErrors": {
+      "modelName": false
+    },
+    "customPropertiesUpdated": true
+  },
+  "lastModifTS": "2022-01-11T05:33:58.749Z",
+  "persistenceSchemaVersion": "5",
+  "isCreatedByPlugin": true,
+  "pluginInformation": {
+    "pluginEngineVersion": "1.0.0"
+  },
+  "applicationInformation": {
+    "version": "5.3.0"
+  },
+  "settings": {
+    "centralPane": {
+      "dbLevel": {
+        "erd": [],
+        "buckets": [],
+        "collapsedNodes": [],
+        "activeRelationship": "",
+        "activeRelationshipFields": {
+          "childField": [],
+          "parentField": []
+        },
+        "selectedCollections": [],
+        "displayColorPicker": false,
+        "graphView": {
+          "erd": [],
+          "buckets": [],
+          "decorativeSymbols": [],
+          "forceLayout": true,
+          "defaultLinkLength": 300
+        },
+        "diagramViews": [],
+        "decorativeSymbols": [],
+        "nestedCollectionsLayout": "horizontal",
+        "options": []
+      },
+      "collectionLevel": {},
+      "changed": false
+    },
+    "dtDiagram": {
+      "collapsedNodes": [],
+      "shouldDistributeCollections": false
+    }
+  }
+}

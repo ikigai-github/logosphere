@@ -5,7 +5,8 @@ import {
   Property,
   DefinitionType,
   propExample,
-} from '@logosphere/ddd';
+} from '@logosphere/schema';
+
 import { strings } from '@angular-devkit/core';
 import {
   classify,

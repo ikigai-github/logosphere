@@ -11,11 +11,9 @@ import {
 
 import { strings } from '@angular-devkit/core';
 
-import {
-  Definition,
-  canonicalSchemaLoader,
-  DefinitionType,
-} from '@logosphere/ddd';
+import { Definition, DefinitionType } from '@logosphere/schema';
+
+import { canonicalSchemaLoader } from '@logosphere/model';
 import { UnrealEngineGeneratorSchema } from './schema';
 import { DEFAULT_CODEGEN_DIR } from '../../common';
 import { isKeyValueDef, cppFormatter } from './lib';

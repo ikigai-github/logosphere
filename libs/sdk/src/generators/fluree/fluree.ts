@@ -7,11 +7,11 @@ import {
   offsetFromRoot,
   Tree,
 } from '@nrwl/devkit';
-import {
-  ConverterFactory,
-  SchemaType,
-  canonicalSchemaLoader,
-} from '@logosphere/ddd';
+
+import { ConverterFactory, SchemaType } from '@logosphere/schema';
+
+import { canonicalSchemaLoader } from '@logosphere/model';
+
 import { FlureeGeneratorSchema } from './schema';
 import { DEFAULT_CODEGEN_DIR } from '../../common';
 import {

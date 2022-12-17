@@ -8,7 +8,7 @@ import {
   Tree,
 } from '@nrwl/devkit';
 
-import { canonicalSchemaLoader } from '@logosphere/ddd';
+import { canonicalSchemaLoader } from '@logosphere/model';
 import { CanonicalGeneratorSchema } from './schema';
 import { DEFAULT_CODEGEN_DIR } from '../../common';
 

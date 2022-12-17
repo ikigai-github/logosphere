@@ -10,11 +10,10 @@ import {
 } from '@nrwl/devkit';
 import { strings } from '@angular-devkit/core';
 
-import {
-  Definition,
-  DefinitionType,
-  canonicalSchemaLoader,
-} from '@logosphere/ddd';
+import { Definition, DefinitionType } from '@logosphere/schema';
+
+import { canonicalSchemaLoader } from '@logosphere/model';
+
 import { tsFormatter } from '../utils';
 import { EntityGeneratorSchema } from './schema';
 import { DEFAULT_CODEGEN_DIR } from '../../common';

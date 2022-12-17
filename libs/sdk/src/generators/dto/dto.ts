@@ -9,11 +9,10 @@ import {
   Tree,
 } from '@nrwl/devkit';
 
-import {
-  Definition,
-  DefinitionType,
-  canonicalSchemaLoader,
-} from '@logosphere/ddd';
+import { Definition, DefinitionType } from '@logosphere/schema';
+
+import { canonicalSchemaLoader } from '@logosphere/model';
+
 import { tsFormatter } from '../utils';
 import { DtoGeneratorSchema } from './schema';
 import { DEFAULT_CODEGEN_DIR } from '../../common';
