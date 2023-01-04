@@ -3,22 +3,15 @@
   "projects": {
     "cardano": "libs/cardano",
     "cardano-e2e": "e2e/cardano-e2e",
-    "configuration": "libs/configuration",
-    "converters": "libs/converters",
-    "decorators": "libs/decorators",
-    "domain": "libs/domain",
-    "errors": "libs/errors",
     "fluree": "libs/fluree",
     "fluree-e2e": "e2e/fluree-e2e",
     "ipfs": "libs/ipfs",
     "ipfs-e2e": "e2e/ipfs-e2e",
     "media": "libs/media",
     "media-e2e": "e2e/media-e2e",
-    "readers": "libs/readers",
+    "model": "libs/model",
+    "schema": "libs/schema",
     "sdk": "libs/sdk",
-    "sdk-e2e": "e2e/sdk-e2e",
-    "test-data": "libs/test-data",
-    "test-schema": "libs/test-schema",
-    "utils": "libs/utils"
+    "sdk-e2e": "e2e/sdk-e2e"
   }
 }

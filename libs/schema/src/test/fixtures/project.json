@@ -1,0 +1,6 @@
+{
+  "root": "libs/test/fixtures",
+  "sourceRoot": "libs/test/fixtures",
+  "projectType": "library",
+  "tags": ["scope:shared"]
+}

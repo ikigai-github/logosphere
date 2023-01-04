@@ -1,6 +1,6 @@
 import { gqlQuery } from './gql.query-generator';
-import * as schema from '../../../../../test/fixtures/code-first/schemas/monolith/canonical/art-marketplace.canonical.schema.json';
-import { CanonicalSchema } from '@logosphere/converters';
+import * as schema from '../art-marketplace.canonical.schema.json';
+import { CanonicalSchema } from '@logosphere/schema';
 import { system as s } from './gql.query-generator.constants';
 
 describe('GQL query Generator', () => {

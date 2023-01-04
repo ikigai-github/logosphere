@@ -16,20 +16,12 @@
     "baseUrl": ".",
     "paths": {
       "@logosphere/cardano": ["libs/cardano/src/index.ts"],
-      "@logosphere/configuration": ["libs/configuration/src/index.ts"],
-      "@logosphere/converters": ["libs/converters/src/index.ts"],
-      "@logosphere/decorators": ["libs/decorators/src/index.ts"],
-      "@logosphere/domain": ["libs/domain/src/index.ts"],
-      "@logosphere/errors": ["libs/errors/src/index.ts"],
       "@logosphere/fluree": ["libs/fluree/src/index.ts"],
       "@logosphere/ipfs": ["libs/ipfs/src/index.ts"],
       "@logosphere/media": ["libs/media/src/index.ts"],
       "@logosphere/model": ["libs/model/src/index.ts"],
-      "@logosphere/readers": ["libs/readers/src/index.ts"],
-      "@logosphere/sdk": ["libs/sdk/src/index.ts"],
-      "@logosphere/test-data": ["libs/test-data/src/index.ts"],
-      "@logosphere/test-schema": ["libs/test-schema/src/index.ts"],
-      "@logosphere/utils": ["libs/utils/src/index.ts"]
+      "@logosphere/schema": ["libs/schema/src/index.ts"],
+      "@logosphere/sdk": ["libs/sdk/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

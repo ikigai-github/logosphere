@@ -1,4 +1,4 @@
-import { FlureeClient } from '@logosphere/fluree';
+import { FlureeClient } from '../fluree.client';
 import { defaults } from '../fluree.constants';
 import { getSinFromPublicKey } from '@fluree/crypto-utils';
 

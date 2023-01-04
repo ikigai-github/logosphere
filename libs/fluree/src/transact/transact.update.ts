@@ -9,7 +9,17 @@ import {
   isFlureeExistingTransactObject,
 } from './transact.schema';
 
-import { isScalarArray } from '@logosphere/utils';
+function isScalarArray(input: any[]): boolean {
+  if (Array.isArray(input)) {
+    let scalar = true;
+    input.map((item: any) => {
+      if (typeof item === 'object') scalar = false;
+    });
+    return scalar;
+  } else {
+    return false;
+  }
+}
 
 /**
  * An update Transact pair can be either a predicate value or a subject id

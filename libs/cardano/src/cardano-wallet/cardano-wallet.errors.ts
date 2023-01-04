@@ -1,5 +1,4 @@
-import { LogosphereError } from '@logosphere/errors';
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const walletMessages = Object.freeze({
   MISSING_WALLET_NAME:
     'The wallet name parameter is either undefined or empty string. Should be a valid alpha-numeric.',
@@ -14,7 +13,7 @@ export const walletMessages = Object.freeze({
   WALLET_EXISTS: 'Wallet already exists',
 });
 
-export class CardanoWalletError extends LogosphereError {
+export class CardanoWalletError extends Error {
   constructor(message: string, error?: any) {
     console.log(`Error: ${JSON.stringify(error)}`);
     const details = error
@@ -22,6 +21,6 @@ export class CardanoWalletError extends LogosphereError {
         ? error.data.message
         : error.message
       : '';
-    super(`${message}: ${details}`, error);
+    super(`${message}: ${details}`);
   }
 }

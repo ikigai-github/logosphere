@@ -12,11 +12,10 @@ import {
 import { strings } from '@angular-devkit/core';
 import { applyTransform } from 'jscodeshift/src/testUtils';
 
-import {
-  Definition,
-  canonicalSchemaLoader,
-  DefinitionType,
-} from '@logosphere/converters';
+import { Definition, DefinitionType } from '@logosphere/schema';
+
+import { canonicalSchemaLoader } from '@logosphere/model';
+
 import { tsFormatter } from '../utils';
 import { ResolverGeneratorSchema } from './schema';
 import { DEFAULT_CODEGEN_DIR } from '../../common';

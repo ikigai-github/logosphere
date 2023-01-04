@@ -1,6 +1,6 @@
 import { dtoData } from './dto.fixture-generator';
-import * as schema from '../../../../../../test/fixtures/code-first/schemas/monolith/canonical/art-marketplace.canonical.schema.json';
-import { CanonicalSchema } from '@logosphere/converters';
+import * as schema from '../../art-marketplace.canonical.schema.json';
+import { CanonicalSchema } from '@logosphere/schema';
 import { predicates as p } from './dto.fixture-generator.constants';
 
 describe('Dto Fixture Generator', () => {

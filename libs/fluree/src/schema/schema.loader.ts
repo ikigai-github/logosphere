@@ -1,9 +1,6 @@
-import {
-  FlureeClient,
-  compile,
-  select,
-  flattenNames,
-} from '@logosphere/fluree';
+import { FlureeClient } from '../fluree.client';
+import { compile, select, flattenNames } from '../query';
+
 import { system as sc } from '../fluree.constants';
 import { FlureeSchema } from './schema.interfaces';
 

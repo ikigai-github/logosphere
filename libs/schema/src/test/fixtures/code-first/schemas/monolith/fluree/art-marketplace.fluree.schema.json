@@ -1,0 +1,412 @@
+{
+  "collections": [
+    {
+      "_id": "_collection",
+      "name": "listing",
+      "doc": "Auction listing",
+      "predicates": [
+        {
+          "_id": "_predicate",
+          "name": "identifier",
+          "type": "string",
+          "doc": "listing unique identifier",
+          "index": true,
+          "unique": true
+        },
+        {
+          "_id": "_predicate",
+          "name": "createdAt",
+          "type": "instant",
+          "doc": "listing creation time",
+          "index": true
+        },
+        {
+          "_id": "_predicate",
+          "name": "updatedAt",
+          "type": "instant",
+          "doc": "listing last update time",
+          "index": true
+        },
+        {
+          "_id": "_predicate",
+          "name": "nft",
+          "index": false,
+          "unique": false,
+          "type": "ref",
+          "restrictCollection": "nft"
+        },
+        {
+          "_id": "_predicate",
+          "name": "minimumPrice",
+          "doc": "Minimum price of the listing the owner agrees to sell it for",
+          "index": false,
+          "unique": false,
+          "type": "bigint"
+        },
+        {
+          "_id": "_predicate",
+          "name": "buyNowPrice",
+          "doc": "Price of the listing the owner agrees the listing to be immediately bought for without an auction",
+          "index": false,
+          "unique": false,
+          "type": "bigint"
+        },
+        {
+          "_id": "_predicate",
+          "name": "startTime",
+          "doc": "Start time of the auction",
+          "index": false,
+          "unique": false,
+          "type": "instant"
+        },
+        {
+          "_id": "_predicate",
+          "name": "endTime",
+          "doc": "End time of the auction",
+          "index": false,
+          "unique": false,
+          "type": "instant"
+        },
+        {
+          "_id": "_predicate",
+          "name": "currentBid",
+          "index": false,
+          "unique": false,
+          "type": "ref",
+          "restrictCollection": "bid"
+        }
+      ]
+    },
+    {
+      "_id": "_collection",
+      "name": "bid",
+      "doc": "An active bid on an auction listing",
+      "predicates": [
+        {
+          "_id": "_predicate",
+          "name": "identifier",
+          "type": "string",
+          "doc": "bid unique identifier",
+          "index": true,
+          "unique": true
+        },
+        {
+          "_id": "_predicate",
+          "name": "createdAt",
+          "type": "instant",
+          "doc": "bid creation time",
+          "index": true
+        },
+        {
+          "_id": "_predicate",
+          "name": "updatedAt",
+          "type": "instant",
+          "doc": "bid last update time",
+          "index": true
+        },
+        {
+          "_id": "_predicate",
+          "name": "bidder",
+          "index": false,
+          "unique": false,
+          "type": "ref",
+          "restrictCollection": "user"
+        },
+        {
+          "_id": "_predicate",
+          "name": "listing",
+          "index": false,
+          "unique": false,
+          "type": "ref",
+          "restrictCollection": "listing"
+        },
+        {
+          "_id": "_predicate",
+          "name": "bidPrice",
+          "doc": "Price of the bid",
+          "index": false,
+          "unique": false,
+          "type": "bigint"
+        }
+      ]
+    },
+    {
+      "_id": "_collection",
+      "name": "artwork",
+      "doc": "Artwork, such as digital image or scan of a physical drawing",
+      "predicates": [
+        {
+          "_id": "_predicate",
+          "name": "identifier",
+          "type": "string",
+          "doc": "artwork unique identifier",
+          "index": true,
+          "unique": true
+        },
+        {
+          "_id": "_predicate",
+          "name": "createdAt",
+          "type": "instant",
+          "doc": "artwork creation time",
+          "index": true
+        },
+        {
+          "_id": "_predicate",
+          "name": "updatedAt",
+          "type": "instant",
+          "doc": "artwork last update time",
+          "index": true
+        },
+        {
+          "_id": "_predicate",
+          "name": "title",
+          "doc": "Title of the artwork",
+          "index": false,
+          "unique": false,
+          "type": "string"
+        },
+        {
+          "_id": "_predicate",
+          "name": "imageSize",
+          "index": true,
+          "unique": false,
+          "type": "tag",
+          "restrictTag": true,
+          "tags": [
+            {
+              "_id": "_tag",
+              "id": "SMALL"
+            },
+            {
+              "_id": "_tag",
+              "id": "MEDIUM"
+            },
+            {
+              "_id": "_tag",
+              "id": "LARGE"
+            }
+          ]
+        },
+        {
+          "_id": "_predicate",
+          "name": "description",
+          "doc": "Description of the artwork",
+          "index": false,
+          "unique": false,
+          "type": "string"
+        },
+        {
+          "_id": "_predicate",
+          "name": "author",
+          "index": false,
+          "unique": false,
+          "type": "ref",
+          "restrictCollection": "user"
+        },
+        {
+          "_id": "_predicate",
+          "name": "ipfsCid",
+          "doc": "Content identifier in IPFS",
+          "index": false,
+          "unique": false,
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "_id": "_collection",
+      "name": "nft",
+      "predicates": [
+        {
+          "_id": "_predicate",
+          "name": "identifier",
+          "type": "string",
+          "doc": "nft unique identifier",
+          "index": true,
+          "unique": true
+        },
+        {
+          "_id": "_predicate",
+          "name": "createdAt",
+          "type": "instant",
+          "doc": "nft creation time",
+          "index": true
+        },
+        {
+          "_id": "_predicate",
+          "name": "updatedAt",
+          "type": "instant",
+          "doc": "nft last update time",
+          "index": true
+        },
+        {
+          "_id": "_predicate",
+          "name": "artwork",
+          "index": false,
+          "unique": false,
+          "type": "ref",
+          "restrictCollection": "artwork"
+        },
+        {
+          "_id": "_predicate",
+          "name": "policy",
+          "doc": "NFT policy",
+          "index": false,
+          "unique": false,
+          "type": "string"
+        },
+        {
+          "_id": "_predicate",
+          "name": "owner",
+          "index": false,
+          "unique": false,
+          "type": "ref",
+          "restrictCollection": "user"
+        },
+        {
+          "_id": "_predicate",
+          "name": "minter",
+          "index": false,
+          "unique": false,
+          "type": "ref",
+          "restrictCollection": "user"
+        }
+      ]
+    },
+    {
+      "_id": "_collection",
+      "name": "user",
+      "doc": "User of the NFT marketplace",
+      "predicates": [
+        {
+          "_id": "_predicate",
+          "name": "identifier",
+          "type": "string",
+          "doc": "user unique identifier",
+          "index": true,
+          "unique": true
+        },
+        {
+          "_id": "_predicate",
+          "name": "createdAt",
+          "type": "instant",
+          "doc": "user creation time",
+          "index": true
+        },
+        {
+          "_id": "_predicate",
+          "name": "updatedAt",
+          "type": "instant",
+          "doc": "user last update time",
+          "index": true
+        },
+        {
+          "_id": "_predicate",
+          "name": "username",
+          "doc": "Unique username that user can pick for themselves. ",
+          "index": false,
+          "unique": false,
+          "type": "string"
+        },
+        {
+          "_id": "_predicate",
+          "name": "handle",
+          "doc": "Handle, such as from adahandle.io",
+          "index": false,
+          "unique": false,
+          "type": "string"
+        },
+        {
+          "_id": "_predicate",
+          "name": "wallets",
+          "index": false,
+          "unique": false,
+          "type": "ref",
+          "restrictCollection": "wallet",
+          "multi": true
+        },
+        {
+          "_id": "_predicate",
+          "name": "nfts",
+          "index": false,
+          "unique": false,
+          "type": "ref",
+          "restrictCollection": "nft",
+          "multi": true
+        },
+        {
+          "_id": "_predicate",
+          "name": "artworks",
+          "index": false,
+          "unique": false,
+          "type": "ref",
+          "restrictCollection": "artwork",
+          "multi": true
+        },
+        {
+          "_id": "_predicate",
+          "name": "listings",
+          "index": false,
+          "unique": false,
+          "type": "ref",
+          "restrictCollection": "listing",
+          "multi": true
+        },
+        {
+          "_id": "_predicate",
+          "name": "bids",
+          "index": false,
+          "unique": false,
+          "type": "ref",
+          "restrictCollection": "bid",
+          "multi": true
+        }
+      ]
+    },
+    {
+      "_id": "_collection",
+      "name": "wallet",
+      "doc": "An ADA crypto wallet, custodial or non-custodial",
+      "predicates": [
+        {
+          "_id": "_predicate",
+          "name": "identifier",
+          "type": "string",
+          "doc": "wallet unique identifier",
+          "index": true,
+          "unique": true
+        },
+        {
+          "_id": "_predicate",
+          "name": "createdAt",
+          "type": "instant",
+          "doc": "wallet creation time",
+          "index": true
+        },
+        {
+          "_id": "_predicate",
+          "name": "updatedAt",
+          "type": "instant",
+          "doc": "wallet last update time",
+          "index": true
+        },
+        {
+          "_id": "_predicate",
+          "name": "address",
+          "doc": "Address of the wallet",
+          "index": false,
+          "unique": false,
+          "type": "string"
+        },
+        {
+          "_id": "_predicate",
+          "name": "owner",
+          "index": false,
+          "unique": false,
+          "type": "ref",
+          "restrictCollection": "user"
+        }
+      ]
+    }
+  ]
+}

@@ -11,9 +11,11 @@ import {
 import {
   ConverterFactory,
   SchemaType,
-  canonicalSchemaLoader,
   GqlFederatedSchema,
-} from '@logosphere/converters';
+} from '@logosphere/schema';
+
+import { canonicalSchemaLoader } from '@logosphere/model';
+
 import { GqlGeneratorSchema } from './schema';
 import { DEFAULT_CODEGEN_DIR } from '../../common';
 
