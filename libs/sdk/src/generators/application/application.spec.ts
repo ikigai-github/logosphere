@@ -1,4 +1,4 @@
-import { applicationGenerator as angularApplicationGenerator } from '@nrwl/angular/src/generators/application/application';
+import { applicationGenerator as angularApplicationGenerator } from '@nrwl/angular/generators';
 import type { Tree } from '@nrwl/devkit';
 import * as devkit from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
@@ -14,8 +14,8 @@ import { applicationGenerator } from './application';
 
 describe('application generator', () => {
   let tree: Tree;
-  const appName = 'myNodeApp';
-  const appDirectory = 'my-node-app';
+  const appName = 'node-app';
+  const appDirectory = 'apps';
 
   beforeEach(() => {
     tree = createTreeWithEmptyWorkspace();
@@ -23,26 +23,39 @@ describe('application generator', () => {
   });
 
   it('should generate files', async () => {
-    await applicationGenerator(tree, { name: appName });
-    expect(tree.exists(`apps/${appDirectory}/src/main.ts`)).toBeTruthy();
+    await applicationGenerator(tree, {
+      name: appName,
+      directory: appDirectory,
+    });
+    console.log(
+      JSON.stringify(
+        tree.listChanges().map((fc) => fc.path),
+        null,
+        2
+      )
+    );
+    expect(tree.exists(`${appDirectory}/${appName}/src/main.ts`)).toBeTruthy();
     expect(
-      tree.exists(`apps/${appDirectory}/src/app/app.module.ts`)
+      tree.exists(`${appDirectory}/${appName}/src/app/app.module.ts`)
     ).toBeTruthy();
   }, 100000);
 
   it('should configure tsconfig correctly', async () => {
-    await applicationGenerator(tree, { name: appName });
+    await applicationGenerator(tree, {
+      name: appName,
+      directory: appDirectory,
+    });
 
     const tsConfig = devkit.readJson(
       tree,
-      `apps/${appDirectory}/tsconfig.app.json`
+      `${appDirectory}/${appName}/tsconfig.app.json`
     );
     expect(tsConfig.compilerOptions.emitDecoratorMetadata).toBe(true);
     expect(tsConfig.compilerOptions.target).toBe('es2015');
     expect(tsConfig.exclude).toEqual([
       'jest.config.ts',
-      '**/*.spec.ts',
-      '**/*.test.ts',
+      'src/**/*.spec.ts',
+      'src/**/*.test.ts',
     ]);
   }, 100000);
 

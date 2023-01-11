@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {Entity, Prop} from '@logosphere/decorators';
+import {Entity, Prop} from '@logosphere/model';
 
 @Entity('<%= camelize(name) %>')
 class <%= classify(name) %>Entity {

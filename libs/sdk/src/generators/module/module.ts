@@ -74,18 +74,18 @@ export async function moduleGenerator(
   options: NodeLibraryGeneratorSchema
 ) {
   options.buildable = true;
-  options.compiler = DEFAULT_COMPILER;
-  options.directory = DEFAULT_CODEGEN_DIR;
+  options.compiler = options.compiler || DEFAULT_COMPILER;
+  options.directory = options.directory || DEFAULT_CODEGEN_DIR;
   options.tags = [scope.shared, type.lib, kind.feature].join(',');
   const normalizedOptions = normalizeOptions(tree, options);
   options.importPath = `@${normalizedOptions.npmScope}/${normalizedOptions.projectName}`;
   await libraryGenerator(tree, options);
   addFiles(tree, normalizedOptions);
   tree.delete(
-    `libs/${DEFAULT_CODEGEN_DIR}/${options.name}/src/lib/codegen-${options.name}.ts`
+    `${options.directory}/${options.name}/src/lib/codegen-${options.name}.ts`
   );
   tree.delete(
-    `libs/${DEFAULT_CODEGEN_DIR}/${options.name}/src/lib/codegen-${options.name}.spec.ts`
+    `${options.directory}/${options.name}/src/lib/codegen-${options.name}.spec.ts`
   );
   await formatFiles(tree);
 }

@@ -8,7 +8,7 @@ describe('module generator', () => {
   let tree: Tree;
   const options: NodeLibraryGeneratorSchema = {
     name: 'test',
-    directory: 'codegen',
+    directory: 'libs/codegen',
     compiler: 'tsc',
   };
 
@@ -23,76 +23,80 @@ describe('module generator', () => {
   });
 
   it('should generate files', async () => {
+    console.log(JSON.stringify(options, null, 2));
     await generator(tree, options);
+    console.log(
+      JSON.stringify(
+        tree.listChanges().map((fc) => fc.path),
+        null,
+        2
+      )
+    );
     expect(
-      tree.exists(`libs/${options.directory}/${options.name}/package.json`)
+      tree.exists(`${options.directory}/${options.name}/package.json`)
     ).toBeTruthy();
     expect(
       tree.exists(
-        `libs/${options.directory}/${options.name}/src/${options.name}.config.json`
+        `${options.directory}/${options.name}/src/${options.name}.config.json`
       )
     ).toBeTruthy();
     expect(
       tree.exists(
-        `libs/${options.directory}/${options.name}/src/${options.name}.model.ts`
+        `${options.directory}/${options.name}/src/${options.name}.model.ts`
       )
     ).toBeTruthy();
     expect(
       tree.exists(
-        `libs/${options.directory}/${options.name}/src/${options.name}.module.ts`
+        `${options.directory}/${options.name}/src/${options.name}.module.ts`
       )
     ).toBeTruthy();
     expect(
       tree.exists(
-        `libs/${options.directory}/${options.name}/src/${options.name}.test-data.json`
+        `${options.directory}/${options.name}/src/${options.name}.test-data.json`
       )
     ).toBeTruthy();
     expect(
-      tree.exists(`libs/${options.directory}/${options.name}/src/dto/index.ts`)
+      tree.exists(`${options.directory}/${options.name}/src/dto/index.ts`)
+    ).toBeTruthy();
+    expect(
+      tree.exists(`${options.directory}/${options.name}/src/entities/index.ts`)
     ).toBeTruthy();
     expect(
       tree.exists(
-        `libs/${options.directory}/${options.name}/src/entities/index.ts`
-      )
-    ).toBeTruthy();
-    expect(
-      tree.exists(
-        `libs/${options.directory}/${options.name}/src/enum-types/index.ts`
-      )
-    ).toBeTruthy();
-    expect(
-      tree.exists(
-        `libs/${options.directory}/${options.name}/src/mappers/dto/index.ts`
+        `${options.directory}/${options.name}/src/enum-types/index.ts`
       )
     ).toBeTruthy();
     expect(
       tree.exists(
-        `libs/${options.directory}/${options.name}/src/mappers/fluree/index.ts`
+        `${options.directory}/${options.name}/src/mappers/dto/index.ts`
       )
     ).toBeTruthy();
     expect(
       tree.exists(
-        `libs/${options.directory}/${options.name}/src/repositories/interfaces/index.ts`
+        `${options.directory}/${options.name}/src/mappers/fluree/index.ts`
       )
     ).toBeTruthy();
     expect(
       tree.exists(
-        `libs/${options.directory}/${options.name}/src/repositories/fluree/index.ts`
+        `${options.directory}/${options.name}/src/repositories/interfaces/index.ts`
       )
     ).toBeTruthy();
     expect(
       tree.exists(
-        `libs/${options.directory}/${options.name}/src/resolvers/index.ts`
+        `${options.directory}/${options.name}/src/repositories/fluree/index.ts`
       )
     ).toBeTruthy();
     expect(
+      tree.exists(`${options.directory}/${options.name}/src/resolvers/index.ts`)
+    ).toBeTruthy();
+    expect(
       tree.exists(
-        `libs/${options.directory}/${options.name}/src/lib/codegen-${options.name}.ts`
+        `${options.directory}/${options.name}/src/lib/codegen-${options.name}.ts`
       )
     ).toBeFalsy();
     expect(
       tree.exists(
-        `libs/${options.directory}/${options.name}/src/lib/codegen-${options.name}.spec.ts`
+        `${options.directory}/${options.name}/src/lib/codegen-${options.name}.spec.ts`
       )
     ).toBeFalsy();
   });

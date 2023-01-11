@@ -3,7 +3,6 @@ import { convertNxGenerator, formatFiles } from '@nrwl/devkit';
 import { initGenerator as nodeInitGenerator } from '@nrwl/node';
 import { runTasksInSerial } from '@nrwl/workspace/src/utilities/run-tasks-in-serial';
 import { setDefaultCollection } from '@nrwl/workspace/src/utilities/set-default-collection';
-import { createPackageJson } from '@nrwl/workspace/src/utilities/create-package-json';
 import { addDependencies, normalizeOptions } from './lib';
 import type { InitGeneratorOptions } from './schema';
 

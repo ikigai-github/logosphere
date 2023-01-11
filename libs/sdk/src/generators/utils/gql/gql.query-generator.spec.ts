@@ -8,6 +8,5 @@ describe('GQL query Generator', () => {
   it('should create GQL query', () => {
     const query = gqlQuery(s.definitions, 'artwork', 2);
     expect(query).toBeDefined();
-    console.log(`Generated GQL query: ${query}`);
   });
 });
