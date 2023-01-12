@@ -59,7 +59,7 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
     ...options,
     ...names(options.name),
     offsetFromRoot: offsetFromRoot(options.projectRoot),
-    template: '',
+    tmpl: '',
   };
   generateFiles(
     tree,
@@ -80,6 +80,10 @@ export async function moduleGenerator(
   const normalizedOptions = normalizeOptions(tree, options);
   options.importPath = `@${normalizedOptions.npmScope}/${normalizedOptions.projectName}`;
   await libraryGenerator(tree, options);
+  //delete default project.json and package.json
+  tree.delete(`${options.directory}/${options.name}/package.json`);
+  tree.delete(`${options.directory}/${options.name}/project.json`);
+
   addFiles(tree, normalizedOptions);
   tree.delete(
     `${options.directory}/${options.name}/src/lib/codegen-${options.name}.ts`
