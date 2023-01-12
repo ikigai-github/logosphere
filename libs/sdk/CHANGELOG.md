@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.6.4](https://github.com/ikigai-github/logosphere/compare/sdk-0.6.3...sdk-0.6.4) (2023-01-12)
+
+### Bug Fixes
+
+- **sdk:** disabling setting default collection ([d7a61b1](https://github.com/ikigai-github/logosphere/commit/d7a61b14f3aab6920aaaa1e45c45e5c414dc2877))
+
 ### [0.6.3](https://github.com/ikigai-github/logosphere/compare/sdk-0.6.2...sdk-0.6.3) (2023-01-12)
 
 ### [0.6.2](https://github.com/ikigai-github/logosphere/compare/sdk-0.6.1...sdk-0.6.2) (2023-01-12)
