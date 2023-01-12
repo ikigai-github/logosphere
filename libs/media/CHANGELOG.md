@@ -2,6 +2,8 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.1.1](https://github.com/ikigai-github/logosphere/compare/media-0.1.0...media-0.1.1) (2023-01-12)
+
 ## 0.1.0 (2022-06-01)
 
 ### Features
