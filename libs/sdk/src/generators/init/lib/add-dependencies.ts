@@ -5,6 +5,7 @@ import {
   nestJsSchematicsVersion,
   nestJsVersion7,
   nestJsVersion8,
+  nestJsVersion9,
   nestJsApolloVersion,
   nestJsGraphQLVersion,
   nxVersion,
@@ -14,28 +15,6 @@ import {
 } from '../../../utils/versions';
 
 export function addDependencies(tree: Tree): GeneratorCallback {
-  // Old nest 7 and rxjs 6 by default
-  let NEST_VERSION = nestJsVersion7;
-  let RXJS = rxjsVersion6;
-
-  const packageJson = readJson(tree, 'package.json');
-
-  if (packageJson.dependencies['@angular/core']) {
-    let rxjs = packageJson.dependencies['rxjs'];
-
-    if (rxjs.startsWith('~') || rxjs.startsWith('^')) {
-      rxjs = rxjs.substring(1);
-    }
-
-    if (satisfies(rxjs, rxjsVersion7)) {
-      NEST_VERSION = nestJsVersion8;
-      RXJS = packageJson.dependencies['rxjs'];
-    }
-  } else {
-    NEST_VERSION = nestJsVersion8;
-    RXJS = rxjsVersion7;
-  }
-
   return addDependenciesToPackageJson(
     tree,
     {
@@ -43,32 +22,32 @@ export function addDependencies(tree: Tree): GeneratorCallback {
       '@fluree/flureenjs': '1.0.4',
       '@fluree/crypto-base': '0.1.6',
       '@fluree/crypto-utils': '1.10.0',
-      '@logosphere/cardano': '0.5.2',
-      '@logosphere/ipfs': '0.1.0',
-      '@logosphere/model': '0.0.1',
-      '@logosphere/fluree': '0.5.1',
+      '@logosphere/cardano': 'latest',
+      '@logosphere/ipfs': 'latest',
+      '@logosphere/model': 'latest',
+      '@logosphere/fluree': 'latest',
       '@nestjs/apollo': nestJsApolloVersion,
-      '@nestjs/common': NEST_VERSION,
+      '@nestjs/common': nestJsVersion9,
       '@nestjs/config': '2.0.0',
-      '@nestjs/core': NEST_VERSION,
+      '@nestjs/core': nestJsVersion9,
       '@nestjs/graphql': nestJsGraphQLVersion,
-      '@nestjs/platform-fastify': NEST_VERSION,
+      '@nestjs/platform-fastify': nestJsVersion9,
       '@pinata/sdk': '1.1.25',
-      'apollo-server-core': '3.6.7',
+      'apollo-server-core': '3.11.1',
       'apollo-server-fastify': '3.6.7',
       'aws-sdk': '2.1131.0',
       axios: '0.26.1',
       'cardano-wallet-js': '1.2.3',
       'class-transformer': '0.2.0',
       'class-validator': '0.13.2',
-      fastify: '3.17.0',
+      fastify: '3.29.0',
       'fs-extra': '10.1.0',
-      graphql: '15.7.2',
+      graphql: '16.5.0',
       'js-sha3': '0.8.0',
       lodash: '4.17.21',
       randomstring: '1.2.2',
       'reflect-metadata': reflectMetadataVersion,
-      rxjs: RXJS,
+      rxjs: '7.8.0',
       'safe-stable-stringify': '2.3.1',
       'shallow-equal': '1.2.1',
       'sleep-promise': '9.1.0',
@@ -80,23 +59,23 @@ export function addDependencies(tree: Tree): GeneratorCallback {
     {
       '@babel/core': '7.0.0',
       '@babel/preset-env': '7.0.0',
-      '@logosphere/schema': '0.0.1',
+      '@logosphere/schema': 'latest',
       '@nestjs/schematics': nestJsSchematicsVersion,
-      '@nestjs/testing': NEST_VERSION,
-      '@nrwl/devkit': '14.0.2',
+      '@nestjs/testing': nestJsVersion9,
+      '@nrwl/devkit': nxVersion,
       '@nrwl/js': nxVersion,
       '@nrwl/nest': nxVersion,
-      '@nrwl/workspace': '14.0.5',
-      '@nx-tools/ci-context': '3.0.0-alpha.2',
-      '@nx-tools/nx-docker': '3.0.0-alpha.2',
-      '@swc/helpers': '0.4.2',
+      '@nrwl/workspace': nxVersion,
+      '@nx-tools/ci-context': '4.0.2',
+      '@nx-tools/nx-docker': '3.0.0',
+      '@swc/helpers': '0.4.14',
       'babel-loader': '8.0.2',
       dotenv: '16.0.1',
       handlebars: '4.7.7',
       jscodeshift: '0.13.1',
       'pascal-case': '3.1.2',
       path: '0.12.7',
-      webpack: '5.0.0',
+      webpack: '5.75.0',
     }
   );
 }
