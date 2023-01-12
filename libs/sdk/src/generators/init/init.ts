@@ -11,7 +11,6 @@ export async function initGenerator(
   rawOptions: InitGeneratorOptions
 ): Promise<GeneratorCallback> {
   const options = normalizeOptions(rawOptions);
-  setDefaultCollection(tree, '@nrwl/nest');
   const nodeInitTask = await nodeInitGenerator(tree, options);
   const installPackagesTask = addDependencies(tree);
 
