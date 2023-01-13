@@ -8,7 +8,7 @@ describe('module generator', () => {
   let tree: Tree;
   const options: NodeLibraryGeneratorSchema = {
     name: 'test',
-    directory: 'libs/codegen',
+    directory: 'codegen',
     compiler: 'tsc',
   };
 
@@ -25,13 +25,6 @@ describe('module generator', () => {
   it('should generate files', async () => {
     console.log(JSON.stringify(options, null, 2));
     await generator(tree, options);
-    console.log(
-      JSON.stringify(
-        tree.listChanges().map((fc) => fc.path),
-        null,
-        2
-      )
-    );
     expect(
       tree.exists(`${options.directory}/${options.name}/package.json`)
     ).toBeTruthy();
