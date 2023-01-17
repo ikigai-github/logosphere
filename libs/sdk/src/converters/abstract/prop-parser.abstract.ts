@@ -1,4 +1,4 @@
-import { Property, DefinitionType } from '../canonical/canonical.schema';
+import { Property, DefinitionType } from '../../schema';
 
 export abstract class PropParser {
   protected _name: string;

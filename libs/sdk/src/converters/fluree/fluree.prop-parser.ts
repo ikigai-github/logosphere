@@ -1,9 +1,10 @@
+/* eslint-disable no-restricted-imports */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   DefinitionType,
   canonicalConstants as cc,
   canonicalTypes as ct,
-} from '../canonical';
+} from '../../schema';
 import { PropParser } from '../abstract';
 import { FlureePredicate } from './fluree.schema';
 import { types as ft, predicates as fp } from './fluree.constants';

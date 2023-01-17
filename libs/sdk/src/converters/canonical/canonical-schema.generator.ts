@@ -1,5 +1,5 @@
 import { Generator } from '../abstract';
-import { CanonicalSchema, Definition } from '.';
+import { CanonicalSchema, Definition } from '../../schema';
 export class CanonicalSchemaGenerator extends Generator {
   protected generateEnum(def: Definition): any {}
   protected generateEntity(def: Definition): any {}

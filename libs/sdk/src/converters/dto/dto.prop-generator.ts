@@ -1,6 +1,6 @@
 import { pascalCase } from 'pascal-case';
 import { PropGenerator } from '../abstract';
-import { Property } from '../canonical';
+import { Property } from '../../schema';
 
 export class DtoPropGenerator extends PropGenerator {
   #name(prop: Property) {

@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import { GqlGenerator } from './gql.generator';
-import { CanonicalSchema } from '../canonical';
+import { CanonicalSchema } from '../../schema';
 import { JsonSchemaParser } from '../json-schema';
 describe('Test GQL generator', () => {
   it('should generate valid GQL', () => {

@@ -1,14 +1,14 @@
 import 'reflect-metadata';
 import { TypeFunc } from '../common';
 import { getMetadataStorage, MetadataKeys } from '../metadata';
-import { EntityMetadata } from './entity.metadata';
+import { EntMetadata } from './entity.metadata';
 import { StorageLayer } from './entity.types';
 
-export type EntityOptions = Partial<EntityMetadata>;
+export type EntOptions = Partial<EntMetadata>;
 
-export function Entity(): ClassDecorator;
-export function Entity(options?: EntityOptions): ClassDecorator;
-export function Entity(name?: string, options?: EntityOptions): ClassDecorator;
+export function Ent(): ClassDecorator;
+export function Ent(options?: EntOptions): ClassDecorator;
+export function Ent(name?: string, options?: EntOptions): ClassDecorator;
 
 /**
  * Any class decorated with the entity decorator can be evaluated for modeling
@@ -16,15 +16,15 @@ export function Entity(name?: string, options?: EntityOptions): ClassDecorator;
  * @param maybeOptions The options object in the event the name was passed as the first param
  * @returns A class decorator function
  */
-export function Entity(
-  nameOrOptions?: string | EntityOptions,
-  maybeOptions?: EntityOptions
+export function Ent(
+  nameOrOptions?: string | EntOptions,
+  maybeOptions?: EntOptions
 ): ClassDecorator {
   const { options, name } = getNameAndOptions(nameOrOptions, maybeOptions);
 
   // eslint-disable-next-line @typescript-eslint/ban-types
   return function (target: Function) {
-    const metadata: EntityMetadata = {
+    const metadata: EntMetadata = {
       target,
       module: options.module,
       nft: options.nft || false,
@@ -47,18 +47,18 @@ export function Entity(
  * Utility function to distinguish the name and options passed in.
  */
 function getNameAndOptions(
-  nameOrOptions: string | EntityOptions | undefined,
-  maybeOptions: EntityOptions | undefined
+  nameOrOptions: string | EntOptions | undefined,
+  maybeOptions: EntOptions | undefined
 ) {
   if (typeof nameOrOptions === 'string') {
     return {
       name: nameOrOptions,
-      options: maybeOptions || ({} as EntityOptions),
+      options: maybeOptions || ({} as EntOptions),
     };
   } else {
     return {
       name: nameOrOptions?.name,
-      options: nameOrOptions || ({} as EntityOptions),
+      options: nameOrOptions || ({} as EntOptions),
     };
   }
 }

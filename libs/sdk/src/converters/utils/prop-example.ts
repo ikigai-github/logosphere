@@ -1,5 +1,5 @@
 import * as rs from 'randomstring';
-import { DefinitionType, Property } from '../canonical';
+import { DefinitionType, Property } from '../../schema';
 function getRandom(arr: any[]): any {
   return arr && arr.length > 0
     ? arr[Math.floor(Math.random() * arr.length)]

@@ -38,10 +38,7 @@ __decorate(
   'username',
   void 0
 );
-UserEntity = __decorate(
-  [(0, decorators_1.Entity)({ name: 'user' })],
-  UserEntity
-);
+UserEntity = __decorate([(0, decorators_1.Ent)({ name: 'user' })], UserEntity);
 let WalletEntity = class WalletEntity {};
 __decorate(
   [
@@ -61,7 +58,7 @@ __decorate(
   void 0
 );
 WalletEntity = __decorate(
-  [(0, decorators_1.Entity)({ name: 'wallet' })],
+  [(0, decorators_1.Ent)({ name: 'wallet' })],
   WalletEntity
 );
 //# sourceMappingURL=user.model.js.map

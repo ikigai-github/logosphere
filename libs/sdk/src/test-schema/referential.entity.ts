@@ -1,8 +1,8 @@
-import { Entity, Prop } from '../decorators';
+import { Ent, Prop } from '../decorators';
 import { BasicEntity } from './basic.entity';
 
-@Entity('referential')
-class ReferenetialEntity {
+@Ent('referential')
+class ReferentialEntity {
   @Prop({
     comment: 'This references the basic entity',
     required: true,

@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import { pascalCase } from 'pascal-case';
-import { Property, DefinitionType } from '../canonical';
+import { Property, DefinitionType } from '../../schema';
 import { PropGenerator } from '../abstract/prop-generator.abstract';
 
 export class GqlPropGenerator extends PropGenerator {

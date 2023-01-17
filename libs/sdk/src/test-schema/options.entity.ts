@@ -1,6 +1,6 @@
-import { Entity, Prop } from '../decorators';
+import { Ent, Prop } from '../decorators';
 
-@Entity('options')
+@Ent('options')
 class OptionsEntity {
   @Prop()
   option: string;

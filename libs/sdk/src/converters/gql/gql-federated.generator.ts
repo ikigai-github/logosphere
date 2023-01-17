@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-imports */
 import { strings as s } from '@angular-devkit/core';
 import { GqlGenerator } from './gql.generator';
 import {
@@ -5,7 +6,7 @@ import {
   Definition,
   DefinitionType,
   Property,
-} from '../canonical';
+} from '../../schema';
 import { constants as c } from './gql.constants';
 import { GqlFederatedSchema } from './gql-federated.schema';
 

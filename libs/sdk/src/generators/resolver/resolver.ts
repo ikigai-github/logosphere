@@ -12,7 +12,7 @@ import {
 import { strings } from '@angular-devkit/core';
 import { applyTransform } from 'jscodeshift/src/testUtils';
 
-import { Definition, DefinitionType } from '../../converters';
+import { Definition, DefinitionType } from '../../schema';
 
 import { canonicalSchemaLoader } from '../../schema';
 

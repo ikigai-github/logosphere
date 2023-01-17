@@ -1,6 +1,6 @@
 import * as f from './json-schema.json';
 import { constants as c } from './json-schema.constants';
-import { Definition, Property, DefinitionType } from '../canonical';
+import { Definition, Property, DefinitionType } from '../../schema';
 import { JsonSchemaParser } from './json-schema.parser';
 
 describe('test JsonSchemaParser', () => {

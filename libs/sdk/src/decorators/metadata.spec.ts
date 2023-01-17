@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import 'reflect-metadata';
 import { DefType } from './common';
-import { Entity } from './entity';
+import { Ent } from './entity';
 import { registerEnum } from './enum/enum';
 import { getMetadataStorage, MetadataKeys } from './metadata';
 import { Prop, PropMetadataMap, resolvePropType } from './prop';
@@ -15,7 +15,7 @@ describe('The Metadata store', () => {
 
     registerEnum(TestEnum, 'TestEnum');
 
-    @Entity()
+    @Ent()
     class TestEnumEntity {
       @Prop({ type: () => TestEnum })
       aEnum: TestEnum;
@@ -53,7 +53,7 @@ describe('The Metadata store', () => {
 
       registerEnum(SingleEnum, 'SingleEnum');
 
-      @Entity('SingleEntity')
+      @Ent('SingleEntity')
       class SingleEntity {
         git;
         @Prop()
@@ -84,13 +84,13 @@ describe('The Metadata store', () => {
   });
 
   it('should default the name of a reference entity to the name of the entity', () => {
-    @Entity('match_this')
+    @Ent('match_this')
     class ExampleMatchEntity {
       @Prop()
       aString: string;
     }
 
-    @Entity('has_match')
+    @Ent('has_match')
     class EntityWithMatch {
       @Prop()
       aMatch: ExampleMatchEntity;
@@ -110,13 +110,13 @@ describe('The Metadata store', () => {
   });
 
   it('should use name of referenced entity as type in canonical schema', () => {
-    @Entity({ name: 'my_ref' })
+    @Ent({ name: 'my_ref' })
     class TestRefEntity {
       @Prop()
       aString: string;
     }
 
-    @Entity({ name: 'my_root' })
+    @Ent({ name: 'my_root' })
     class TestRootEntity {
       @Prop({ name: 'a_ref' })
       aRefEntity: TestRefEntity;
@@ -167,7 +167,7 @@ describe('The Metadata store', () => {
 
     registerEnum(Tree, 'tree');
 
-    @Entity('soil')
+    @Ent('soil')
     class Soil {
       @Prop({ type: () => Tree })
       aTree: Tree;

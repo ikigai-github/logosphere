@@ -12,9 +12,11 @@ import {
 import { strings } from '@angular-devkit/core';
 import { applyTransform } from 'jscodeshift/src/testUtils';
 
-import { Definition, DefinitionType } from '../../converters';
-
-import { canonicalSchemaLoader } from '../../schema';
+import {
+  Definition,
+  DefinitionType,
+  canonicalSchemaLoader,
+} from '../../schema';
 
 import { tsFormatter } from '../utils';
 import { RepositoryGeneratorSchema } from './schema';

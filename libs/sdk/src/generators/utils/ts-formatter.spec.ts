@@ -1,4 +1,4 @@
-import { Definition, DefinitionType } from '../../converters';
+import { Definition, DefinitionType } from '../../schema';
 import * as tsFormatter from './ts-formatter';
 
 describe('TypeScript Formatter', () => {

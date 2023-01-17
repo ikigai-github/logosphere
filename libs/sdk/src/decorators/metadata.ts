@@ -5,7 +5,7 @@
 //   DefinitionType,
 //   Property,
 // } from '@logosphere/converters';
-import { EntityMetadata } from './entity';
+import { EntMetadata } from './entity';
 import { PropMetadataMap, resolvePropType } from './prop';
 import { isDefined } from './utils';
 import { EnumMetadata } from './enum/enum.metadata';
@@ -30,10 +30,10 @@ export enum MetadataKeys {
  * This class provides a way to access collected metadata from decorators.
  */
 export class MetadataStorage {
-  private entities: EntityMetadata[] = [];
+  private entities: EntMetadata[] = [];
   private enums: EnumMetadata[] = [];
 
-  addEntity(metadata: EntityMetadata) {
+  addEntity(metadata: EntMetadata) {
     if (!this.entities.find((entity) => entity.name === metadata.name)) {
       this.entities.push(metadata);
     }

@@ -1,5 +1,5 @@
 import { canonicalSchemaLoader } from './canonical-schema.loader';
-import { Definition } from '../converters';
+import { Definition } from './canonical.schema';
 
 describe('Federated Schema Loader', () => {
   test('Load canonical schema', () => {

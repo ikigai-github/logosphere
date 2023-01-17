@@ -1,7 +1,6 @@
-import { join } from 'path';
 import { getMetadataStorage } from '../decorators';
 import { FunctionDeclarationStructure, Project, SourceFile } from 'ts-morph';
-import { CanonicalSchema } from '../converters';
+import { CanonicalSchema } from './canonical.schema';
 
 export function openProject(tsConfigFilePath: string) {
   const project = new Project({
@@ -69,10 +68,10 @@ function getEntityFiles(project: Project) {
       .find(
         (file) =>
           file.getBaseNameWithoutExtension() === 'entity' &&
-          file.getFunction('Entity')?.getReturnType()?.getText() ===
+          file.getFunction('Ent')?.getReturnType()?.getText() ===
             'ClassDecorator'
       )
-      ?.getFunction('Entity')
+      ?.getFunction('Ent')
       .findReferences()
       .map((reference) => reference.getDefinition().getSourceFile()) ?? []
   );
@@ -108,7 +107,7 @@ function addFile(file: SourceFile, files: object = {}) {
  */
 function getEntityClasses(project: Project) {
   return getEntityFiles(project).flatMap((file) =>
-    file.getClasses().filter((clazz) => clazz.getDecorator('Entity') !== null)
+    file.getClasses().filter((clazz) => clazz.getDecorator('Ent') !== null)
   );
 }
 

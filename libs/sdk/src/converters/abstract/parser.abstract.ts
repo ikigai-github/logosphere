@@ -1,4 +1,4 @@
-import { Definition, CanonicalSchema } from '../canonical/canonical.schema';
+import { Definition, CanonicalSchema } from '../../schema';
 
 export abstract class Parser {
   protected abstract getDefs(schema: any): Definition[];

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { DefinitionType, Definition, Property } from '../canonical';
+import { DefinitionType, Definition } from '../../schema';
 import { Parser } from '../abstract/parser.abstract';
 import { FlureeSchemaPropParser } from './fluree.prop-parser';
 import {

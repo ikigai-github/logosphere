@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { MetadataKeys } from '../metadata';
 import { Prop } from '.';
-import { Entity, EntityMetadata } from '../entity';
+import { Ent, EntMetadata } from '../entity';
 import { resolveType } from '../utils';
 import { PropMetadataMap } from './prop.metadata';
 
@@ -19,7 +19,7 @@ function validateTypeInfo<T>(
 
 describe('The Prop decorator', () => {
   it('should capture boxed primitive types', () => {
-    @Entity()
+    @Ent()
     class PrimitiveTypeTest {
       @Prop()
       aString: string;
@@ -42,7 +42,7 @@ describe('The Prop decorator', () => {
   });
 
   it('should use defined functions for getting array types', () => {
-    @Entity()
+    @Ent()
     class ArrayTypeTest {
       @Prop({ type: () => [String] })
       aString: string[];
@@ -65,7 +65,7 @@ describe('The Prop decorator', () => {
   });
 
   it('should support arrays of entities', () => {
-    @Entity()
+    @Ent()
     class ArrayEntityItem {
       @Prop()
       aString: string;
@@ -76,7 +76,7 @@ describe('The Prop decorator', () => {
       other = 'other',
     }
 
-    @Entity()
+    @Ent()
     class ArrayWithEntityTest {
       @Prop({ type: () => [ArrayEntityItem] })
       entityItems: ArrayEntityItem[];
@@ -95,7 +95,7 @@ describe('The Prop decorator', () => {
   });
 
   it('should provide default values for required metadata', () => {
-    @Entity()
+    @Ent()
     class DefaultTypeTest {
       @Prop()
       aString: string;
@@ -124,7 +124,7 @@ describe('The Prop decorator', () => {
       aThing: string;
     }
 
-    @Entity()
+    @Ent()
     class CustomizedTypeTest {
       @Prop({
         type: () => CoolClass,
@@ -175,13 +175,13 @@ describe('The Prop decorator', () => {
   });
 
   it('should support finding reference entities', () => {
-    @Entity()
+    @Ent()
     class AnEntity {
       @Prop()
       aString: string;
     }
 
-    @Entity()
+    @Ent()
     class AggregateRoot {
       @Prop()
       aEntity: AnEntity;
@@ -193,7 +193,7 @@ describe('The Prop decorator', () => {
     );
 
     const metadata = props.get('aEntity');
-    const childEntity: EntityMetadata = Reflect.getMetadata(
+    const childEntity: EntMetadata = Reflect.getMetadata(
       MetadataKeys.EntityCache,
       metadata.target
     );

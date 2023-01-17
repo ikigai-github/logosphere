@@ -1,6 +1,6 @@
-import { Entity, Prop } from '../decorators';
+import { Ent, Prop } from '../decorators';
 
-@Entity('basic')
+@Ent('basic')
 export class BasicEntity {
   @Prop()
   name: string;

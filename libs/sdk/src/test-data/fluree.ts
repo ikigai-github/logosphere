@@ -8,7 +8,7 @@ import {
   Definition,
   DefinitionType,
   Property,
-} from '../converters';
+} from '../schema';
 import { ModuleConfiguration } from '../configuration';
 import { canonicalSchemaLoader } from '../schema';
 import {

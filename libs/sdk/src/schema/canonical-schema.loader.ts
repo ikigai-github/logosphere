@@ -1,5 +1,5 @@
 import * as fs from 'fs-extra';
-import { CanonicalSchema } from '../converters';
+import { CanonicalSchema } from './canonical.schema';
 import { getMetadataStorage } from '../decorators';
 
 const getAllFiles = function (dirPath: string, arrayOfFiles?: string[]) {

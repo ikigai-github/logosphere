@@ -1,6 +1,6 @@
 import * as f from './json-schema.json';
 import { JsonSchemaPropParser } from './json-schema.prop-parser';
-import { DefinitionType } from '../canonical';
+import { DefinitionType } from '../../schema';
 import { constants as c } from './json-schema.constants';
 describe('test JsonSchemaPropParser', () => {
   it('parse scalar', () => {

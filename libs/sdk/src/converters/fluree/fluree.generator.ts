@@ -5,7 +5,7 @@ import {
   DefinitionType,
   CanonicalSchema,
   Property,
-} from '../canonical';
+} from '../../schema';
 import { Generator } from '../abstract';
 import { FlureePropGenerator } from './fluree.prop-generator';
 import {

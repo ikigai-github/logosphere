@@ -1,4 +1,4 @@
-import { Definition, CanonicalSchema } from '.';
+import { Definition, CanonicalSchema } from '../../schema';
 import { Parser } from '../abstract/parser.abstract';
 
 export class CanonicalSchemaParser extends Parser {

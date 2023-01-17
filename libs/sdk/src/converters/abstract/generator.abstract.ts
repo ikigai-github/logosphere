@@ -1,8 +1,4 @@
-import {
-  CanonicalSchema,
-  Definition,
-  DefinitionType,
-} from '../canonical/canonical.schema';
+import { CanonicalSchema, Definition, DefinitionType } from '../../schema';
 export abstract class Generator {
   protected abstract generateEnum(def: Definition): any;
   protected abstract generateEntity(def: Definition): any;

@@ -1,4 +1,4 @@
-import { Definition, DefinitionType, Property } from '../../../converters';
+import { Definition, DefinitionType, Property } from '../../../schema';
 
 import { system as s } from './gql.query-generator.constants';
 

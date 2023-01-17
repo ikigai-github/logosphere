@@ -4,7 +4,7 @@ import { StorageLayer } from './entity.types';
 /**
  * The metadata extracted from entity class and decorators
  */
-export type EntityMetadata = CommonMetadata & {
+export type EntMetadata = CommonMetadata & {
   version: number;
   layer: StorageLayer;
   module?: string;

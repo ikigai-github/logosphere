@@ -10,9 +10,11 @@ import {
 } from '@nrwl/devkit';
 import { strings } from '@angular-devkit/core';
 
-import { Definition, DefinitionType } from '../../converters';
-
-import { canonicalSchemaLoader } from '../../schema';
+import {
+  Definition,
+  DefinitionType,
+  canonicalSchemaLoader,
+} from '../../schema';
 
 import { tsFormatter } from '../utils';
 import { EntityGeneratorSchema } from './schema';

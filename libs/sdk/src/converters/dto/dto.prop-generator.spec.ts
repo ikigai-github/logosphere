@@ -1,5 +1,5 @@
 import { DtoPropGenerator } from './dto.prop-generator';
-import { Property, DefinitionType } from '../canonical';
+import { Property, DefinitionType } from '../../schema';
 describe('DTO Prop Generator', () => {
   const propGenerator = new DtoPropGenerator();
 

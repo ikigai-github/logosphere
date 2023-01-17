@@ -6,7 +6,7 @@ import {
   flureePredicates as fp,
 } from '@logosphere/fluree';
 
-import { Definition, DefinitionType, Property } from '../converters';
+import { Definition, DefinitionType, Property } from '../schema';
 import FlureeSchema from './fluree';
 
 import { BOOLEAN, IDENTIFIER, INTEGER, NUMBER, STRING } from './const';

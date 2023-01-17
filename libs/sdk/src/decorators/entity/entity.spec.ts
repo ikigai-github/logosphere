@@ -1,19 +1,19 @@
 import 'reflect-metadata';
 import { MetadataKeys } from '../metadata';
 import { Prop } from '../prop';
-import { Entity } from './entity';
-import { EntityMetadata } from './entity.metadata';
+import { Ent } from './entity';
+import { EntMetadata } from './entity.metadata';
 import { StorageLayer } from './entity.types';
 
 describe('The Entity decorator', () => {
   it('should have default metadata', () => {
-    @Entity()
+    @Ent()
     class SampleEntity {
       @Prop()
       aProp: string;
     }
 
-    const entity: EntityMetadata = Reflect.getMetadata(
+    const entity: EntMetadata = Reflect.getMetadata(
       MetadataKeys.EntityCache,
       SampleEntity
     );

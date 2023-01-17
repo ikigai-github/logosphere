@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DefinitionType, Property } from '../canonical/canonical.schema';
+import { DefinitionType, Property } from '../../schema';
 export abstract class PropGenerator {
   protected abstract generateScalar(prop: Property): any;
   protected abstract generateEnum(prop: Property): any;

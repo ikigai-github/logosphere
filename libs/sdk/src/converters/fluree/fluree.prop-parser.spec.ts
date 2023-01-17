@@ -1,6 +1,6 @@
 import { FlureePredicate } from './fluree.schema';
 import { system as f, types as ft, predicates as fp } from './fluree.constants';
-import { canonicalTypes as ct, DefinitionType } from '../canonical';
+import { canonicalTypes as ct, DefinitionType } from '../../schema';
 import { FlureeSchemaPropParser } from './fluree.prop-parser';
 
 describe('Fluree prop parser', () => {

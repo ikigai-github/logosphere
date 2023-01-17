@@ -11,7 +11,7 @@ import {
 
 import { strings } from '@angular-devkit/core';
 
-import { Definition, DefinitionType } from '../../converters';
+import { Definition } from '../../schema';
 
 import { canonicalSchemaLoader } from '../../schema';
 import { UnrealEngineGeneratorSchema } from './schema';

@@ -1,6 +1,6 @@
 import { Parser } from './abstract/parser.abstract';
 import { Generator } from './abstract/generator.abstract';
-import { CanonicalSchema } from './canonical';
+import { CanonicalSchema } from '../schema';
 
 export class Converter {
   constructor(
