@@ -85,5 +85,5 @@
       }
     }
   },
-  "tags": ["scope:cli", "type:lib", "kind:feature"]
+  "tags": ["scope:shared", "type:lib", "kind:feature"]
 }

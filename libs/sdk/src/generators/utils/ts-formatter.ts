@@ -5,7 +5,7 @@ import {
   Property,
   DefinitionType,
   propExample,
-} from '@logosphere/schema';
+} from '../../converters';
 
 import { strings } from '@angular-devkit/core';
 import {

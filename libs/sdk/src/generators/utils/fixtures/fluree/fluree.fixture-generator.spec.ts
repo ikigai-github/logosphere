@@ -1,6 +1,6 @@
 import { flureeData } from './fluree.fixture-generator';
 import * as schema from '../../art-marketplace.canonical.schema.json';
-import { CanonicalSchema } from '@logosphere/schema';
+import { CanonicalSchema } from '../../../../converters';
 import { predicates as p } from './fluree.fixture-generator.constants';
 
 describe('Fluree Fixture Generator', () => {

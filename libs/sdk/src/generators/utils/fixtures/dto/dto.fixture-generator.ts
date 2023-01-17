@@ -3,7 +3,7 @@ import {
   DefinitionType,
   Property,
   propExample,
-} from '@logosphere/schema';
+} from '../../../../converters';
 
 import {
   fixtures as f,

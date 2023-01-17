@@ -1,4 +1,4 @@
-import { Definition, DefinitionType } from '@logosphere/schema';
+import { Definition, DefinitionType } from '../../converters';
 import * as tsFormatter from './ts-formatter';
 
 describe('TypeScript Formatter', () => {

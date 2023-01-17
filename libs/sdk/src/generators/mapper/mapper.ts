@@ -12,9 +12,9 @@ import {
 import { strings } from '@angular-devkit/core';
 import { applyTransform } from 'jscodeshift/src/testUtils';
 
-import { Definition, DefinitionType } from '@logosphere/schema';
+import { Definition, DefinitionType } from '../../converters';
 
-import { canonicalSchemaLoader } from '@logosphere/model';
+import { canonicalSchemaLoader } from '../../schema';
 
 import { tsFormatter } from '../utils';
 import { MapperGeneratorSchema } from './schema';

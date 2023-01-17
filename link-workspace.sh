@@ -19,8 +19,6 @@ pnpm link ../logosphere/dist/libs/cardano
 pnpm link ../logosphere/dist/libs/fluree
 pnpm link ../logosphere/dist/libs/ipfs
 pnpm link ../logosphere/dist/libs/media
-pnpm link ../logosphere/dist/libs/model
-pnpm link ../logosphere/dist/libs/schema
 pnpm link ../logosphere/dist/libs/sdk
 
 popd

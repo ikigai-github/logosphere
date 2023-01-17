@@ -8,9 +8,9 @@ import {
   Tree,
 } from '@nrwl/devkit';
 
-import { ConverterFactory, SchemaType } from '@logosphere/schema';
+import { ConverterFactory, SchemaType } from '../../converters';
 
-import { canonicalSchemaLoader } from '@logosphere/model';
+import { canonicalSchemaLoader } from '../../schema';
 
 import { FlureeGeneratorSchema } from './schema';
 import { DEFAULT_CODEGEN_DIR } from '../../common';

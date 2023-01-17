@@ -12,7 +12,7 @@ import { tx_prepare_json } from 'cbauth-logo-wasm';
 import { <%= classify(name) %> } from '../entities';
 import { <%= classify(name) %>FlureeRepository } from '../repositories/fluree';
 <%_ } -%>
-import { LogosphereError } from '@logosphere/errors';
+import { LogosphereError } from '@logosphere/sdk';
 import { parseInfo } from '@logosphere/fluree';
 import { <%= classify(name) %>Dto } from '../dto';
 import { <%= classify(name) %>DtoMap } from '../mappers/dto';
