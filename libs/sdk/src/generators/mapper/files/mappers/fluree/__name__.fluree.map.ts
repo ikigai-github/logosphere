@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from "@nestjs/common";
-import { Mapper, MapperError } from '@logosphere/domain';
+import { Mapper, MapperError } from '@logosphere/sdk';
 import { 
   <%= classify(name) %>,
   <% entityImports(definition).map((imp) => {-%>

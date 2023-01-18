@@ -24,8 +24,8 @@ export function addDependencies(tree: Tree): GeneratorCallback {
       '@fluree/crypto-utils': '1.10.0',
       '@logosphere/cardano': '*',
       '@logosphere/ipfs': '*',
-      '@logosphere/model': '*',
       '@logosphere/fluree': '*',
+      '@logosphere/sdk': '*',
       '@nestjs/apollo': nestJsApolloVersion,
       '@nestjs/common': nestJsVersion9,
       '@nestjs/config': '2.0.0',
@@ -59,7 +59,6 @@ export function addDependencies(tree: Tree): GeneratorCallback {
     {
       '@babel/core': '7.0.0',
       '@babel/preset-env': '7.0.0',
-      '@logosphere/schema': '*',
       '@nestjs/schematics': nestJsSchematicsVersion,
       '@nestjs/testing': nestJsVersion9,
       '@nrwl/devkit': nxVersion,

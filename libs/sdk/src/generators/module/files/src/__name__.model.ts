@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {Entity, Prop} from '@logosphere/model';
+import { Ent, Prop } from '@logosphere/sdk';
 
-@Entity('<%= camelize(name) %>')
+@Ent('<%= camelize(name) %>')
 class <%= classify(name) %>Entity {
   @Prop({
     examples:['<%= dasherize(name) %>-1', '<%= dasherize(name) %>-2', '<%= dasherize(name) %>-3'],
@@ -9,7 +9,7 @@ class <%= classify(name) %>Entity {
   <%= camelize(name) %>: string;
 }
 
-@Entity('walletAsset')
+@Ent('walletAsset')
 class WalletAsset {
 
   @Prop({ doc: 'Name of the asset', examples: ['4269736f6e'] })
@@ -34,7 +34,7 @@ class WalletAsset {
   logosphereId: string;
 }
 
-@Entity('wallet')
+@Ent('wallet')
 class Wallet {
 
   @Prop( {
@@ -67,6 +67,12 @@ class Wallet {
   })
   publicKey: string;
 
+  @Prop({
+    doc: 'Balance of the wallet in lovelace',
+    examples: ['0', '1000']
+  })
+  balance: number;
+
   @Prop({ 
     doc: 'Wallet assets', 
     type: () => [WalletAsset]}
@@ -75,7 +81,7 @@ class Wallet {
 
 }
 
-@Entity('user')
+@Ent('user')
 class User {
 
   @Prop( {
