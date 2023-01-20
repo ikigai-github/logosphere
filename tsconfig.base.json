@@ -19,8 +19,6 @@
       "@logosphere/fluree": ["libs/fluree/src/index.ts"],
       "@logosphere/ipfs": ["libs/ipfs/src/index.ts"],
       "@logosphere/media": ["libs/media/src/index.ts"],
-      "@logosphere/model": ["libs/model/src/index.ts"],
-      "@logosphere/schema": ["libs/schema/src/index.ts"],
       "@logosphere/sdk": ["libs/sdk/src/index.ts"]
     }
   },

@@ -1,14 +1,15 @@
 /* eslint-disable no-restricted-imports */
-import j from 'jscodeshift';
+import { FileInfo, API, TransformOptions, Node } from 'jscodeshift';
 
 import { strings as s } from '@angular-devkit/core';
 
 export function addProviderToModule(
-  file: j.FileInfo,
-  api: j.API,
-  options: j.TransformOptions
+  file: FileInfo,
+  api: API,
+  options: TransformOptions
 ) {
-  const root = api.jscodeshift(file.source);
+  const j = api.jscodeshift;
+  const root = j(file.source);
 
   return root
     .find(j.ClassDeclaration, {
@@ -19,15 +20,15 @@ export function addProviderToModule(
         },
       },
     })
-    .forEach((cls: j.Node) => {
+    .forEach((cls: Node) => {
       const moduleDecorator = cls.value.decorators.find(
-        (decorator: j.Node) => decorator.expression.callee.name === 'Module'
+        (decorator: Node) => decorator.expression.callee.name === 'Module'
       );
       const props = moduleDecorator.expression.arguments[0].properties;
       const providers = props.find(
-        (prop: j.Node) => prop.key.loc.identifierName === 'providers'
+        (prop: Node) => prop.key.loc.identifierName === 'providers'
       ).value;
-      if (!providers.elements.find((e: j.Node) => e.name === options.name)) {
+      if (!providers.elements.find((e: Node) => e.name === options.name)) {
         providers.elements.push(j.template.expression([options.name]));
       }
     })
