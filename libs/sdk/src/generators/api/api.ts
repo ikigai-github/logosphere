@@ -17,9 +17,9 @@ import { apiE2eTestGenerator } from '../api-e2e';
 export async function apiGenerator(tree: Tree, options: ApiGeneratorSchema) {
   const module = options.module;
 
-  if (!getProjects(tree).has(module)) {
+  if (!getProjects(tree).has(`${module}-app`)) {
     await applicationGenerator(tree, {
-      name: module,
+      name: `${module}-app`,
     });
   }
 
