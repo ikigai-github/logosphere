@@ -23,9 +23,6 @@ describe('init generator', () => {
     const packageJson = devkit.readJson(tree, 'package.json');
     expect(packageJson.dependencies['@nestjs/common']).toBe(nestJsVersion9);
     expect(packageJson.dependencies['@nestjs/core']).toBe(nestJsVersion9);
-    expect(packageJson.dependencies['@nestjs/platform-fastify']).toBe(
-      nestJsVersion9
-    );
     expect(packageJson.dependencies['reflect-metadata']).toBeDefined();
     expect(packageJson.dependencies['rxjs']).toBeDefined();
     expect(packageJson.dependencies['tslib']).toBeDefined();
