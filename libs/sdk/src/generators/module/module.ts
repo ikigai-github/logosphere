@@ -16,11 +16,14 @@ import {
   typeTag as type,
   kindTag as kind,
   DEFAULT_CODEGEN_DIR,
+  DEFAULT_LIB_CODEGEN_PREFIX,
   DEFAULT_COMPILER,
 } from '../../common';
 
 interface NormalizedSchema extends NodeLibraryGeneratorSchema {
   npmScope: string;
+  prefix: string;
+  fileName: string;
   projectName: string;
   projectRoot: string;
   projectDirectory: string;
@@ -31,11 +34,10 @@ function normalizeOptions(
   tree: Tree,
   options: NodeLibraryGeneratorSchema
 ): NormalizedSchema {
-  const name = names(options.name).fileName;
-  const projectDirectory = options.directory
-    ? `${options.directory}/${options.name}`
-    : name;
-  const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
+  const fileName = names(options.name).fileName;
+  const projectName = `${fileName}-${DEFAULT_LIB_CODEGEN_PREFIX}`;
+  const projectDirectory = projectName;
+  const prefix = DEFAULT_LIB_CODEGEN_PREFIX;
   const workspace = getWorkspaceLayout(tree);
   const npmScope = workspace.npmScope;
   const projectRoot = `${workspace.libsDir}/${projectDirectory}`;
@@ -46,6 +48,8 @@ function normalizeOptions(
   return {
     ...options,
     ...strings,
+    fileName,
+    prefix,
     npmScope,
     projectName,
     projectRoot,
@@ -73,24 +77,29 @@ export async function moduleGenerator(
   tree: Tree,
   options: NodeLibraryGeneratorSchema
 ) {
-  options.buildable = true;
-  options.compiler = options.compiler || DEFAULT_COMPILER;
-  options.directory = options.directory || DEFAULT_CODEGEN_DIR;
-  options.tags = [scope.shared, type.lib, kind.feature].join(',');
-  const normalizedOptions = normalizeOptions(tree, options);
-  options.importPath = `@${normalizedOptions.npmScope}/${normalizedOptions.projectName}`;
-  await libraryGenerator(tree, options);
-  //delete default project.json and package.json
-  tree.delete(`${options.directory}/${options.name}/package.json`);
-  tree.delete(`${options.directory}/${options.name}/project.json`);
+  const libName = `${
+    names(options.name).fileName
+  }-${DEFAULT_LIB_CODEGEN_PREFIX}`;
+  const libOptions = {
+    name: libName,
+    buildable: true,
+    compiler: options.compiler || DEFAULT_COMPILER,
+    tags: [scope.shared, type.lib, kind.feature].join(','),
+    importPath: `@${getWorkspaceLayout(tree).npmScope}/${libName}`,
+  };
+  await libraryGenerator(tree, libOptions);
 
+  const libsDir = getWorkspaceLayout(tree).libsDir;
+
+  //delete default project.json and package.json
+  tree.delete(`${libsDir}/${libName}/package.json`);
+  tree.delete(`${libsDir}/${libName}/project.json`);
+  //delete default lib files
+  tree.delete(`${libsDir}/${libName}/src/lib/${libName}.ts`);
+  tree.delete(`${libsDir}/${libName}/src/lib/${libName}.spec.ts`);
+
+  const normalizedOptions = normalizeOptions(tree, options);
   addFiles(tree, normalizedOptions);
-  tree.delete(
-    `${options.directory}/${options.name}/src/lib/codegen-${options.name}.ts`
-  );
-  tree.delete(
-    `${options.directory}/${options.name}/src/lib/codegen-${options.name}.spec.ts`
-  );
   await formatFiles(tree);
 }
 

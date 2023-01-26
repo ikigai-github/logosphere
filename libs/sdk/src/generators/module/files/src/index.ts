@@ -1,4 +1,4 @@
-export * from './<%= name %>.module';
+export * from './<%= fileName %>.module';
 export * from './repositories/fluree';
 export * from './entities';
 export * from './resolvers';
