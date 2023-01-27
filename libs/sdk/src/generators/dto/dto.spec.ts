@@ -30,8 +30,6 @@ describe('dto generator', () => {
     const config = readProjectConfiguration(tree, libName);
     expect(config).toBeDefined();
     expect(config.root).toBe(libName);
-
-    //console.log(tree.listChanges().map(fc => console.log(fc.path)));
   });
 
   it('should generate files', async () => {

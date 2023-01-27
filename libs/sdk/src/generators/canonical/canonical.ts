@@ -10,7 +10,7 @@ import {
 
 import { canonicalSchemaLoader } from '../../schema';
 import { CanonicalGeneratorSchema } from './schema';
-import { DEFAULT_CODEGEN_DIR, DEFAULT_LIB_CODEGEN_PREFIX } from '../../common';
+import { DEFAULT_LIB_CODEGEN_PREFIX } from '../../common';
 
 interface NormalizedSchema extends CanonicalGeneratorSchema {
   fileName: string;
