@@ -19,7 +19,6 @@ import {
   applySchemaDiff,
   schemaTransact,
 } from '@logosphere/fluree';
-import { truncate } from 'lodash';
 
 interface NormalizedSchema extends FlureeGeneratorSchema {
   fileName: string;

@@ -31,7 +31,7 @@ export async function apiGenerator(tree: Tree, options: ApiGeneratorSchema) {
     module,
     flureeLedger: options.flureeLedger || false,
   });
-  // await gqlGenerator(tree, { module });
+  await gqlGenerator(tree, { module });
   // await mapperGenerator(tree, {
   //   module,
   //   type: 'dto',

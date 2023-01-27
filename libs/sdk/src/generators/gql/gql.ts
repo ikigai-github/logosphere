@@ -17,9 +17,10 @@ import {
 import { canonicalSchemaLoader } from '../../schema';
 
 import { GqlGeneratorSchema } from './schema';
-import { DEFAULT_CODEGEN_DIR } from '../../common';
+import { DEFAULT_LIB_CODEGEN_PREFIX } from '../../common';
 
 interface NormalizedSchema extends GqlGeneratorSchema {
+  fileName: string;
   projectName: string;
   libsRoot: string;
   libsDirectory: string;
@@ -29,16 +30,19 @@ function normalizeOptions(
   tree: Tree,
   options: GqlGeneratorSchema
 ): NormalizedSchema {
-  const name = names(options.module).fileName;
-  const projectName = options.module;
-  const workspace = getWorkspaceLayout(tree);
-  const libsRoot = `${workspace.libsDir}/${DEFAULT_CODEGEN_DIR}/${options.module}/src`;
-  const libsDirectory = options.directory
-    ? `${names(options.directory).fileName}/${name}`
-    : `gql/${name}`;
+  const fileName = names(options.module).fileName;
+  const projectName = `${
+    names(options.module).fileName
+  }-${DEFAULT_LIB_CODEGEN_PREFIX}`;
+  const libsDirectory = projectName;
+
+  const libsRoot = `${
+    getWorkspaceLayout(tree).libsDir
+  }/${libsDirectory}/src/gql`;
 
   return {
     ...options,
+    fileName,
     projectName,
     libsRoot,
     libsDirectory,
@@ -48,7 +52,7 @@ function normalizeOptions(
 function addLibsFiles(tree: Tree, options: NormalizedSchema) {
   const templateOptions = {
     ...options,
-    ...names(options.libsDirectory),
+    //...names(options.libsDirectory),
     offsetFromRoot: offsetFromRoot(options.libsRoot),
     template: '',
   };
@@ -61,7 +65,9 @@ function addLibsFiles(tree: Tree, options: NormalizedSchema) {
 }
 
 export async function gqlGenerator(tree: Tree, options: GqlGeneratorSchema) {
-  const sourceSchema = canonicalSchemaLoader(options.module);
+  const sourceSchema = options.sourceSchema
+    ? options.sourceSchema
+    : canonicalSchemaLoader(options.module);
   const converter = ConverterFactory.getConverter(
     SchemaType.Canonical,
     SchemaType.Gql
