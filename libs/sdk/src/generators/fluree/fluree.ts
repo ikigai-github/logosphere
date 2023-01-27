@@ -13,7 +13,7 @@ import { ConverterFactory, SchemaType } from '../../converters';
 import { canonicalSchemaLoader } from '../../schema';
 
 import { FlureeGeneratorSchema } from './schema';
-import { DEFAULT_CODEGEN_DIR } from '../../common';
+import { DEFAULT_LIB_CODEGEN_PREFIX } from '../../common';
 import {
   FlureeSchema,
   applySchemaDiff,
@@ -22,6 +22,7 @@ import {
 import { truncate } from 'lodash';
 
 interface NormalizedSchema extends FlureeGeneratorSchema {
+  fileName: string;
   projectName: string;
   projectRoot: string;
   projectDirectory: string;
@@ -31,17 +32,19 @@ function normalizeOptions(
   tree: Tree,
   options: FlureeGeneratorSchema
 ): NormalizedSchema {
-  const name = names(options.module).fileName;
-  const projectDirectory = options.directory
-    ? `${names(options.directory).fileName}/${name}`
-    : `fluree/${name}`;
-  const projectName = options.module; //projectDirectory.replace(new RegExp('/', 'g'), '-');
+  const fileName = names(options.module).fileName;
+  const projectName = `${
+    names(options.module).fileName
+  }-${DEFAULT_LIB_CODEGEN_PREFIX}`;
+  const projectDirectory = projectName;
+
   const projectRoot = `${
     getWorkspaceLayout(tree).libsDir
-  }/${DEFAULT_CODEGEN_DIR}/${options.module}/src`;
+  }/${projectDirectory}/src/fluree`;
 
   return {
     ...options,
+    fileName,
     projectName,
     projectRoot,
     projectDirectory,
@@ -51,7 +54,6 @@ function normalizeOptions(
 function addFiles(tree: Tree, options: NormalizedSchema) {
   const templateOptions = {
     ...options,
-    ...names(options.projectDirectory),
     offsetFromRoot: offsetFromRoot(options.projectRoot),
     template: '',
   };
@@ -73,82 +75,6 @@ export async function flureeGenerator(
     SchemaType.Fluree
   );
   const newSchema: FlureeSchema = converter.convert(canonicalSchema);
-
-  // newSchema.collections.push({
-  //   _id: '_collection',
-  //   name: 'walletAsset',
-  //   predicates: [
-  //     {
-  //       _id: '_predicate',
-  //       name: 'name',
-  //       type: 'string',
-  //       doc: 'Name of the asset',
-  //     },
-  //     {
-  //       _id: '_predicate',
-  //       name: 'policyId',
-  //       type: 'string',
-  //       doc: 'Policy of the asset',
-  //     },
-  //     {
-  //       _id: '_predicate',
-  //       name: 'quantity',
-  //       type: 'int',
-  //       doc: 'Quantity of the asset',
-  //     },
-  //     {
-  //       _id: '_predicate',
-  //       name: 'metadata',
-  //       type: 'json',
-  //       doc: 'Metadata of the asset',
-  //     },
-  //     {
-  //       _id: '_predicate',
-  //       name: 'subjectId',
-  //       type: 'int',
-  //       doc: 'Fluree subject ID associated with the asset',
-  //     },
-  //   ],
-  // });
-
-  // newSchema.collections.push({
-  //   _id: '_collection',
-  //   name: 'wallet',
-  //   predicates: [
-  //     {
-  //       _id: '_predicate',
-  //       name: 'walletId',
-  //       type: 'string',
-  //       index: true,
-  //       unique: true,
-  //       doc: 'ID of the wallet',
-  //     },
-  //     {
-  //       _id: '_predicate',
-  //       name: 'address',
-  //       type: 'string',
-  //       index: true,
-  //       unique: true,
-  //       doc: 'Address of the wallet',
-  //     },
-  //     {
-  //       _id: '_predicate',
-  //       name: 'publicKey',
-  //       type: 'string',
-  //       index: true,
-  //       unique: true,
-  //       doc: 'Public key of the wallet',
-  //     },
-  //     {
-  //       _id: '_predicate',
-  //       name: 'assets',
-  //       type: 'ref',
-  //       restrictCollection: 'walletAsset',
-  //       multi: true,
-  //       doc: 'Wallet assets',
-  //     },
-  //   ],
-  // });
 
   newSchema.collections.push({
     _id: '_collection',
@@ -172,13 +98,6 @@ export async function flureeGenerator(
         type: 'string',
         doc: 'User wallet public key on Cardano',
       },
-      // {
-      //   _id: '_predicate',
-      //   name: 'wallet',
-      //   type: 'ref',
-      //   restrictCollection: 'wallet',
-      //   doc: 'User wallet on Cardano',
-      // },
     ],
   });
 

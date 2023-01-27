@@ -27,10 +27,10 @@ export async function apiGenerator(tree: Tree, options: ApiGeneratorSchema) {
   await dtoGenerator(tree, { module });
   await entityGenerator(tree, { module });
   await enumTypeGenerator(tree, { module });
-  // await flureeGenerator(tree, {
-  //   module,
-  //   flureeLedger: options.flureeLedger || false,
-  // });
+  await flureeGenerator(tree, {
+    module,
+    flureeLedger: options.flureeLedger || false,
+  });
   // await gqlGenerator(tree, { module });
   // await mapperGenerator(tree, {
   //   module,
