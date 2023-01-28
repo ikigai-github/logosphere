@@ -40,14 +40,14 @@ export async function apiGenerator(tree: Tree, options: ApiGeneratorSchema) {
     module,
     type: 'fluree',
   });
-  // await repositoryGenerator(tree, {
-  //   module,
-  //   type: 'interfaces',
-  // });
-  // await repositoryGenerator(tree, {
-  //   module,
-  //   type: 'fluree',
-  // });
+  await repositoryGenerator(tree, {
+    module,
+    type: 'interfaces',
+  });
+  await repositoryGenerator(tree, {
+    module,
+    type: 'fluree',
+  });
   // await resolverGenerator(tree, { module });
   // await apiE2eTestGenerator(tree, { module });
 }
