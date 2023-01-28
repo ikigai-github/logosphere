@@ -32,14 +32,14 @@ export async function apiGenerator(tree: Tree, options: ApiGeneratorSchema) {
     flureeLedger: options.flureeLedger || false,
   });
   await gqlGenerator(tree, { module });
-  // await mapperGenerator(tree, {
-  //   module,
-  //   type: 'dto',
-  // });
-  // await mapperGenerator(tree, {
-  //   module,
-  //   type: 'fluree',
-  // });
+  await mapperGenerator(tree, {
+    module,
+    type: 'dto',
+  });
+  await mapperGenerator(tree, {
+    module,
+    type: 'fluree',
+  });
   // await repositoryGenerator(tree, {
   //   module,
   //   type: 'interfaces',
