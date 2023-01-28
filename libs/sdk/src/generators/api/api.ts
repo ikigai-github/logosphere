@@ -48,7 +48,7 @@ export async function apiGenerator(tree: Tree, options: ApiGeneratorSchema) {
     module,
     type: 'fluree',
   });
-  // await resolverGenerator(tree, { module });
+  await resolverGenerator(tree, { module });
   // await apiE2eTestGenerator(tree, { module });
 }
 
