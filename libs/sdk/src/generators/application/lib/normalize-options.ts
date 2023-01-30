@@ -3,7 +3,7 @@ import { getWorkspaceLayout, joinPathFragments, names } from '@nrwl/devkit';
 import { Linter } from '@nrwl/linter';
 import type { Schema as NodeApplicationGeneratorOptions } from '@nrwl/node/src/generators/application/schema';
 import type { ApplicationGeneratorOptions, NormalizedOptions } from '../schema';
-import { scopeTag as scope } from '../../../common';
+import { scopeTag as scope, DEFAULT_LIB_CODEGEN_PREFIX } from '../../../common';
 export function normalizeOptions(
   tree: Tree,
   options: ApplicationGeneratorOptions
@@ -22,9 +22,13 @@ export function normalizeOptions(
     ? options.tags.concat(scope.api)
     : scope.api;
 
+  const libName = `${
+    names(options.name).fileName
+  }-${DEFAULT_LIB_CODEGEN_PREFIX}`;
   return {
     ...options,
     className,
+    libName,
     appProjectRoot,
     linter: options.linter ?? Linter.EsLint,
     unitTestRunner: options.unitTestRunner ?? 'jest',
