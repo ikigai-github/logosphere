@@ -17,8 +17,8 @@ import {
   FlureeQuery,
   predicateQuery,
   deprecatePredicate,
-  flureePredicates as fp,
-  flureeSystem as f,
+  flureePredicates,
+  flureeSystem,
   FileUtil,
   isArray,
 } from '@logosphere/fluree';
@@ -176,8 +176,8 @@ export default class FlureeSchema {
    */
   async getCollections(): Promise<string[]> {
     const query: FlureeQuery = {
-      select: [f.NAME],
-      from: f.COLLECTION,
+      select: [flureeSystem.NAME],
+      from: flureeSystem.COLLECTION,
     };
 
     const response = await this.dao.query(
@@ -309,7 +309,8 @@ export default class FlureeSchema {
         this.toInsertData[key].forEach((entry) => {
           pendingArray.forEach((pendingKey) => {
             Object.keys(pendingKey).forEach((pKey) => {
-              entry[pKey] = this.toInsertData[pendingKey[pKey]][0][f._ID];
+              entry[pKey] =
+                this.toInsertData[pendingKey[pKey]][0][flureeSystem._ID];
             });
           });
         });
@@ -402,13 +403,15 @@ export default class FlureeSchema {
         const childEntity = prop.type;
         const index = 5;
         if (Object.keys(this.toInsertData).includes(childEntity)) {
-          data[prop.name] = [this.toInsertData[childEntity][0][f._ID]];
+          data[prop.name] = [
+            this.toInsertData[childEntity][0][flureeSystem._ID],
+          ];
         }
         if (index > 0) {
           const identifiers: any[] = [];
           for (let i = 0; i < index; i++) {
             const appendedChild = this.parse(childEntity);
-            identifiers.push(appendedChild[f._ID]);
+            identifiers.push(appendedChild[flureeSystem._ID]);
             this.toInsertData[childEntity].push(appendedChild);
           }
           data[prop.name] = identifiers;
@@ -448,7 +451,7 @@ export default class FlureeSchema {
           prop.defType === DefinitionType.Entity &&
           Object.keys(this.toInsertData).includes(prop.type)
         ) {
-          data[prop.name] = this.toInsertData[prop.type][0][f._ID];
+          data[prop.name] = this.toInsertData[prop.type][0][flureeSystem._ID];
         } else if (prop.defType === DefinitionType.Enum) {
           //data[prop.name] = [0];
           // TODO: Enable enum support in test data generator
@@ -456,13 +459,17 @@ export default class FlureeSchema {
         }
       }
     });
-    data[f._ID] = entity;
+    data[flureeSystem._ID] = entity;
 
     data[IDENTIFIER] = sha3_256(JSON.stringify(data));
-    data[f._ID] = `${entity}$${data[IDENTIFIER]}`;
+    data[flureeSystem._ID] = `${entity}$${data[IDENTIFIER]}`;
 
-    if (schema.props.find((prop: Property) => prop.name === fp.CREATED_AT)) {
-      data[fp.CREATED_AT] = Date.now();
+    if (
+      schema.props.find(
+        (prop: Property) => prop.name === flureePredicates.CREATED_AT
+      )
+    ) {
+      data[flureePredicates.CREATED_AT] = Date.now();
     }
 
     if (isPending) {
@@ -484,7 +491,7 @@ export default class FlureeSchema {
 
     const collection: any[] = [
       {
-        _id: f.COLLECTION,
+        _id: flureeSystem.COLLECTION,
         name: entityName,
       },
       //   {
@@ -496,8 +503,8 @@ export default class FlureeSchema {
       //     index: true,
       //   },
       {
-        _id: f.PREDICATE,
-        name: `${entityName}`.concat('/').concat(fp.IDENTIFIER),
+        _id: flureeSystem.PREDICATE,
+        name: `${entityName}`.concat('/').concat(flureePredicates.IDENTIFIER),
         doc: `The ${entityName}'s identifier`,
         type: STRING,
         unique: true,
@@ -549,7 +556,7 @@ export default class FlureeSchema {
     entitySchema: Definition
   ) {
     const predicate: FlureePredicate = {
-      _id: f.PREDICATE,
+      _id: flureeSystem.PREDICATE,
       name: `${entityName}/${predicateName}`,
       doc: `${entityName}'s ${predicateName} field`,
       ...(predicateName === IDENTIFIER && {

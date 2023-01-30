@@ -2,8 +2,8 @@ import { sha3_256 } from 'js-sha3';
 
 import {
   FlureeQuery,
-  flureeSystem as s,
-  flureePredicates as fp,
+  flureeSystem,
+  flureePredicates,
 } from '@logosphere/fluree';
 
 import { Definition, DefinitionType, Property } from '../schema';
@@ -123,7 +123,7 @@ export default class TestDataGenerator {
         datum[IDENTIFIER] = sha3_256(
           JSON.stringify(datum).concat(Math.random().toString(36))
         );
-        datum[s._ID] = `${entity}$${datum[IDENTIFIER]}`;
+        datum[flureeSystem._ID] = `${entity}$${datum[IDENTIFIER]}`;
         testData.push(datum);
       }
       // this.fluree.fileUtil.write(
@@ -152,7 +152,7 @@ export default class TestDataGenerator {
 
   async getRecordIdentifiers(collection: string) {
     const query: FlureeQuery = {
-      select: [fp.IDENTIFIER],
+      select: [flureePredicates.IDENTIFIER],
       from: collection,
     };
 
