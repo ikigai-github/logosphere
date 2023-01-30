@@ -3,15 +3,12 @@ import { addDependenciesToPackageJson, readJson } from '@nrwl/devkit';
 import { satisfies } from 'semver';
 import {
   nestJsSchematicsVersion,
-  nestJsVersion7,
-  nestJsVersion8,
-  nestJsVersion9,
+  nestJsVersion,
   nestJsApolloVersion,
   nestJsGraphQLVersion,
   nxVersion,
   reflectMetadataVersion,
-  rxjsVersion6,
-  rxjsVersion7,
+  rxjsVersion,
 } from '../../../utils/versions';
 
 export function addDependencies(tree: Tree): GeneratorCallback {
@@ -27,11 +24,11 @@ export function addDependencies(tree: Tree): GeneratorCallback {
       // '@logosphere/fluree': '*',
       // '@logosphere/sdk': '*',
       '@nestjs/apollo': nestJsApolloVersion,
-      '@nestjs/common': nestJsVersion9,
+      '@nestjs/common': nestJsVersion,
       '@nestjs/config': '2.0.0',
-      '@nestjs/core': nestJsVersion9,
+      '@nestjs/core': nestJsVersion,
       '@nestjs/graphql': nestJsGraphQLVersion,
-      '@nestjs/platform-fastify': nestJsVersion9,
+      '@nestjs/platform-fastify': nestJsVersion,
       '@pinata/sdk': '1.1.25',
       'apollo-server-core': '3.11.1',
       'apollo-server-fastify': '3.6.7',
@@ -60,7 +57,7 @@ export function addDependencies(tree: Tree): GeneratorCallback {
       '@babel/core': '7.0.0',
       '@babel/preset-env': '7.0.0',
       '@nestjs/schematics': nestJsSchematicsVersion,
-      '@nestjs/testing': nestJsVersion9,
+      '@nestjs/testing': nestJsVersion,
       '@nrwl/devkit': nxVersion,
       '@nrwl/js': nxVersion,
       '@nrwl/nest': nxVersion,
