@@ -3,8 +3,7 @@ import * as devkit from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import {
   nestJsSchematicsVersion,
-  nestJsVersion8,
-  nestJsVersion9,
+  nestJsVersion,
   nxVersion,
 } from '../../utils/versions';
 import { initGenerator } from './init';
@@ -21,8 +20,8 @@ describe('init generator', () => {
     await initGenerator(tree, {});
 
     const packageJson = devkit.readJson(tree, 'package.json');
-    expect(packageJson.dependencies['@nestjs/common']).toBe(nestJsVersion9);
-    expect(packageJson.dependencies['@nestjs/core']).toBe(nestJsVersion9);
+    expect(packageJson.dependencies['@nestjs/common']).toBe(nestJsVersion);
+    expect(packageJson.dependencies['@nestjs/core']).toBe(nestJsVersion);
     expect(packageJson.dependencies['reflect-metadata']).toBeDefined();
     expect(packageJson.dependencies['rxjs']).toBeDefined();
     expect(packageJson.dependencies['tslib']).toBeDefined();
@@ -30,7 +29,7 @@ describe('init generator', () => {
     expect(packageJson.devDependencies['@nestjs/schematics']).toBe(
       nestJsSchematicsVersion
     );
-    expect(packageJson.devDependencies['@nestjs/testing']).toBe(nestJsVersion9);
+    expect(packageJson.devDependencies['@nestjs/testing']).toBe(nestJsVersion);
     expect(packageJson.devDependencies['@nrwl/nest']).toBe(nxVersion);
   });
 
