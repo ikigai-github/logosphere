@@ -3,7 +3,7 @@ import { Args, Mutation, Resolver, Query } from '@nestjs/graphql';
 import { UserAuthDto, WalletDto } from '../dto';
 import { User, Wallet } from '../entities';
 import { WalletDtoMap } from '../mappers/dto';
-import { LogosphereError } from '@logosphere/errors';
+import { LogosphereError } from '@logosphere/sdk';
 import { 
   UserFlureeRepository, 
   UserAuthFlureeRepository, 

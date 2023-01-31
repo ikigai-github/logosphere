@@ -1,4 +1,4 @@
-import { Guard, Entity, EntityProps, Result } from '@logosphere/domain';
+import { Guard, Entity, EntityProps, Result } from '@logosphere/sdk';
 <% if (isEnumImport(definition)) { -%>
   import {
     <% enumImports(definition).map((imp) => {-%>

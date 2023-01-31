@@ -8,11 +8,12 @@ import {
   Tree,
 } from '@nrwl/devkit';
 
-import { canonicalSchemaLoader } from '@logosphere/model';
+import { canonicalSchemaLoader } from '../../schema';
 import { CanonicalGeneratorSchema } from './schema';
-import { DEFAULT_CODEGEN_DIR } from '../../common';
+import { DEFAULT_LIB_CODEGEN_PREFIX } from '../../common';
 
 interface NormalizedSchema extends CanonicalGeneratorSchema {
+  fileName: string;
   projectName: string;
   projectRoot: string;
   projectDirectory: string;
@@ -22,17 +23,17 @@ function normalizeOptions(
   tree: Tree,
   options: CanonicalGeneratorSchema
 ): NormalizedSchema {
-  const name = names(options.module).fileName;
-  const projectDirectory = options.directory
-    ? `${names(options.directory).fileName}/${name}`
-    : `canonical/${name}`;
-  const projectName = options.module;
+  const fileName = names(options.module).fileName;
+  const projectName = `${fileName}-${DEFAULT_LIB_CODEGEN_PREFIX}`;
+  const projectDirectory = projectName;
+
   const projectRoot = `${
     getWorkspaceLayout(tree).libsDir
-  }/${DEFAULT_CODEGEN_DIR}/${options.module}/src`;
+  }/${projectDirectory}/src/canonical`;
 
   return {
     ...options,
+    fileName,
     projectName,
     projectRoot,
     projectDirectory,
@@ -42,7 +43,7 @@ function normalizeOptions(
 function addFiles(tree: Tree, options: NormalizedSchema) {
   const templateOptions = {
     ...options,
-    ...names(options.projectDirectory),
+    name: options.module,
     offsetFromRoot: offsetFromRoot(options.projectRoot),
     template: '',
   };
@@ -66,6 +67,7 @@ export async function canonicalSchemaGenerator(
     source,
   };
   const normalizedOptions = normalizeOptions(tree, options);
+  //console.log(JSON.stringify(normalizedOptions, null, 2));
   addFiles(tree, normalizedOptions);
   await formatFiles(tree);
 }

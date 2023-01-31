@@ -2,6 +2,37 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.6.5](https://github.com/ikigai-github/logosphere/compare/sdk-0.6.4...sdk-0.6.5) (2023-01-31)
+
+### Bug Fixes
+
+- **sdk:** adding gen postfix to the module lib generator ([c89260d](https://github.com/ikigai-github/logosphere/commit/c89260d38964dbf0ccf704c094055d365c78b2c4))
+- **sdk:** adjust canonical schema generator to module lib with postfix ([534ab52](https://github.com/ikigai-github/logosphere/commit/534ab52d2a85a265d5eb9e9704d1a0f362326def))
+- **sdk:** adjust dto generator to module lib with postfix ([532ac3c](https://github.com/ikigai-github/logosphere/commit/532ac3cba16f762b6b2aa92deeb955a8ff849170))
+- **sdk:** adjust entity generator to module lib with postfix ([1d4e7e9](https://github.com/ikigai-github/logosphere/commit/1d4e7e9781788c5c6b0da01aad7718ffd60d3083))
+- **sdk:** adjust enum type generator to module lib with postfix ([a297071](https://github.com/ikigai-github/logosphere/commit/a29707184485b83a5b8a067d005183128a931f00))
+- **sdk:** adjust fluree schema generator to module lib with postfix ([3bedfb5](https://github.com/ikigai-github/logosphere/commit/3bedfb567a724c0e43cbe1a5ea145a004f68db25))
+- **sdk:** adjust gql generator to module lib with postfix ([0f95be0](https://github.com/ikigai-github/logosphere/commit/0f95be0446dcd9e0dbef063e324f24fb4f16535f))
+- **sdk:** adjust mapper generator to module lib with postfix ([da8366d](https://github.com/ikigai-github/logosphere/commit/da8366d2bb4d43fe9778327c183e112ef6394524))
+- **sdk:** adjust repositories generator to module lib with postfix ([7f525ba](https://github.com/ikigai-github/logosphere/commit/7f525bad516ff0e13de6cc8743da2a603bcd9d7e))
+- **sdk:** adjust resolvers generator to module lib with postfix ([b4f449a](https://github.com/ikigai-github/logosphere/commit/b4f449ac5ec2c398e5e20c98b506834d40f60043))
+- **sdk:** adjusting docker file for postfixed library ([527c6ea](https://github.com/ikigai-github/logosphere/commit/527c6ea14ffd976db86afb595e0d9f158b677d6b))
+- **sdk:** adjusting SDK generators to refactored libs ([03db6e0](https://github.com/ikigai-github/logosphere/commit/03db6e0728b644adce2d307745de7a88bcc96a95))
+- **sdk:** changing fastify to express in init generator ([f91c7c1](https://github.com/ikigai-github/logosphere/commit/f91c7c1b1aee53aa18183d5e8d5b377b41f4fa0e))
+- **sdk:** enabling e2e generator ([ed7dcba](https://github.com/ikigai-github/logosphere/commit/ed7dcba5051bf7d9ef5d77f11e1515e61696b3cd))
+- **sdk:** modifying app and init unit tests to the changed nestjs and rxjs version constants ([2596388](https://github.com/ikigai-github/logosphere/commit/25963881102bcafc8ec81045b8cdd144791bf482))
+- **sdk:** workaround for NX 15 bug, adding -app postfix to the app ([85f258f](https://github.com/ikigai-github/logosphere/commit/85f258f982dcb881e295b4edffa93ede4c98eea8))
+
+### [0.6.4](https://github.com/ikigai-github/logosphere/compare/sdk-0.6.3...sdk-0.6.4) (2023-01-12)
+
+### Bug Fixes
+
+- **sdk:** disabling setting default collection ([d7a61b1](https://github.com/ikigai-github/logosphere/commit/d7a61b14f3aab6920aaaa1e45c45e5c414dc2877))
+
+### [0.6.3](https://github.com/ikigai-github/logosphere/compare/sdk-0.6.2...sdk-0.6.3) (2023-01-12)
+
+### [0.6.2](https://github.com/ikigai-github/logosphere/compare/sdk-0.6.1...sdk-0.6.2) (2023-01-12)
+
 ### [0.6.1](https://github.com/ikigai-github/logosphere/compare/sdk-0.6.0...sdk-0.6.1) (2022-10-31)
 
 ## [0.6.0](https://github.com/ikigai-github/logosphere/compare/sdk-0.5.0...sdk-0.6.0) (2022-10-14)

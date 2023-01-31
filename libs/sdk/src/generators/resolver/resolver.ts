@@ -12,13 +12,13 @@ import {
 import { strings } from '@angular-devkit/core';
 import { applyTransform } from 'jscodeshift/src/testUtils';
 
-import { Definition, DefinitionType } from '@logosphere/schema';
+import { Definition, DefinitionType } from '../../schema';
 
-import { canonicalSchemaLoader } from '@logosphere/model';
+import { canonicalSchemaLoader } from '../../schema';
 
 import { tsFormatter } from '../utils';
 import { ResolverGeneratorSchema } from './schema';
-import { DEFAULT_CODEGEN_DIR } from '../../common';
+import { DEFAULT_LIB_CODEGEN_PREFIX } from '../../common';
 
 import { addImport, addProviderToModule } from '../utils/transforms';
 
@@ -33,17 +33,17 @@ function normalizeOptions(
   tree: Tree,
   options: ResolverGeneratorSchema
 ): NormalizedSchema {
-  const module = names(options.module).fileName;
-  const projectDirectory = options.directory
-    ? `${names(options.directory).fileName}/${module}`
-    : module;
-  const projectName = options.module;
+  const projectName = `${
+    names(options.module).fileName
+  }-${DEFAULT_LIB_CODEGEN_PREFIX}`;
+  const projectDirectory = projectName;
   const projectRoot = `${
     getWorkspaceLayout(tree).libsDir
-  }/${DEFAULT_CODEGEN_DIR}/${options.module}/src`;
-  // update module file
-  const moduleFile = path.join(projectRoot, `${options.module}.module.ts`);
-
+  }/${projectDirectory}/src`;
+  const moduleFile = path.join(
+    projectRoot,
+    `${names(options.module).fileName}.module.ts`
+  );
   return {
     ...options,
     projectName,
@@ -55,9 +55,11 @@ function normalizeOptions(
 
 function addFiles(tree: Tree, options: NormalizedSchema) {
   const sourceSchema = canonicalSchemaLoader(options.module);
-  const definitions = sourceSchema.definitions.filter(
-    (def: Definition) => def.type === DefinitionType.Entity
-  );
+  const definitions = options.definition
+    ? [options.definition]
+    : sourceSchema.definitions.filter(
+        (def: Definition) => def.type === DefinitionType.Entity
+      );
 
   const templateOptions = {
     ...options,
@@ -66,7 +68,7 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
     ...names(options.projectDirectory),
     offsetFromRoot: offsetFromRoot(options.projectRoot),
     template: '',
-    index: definitions,
+    index: options.index ? options.index : definitions,
   };
 
   definitions.map(async (def: Definition) => {

@@ -1,5 +1,5 @@
 import { strings as s } from '@angular-devkit/core/src';
-import { Definition, DefinitionType, Property } from '@logosphere/schema';
+import { Definition, DefinitionType, Property } from '../../../schema';
 import { KEY, VALUE, tsTypes as ts, cppTypes as cpp } from './const';
 
 /**

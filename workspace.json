@@ -9,8 +9,6 @@
     "ipfs-e2e": "e2e/ipfs-e2e",
     "media": "libs/media",
     "media-e2e": "e2e/media-e2e",
-    "model": "libs/model",
-    "schema": "libs/schema",
     "sdk": "libs/sdk",
     "sdk-e2e": "e2e/sdk-e2e"
   }

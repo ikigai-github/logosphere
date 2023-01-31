@@ -9,9 +9,11 @@ import {
   offsetFromRoot,
   Tree,
 } from '@nrwl/devkit';
-import { Definition, DefinitionType } from '@logosphere/schema';
-
-import { canonicalSchemaLoader } from '@logosphere/model';
+import {
+  Definition,
+  DefinitionType,
+  canonicalSchemaLoader,
+} from '../../schema';
 
 import { strings } from '@angular-devkit/core';
 import { DEFAULT_FIXTURE_DEPTH } from '../../common';

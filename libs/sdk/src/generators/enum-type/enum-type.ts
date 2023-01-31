@@ -11,9 +11,12 @@ import {
 
 import { strings } from '@angular-devkit/core';
 
-import { Definition, DefinitionType } from '@logosphere/schema';
-
-import { canonicalSchemaLoader } from '@logosphere/model';
+import {
+  Definition,
+  DefinitionType,
+  canonicalSchemaLoader,
+} from '../../schema';
+import { DEFAULT_LIB_CODEGEN_PREFIX } from '../../common';
 
 import { tsFormatter } from '../utils';
 import { EnumTypeGeneratorSchema } from './schema';
@@ -29,14 +32,14 @@ function normalizeOptions(
   tree: Tree,
   options: EnumTypeGeneratorSchema
 ): NormalizedSchema {
-  const module = names(options.module).fileName;
-  const projectDirectory = options.directory
-    ? `${names(options.directory).fileName}/${module}`
-    : module;
-  const projectName = options.module;
+  const projectName = `${
+    names(options.module).fileName
+  }-${DEFAULT_LIB_CODEGEN_PREFIX}`;
+  const projectDirectory = projectName;
+
   const projectRoot = `${
     getWorkspaceLayout(tree).libsDir
-  }/${DEFAULT_CODEGEN_DIR}/${options.module}/src`;
+  }/${projectDirectory}/src`;
 
   return {
     ...options,
@@ -48,9 +51,11 @@ function normalizeOptions(
 
 function addFiles(tree: Tree, options: NormalizedSchema) {
   const sourceSchema = canonicalSchemaLoader(options.module);
-  const definitions = sourceSchema.definitions.filter(
-    (def: Definition) => def.type === DefinitionType.Enum
-  );
+  const definitions = options.definition
+    ? [options.definition]
+    : sourceSchema.definitions.filter(
+        (def: Definition) => def.type === DefinitionType.Enum
+      );
 
   const templateOptions = {
     ...options,

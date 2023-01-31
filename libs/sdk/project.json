@@ -15,8 +15,7 @@
       "options": {
         "outputPath": "dist/libs/sdk",
         "tsConfig": "libs/sdk/tsconfig.lib.json",
-        "main": "libs/sdk/index.ts",
-        "updateBuildableProjectDepsInPackageJson": false,
+        "main": "libs/sdk/src/index.ts",
         "assets": [
           {
             "input": "libs/sdk",
@@ -85,5 +84,5 @@
       }
     }
   },
-  "tags": ["scope:cli", "type:lib", "kind:feature"]
+  "tags": ["scope:shared", "type:lib", "kind:feature"]
 }

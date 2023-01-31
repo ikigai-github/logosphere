@@ -14,8 +14,7 @@ import {
   processUpdateTransactSpec,
   reconcileArrays
 } from '@logosphere/fluree';
-import { copySubjectId } from '@logosphere/utils';
-import { RepositoryError } from '@logosphere/domain';
+import { copySubjectId, RepositoryError } from '@logosphere/sdk';
 <% if (hasIndexedEnum(definition)) { -%>
   import {
     <% enumImports(definition).map((imp) => {-%>

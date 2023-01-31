@@ -15,11 +15,6 @@
       },
       "x-prompt": "What name would you like to use for the module?"
     },
-    "directory": {
-      "type": "string",
-      "description": "A directory where the module is placed",
-      "alias": "dir"
-    },
     "tags": {
       "type": "string",
       "description": "Add tags to the module.",

@@ -1,17 +1,10 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import {
-  FastifyAdapter,
-  NestFastifyApplication,
-} from '@nestjs/platform-fastify';
 import { applySchemaDiffFromFile } from '@logosphere/fluree';
 import { AppModule } from './app/app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestFastifyApplication>(
-    AppModule,
-    new FastifyAdapter()
-  );
+  const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
   const ledger = process.env.FLUREE_LEDGER || 'local/<%= name %>';
   await applySchemaDiffFromFile(ledger, '<%= name %>-fluree-schema.json');

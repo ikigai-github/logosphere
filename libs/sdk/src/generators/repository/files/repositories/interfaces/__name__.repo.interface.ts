@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-interface */
-import { Repository } from '@logosphere/domain';
+import { Repository } from '@logosphere/sdk';
 import { <%= classify(name) %> } from '../../entities';
 <% if (hasIndexedEnum(definition)) { -%>
   import {

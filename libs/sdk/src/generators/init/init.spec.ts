@@ -3,7 +3,7 @@ import * as devkit from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import {
   nestJsSchematicsVersion,
-  nestJsVersion8,
+  nestJsVersion,
   nxVersion,
 } from '../../utils/versions';
 import { initGenerator } from './init';
@@ -20,11 +20,8 @@ describe('init generator', () => {
     await initGenerator(tree, {});
 
     const packageJson = devkit.readJson(tree, 'package.json');
-    expect(packageJson.dependencies['@nestjs/common']).toBe(nestJsVersion8);
-    expect(packageJson.dependencies['@nestjs/core']).toBe(nestJsVersion8);
-    expect(packageJson.dependencies['@nestjs/platform-fastify']).toBe(
-      nestJsVersion8
-    );
+    expect(packageJson.dependencies['@nestjs/common']).toBe(nestJsVersion);
+    expect(packageJson.dependencies['@nestjs/core']).toBe(nestJsVersion);
     expect(packageJson.dependencies['reflect-metadata']).toBeDefined();
     expect(packageJson.dependencies['rxjs']).toBeDefined();
     expect(packageJson.dependencies['tslib']).toBeDefined();
@@ -32,7 +29,7 @@ describe('init generator', () => {
     expect(packageJson.devDependencies['@nestjs/schematics']).toBe(
       nestJsSchematicsVersion
     );
-    expect(packageJson.devDependencies['@nestjs/testing']).toBe(nestJsVersion8);
+    expect(packageJson.devDependencies['@nestjs/testing']).toBe(nestJsVersion);
     expect(packageJson.devDependencies['@nrwl/nest']).toBe(nxVersion);
   });
 
@@ -43,19 +40,6 @@ describe('init generator', () => {
       tree,
       'nx.json'
     );
-    expect(cli.defaultCollection).toEqual('@nrwl/nest');
-  });
-
-  it('should not set @nrwl/nest as the default collection when another one was set before', async () => {
-    devkit.updateJson(tree, 'nx.json', (json) => ({
-      ...json,
-      cli: { defaultCollection: '@nrwl/node' },
-    }));
-
-    await initGenerator(tree, {});
-
-    const workspaceJson = devkit.readJson(tree, 'nx.json');
-    expect(workspaceJson.cli.defaultCollection).toEqual('@nrwl/node');
   });
 
   it('should add jest config when unitTestRunner is jest', async () => {

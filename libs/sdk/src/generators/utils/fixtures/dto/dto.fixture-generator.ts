@@ -1,9 +1,6 @@
-import {
-  Definition,
-  DefinitionType,
-  Property,
-  propExample,
-} from '@logosphere/schema';
+import { propExample } from '../../../../converters';
+
+import { Definition, DefinitionType, Property } from '../../../../schema';
 
 import {
   fixtures as f,

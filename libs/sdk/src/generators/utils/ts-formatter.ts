@@ -1,11 +1,8 @@
 /* eslint-disable no-restricted-imports */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {
-  Definition,
-  Property,
-  DefinitionType,
-  propExample,
-} from '@logosphere/schema';
+import { Definition, Property, DefinitionType } from '../../schema';
+
+import { propExample } from '../../converters';
 
 import { strings } from '@angular-devkit/core';
 import {
