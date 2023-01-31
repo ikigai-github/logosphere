@@ -1,5 +1,3 @@
-export { applicationGenerator } from './generators/application/application';
-export { initGenerator } from './generators/init/init';
 export * from './common';
 export * from './configuration';
 export * from './converters';
