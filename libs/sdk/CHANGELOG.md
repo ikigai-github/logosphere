@@ -2,19 +2,11 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
-### [0.6.6](https://github.com/ikigai-github/logosphere/compare/sdk-0.6.5...sdk-0.6.6) (2023-02-01)
+### [0.6.7](https://github.com/ikigai-github/logosphere/compare/sdk-0.6.6...sdk-0.6.7) (2023-01-31)
+
+- **sdk:** removing unnecessary exports ([220c783](https://github.com/ikigai-github/logosphere/commit/220c783e906d370c445fd1ebf9aadeee5777f5fc))
 
 ### Bug Fixes
-
-- **sdk:** removing generators export from sdk index file ([6e7ce71](https://github.com/ikigai-github/logosphere/commit/6e7ce719c64e5b632d8ae11d4cf699966b612b20))
-- **sdk:** removing unnecessary exports ([36f884a](https://github.com/ikigai-github/logosphere/commit/36f884adbdc68be812cb525114706eb7246d67d7))
-
-### [0.6.6](https://github.com/ikigai-github/logosphere/compare/sdk-0.6.5...sdk-0.6.6) (2023-02-01)
-
-### Bug Fixes
-
-- **sdk:** removing generators export from sdk index file ([6e7ce71](https://github.com/ikigai-github/logosphere/commit/6e7ce719c64e5b632d8ae11d4cf699966b612b20))
-- **sdk:** removing unnecessary exports ([36f884a](https://github.com/ikigai-github/logosphere/commit/36f884adbdc68be812cb525114706eb7246d67d7))
 
 ### [0.6.6](https://github.com/ikigai-github/logosphere/compare/sdk-0.6.5...sdk-0.6.6) (2023-01-31)
 
