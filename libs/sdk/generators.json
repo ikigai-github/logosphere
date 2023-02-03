@@ -168,6 +168,11 @@
       "factory": "./src/generators/unreal/unreal",
       "schema": "./src/generators/unreal/schema.json",
       "description": "Unreal Engine C++ generator"
+    },
+    "docker-compose": {
+      "factory": "./src/generators/docker-compose/generator",
+      "schema": "./src/generators/docker-compose/schema.json",
+      "description": "docker-compose generator"
     }
   }
 }

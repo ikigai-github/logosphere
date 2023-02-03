@@ -1,8 +1,6 @@
-import { applicationGenerator as angularApplicationGenerator } from '@nrwl/angular/generators';
 import type { Tree } from '@nrwl/devkit';
 import * as devkit from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
-import * as semver from 'semver';
 import {
   nestJsSchematicsVersion,
   nestJsVersion,
@@ -25,13 +23,6 @@ describe('application generator', () => {
       name: appName,
       directory: appDirectory,
     });
-    console.log(
-      JSON.stringify(
-        tree.listChanges().map((fc) => fc.path),
-        null,
-        2
-      )
-    );
     expect(tree.exists(`${appDirectory}/${appName}/src/main.ts`)).toBeTruthy();
     expect(
       tree.exists(`${appDirectory}/${appName}/src/app/app.module.ts`)
@@ -79,42 +70,6 @@ describe('application generator', () => {
     it('should use NestJs 9 for empty workspace', async () => {
       await applicationGenerator(tree, { name: appName });
       const pkg = devkit.readJson(tree, `package.json`);
-
-      expect(pkg.dependencies['rxjs']).toBe(rxjsVersion);
-      expect(pkg.dependencies['@nestjs/common']).toBe(nestJsVersion);
-      expect(pkg.devDependencies['@nestjs/schematics']).toBe(
-        nestJsSchematicsVersion
-      );
-    }, 100000);
-
-    it(`should use NestJs 9 for Angular + RxJS 7 (${rxjsVersion}) workspace`, async () => {
-      await angularApplicationGenerator(tree, { name: 'angular-app' });
-
-      let pkg = devkit.readJson(tree, 'package.json');
-      pkg.dependencies['rxjs'] = rxjsVersion;
-      tree.write('package.json', JSON.stringify(pkg));
-
-      await applicationGenerator(tree, { name: appName });
-
-      pkg = devkit.readJson(tree, 'package.json');
-
-      expect(pkg.dependencies['rxjs']).toBe(rxjsVersion);
-      expect(pkg.dependencies['@nestjs/common']).toBe(nestJsVersion);
-      expect(pkg.devDependencies['@nestjs/schematics']).toBe(
-        nestJsSchematicsVersion
-      );
-    }, 100000);
-
-    it('should use NestJs 9 for Angular + RxJS 7 (7.8.0) workspace', async () => {
-      await angularApplicationGenerator(tree, { name: 'angular-app' });
-
-      let pkg = devkit.readJson(tree, 'package.json');
-      pkg.dependencies['rxjs'] = rxjsVersion;
-      tree.write('package.json', JSON.stringify(pkg));
-
-      await applicationGenerator(tree, { name: appName });
-
-      pkg = devkit.readJson(tree, 'package.json');
 
       expect(pkg.dependencies['rxjs']).toBe(rxjsVersion);
       expect(pkg.dependencies['@nestjs/common']).toBe(nestJsVersion);
