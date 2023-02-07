@@ -1,25 +1,20 @@
-FROM node:lts-alpine AS builder
+FROM node:lts-alpine 
+
+WORKDIR /app
+
+COPY --chown=node:node /dist/<%= root %>  /app
+COPY --chown=node:node /libs/<%= libName %>/src/gql /app
+COPY --chown=node:node /libs/<%= libName %>/src/fluree /app
+COPY --chown=node:node .npmrc .npmrc
+
 RUN corepack enable && \
     corepack prepare pnpm@6.32.11 --activate
-
-ARG NPM_TOKEN
-
-WORKDIR /app
-COPY ./apps/<%= name %> /app
-COPY ./libs/<%= libName %>/src/gql /app
-COPY ./libs/<%= libName %>/src/fluree /app
-RUN echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc && \
+RUN cat .npmrc | grep _authToken > .npmrc && \
     pnpm install --production && \
-    pnpm install tslib && \
     rm -f .npmrc
-
-FROM node:lts-alpine 
-RUN  apk update && \
-     apk add -q -f dumb-init && \
-     rm -rf /var/cache/apk/*
-
-WORKDIR /app
-COPY --from=builder --chown=node:node /app ./
+RUN apk update && \
+    apk add -q -f dumb-init && \
+    rm -rf /var/cache/apk/*
 
 USER node
-CMD dumb-init node ./main.js
+CMD dumb-init node main.js

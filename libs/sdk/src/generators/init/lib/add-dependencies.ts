@@ -64,7 +64,6 @@ export function addDependencies(tree: Tree): GeneratorCallback {
       '@nrwl/nest': nxVersion,
       '@nrwl/workspace': nxVersion,
       '@nx-tools/ci-context': '4.0.2',
-      '@nx-tools/nx-docker': '3.0.0',
       '@swc/helpers': '0.4.14',
       'babel-loader': '8.0.2',
       dotenv: '16.0.1',

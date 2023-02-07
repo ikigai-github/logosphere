@@ -33,11 +33,14 @@
         "buildTarget": "<%= name %>:build"
       }
     },
-     "docker": {
-      "executor":"@nx-tools/nx-docker:build",
+    "docker": {
+      "executor": "nx:run-commands",
       "options": {
-        "context": "dist",
-        "tags": ["logosphere/<%= name %>:latest"]
+        "commands": [
+          "docker build -f <%= root %>/Dockerfile -t <%= name %> .",
+          "docker run -dp 3000:3000 <%= name %>"
+        ],
+        "parallel": false
       }
     },
     "lint": {

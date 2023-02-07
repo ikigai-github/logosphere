@@ -1,0 +1,41 @@
+# DOCKER
+# -------
+# local path to store files to mount as docker volumes
+DOCKER_VOLUMES_PATH= ./tmp/docker
+
+# FLUREE
+# -------
+# Flag to update Fluree schema automatically when the model is changed
+FLUREE_AUTO_UPDATE_SCHEMA=true
+# Root private key for signing Fluree transactions for admin purposes when API is closed (Secp256k1)
+FLUREE_ROOT_PRIVATE_KEY=
+# Root public key (Secp256k1)
+FLUREE_ROOT_PUBLIC_KEY=
+# Auth ID of the Fluree root auth record
+FLUREE_ROOT_AUTH_ID=
+# Flag to open API. If false, every query and transaction has to be signed
+FLUREE_OPEN_API=true
+
+# CARDANO
+# -------
+# Cardano network: testnet, preview, preprod or mainnet
+CARDANO_NETWORK=preview
+# Wallet ID for custodial minting of NFT assets (used in mintNft API methods)
+CARDANO_WALLET_ID=
+# Mnemonic for the custodial wallet (15 words, comma separated)
+CARDANO_WALLET_MNEMONIC=
+# Address of the custodial wallet
+CARDANO_WALLET_ADDRESS= 
+# number of slots to be added to the current slot for the NFT timelock
+CARDANO_NFT_LOCKED_AFTER_NUM_SLOTS=1000
+# adjustment of the minting fee that will be added to the minimum fee
+CARDANO_FEE_ADJUSTMENT=100
+
+# POSTGRES
+# -------
+# Blockfrost and Cardano node db name
+DB_NAME=cexplorer
+# Blockfrost and Cardano node db user name
+DB_USER=postgres
+# Blockfrost and Cardano node db password
+DB_PASSWORD=<%= password %>
