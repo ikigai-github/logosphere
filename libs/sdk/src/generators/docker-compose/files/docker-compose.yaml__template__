@@ -11,7 +11,7 @@ services:
       - fluree-ledger
       - blockfrost 
     ports:
-      - <%= application.port %>:<%= application.port %>
+      - <%= application.port %>:3000
     environment:
       FLUREE_URL: http://fluree-ledger:8090
       FLUREE_LEDGER: local/<%= application.name %>
