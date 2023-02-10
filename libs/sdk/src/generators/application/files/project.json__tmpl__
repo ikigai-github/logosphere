@@ -37,8 +37,11 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "docker build -f <%= root %>/Dockerfile -t <%= name %> .",
-          "docker run -dp 3000:3000 <%= name %>"
+          {
+            "docker build -f <%= root %>/Dockerfile -t <%= name %> .",
+            "forwardAllArgs": false
+          },
+          "docker run -dp {args.port}:3000 <%= name %>"
         ],
         "parallel": false
       }
