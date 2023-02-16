@@ -1,8 +1,7 @@
-import { FileSystemReader } from '@logosphere/readers';
-import { gqlExec, dtoRemoveSystemFields } from '@logosphere/utils';
+import { FileSystemReader, gqlExec, dtoRemoveSystemFields } from '@logosphere/sdk';
 import { ID } from '@nestjs/graphql';
 import { <%= classify(name) %>Dto
-} from '@<%= npmScope %>/codegen-<%= dasherize(module) %>';
+} from '@<%= npmScope %>/<%= dasherize(module) %>-gen';
 
 describe('<%= name %> E2E test', () => {
 

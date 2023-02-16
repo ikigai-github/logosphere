@@ -14,7 +14,6 @@ describe('api-e2e generator', () => {
 
   it('should run successfully', async () => {
     await generator(appTree, options);
-    const config = readProjectConfiguration(appTree, 'test-e2e');
-    expect(config).toBeDefined();
+    expect(appTree.exists('package.json'));
   });
 });

@@ -62,7 +62,6 @@ describe('gql schema generator', () => {
       },
     };
     await generator(tree, genOptions);
-    tree.listChanges().map((fc) => console.log(fc.path));
     expect(
       tree.exists(`${libName}/src/gql/${fileName}.schema.graphql`)
     ).toBeTruthy();
