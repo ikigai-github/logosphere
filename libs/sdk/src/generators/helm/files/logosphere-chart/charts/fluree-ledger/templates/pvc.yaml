@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: fluree-data-claim
+  labels:
+    {{- include "logosphere.labels" . | nindent 4 -}}
+  {{- if .Values.global.commonAnnotations }}
+  annotations:
+    {{- include "logosphere.annotations" . | nindent 4 -}}
+  {{- end }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  {{- if .Values.storageClassName }}
+  storageClassName: "{{ .Values.storageClassName }}"
+  {{- end }}
+  resources:
+    requests:
+      storage: "{{ .Values.storageSize }}"

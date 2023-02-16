@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: <%= application.name %>
+  labels:
+    {{- include "logosphere.labels" . | nindent 4 }}
+    app: <%= application.name %>
+  {{- if .Values.global.commonAnnotations }}
+  annotations:
+    {{- include "logosphere.annotations" . | nindent 4 -}}
+  {{- end }}
+spec:
+  type: {{ if .Values.localIngress.enabled }}ClusterIp{{ else }}{{ .Values.serviceType }}{{ end }}
+  ports:
+    - port: 3000
+      targetPort: 3000
+  selector:
+    app: <%= application.name %>

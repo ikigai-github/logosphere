@@ -1,0 +1,28 @@
+---
+{{ if .Values.localIngress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: <%= application.name %>
+  labels:
+    {{- include "logosphere.labels" . | nindent 4 -}}
+  {{- if or .Values.global.commonAnnotations .Values.localIngress.annotations }}
+  annotations:
+    {{- include "logosphere.annotations" . | nindent 4 -}}
+    {{- range $k, $v := .Values.localIngress.annotations }}
+    {{ $k }}: "{{ $v }}"
+    {{- end }}
+  {{- end }}
+spec:
+  rules:
+    - host: ls-<%= application.name %>.localhost
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: <%= application.name %>
+                port:
+                  number: 3000
+{{ end }}

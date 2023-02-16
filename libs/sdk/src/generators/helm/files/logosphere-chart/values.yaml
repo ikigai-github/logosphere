@@ -1,0 +1,36 @@
+---
+global:
+  commonLabels: {}
+  commonAnnotations: {}
+  fluree:
+    url: http://fluree-ledger:8090
+    ledgerPrefix: local
+    autoUpdateSchema: true
+    rootPrivateKey: ''
+    openApi: true
+
+  cardanoWallet:
+    url: http://cardano-wallet:8090/v2
+    id: ''
+    mnemonic: ''
+    address: ''
+
+blockfrost:
+  deploy: <%= !excludeBlockfrost %>
+
+fluree:
+  deploy: <%= !excludeFluree %>
+
+cardano-wallet:
+  deploy: <%= !excludeWallet %>
+
+<% applications.forEach(function(application){ %>
+<%= application.name %>:
+  image:
+    repo: 'logosphere/'
+    name: <%= application.name %>
+    tag: latest
+  localIngress:
+    enabled: false
+  serviceType: NodePort
+<% }); %>

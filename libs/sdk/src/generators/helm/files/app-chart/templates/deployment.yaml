@@ -1,0 +1,45 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: <%= application.name %>
+  labels:
+    app: <%= application.name %>
+    {{- include "logosphere.labels" . | nindent 4 -}}
+  {{- if .Values.global.commonAnnotations }}
+  annotations:
+    {{- include "logosphere.annotations" . | nindent 4 -}}
+  {{- end }}
+spec:
+  selector:
+    matchLabels:
+      app: <%= application.name %>
+  template:
+    metadata:
+      labels:
+        app: <%= application.name %>
+    spec:
+      containers:
+        - name: <%= application.name %>
+          image: "{{ .Values.image.repo }}{{ .Values.image.name }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: <%= application.port %>
+          env:
+            - name: FLUREE_URL
+              value: "{{ .Values.global.fluree.url }}"
+            - name: FLUREE_LEDGER
+              value: "{{ .Values.global.fluree.ledgerPrefix }}/<%= application.name %>"
+            - name: FLUREE_AUTO_UPDATE_SCHEMA
+              value: "{{ .Values.global.fluree.autoUpdateSchema }}"
+            - name: FLUREE_ROOT_PRIVATE_KEY
+              value: "{{ .Values.global.fluree.rootPrivateKey }}"
+            - name: FLUREE_OPEN_API
+              value: "{{ .Values.global.fluree.openApi }}"
+            - name: CARDANO_WALLET_URL
+              value: "{{ .Values.global.cardanoWallet.url }}"
+            - name: CARDANO_WALLET_ID
+              value: "{{ .Values.global.cardanoWallet.id }}"
+            - name: CARDANO_WALLET_MNEMONIC
+              value: "{{ .Values.global.cardanoWallet.mnemonic }}"
+            - name: CARDANO_WALLET_ADDRESS
+              value: "{{ .Values.global.cardanoWallet.address }}"

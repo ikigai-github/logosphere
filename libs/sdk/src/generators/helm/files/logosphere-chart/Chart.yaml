@@ -1,0 +1,14 @@
+apiVersion: v2
+name: logosphere-applications
+version: 1.0.0
+dependencies:
+  - name: fluree-ledger
+    version: 1.0.0
+    condition: fluree.deploy
+  - name: cardano-wallet
+    version: 1.0.0
+    condition: cardano-wallet.deploy
+  - name: blockfrost
+    version: 1.0.0
+    repository: https://ikigai-github.github.io/ikigai-blockfrost-config/helm
+    condition: blockfrost.deploy

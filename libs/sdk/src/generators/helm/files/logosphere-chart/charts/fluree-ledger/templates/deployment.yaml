@@ -1,0 +1,33 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fluree-ledger
+  labels:
+    {{- include "logosphere.labels" . | nindent 4 -}}
+  {{- if .Values.global.commonAnnotations }}
+  annotations:
+    {{- include "logosphere.annotations" . | nindent 4 -}}
+  {{- end }}
+spec:
+  selector:
+    matchLabels:
+      app: fluree-ledger
+  template:
+    metadata:
+      labels:
+        app: fluree-ledger
+    spec:
+      containers:
+        - name: fluree-ledger
+          image: fluree/ledger:1.0.3
+          ports:
+            - containerPort: 8090
+          volumeMounts:
+            - name: fluree-data
+              mountPath: /var/lib/fluree
+
+      volumes:
+        - name: fluree-data
+          persistentVolumeClaim:
+            claimName: fluree-data-claim

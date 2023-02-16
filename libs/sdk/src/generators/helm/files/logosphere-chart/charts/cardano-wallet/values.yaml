@@ -1,0 +1,6 @@
+---
+#nodeStorageClassName:
+nodeStorageSize: 5Gi
+
+#walletStorageClassName:
+walletStorageSize: 5Gi
