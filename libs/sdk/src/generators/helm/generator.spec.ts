@@ -18,7 +18,8 @@ describe('helm generator', () => {
       buildImages: false,
       force: true,
     });
-    const config = readProjectConfiguration(appTree, 'test');
-    expect(config).toBeDefined();
+    expect(appTree.exists('helm')).toBe(true);
+    expect(appTree.exists('helm/Chart.yaml')).toBe(true);
+    expect(appTree.exists('helm/values.yaml')).toBe(true);
   });
 });
