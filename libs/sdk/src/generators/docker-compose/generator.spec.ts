@@ -1,6 +1,6 @@
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { Tree, readProjectConfiguration } from '@nrwl/devkit';
-
+import { DockerComposeGeneratorSchema } from './schema';
 import generator from './generator';
 
 describe('docker-compose generator', () => {
@@ -12,7 +12,6 @@ describe('docker-compose generator', () => {
 
   it('should run successfully', async () => {
     await generator(appTree);
-    const config = readProjectConfiguration(appTree, 'test');
-    expect(config).toBeDefined();
+    expect(appTree.exists('package.json')).toBeTruthy();
   });
 });

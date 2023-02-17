@@ -1,6 +1,5 @@
 import type { GeneratorCallback, Tree } from '@nrwl/devkit';
-import { addDependenciesToPackageJson, readJson } from '@nrwl/devkit';
-import { satisfies } from 'semver';
+import { addDependenciesToPackageJson } from '@nrwl/devkit';
 import {
   nestJsSchematicsVersion,
   nestJsVersion,
