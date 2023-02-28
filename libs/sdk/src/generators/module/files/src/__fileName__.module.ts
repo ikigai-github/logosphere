@@ -7,6 +7,7 @@ import {
 import {
   CardanoWalletService,
   MintService,
+  MintingService,
   cardanoWalletConfig,
   mintConfig,
 } from '@logosphere/cardano';
@@ -25,6 +26,7 @@ import {} from './mappers/dto';
     FlureeClient,
     CardanoWalletService,
     MintService,
+    MintingService,
   ],
   exports: []
 })

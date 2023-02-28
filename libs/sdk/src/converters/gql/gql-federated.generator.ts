@@ -60,6 +60,7 @@ export class GqlFederatedGenerator extends GqlGenerator {
       '\tloginUser(username: String, password: String): UserAuth\n';
     queryString += '\tgetLastTxId(username: String): String\n';
     queryString += '\tgetUserWallet(username: String): Wallet\n';
+    queryString += '\tgetCbor(nft: MintingDto): String\n';
     queryString += '}\n\n';
     return queryString;
   }
@@ -93,6 +94,8 @@ export class GqlFederatedGenerator extends GqlGenerator {
     mutationString +=
       '\tcreateUser(username: String, password: String, role: String): UserAuth\n';
     mutationString += '\tsubmitTx(txCborHex: String): String\n';
+    mutationString += '\tsubmitTransaction(cbor: String): String\n';
+    mutationString += '\tmintNft(nft: MintingDto): String\n';
     mutationString += '}\n\n';
     return mutationString;
   }
@@ -216,6 +219,15 @@ type WalletKeyPair {
   accountPublicKey: String
   mnemonic: String
 }\n`;
+
+    gql += `
+input MintingDto {
+  header: String
+  name: String
+  description: String
+  image: String 
+}\n`;
+
       gql += `
 type UserAuth {
   username: String
