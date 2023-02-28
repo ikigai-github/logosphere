@@ -3,20 +3,10 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { execSync } from 'child_process';
 import randomstring from 'randomstring';
-import promptSync from 'prompt-sync';
+import * as prompt from '../utils/user-prompt';
 import { HelmApplication, TemplateType, HelmGeneratorOptions } from './schema';
 
-const prompt = promptSync();
 const FILES_DIRECTORY = 'files';
-const PROMPT_VALUES = ['yes', 'y', 'no', 'n'];
-const RED_CODE = '\x1b[31m';
-const GREEN_CODE = '\x1b[32m';
-const WHITE_CODE = '\x1b[0m';
-const BLUE_CODE = '\x1b[94m';
-
-function colorize(items: string[], colorCode: string): string {
-  return items.map((fileName) => colorCode + fileName + WHITE_CODE).join(', ');
-}
 
 export default async function (
   tree: Tree,
@@ -34,7 +24,7 @@ export default async function (
     }));
 
   const helper = new HelmGeneratorHelper(tree, generatorOptions);
-  helper.do(applications);
+  helper.generateAllCharts(applications);
 
   // prettier has yaml support, but limitted jinja support which is what helm
   // tends to use. So just skip the formatting
@@ -56,7 +46,7 @@ class HelmGeneratorHelper {
     };
   }
 
-  do(applications: Array<HelmApplication>) {
+  generateAllCharts(applications: Array<HelmApplication>) {
     this.generateLogosphereCharts(applications);
     this.generateApplicationCharts(applications);
   }
@@ -74,24 +64,34 @@ class HelmGeneratorHelper {
   generateApplicationCharts(applications: HelmApplication[]) {
     for (const application of applications) {
       let templatedChartDir = path.join('helm', 'charts', application.name);
+      let coloredAppName = prompt.colorize(
+        [application.name],
+        prompt.TERMINAL_COLOR_CODES.RED
+      );
       if (
         !fs.existsSync(templatedChartDir) ||
-        this.promptConfirmed(application.name)
+        this.options.force ||
+        prompt.validateYesNoQuestion(
+          `Helm chart for ${coloredAppName} already exists. Override and continue? (y/n): `
+        )
       ) {
         if (this.options.buildImages) {
           console.log(
-            colorize(
+            prompt.colorize(
               [
                 `\n*** Start Docker Output (pnpm nx docker ${application.name}) ***`,
               ],
-              BLUE_CODE
+              prompt.TERMINAL_COLOR_CODES.BLUE
             )
           );
           execSync(`pnpm nx docker ${application.name}`, {
             cwd: this.tree.root,
           });
           console.log(
-            colorize(['\n*** End Docker Output ***'], BLUE_CODE) + '\n'
+            prompt.colorize(
+              ['\n*** End Docker Output ***'],
+              prompt.TERMINAL_COLOR_CODES.BLUE
+            ) + '\n'
           );
         }
         generateFiles(
@@ -100,27 +100,6 @@ class HelmGeneratorHelper {
           path.join(templatedChartDir),
           { ...this.templateConfigBase, application: application }
         );
-      }
-    }
-  }
-
-  promptConfirmed(applicationName: string): boolean {
-    if (this.options.force) {
-      return true;
-    }
-    const coloredAppName = colorize([applicationName], RED_CODE);
-    const coloredPromptValues = colorize(PROMPT_VALUES, GREEN_CODE);
-    // eslint-disable-next-line no-constant-condition
-    while (true) {
-      const input = prompt(
-        `Helm chart for ${coloredAppName} already exists. Override and continue? (y/n): `
-      )?.toLocaleLowerCase();
-      if (PROMPT_VALUES.includes(input)) {
-        return input === 'y' || input === 'yes' ? true : false;
-      } else if (input !== undefined) {
-        console.log(`Only ${coloredPromptValues} values accepted`);
-      } else {
-        return false;
       }
     }
   }
