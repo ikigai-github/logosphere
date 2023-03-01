@@ -2,6 +2,7 @@ import type { GeneratorCallback, Tree } from '@nrwl/devkit';
 import { convertNxGenerator, formatFiles } from '@nrwl/devkit';
 import { applicationGenerator as nodeApplicationGenerator } from '@nrwl/node';
 import { runTasksInSerial } from '@nrwl/workspace/src/utilities/run-tasks-in-serial';
+import { DEFAULT_LIB_CODEGEN_PREFIX } from '../../common';
 import { initGenerator } from '../init/init';
 import {
   createFiles,
@@ -27,7 +28,7 @@ export async function applicationGenerator(
     toNodeApplicationGeneratorOptions(options)
   );
 
-  createFiles(tree, options);
+  createFiles(tree, options, DEFAULT_LIB_CODEGEN_PREFIX);
   updateTsConfigApp(tree, options);
   updateTsConfigSpec(tree, options);
 
