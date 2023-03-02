@@ -1,6 +1,7 @@
 import { ApolloDriver } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
+import { <%= moduleName %>Module } from '<%= importPath %>';
 
 @Module({
   imports: [
@@ -9,6 +10,7 @@ import { GraphQLModule } from '@nestjs/graphql';
       installSubscriptionHandlers: true,
       driver: ApolloDriver
     }),
+    <%= moduleName %>Module
   ],
   providers: [],
 })
