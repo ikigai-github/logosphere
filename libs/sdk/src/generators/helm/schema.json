@@ -20,11 +20,6 @@
       "description": "If set, a cardano wallet chart will not be included in the output",
       "default": false
     },
-    "buildImages": {
-      "type": "boolean",
-      "description": "If set, app Docker images will be built locally and tagged <application>:latest",
-      "default": false
-    },
     "force": {
       "type": "boolean",
       "description": "If true, all charts will be regenerated without user input",

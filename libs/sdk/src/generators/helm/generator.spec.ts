@@ -1,5 +1,5 @@
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
-import { Tree, readProjectConfiguration } from '@nrwl/devkit';
+import { Tree } from '@nrwl/devkit';
 
 import generator from './generator';
 
@@ -15,10 +15,10 @@ describe('helm generator', () => {
       excludeFluree: false,
       excludeBlockfrost: false,
       excludeWallet: false,
-      buildImages: false,
       force: true,
     });
     expect(appTree.exists('helm')).toBe(true);
+    expect(appTree.exists('deploy_helm_local.sh')).toBe(true);
     expect(appTree.exists('helm/Chart.yaml')).toBe(true);
     expect(appTree.exists('helm/values.yaml')).toBe(true);
   });

@@ -24,7 +24,7 @@ export default async function (
     }));
 
   const helper = new HelmGeneratorHelper(tree, generatorOptions);
-  helper.generateAllCharts(applications);
+  helper.generateAllFiles(applications);
 
   // prettier has yaml support, but limitted jinja support which is what helm
   // tends to use. So just skip the formatting
@@ -46,9 +46,19 @@ class HelmGeneratorHelper {
     };
   }
 
-  generateAllCharts(applications: Array<HelmApplication>) {
+  generateAllFiles(applications: Array<HelmApplication>) {
+    this.generateDeploymentScripts(applications);
     this.generateLogosphereCharts(applications);
     this.generateApplicationCharts(applications);
+  }
+
+  generateDeploymentScripts(applications: HelmApplication[]) {
+    generateFiles(
+      this.tree,
+      path.join(__dirname, FILES_DIRECTORY, 'deployment-scripts'),
+      '.',
+      { ...this.templateConfigBase, applications: applications }
+    );
   }
 
   generateLogosphereCharts(applications: HelmApplication[]) {
@@ -75,25 +85,6 @@ class HelmGeneratorHelper {
           `Helm chart for ${coloredAppName} already exists. Override and continue? (y/n): `
         )
       ) {
-        if (this.options.buildImages) {
-          console.log(
-            prompt.colorize(
-              [
-                `\n*** Start Docker Output (pnpm nx docker ${application.name}) ***`,
-              ],
-              prompt.TERMINAL_COLOR_CODES.BLUE
-            )
-          );
-          execSync(`pnpm nx docker ${application.name}`, {
-            cwd: this.tree.root,
-          });
-          console.log(
-            prompt.colorize(
-              ['\n*** End Docker Output ***'],
-              prompt.TERMINAL_COLOR_CODES.BLUE
-            ) + '\n'
-          );
-        }
         generateFiles(
           this.tree,
           path.join(__dirname, FILES_DIRECTORY, 'app-chart'),

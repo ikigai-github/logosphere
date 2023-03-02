@@ -2,7 +2,6 @@ export interface HelmGeneratorOptions {
   excludeFluree: boolean;
   excludeBlockfrost: boolean;
   excludeWallet: boolean;
-  buildImages: boolean;
   force: boolean;
 }
 
