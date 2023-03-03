@@ -12,6 +12,7 @@ describe('docker-compose generator', () => {
 
   it('should run successfully', async () => {
     await generator(appTree);
-    expect(appTree.exists('package.json')).toBeTruthy();
+    expect(appTree.exists('docker-compose.yaml')).toBe(true);
+    expect(appTree.exists('.env')).toBe(true);
   });
 });

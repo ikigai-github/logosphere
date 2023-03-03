@@ -1,0 +1,11 @@
+---
+localIngress:
+  enabled: false
+  annotations: {}
+
+serviceType: NodePort
+
+image:
+  repo: 'logosphere/'
+  name: <%= application.name %>
+  tag: latest

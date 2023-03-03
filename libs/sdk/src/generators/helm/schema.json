@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "Helm",
+  "title": "",
+  "type": "object",
+  "properties": {
+    "excludeBlockfrost": {
+      "type": "boolean",
+      "description": "If set, a blockfrost chart will not be included in the output",
+      "default": false
+    },
+    "excludeFluree": {
+      "type": "boolean",
+      "description": "If set, a fluree ledger chart will not be included in the output",
+      "default": false
+    },
+    "excludeWallet": {
+      "type": "boolean",
+      "description": "If set, a cardano wallet chart will not be included in the output",
+      "default": false
+    },
+    "force": {
+      "type": "boolean",
+      "description": "If true, all charts will be regenerated without user input",
+      "default": false
+    }
+  },
+  "required": []
+}
