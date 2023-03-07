@@ -55,6 +55,23 @@ services:
         max-size: "200k"
         max-file: "10"    
 
+  cardano-submit-api:
+    image: inputoutput/cardano-submit-api:1.35.5
+    environment:
+      - NETWORK=${CARDANO_NETWORK}
+    depends_on:
+      - cardano-node
+    volumes:
+      - node-ipc:/node-ipc
+    ports:
+      - 9090:8090
+    restart: on-failure
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"        
+
   cardano-node:
     image: inputoutput/cardano-node:1.35.4
     environment:
@@ -113,7 +130,7 @@ services:
       - $$(nix-build -A blockfrost-backend --no-out-link)/bin/blockfrost-backend
     environment:
       - BLOCKFROST_CONFIG_DBSYNC_HOST=${DB_HOST_NAME}
-      - BLOCKFROST_CONFIG_SERVER_LISTEN_ADDRESS=${BLOCKFROST_LISTEN_ADDRESS}
+      - BLOCKFROST_CONFIG_SERVER_LISTEN_ADDRESS=${BLOCKFROST_DOCKER_ADDRESS}
       - NODE_APP_INSTANCE=default
       - BLOCKFROST_CONFIG_DBSYNC_USER=${DB_USER}
       - BLOCKFROST_CONFIG_DBSYNC_DATABASE=${DB_NAME}

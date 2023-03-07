@@ -38,10 +38,10 @@
       "options": {
         "commands": [
           {
-            "docker build -f <%= root %>/Dockerfile -t <%= name %> .",
+            "command": "docker build -f <%= root %>/Dockerfile -t <%= name %> .",
             "forwardAllArgs": false
           },
-          "docker run -dp {args.port}:3000 <%= name %>"
+          "docker run -dp {args.port}:3000 --name <%= name %> <%= name %>"
         ],
         "parallel": false
       }
