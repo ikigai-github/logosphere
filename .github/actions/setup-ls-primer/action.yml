@@ -19,14 +19,15 @@ runs:
       shell: bash
 
     - name: Install NX
-      run: pnpm install -g nx@15.4.4
+      run: pnpm install -g nx@15.4.4 create-nx-workspace@15.4.4
       shell: bash
 
     - name: Create NX Workspace
       run: >-
-        yes | npx create-nx-workspace@15.4.4
+        npx create-nx-workspace@15.4.4
         --name ls-primer --pm pnpm --nxCloud false
-        --preset empty --skipGit
+        --preset empty --skipGit ||
+        (find /tmp -wholename "/tmp/tmp-*/error.log" -exec cat {} \; && exit 1)
       shell: bash
 
     - name: Install Latest SDK
