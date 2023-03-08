@@ -21,7 +21,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - run: ls -la .github
+      - run: ls -la .github/actions/builds/test
 #      - uses: .github/actions/builds/test/action.yml
 #- uses: .github/actions/builds/art/action.yml
 # - uses: .github/actions/builds/music
