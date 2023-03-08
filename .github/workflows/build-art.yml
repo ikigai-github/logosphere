@@ -40,9 +40,6 @@ jobs:
       #     username: ${{ secrets.DOCKERHUB_USERNAME }}
       #     password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push
-        uses: docker/build-push-action@v4
-        with:
-          context: /tmp/ls-primer/dist/apps/art/
-          push: false
-          tags: logosphere/art:latest
+      - name: Build The Docker Image
+        run: pnpm nx docker art
+        working-directory: /tmp/ls-primer
