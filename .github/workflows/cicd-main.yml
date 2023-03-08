@@ -16,7 +16,17 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build-art:
-    uses: ./.github/actions/builds/art
-  build-music:
-    uses: ./.github/actions/builds/music
+  # build-art:
+  #   uses: ./.github/actions/builds/art
+  # build-music:
+  #   uses: ./.github/actions/builds/music
+  ci:
+    runs-on: ubuntu-latest
+    # uses:
+    #   build-art: ./.github/actions/builds/art/action
+    #   build-music: ./.github/actions/builds/music
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: ./.github/workflows/builds/art.yml
+      - uses: ./.github/workflows/builds/music.yml
