@@ -27,20 +27,21 @@ runs:
         npx create-nx-workspace@15.4.4
         --name ls-primer --pm pnpm --nxCloud false
         --preset empty --skipGit ||
-        (find /tmp -wholename "/tmp/tmp-*/error.log" -exec cat {} \; && exit 1)
+        (find /tmp/tmp-* -name error.log -exec cat {} \; && exit 1)
       shell: bash
+      working-directory: /tmp
 
     - name: Install Latest SDK
       run: pnpm install @logosphere/sdk@latest
       shell: bash
-      working-directory: ./ls-primer
+      working-directory: /tmp/ls-primer
 
     - name: Install NX Node Plugins
       run: pnpm install @nrwl/node@15.4.4 @types/node @babel/core
       shell: bash
-      working-directory: ./ls-primer
+      working-directory: /tmp/ls-primer
 
     - name: Init NX Workspace
       run: pnpm nx g @logosphere/sdk:init
       shell: bash
-      working-directory: ./ls-primer
+      working-directory: /tmp/ls-primer

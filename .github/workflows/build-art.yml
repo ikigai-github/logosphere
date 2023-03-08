@@ -18,19 +18,19 @@ jobs:
 
       - name: Generate The Art Module
         run: pnpm nx g @logosphere/sdk:module --name art
-        working-directory: ./ls-primer
+        working-directory: /tmp/ls-primer
 
       - name: Build The Art Module
         run: pnpm nx build muisc-gen
-        working-directory: ./ls-primer
+        working-directory: /tmp/ls-primer
 
       - name: Generate The Art API
         run: pnpm nx g @logosphere/sdk:api --module art
-        working-directory: ./ls-primer
+        working-directory: /tmp/ls-primer
 
       - name: Build The Art API
         run: pnpm nx build art-api
-        working-directory: ./ls-primer
+        working-directory: /tmp/ls-primer
 
       # - name: Login to Docker Hub
       #   uses: docker/login-action@v2
@@ -41,6 +41,6 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
-          context: ./ls-primer/dist/apps/art/
+          context: /tmp/ls-primer/dist/apps/art/
           push: false
           tags: logosphere/art:latest
