@@ -21,5 +21,5 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - uses: .github/actions/builds/art
-      - uses: .github/actions/builds/music
+      # - uses: .github/actions/builds/art
+      # - uses: .github/actions/builds/music
