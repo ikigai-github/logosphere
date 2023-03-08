@@ -1,6 +1,10 @@
 ---
 name: 'Setup ls-primer Workspace'
 description: 'Installs Node and sets up a clean ls-primer workspace'
+inputs:
+  NPM_CICD_TOKEN:
+    description: 'A NPM token for logosphere'
+    required: true
 runs:
   using: 'composite'
   steps:
@@ -32,7 +36,8 @@ runs:
       working-directory: /tmp
 
     - name: Authenticate with private NPM package
-      run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_CICD_TOKEN }}" > ~/.npmrc
+      run: echo "//registry.npmjs.org/:_authToken=${{ inputs.NPM_CICD_TOKEN }}" > ~/.npmrc
+      shell: bash
 
     - name: Install Latest SDK
       run: pnpm install @logosphere/sdk@latest
