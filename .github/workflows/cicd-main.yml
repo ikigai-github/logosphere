@@ -16,8 +16,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # build-art:
-  #   uses: ./.github/actions/builds/art
+  build-art:
+    uses: ./.github/workflows/build-art.yml
   # build-music:
   #   uses: ./.github/actions/builds/music
   ci:
