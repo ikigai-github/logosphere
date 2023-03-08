@@ -45,3 +45,5 @@ jobs:
       - name: Build The Docker Image
         run: pnpm nx docker art
         working-directory: /tmp/ls-primer
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_CICD_TOKEN }}
