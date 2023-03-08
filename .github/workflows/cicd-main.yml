@@ -18,6 +18,5 @@ jobs:
   check-links:
     runs-on: ubuntu-latest
     steps:
-    steps:
       - uses: ./builds/art.yml
       - uses: ./builds/music.yml
