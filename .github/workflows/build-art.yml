@@ -30,8 +30,10 @@ jobs:
         run: pnpm nx g @logosphere/sdk:api --module art
         working-directory: /tmp/ls-primer
 
-      - name: Build The Art API
-        run: pnpm nx affected:build
+      - name: Build All
+        run: >-
+          pnpm nx build art &&
+          pnpm nx build art-gen
         working-directory: /tmp/ls-primer
 
       # - name: Login to Docker Hub
