@@ -16,8 +16,10 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  check-links:
+  ci:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
       - uses: ./builds/art.yml
       - uses: ./builds/music.yml
