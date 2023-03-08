@@ -31,6 +31,9 @@ runs:
       shell: bash
       working-directory: /tmp
 
+    - name: Authenticate with private NPM package
+      run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_CICD_TOKEN }}" > ~/.npmrc
+
     - name: Install Latest SDK
       run: pnpm install @logosphere/sdk@latest
       shell: bash
