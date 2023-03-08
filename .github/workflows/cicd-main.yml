@@ -23,8 +23,8 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     uses:
-      build-art: ./.github/actions/builds/art/action
-      build-music: ./.github/actions/builds/music
+      build-art: ./.github/workflows/builds/art.yml
+      build-music: ./.github/workflows/builds/music.yml
     steps:
       - name: Checkout
         uses: actions/checkout@v3
