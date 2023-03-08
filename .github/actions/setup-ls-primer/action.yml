@@ -23,7 +23,7 @@ runs:
       shell: bash
 
     - name: Create NX Workspace
-      run: pnpm nx create-nx-workspace@15.4.4 --name ls-primer --pm pnpm --nxCloud false --preset empty
+      run: yes | pnx create-nx-workspace@15.4.4 --name ls-primer --pm pnpm --nxCloud false --preset empty
       shell: bash
 
     - name: Install Latest SDK
