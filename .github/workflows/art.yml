@@ -3,6 +3,10 @@ name: 'Build Example Art Moule'
 on:
   workflow_dispatch:
   workflow_call:
+  push:
+    branches:
+      - main
+      - mm/cicd
 
 permissions: {}
 description: 'Build the example art module'
