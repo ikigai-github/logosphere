@@ -1,34 +1,33 @@
----
-name: 'Build Example Art Moule'
+name: 'Build Example Music Module'
 on:
   workflow_dispatch:
   workflow_call:
 
 permissions: {}
-description: 'Build the example art module'
+description: 'Build the example music module'
 jobs:
-  build-art:
+  check-links:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - uses: .github/actions/composites/setup-ls-primer.yml
+      - uses: ./.github/actions/composites/setup-ls-primer.yml
 
-      - name: Generate The Art Module
-        run: pnpm nx g @logosphere/sdk:module --name art
+      - name: Generate The Music Module
+        run: pnpm nx g @logosphere/sdk:module --name music
         working-directory: ./ls-primer
 
-      - name: Build The Art Module
+      - name: Build The Music Module
         run: pnpm nx build muisc-gen
         working-directory: ./ls-primer
 
-      - name: Generate The Art API
-        run: pnpm nx g @logosphere/sdk:api --module art
+      - name: Generate The Music API
+        run: pnpm nx g @logosphere/sdk:api --module music
         working-directory: ./ls-primer
 
-      - name: Build The Art API
-        run: pnpm nx build art-api
+      - name: Build The Music API
+        run: pnpm nx build music-api
         working-directory: ./ls-primer
 
       # - name: Login to Docker Hub
@@ -40,6 +39,6 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
-          context: ./ls-primer/dist/apps/art/
+          context: ./ls-primer/dist/apps/music/
           push: false
-          tags: logosphere/art:latest
+          tags: logosphere/music:latest

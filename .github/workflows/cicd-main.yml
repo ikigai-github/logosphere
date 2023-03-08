@@ -18,15 +18,5 @@ concurrency:
 jobs:
   build-art:
     uses: ./.github/workflows/build-art.yml
-  # build-music:
-  #   uses: ./.github/actions/builds/music
-  ci:
-    runs-on: ubuntu-latest
-    # uses:
-    #   build-art: ./.github/workflows/builds/art.yml
-    #   build-music: ./.github/workflows/builds/music.yml
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      # - uses: ./.github/workflows/builds/art.yml
-      # - uses: ./.github/workflows/builds/music.yml
+  build-music:
+    uses: ./.github/workflows/build-music.yml
