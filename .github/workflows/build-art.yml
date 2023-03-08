@@ -23,7 +23,7 @@ jobs:
         working-directory: /tmp/ls-primer
 
       - name: Build The Art Module
-        run: pnpm nx build muisc-gen
+        run: pnpm nx build art-gen
         working-directory: /tmp/ls-primer
 
       - name: Generate The Art API
