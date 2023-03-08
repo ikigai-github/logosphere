@@ -10,7 +10,10 @@ jobs:
   check-links:
     runs-on: ubuntu-latest
     steps:
-      - uses: ../../actions/setup-ls-primer.yml
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - uses: .github/actions/composites/setup-ls-primer.yml
 
       - name: Generate The Art Module
         run: pnpm nx g @logosphere/sdk:module --name art
@@ -22,7 +25,7 @@ jobs:
 
       - name: Generate The Art API
         run: pnpm nx g @logosphere/sdk:api --module art
-        working-directory: ./ls-primer
+        working-directory: /ls-primer
 
       - name: Build The Art API
         run: pnpm nx build art-api

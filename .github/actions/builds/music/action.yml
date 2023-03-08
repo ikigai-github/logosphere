@@ -9,7 +9,10 @@ jobs:
   check-links:
     runs-on: ubuntu-latest
     steps:
-      - uses: ../../actions/setup-ls-primer.yml
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - uses: .github/actions/composites/setup-ls-primer.yml
 
       - name: Generate The Music Module
         run: pnpm nx g @logosphere/sdk:module --name music
