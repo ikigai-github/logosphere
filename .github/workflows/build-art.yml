@@ -3,14 +3,10 @@ name: 'Build Example Art Module'
 on:
   workflow_dispatch:
   workflow_call:
-  push:
-    branches:
-      - main
-      - mm/cicd
 
 permissions: {}
 jobs:
-  build-art:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
