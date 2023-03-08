@@ -18,5 +18,7 @@ concurrency:
 jobs:
   build-art:
     uses: ./.github/workflows/build-art.yml
+    secrets: inherit
   build-music:
     uses: ./.github/workflows/build-music.yml
+    secrets: inherit

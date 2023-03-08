@@ -16,7 +16,7 @@ jobs:
 
       - uses: ./.github/actions/setup-ls-primer
         with:
-          NPM_CICD_TOKEN: { { secrets.NPM_CICD_TOKEN } }
+          NPM_CICD_TOKEN: '{{ secrets.NPM_CICD_TOKEN }}'
 
       - name: Generate The Music Module
         run: pnpm nx g @logosphere/sdk:module --name music
