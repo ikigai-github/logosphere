@@ -9,7 +9,6 @@ on:
       - mm/cicd
 
 permissions: {}
-description: 'Build the example art module'
 jobs:
   build-art:
     runs-on: ubuntu-latest

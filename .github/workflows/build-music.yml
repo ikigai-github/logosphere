@@ -1,10 +1,10 @@
+---
 name: 'Build Example Music Module'
 on:
   workflow_dispatch:
   workflow_call:
 
 permissions: {}
-description: 'Build the example music module'
 jobs:
   check-links:
     runs-on: ubuntu-latest
