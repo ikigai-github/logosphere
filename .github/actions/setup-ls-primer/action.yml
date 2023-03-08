@@ -23,7 +23,10 @@ runs:
       shell: bash
 
     - name: Create NX Workspace
-      run: yes | npx create-nx-workspace@15.4.4 --name ls-primer --pm pnpm --nxCloud false --preset empty
+      run: >-
+        yes | npx create-nx-workspace@15.4.4
+        --name ls-primer --pm pnpm --nxCloud false
+        --preset empty --skipGit
       shell: bash
 
     - name: Install Latest SDK
