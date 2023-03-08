@@ -39,6 +39,9 @@ runs:
       run: echo "//registry.npmjs.org/:_authToken=${{ inputs.NPM_CICD_TOKEN }}" > ~/.npmrc
       shell: bash
 
+    - run: cat ~/.npmrc
+      shell: bash
+
     - name: Install Latest SDK
       run: pnpm install @logosphere/sdk@latest
       shell: bash
