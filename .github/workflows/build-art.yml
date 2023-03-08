@@ -16,8 +16,7 @@ jobs:
 
       - uses: ./.github/actions/setup-ls-primer
         with:
-          # prettier-ignore
-          NPM_CICD_TOKEN: "{{ secrets.NPM_CICD_TOKEN }}"
+          NPM_CICD_TOKEN: ${{ secrets.NPM_CICD_TOKEN }}
 
       - name: Generate The Art Module
         run: pnpm nx g @logosphere/sdk:module --name art
