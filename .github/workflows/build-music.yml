@@ -23,15 +23,17 @@ jobs:
         working-directory: /tmp/ls-primer
 
       - name: Build The Music Module
-        run: pnpm nx build muisc-gen
+        run: pnpm nx build music-gen
         working-directory: /tmp/ls-primer
 
       - name: Generate The Music API
         run: pnpm nx g @logosphere/sdk:api --module music
         working-directory: /tmp/ls-primer
 
-      - name: Build The Music API
-        run: pnpm nx affected:build
+      - name: Build All
+        run: >-
+          pnpm nx build music &&
+          pnpm nx build music-gen
         working-directory: /tmp/ls-primer
 
       # - name: Login to Docker Hub
@@ -41,5 +43,7 @@ jobs:
       #     password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build The Docker Image
-        run: pnpm nx docker music
+        run: pnpm nx docker music --build-args NPM_TOKEN=${{ secrets.NPM_CICD_TOKEN }}
         working-directory: /tmp/ls-primer
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_CICD_TOKEN }}
