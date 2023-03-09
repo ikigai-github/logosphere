@@ -43,7 +43,7 @@ jobs:
       #     password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build The Docker Image
-        run: pnpm nx docker art
+        run: pnpm nx docker art --build-args NPM_TOKEN=${{ secrets.NPM_CICD_TOKEN }}
         working-directory: /tmp/ls-primer
         env:
           NPM_TOKEN: ${{ secrets.NPM_CICD_TOKEN }}
