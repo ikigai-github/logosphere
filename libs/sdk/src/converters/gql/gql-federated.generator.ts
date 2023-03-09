@@ -60,7 +60,9 @@ export class GqlFederatedGenerator extends GqlGenerator {
       '\tloginUser(username: String, password: String): UserAuth\n';
     queryString += '\tgetLastTxId(username: String): String\n';
     queryString += '\tgetUserWallet(username: String): Wallet\n';
-    queryString += '\tgetCbor(nft: MintingDto): String\n';
+    queryString += '\tmintingNftCbor(nft: NftDto): String\n';
+    queryString += '\tmintingAssetsCbor(asset: AssetDto): String\n';
+    queryString += '\ttransferCbor(transfer: TransferDto): String\n';
     queryString += '}\n\n';
     return queryString;
   }
@@ -95,7 +97,10 @@ export class GqlFederatedGenerator extends GqlGenerator {
       '\tcreateUser(username: String, password: String, role: String): UserAuth\n';
     mutationString += '\tsubmitTx(txCborHex: String): String\n';
     mutationString += '\tsubmitTransaction(cbor: String): String\n';
-    mutationString += '\tmintNft(nft: MintingDto): String\n';
+    mutationString += '\tmintNft(nft: NftDto): String\n';
+    mutationString += '\tmintAssets(asset: AssetDto): String\n';
+    mutationString += '\ttransfer(transfer: TransferDto): String\n';
+    mutationString += '\tsubmitTransaction(cbor: String): String\n';
     mutationString += '}\n\n';
     return mutationString;
   }
@@ -220,12 +225,38 @@ type WalletKeyPair {
   mnemonic: String
 }\n`;
 
-    gql += `
-input MintingDto {
-  header: String
-  name: String
-  description: String
-  image: String 
+      gql += `
+input MintingMetaData {
+  name: String!
+  description: String!
+  image: String!
+}
+
+input AssetData {
+  name: String!
+  amount: Int!
+}
+
+input NftDto {
+  walletAddress: String!
+  assetName: String!
+  metaData: MintingMetaData!
+}
+
+input AssetDto {
+  walletAddress: String!
+  assets: [AssetData!]!
+}
+
+input TransferRecipient {
+  walletAddress: String!
+  policyId: String
+  asset: AssetData!
+}
+
+input TransferDto {
+  walletAddress: String!
+  recipients: [TransferRecipient!]!
 }\n`;
 
       gql += `
