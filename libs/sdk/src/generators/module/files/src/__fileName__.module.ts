@@ -1,15 +1,16 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { 
-  FlureeClient, 
-  flureeConfig 
+import {
+  FlureeClient,
+  flureeConfig
 } from '@logosphere/fluree';
 import {
-  CardanoWalletService,
-  MintService,
-  MintingService,
   cardanoWalletConfig,
+  CardanoWalletService,
   mintConfig,
+  MintService,
+  SubmitService,
+  TransactionService,
 } from '@logosphere/cardano';
 import {} from './repositories/fluree';
 import {} from './resolvers';
@@ -26,7 +27,8 @@ import {} from './mappers/dto';
     FlureeClient,
     CardanoWalletService,
     MintService,
-    MintingService,
+    SubmitService,
+    TransactionService,
   ],
   exports: []
 })
