@@ -1,0 +1,32 @@
+myEval() { echo "🏃 $1"; eval $1; }
+myTweak() { echo "🚧 $1"; eval $1 > /dev/null; }
+myCommit() {
+  git add ./ > /dev/null;
+  git commit ./ -m"$1" > /dev/null
+}
+
+[ -e ls-primer ] && sudo rm -rf ls-primer && echo "🗑  cleanup ls-primer done"
+
+myEval "npx create-nx-workspace@15.4.4 --name ls-primer --pm pnpm --nxCloud false --preset empty"
+myEval "cd ls-primer"
+
+## package.json tweak
+read -r -d '' DEPS <<-EOF_DEPS
+{
+  "@logosphere/cardano": "file:../logosphere/dist/libs/cardano",
+  "@logosphere/fluree": "file:../logosphere/dist/libs/fluree",
+  "@logosphere/ipfs": "file:../logosphere/dist/libs/ipfs",
+  "@logosphere/media": "file:../logosphere/dist/libs/media",
+  "@logosphere/sdk": "file:../logosphere/dist/libs/sdk"
+}
+EOF_DEPS
+DEPS_COMPACT=`echo $DEPS | jq -c | sed 's!\/!\\\/!g'`
+cat package.json | jq | sed -e "s/\"dependencies\": {}/\"dependencies\":$DEPS_COMPACT/" | jq > package.json.new
+mv package.json package.json.orig
+mv package.json.new package.json
+
+myEval "pnpm install @nrwl/node@15.4.4 @types/node @babel/core"
+myEval "pnpm nx g @logosphere/sdk:init"
+myCommit "after: pnpm nx g @logosphere/sdk:init"
+
+myEval "cd .."

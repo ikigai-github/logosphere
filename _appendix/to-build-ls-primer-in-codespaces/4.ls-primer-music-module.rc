@@ -1,0 +1,25 @@
+myEval() { echo "🏃 $1"; eval $1; }
+myTweak() { echo "🚧 $1"; eval $1 > /dev/null; }
+myCommit() {
+  git add ./ > /dev/null;
+  git commit ./ -m"$1" > /dev/null
+}
+
+myEval "cd ls-primer"
+myEval "pnx g @logosphere/sdk:module --name music"
+myCommit "After: pnx g @logosphere/sdk:module --name music"
+
+myEval "cp ../misc/music.model.1.ts libs/music-gen/src/music.model.ts"
+myEval "pnx affected:build"
+
+myCommit "STEP1: after: pnx affected:build, i.e. pnpm nx run music-gen:build"
+
+myEval "pnx g @logosphere/sdk:api --module music"
+myEval "cp ../misc/app.module.ts apps/music/src/app/app.module.ts"
+
+myEval "pnx g @logosphere/sdk:docker-compose"
+
+myEval "pnx affected:build"
+myEval "pnx affected:test"
+
+myEval "cd .."

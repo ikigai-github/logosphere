@@ -1,0 +1,24 @@
+myEval() { echo "🏃 $1"; eval $1; }
+myTweak() { echo "🚧 $1"; eval $1 > /dev/null; }
+myCommit() {
+  git add ./ > /dev/null;
+  git commit ./ -m"$1" > /dev/null
+}
+
+myEval "cd ls-primer"
+
+myEval "pnx g @logosphere/sdk:docker-compose"
+
+## CARDANO
+myEval "export CARDANO_WALLET_ID=1299b5d429f8a79abc507ea6b906b16afb0a3625"
+myEval "export CARDANO_WALLET_ADDRESS=addr_test1qp03spdp50p77qs64ufnjf62scd3ssa0u7s9al9vun4t8pkkgl0hrywrkj94j0hszqz339sv90p3c2rw8fdg66ez7cxq3taf3p"
+myEval "export CARDANO_WALLET_MNEMONIC=slab,praise,suffer,rabbit,during,dream,arch,harvest,culture,book,owner,loud,wool,salon,table,animal,vivid,arrow,dirt,divide,humble,tornado,solution,jungle"
+
+## FLUREE
+myEval "export FLUREE_ROOT_PRIVATE_KEY=d301d43c7c97c0cbc2ae9cda8cefe64b08b54915e43239c452fb7e3464735dec"
+myEval "export FLUREE_ROOT_PUBLIC_KEY=02c32207d7d19e1982ef67dadce291f4d9dd25d1f730bcfde400ce1d12d712bea4"
+myEval "export FLUREE_ROOT_AUTH_ID=TfFtV4LCDiL48oAbqn8Th312Tyw6UNztnYc"
+
+myEval "docker-compose up -d"
+
+myEval "cd .."

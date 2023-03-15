@@ -1,0 +1,1 @@
+docker start $(docker ps -a --filter name=ls-primer_fluree-ledger -q)

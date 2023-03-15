@@ -1,0 +1,4 @@
+SRC_DIR=logosphere/_appendix/to-build-ls-primer-in-codespaces
+cd ../../../
+cp ${SRC_DIR}/?.*.rc ./
+cp -r ${SRC_DIR}/misc ./

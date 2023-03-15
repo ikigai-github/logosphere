@@ -1,0 +1,15 @@
+cd logosphere
+pnpm install
+pnpm nx affected:build --all --skip-nx-cache
+
+## Remove @logosphere/[fluree|cardano] from sdk/package.json peerDependencies
+cp dist/libs/sdk/package.json dist/libs/sdk/package.json.ORIG
+egrep -v "@logosphere/[fluree|cardano]" dist/libs/sdk/package.json.ORIG > dist/libs/sdk/package.json
+diff dist/libs/sdk/package.json.ORIG dist/libs/sdk/package.json
+
+## Remove @logosphere/ from dist/libs/sdk/src/generators/init/lib/add-dependencies.js
+cp dist/libs/sdk/src/generators/init/lib/add-dependencies.js dist/libs/sdk/src/generators/init/lib/add-dependencies.js.ORIG
+egrep -v "@logosphere/" dist/libs/sdk/src/generators/init/lib/add-dependencies.js.ORIG > dist/libs/sdk/src/generators/init/lib/add-dependencies.js
+diff dist/libs/sdk/src/generators/init/lib/add-dependencies.js.ORIG dist/libs/sdk/src/generators/init/lib/add-dependencies.js
+
+cd ..

@@ -1,0 +1,24 @@
+myEval() { echo "🏃 $1"; eval $1; }
+myTweak() { echo "🚧 $1"; eval $1 > /dev/null; }
+myCommit() {
+  git add ./ > /dev/null;
+  git commit ./ -m"$1" > /dev/null
+}
+
+myEval "cd ls-primer"
+
+cp $HOME/.npmrc ./.npmrc
+
+## If any previously created music container, let us remove it.
+MUSIC_CONTAINER_ID=`docker ps -qa -f name=music`
+RESULT_LENG=`echo $MUSIC_CONTAINER_ID | wc -c`
+if [ $RESULT_LENG -ne 1 ]
+then
+  docker rm $MUSIC_CONTAINER_ID
+fi
+
+## NOTE: port 3003 is tentative... to be well-defined later.
+## myEval "pnx docker music --args='--port=3003'"
+myEval "pnx docker music --port=4000"
+
+myEval "cd .."
