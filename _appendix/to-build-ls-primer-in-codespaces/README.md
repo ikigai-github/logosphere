@@ -23,6 +23,8 @@ Email: (this IS public) you@example.com
 npm notice Please use the one-time password (OTP) from your authenticator application
 Enter one-time password: 777123
 ```
+### 2.build_logosphere
+```
 @norywoo ➜ /workspaces $ source 2.build_logosphere.rc 
 :
  >  NX   Running affected:* commands with --all can result in very slow builds.
@@ -61,4 +63,5 @@ Enter one-time password: 777123
 ---
 > //# sourceMappingURL=add-dependencies.js.map
 ```
+
 
