@@ -43,6 +43,8 @@ CARDANO_WALLET_ADDRESS=
 CARDANO_NFT_LOCKED_AFTER_NUM_SLOTS=1000
 # adjustment of the minting fee that will be added to the minimum fee
 CARDANO_FEE_ADJUSTMENT=100
+# time period after which minted tokan can't be changed
+CARDANO_MINTING_VALIDATION_LENGTH=100000
 
 # POSTGRES
 # -------

@@ -1,2 +1,3 @@
-export * from './minting.dto';
-export * from './minting.service';
+export * from './minting.models';
+export * from './submit.service';
+export * from './transaction.service';
