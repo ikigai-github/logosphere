@@ -64,4 +64,61 @@ Enter one-time password: 777123
 > //# sourceMappingURL=add-dependencies.js.map
 ```
 
+### 3.ls-primer-nx-workspace
+```
+@norywoo ➜ /workspaces $ source 3.ls-primer-nx-workspace.rc 
+🏃 npx create-nx-workspace@15.4.4 --name ls-primer --pm pnpm --nxCloud false --preset empty
+Need to install the following packages:
+  create-nx-workspace@15.4.4
+Ok to proceed? (y) y
 
+ >  NX   Let's create a new workspace [https://nx.dev/getting-started/intro]
+
+
+ >  NX   Nx is creating your v15.4.4 workspace.
+:
+```
+
+### 4.ls-primer-music-module 
+```
+@norywoo ➜ /workspaces $ source 4.ls-primer-music-module.rc 
+🏃 cd ls-primer
+🏃 pnx g @logosphere/sdk:module --name music
+
+>  NX  Generating @logosphere/sdk:module
+:
+🏃 cp ../misc/app.module.ts apps/music/src/app/app.module.ts
+🏃 pnx g @logosphere/sdk:docker-compose
+
+>  NX  Generating @logosphere/sdk:docker-compose
+
+CREATE .env
+CREATE docker-compose.yaml
+CREATE tmp/docker/blockfrost-config/default.ts
+🏃 pnx affected:build
+
+ >  NX   Affected criteria defaulted to --base=main --head=HEAD
+
+
+    ✔  nx run music-gen:build (6s)
+    ✔  nx run music:build (11s)
+
+ —————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+
+ >  NX   Successfully ran target build for 2 projects (18s)
+ 
+🏃 pnx affected:test
+
+ >  NX   Affected criteria defaulted to --base=main --head=HEAD
+
+
+    ✔  nx run music:test (5s)
+    ✔  nx run music-gen:test (17s)
+
+ —————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+
+ >  NX   Successfully ran target test for 2 projects (17s)
+
+🏃 ln -s ./libs/music-gen/src/fluree/music-fluree-schema.json
+🏃 cd ..
+```
