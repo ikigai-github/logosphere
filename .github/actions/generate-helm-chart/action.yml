@@ -7,3 +7,4 @@ runs:
     - name: Generate The Chart
       run: pnpm nx g @logosphere/sdk:helm --force
       working-directory: /tmp/ls-primer
+      shell: bash

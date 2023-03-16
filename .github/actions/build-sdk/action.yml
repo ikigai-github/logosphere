@@ -20,3 +20,4 @@ runs:
         shell: bash
 
       - run: pnpm build
+        shell: bash
