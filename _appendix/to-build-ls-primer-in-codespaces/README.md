@@ -11,6 +11,7 @@ To copy *ls-primer* build scripts and associated files under /workspaces/
 2.build_logosphere.rc  4.ls-primer-music-module.rc  6.ls-primer-docker-compose.rc   misc
 ```
 
+### 1.setup
 ```
 @norywoo ➜ /workspaces $ source 1.setup.rc 
 Downloading and installing node v16.19.1...
@@ -120,5 +121,47 @@ CREATE tmp/docker/blockfrost-config/default.ts
  >  NX   Successfully ran target test for 2 projects (17s)
 
 🏃 ln -s ./libs/music-gen/src/fluree/music-fluree-schema.json
+🏃 cd ..
+```
+
+### ls-primer-docker-compose
+```
+@norywoo ➜ /workspaces $ source 5.ls-primer-docker-compose.rc 
+🏃 cd ls-primer
+🏃 pnx g @logosphere/sdk:docker-compose
+
+>  NX  Generating @logosphere/sdk:docker-compose
+
+Files: .env, docker-compose.yaml already exist. Override and continue? (y/n): y
+UPDATE .env
+UPDATE docker-compose.yaml
+🏃 export CARDANO_WALLET_ID=1299b5d429f8a79abc507ea6b906b16afb0a3625
+🏃 export CARDANO_WALLET_ADDRESS=addr_test1qp03spdp50p77qs64ufnjf62scd3ssa0u7s9al9vun4t8pkkgl0hrywrkj94j0hszqz339sv90p3c2rw8fdg66ez7cxq3taf3p
+🏃 export CARDANO_WALLET_MNEMONIC=slab,praise,suffer,rabbit,during,dream,arch,harvest,culture,book,owner,loud,wool,salon,table,animal,vivid,arrow,dirt,divide,humble,tornado,solution,jungle
+🏃 export FLUREE_ROOT_PRIVATE_KEY=d301d43c7c97c0cbc2ae9cda8cefe64b08b54915e43239c452fb7e3464735dec
+🏃 export FLUREE_ROOT_PUBLIC_KEY=02c32207d7d19e1982ef67dadce291f4d9dd25d1f730bcfde400ce1d12d712bea4
+🏃 export FLUREE_ROOT_AUTH_ID=TfFtV4LCDiL48oAbqn8Th312Tyw6UNztnYc
+🏃 cd ls-primer
+bash: cd: ls-primer: No such file or directory
+🏃 cp docker-compose.yaml docker-compose.yaml.orig
+🏃 yq -yi '.services.music = null' docker-compose.yaml
+🏃 sed -ie '/music:/d' docker-compose.yaml
+🏃 docker-compose up -d
+Creating network "ls-primer_default" with the default driver
+Creating ls-primer_fluree-ledger_1      ... done
+Creating ls-primer_postgres_1           ... done
+Creating ls-primer_cardano-node_1  ... done
+Creating ls-primer_cardano-submit-api_1 ... done
+Creating ls-primer_blockfrost_1         ... done
+Creating ls-primer_cardano-db-sync_1    ... done
+🏃 docker-compose ps
+             Name                           Command                  State                        Ports                  
+-------------------------------------------------------------------------------------------------------------------------
+ls-primer_blockfrost_1           /app/blockfrost-backend-ry ...   Up             0.0.0.0:3000->3000/tcp,:::3000->3000/tcp
+ls-primer_cardano-db-sync_1      /nix/store/9r07xp541bmp258 ...   Up             0.0.0.0:3002->3002/tcp,:::3002->3002/tcp
+ls-primer_cardano-node_1         entrypoint                       Up (healthy)   0.0.0.0:3001->3001/tcp,:::3001->3001/tcp
+ls-primer_cardano-submit-api_1   /nix/store/wr29fnsggvm95gw ...   Up             0.0.0.0:9090->8090/tcp,:::9090->8090/tcp
+ls-primer_fluree-ledger_1        ./fluree_start.sh                Up             0.0.0.0:8090->8090/tcp,:::8090->8090/tcp
+ls-primer_postgres_1             docker-entrypoint.sh postgres    Up (healthy)   0.0.0.0:5432->5432/tcp,:::5432->5432/tcp
 🏃 cd ..
 ```
