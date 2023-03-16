@@ -4,20 +4,19 @@ description: 'Builds the SDK'
 runs:
   using: 'composite'
   steps:
-    steps:
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 6.35.0
+    - uses: pnpm/action-setup@v2
+      with:
+        version: 6.35.0
 
-      - name: Setup node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          cache: pnpm
+    - name: Setup node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+        cache: pnpm
 
-      - name: Config PNPM
-        run: pnpm config set auto-install-peers true
-        shell: bash
+    - name: Config PNPM
+      run: pnpm config set auto-install-peers true
+      shell: bash
 
-      - run: pnpm build
-        shell: bash
+    - run: pnpm build
+      shell: bash
