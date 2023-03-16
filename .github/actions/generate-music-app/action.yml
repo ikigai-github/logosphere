@@ -1,0 +1,23 @@
+---
+name: 'Generate The Music App'
+description: 'Generates the demo music app in a ls-primer workspace'
+runs:
+  using: 'composite'
+  steps:
+    - name: Generate The Music Module
+      run: pnpm nx g @logosphere/sdk:module --name music
+      working-directory: /tmp/ls-primer
+
+    - name: Build The Music Module
+      run: pnpm nx build music-gen
+      working-directory: /tmp/ls-primer
+
+    - name: Generate The Music API
+      run: pnpm nx g @logosphere/sdk:api --module music
+      working-directory: /tmp/ls-primer
+
+    - name: Build All
+      run: >-
+        pnpm nx build music &&
+        pnpm nx build music-gen
+      working-directory: /tmp/ls-primer
