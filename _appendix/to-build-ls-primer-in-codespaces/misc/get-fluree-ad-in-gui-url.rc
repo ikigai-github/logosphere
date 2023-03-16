@@ -1,0 +1,2 @@
+echo FLUREE ADMIN GUI:
+echo https://${CODESPACE_NAME}-8090.preview.app.github.dev/index.html

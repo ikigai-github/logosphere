@@ -22,4 +22,6 @@ myEval "pnx g @logosphere/sdk:docker-compose"
 myEval "pnx affected:build"
 myEval "pnx affected:test"
 
+myEval "ln -s ./libs/music-gen/src/fluree/music-fluree-schema.json"
+
 myEval "cd .."
