@@ -1,13 +1,13 @@
 name: 'LS Primer Build and Deploy'
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - mm/cd
 
 permissions:
   contents: read
   pull-requests: read
-  push:
-    branches:
-      - mm/cd
 
 # This allows a subsequently queued workflow run to interrupt previous runs
 concurrency:
