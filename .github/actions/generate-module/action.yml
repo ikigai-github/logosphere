@@ -1,0 +1,34 @@
+---
+name: 'Generate A User Defined Module'
+description: 'Generates an app in a ls-primer workspace'
+inputs:
+  module_name:
+    description: 'The name of the module to generate'
+    required: true
+  working_dir:
+    description: 'The path to the ls-primer workspace'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - name: Generate The Module
+      run: pnpm nx g @logosphere/sdk:module --name ${{ inputs.module_name }}
+      shell: bash
+      working-directory: ${{ inputs.working_dir }}
+
+    - name: Build The Generated Module
+      run: pnpm nx build ${{ inputs.module_name }}-gen
+      shell: bash
+      working-directory: ${{ inputs.working_dir }}
+
+    - name: Generate The API
+      run: pnpm nx g @logosphere/sdk:api --module ${{ inputs.module_name }}
+      shell: bash
+      working-directory: ${{ inputs.working_dir }}
+
+    - name: Build All
+      shell: bash
+      run: >-
+        pnpm nx build ${{ inputs.module_name }} &&
+        pnpm nx build ${{ inputs.module_name }}-gen
+      working-directory: ${{ inputs.working_dir }}

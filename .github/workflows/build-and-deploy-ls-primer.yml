@@ -5,6 +5,9 @@ on:
 permissions:
   contents: read
   pull-requests: read
+  push:
+    branches:
+      - mm/cd
 
 # This allows a subsequently queued workflow run to interrupt previous runs
 concurrency:
@@ -23,6 +26,8 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   build-and-deploy-demo:
+    permissions:
+      id-token: write
     needs: build-and-publish-sdk
     runs-on: ubuntu-latest
     steps:
@@ -33,8 +38,16 @@ jobs:
         with:
           NPM_CICD_TOKEN: ${{ secrets.NPM_CICD_TOKEN }}
 
-      - uses: ./.github/actions/generate-music-app
-      - uses: ./.github/actions/generate-art-app
+      - uses: ./.github/actions/generate-module
+        with:
+          module_name: music
+          working_dir: /tmp/ls-primer
+
+      - uses: ./.github/actions/generate-module
+        with:
+          module_name: art
+          working_dir: /tmp/ls-primer
+
       - uses: ./.github/actions/generate-helm-chart
 
       - name: Login to Docker Hub
@@ -62,7 +75,32 @@ jobs:
           docker push ikigaitech/ls-primer-music:latest &&
           docker push ikigaitech/ls-primer-art:latest
 
-      - name: Package The Helm Chart
-        run: >-
-          tar -czf ls-primer.tar.gz /tmp/ls-primer/helm
-      #TODO push chart to private repo and deploy
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::190225837842:role/ikigai-github-actions-oidc-role
+
+      - name: Install Helm S3 Plugin
+        uses: WyriHaximus/github-action-helm3@v3
+        with:
+          exec: helm plugin install https://github.com/hypnoglow/helm-s3.git
+
+      - name: Register S3 Helm Repo
+        uses: WyriHaximus/github-action-helm3@v3
+        with:
+          exec: helm repo add private-s3 s3://ikigai-shared-helm-charts-private/logosphere/ls-primer/
+
+      - name: Install Helm Dependencies
+        uses: WyriHaximus/github-action-helm3@v3
+        with:
+          exec: helm dependency build /tmp/ls-primer/helm
+
+      - name: Package The Generated Helm Chart
+        uses: WyriHaximus/github-action-helm3@v3
+        with:
+          exec: helm package /tmp/ls-primer/helm
+
+      - name: Push The Helm Package to The Remote
+        uses: WyriHaximus/github-action-helm3@v3
+        with:
+          exec: helm s3 push --force ./logosphere-*.tgz private-s3
