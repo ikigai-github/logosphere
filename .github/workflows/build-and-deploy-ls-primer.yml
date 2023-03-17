@@ -6,6 +6,7 @@ on:
       - mm/cd
 
 permissions:
+  id-token: write
   contents: read
   pull-requests: read
 
@@ -26,8 +27,6 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   build-and-deploy-demo:
-    permissions:
-      id-token: write
     needs: build-and-publish-sdk
     runs-on: ubuntu-latest
     steps:
