@@ -2,10 +2,6 @@
 name: 'Build Example Art Module'
 on:
   workflow_dispatch:
-  pull_request:
-  push:
-    branches:
-      - mm/cicd
 
 permissions:
   contents: read

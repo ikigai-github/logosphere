@@ -18,9 +18,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - uses: ./.github/actions/build-sdk
-      # - run: pnpm publish
-      #   env:
-      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: pnpm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   build-and-deploy-demo:
     needs: build-and-publish-sdk
@@ -65,3 +65,4 @@ jobs:
       - name: Package The Helm Chart
         run: >-
           tar -czf ls-primer.tar.gz /tmp/ls-primer/helm
+      #TODO push chart to private repo and deploy
