@@ -3,4 +3,4 @@ npm install -g pnpm@6.35.0
 pnpm install -g nx@15.4.4
 alias pnx='pnpm nx'
 
-npm login --auth-type legacy
+# npm login --auth-type legacy
