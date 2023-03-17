@@ -108,7 +108,8 @@ export class TransactionService {
       throw new Error('At lease one asset require');
     }
     const utxos = await this.getUtxos(lct.lucid);
-    const policy = this.getMintingPolicy(lct.lc, utxos[0]);
+    const collectionSize = assets.reduce((sum, asset) => sum + asset.amount, 0);
+    const policy = this.getMintingPolicy(lct.lc, utxos[0], collectionSize);
     const policyId = lct.lucid.utils.mintingPolicyToId(policy);
     const mintAssets = this.getAssets(policyId, assets, lct.lc);
     const transaction = lct.lucid
@@ -149,10 +150,10 @@ export class TransactionService {
     return utxos;
   }
 
-  private getMintingPolicy(lc: any, utxo: UTxO): MintingPolicy {
+  private getMintingPolicy(lc: any, utxo: UTxO, collectionSize: number): MintingPolicy {
     const txId = new lc.Constr(0, [utxo.txHash]);
     const txOutRef = new lc.Constr(0, [txId, BigInt(utxo.outputIndex)]);
-    const bulkParams = new lc.Constr(0, [txOutRef, 1]);
+    const bulkParams = new lc.Constr(0, [txOutRef, collectionSize]);
 
     return {
       type: 'PlutusV2',
