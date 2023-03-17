@@ -1,0 +1,10 @@
+---
+name: 'Generate The Helm Chart'
+description: 'Generates the helm chart for all apps in a ls-primer workspace'
+runs:
+  using: 'composite'
+  steps:
+    - name: Generate The Chart
+      run: pnpm nx g @logosphere/sdk:helm --force
+      working-directory: /tmp/ls-primer
+      shell: bash

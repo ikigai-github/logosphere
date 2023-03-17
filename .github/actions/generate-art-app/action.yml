@@ -1,0 +1,27 @@
+---
+name: 'Generate The Art App'
+description: 'Generates the demo art app in a ls-primer workspace'
+runs:
+  using: 'composite'
+  steps:
+    - name: Generate The Art Module
+      run: pnpm nx g @logosphere/sdk:module --name art
+      shell: bash
+      working-directory: /tmp/ls-primer
+
+    - name: Build The Art Module
+      run: pnpm nx build art-gen
+      shell: bash
+      working-directory: /tmp/ls-primer
+
+    - name: Generate The Art API
+      run: pnpm nx g @logosphere/sdk:api --module art
+      shell: bash
+      working-directory: /tmp/ls-primer
+
+    - name: Build All
+      shell: bash
+      run: >-
+        pnpm nx build art &&
+        pnpm nx build art-gen
+      working-directory: /tmp/ls-primer

@@ -1,0 +1,20 @@
+---
+name: 'Build Example Music Module'
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - uses: ./.github/actions/setup-ls-primer
+        with:
+          NPM_CICD_TOKEN: ${{ secrets.NPM_CICD_TOKEN }}
+
+      - uses: ./.github/actions/generate-music-app
