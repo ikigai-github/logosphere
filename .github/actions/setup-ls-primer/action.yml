@@ -49,6 +49,18 @@ runs:
       run: echo "//registry.npmjs.org/:_authToken=${{ inputs.NPM_CICD_TOKEN }}" > ~/.npmrc
       shell: bash
 
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        path: ${{ inputs.working_dir }}
+      if: inputs.use_local_logosphere == true
+
+    - name: Build Local Checkout
+      shell: base
+      uses: ./.github/actions/build-sdk
+      working-directory: ${{ inputs.working_dir }}/logosphere
+      if: inputs.use_local_logosphere == true
+
     - name: Link Local Checkout
       shell: base
       run: >-

@@ -23,8 +23,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - run: cp -R . /tmp/logosphere
-
       - uses: ./.github/actions/setup-ls-primer
         with:
           NPM_CICD_TOKEN: ${{ secrets.NPM_CICD_TOKEN }}
