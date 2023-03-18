@@ -23,6 +23,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Checkout
+        uses: actions/checkout@v3
+        path: /tmp
+
+      - name: Build Local Checkout
+        uses: ./.github/actions/build-sdk
+        working-directory: /tmp/logosphere
+
       - uses: ./.github/actions/setup-ls-primer
         with:
           NPM_CICD_TOKEN: ${{ secrets.NPM_CICD_TOKEN }}
