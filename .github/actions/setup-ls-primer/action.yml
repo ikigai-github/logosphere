@@ -52,8 +52,8 @@ runs:
     - name: Link Local Checkout
       shell: bash
       run: >-
-        chmod +x link-workspace.sh && ./link-workspace.sh
-      working-directory: ${{ inputs.working_dir }}/ls-primer
+        chmod +x link-workspace.sh && ./link-workspace.sh ${{ inputs.working_dir }}/ls-primer
+      working-directory: ${{ inputs.working_dir }}/logosphere
       if: ${{ inputs.use_local_logosphere }}
 
     - name: Install Latest SDK
