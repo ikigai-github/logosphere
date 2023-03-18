@@ -23,14 +23,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          path: /tmp
-
       - name: Build Local Checkout
         uses: ./.github/actions/build-sdk
-        working-directory: /tmp/logosphere
+
+      - name: Copy Built Repo For ls-primer
+        run: cp -R . /tmp/logosphere
 
       - uses: ./.github/actions/setup-ls-primer
         with:
