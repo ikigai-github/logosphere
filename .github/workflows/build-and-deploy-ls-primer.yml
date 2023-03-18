@@ -25,7 +25,8 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v3
-        path: /tmp
+        with:
+          path: /tmp
 
       - name: Build Local Checkout
         uses: ./.github/actions/build-sdk
