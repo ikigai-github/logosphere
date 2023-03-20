@@ -28,7 +28,7 @@ jobs:
         run: echo "//registry.npmjs.org/:_authToken=${{ inputs.NPM_CICD_TOKEN }}" > ~/.npmrc
         shell: bash
 
-      - run: pnpm publish --no-git-checks --regsitry=https://registry.npmjs.org/ dist/libs/sdk
+      - run: pnpm publish --no-git-checks dist/libs/sdk
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
