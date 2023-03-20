@@ -1,12 +1,11 @@
-name: 'SDK Build and Publish'
+name: 'IPFS Build and Publish'
 on:
   workflow_dispatch:
   push:
     tags:
-      - sdk-*
+      - ipfs-*
 
 permissions:
-  id-token: write
   contents: read
   pull-requests: read
 
@@ -15,7 +14,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build-and-publish-sdk:
+  build-and-publish-ipfs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -27,8 +26,4 @@ jobs:
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_CICD_TOKEN }}" > .npmrc
         shell: bash
 
-      - run: pnpm publish --no-git-checks dist/libs/sdk
-
-  call-publish-ls-primer:
-    uses: ./.github/workflows/publish-ls-primer.yml
-    needs: build-and-publish-sdk
+      - run: pnpm publish --no-git-checks dist/libs/ipfs
