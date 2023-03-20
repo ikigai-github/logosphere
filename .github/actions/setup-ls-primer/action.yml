@@ -49,13 +49,6 @@ runs:
       run: echo "//registry.npmjs.org/:_authToken=${{ inputs.NPM_CICD_TOKEN }}" > ~/.npmrc
       shell: bash
 
-    - name: Link Local Checkout
-      shell: bash
-      run: >-
-        chmod +x link-workspace.sh && ./link-workspace.sh ls-primer
-      working-directory: ${{ inputs.working_dir }}/logosphere
-      if: ${{ inputs.use_local_logosphere }}
-
     - name: Install Latest SDK
       run: pnpm install @logosphere/sdk@latest
       shell: bash
@@ -71,3 +64,10 @@ runs:
       run: pnpm nx g @logosphere/sdk:init
       shell: bash
       working-directory: ${{ inputs.working_dir }}/ls-primer
+
+    - name: Link Local Checkout
+      shell: bash
+      run: >-
+        chmod +x link-workspace.sh && ./link-workspace.sh ls-primer
+      working-directory: ${{ inputs.working_dir }}/logosphere
+      if: ${{ inputs.use_local_logosphere }}
