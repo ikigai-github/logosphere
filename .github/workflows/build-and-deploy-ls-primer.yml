@@ -64,8 +64,8 @@ jobs:
 
       - name: Push The Docker Images
         run: >-
-          docker tag logosphere/music:latest ikigaitech/ls-primer-music:latest &&
-          docker tag logosphere/art:latest ikigaitech/ls-primer-art:latest &&
+          docker tag music:latest ikigaitech/ls-primer-music:latest &&
+          docker tag art:latest ikigaitech/ls-primer-art:latest &&
           docker push ikigaitech/ls-primer-music:latest &&
           docker push ikigaitech/ls-primer-art:latest
 
