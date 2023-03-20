@@ -1,4 +1,4 @@
-FROM node:lts-alpine 
+FROM node:lts-alpine
 
 WORKDIR /app
 
@@ -9,9 +9,10 @@ COPY --chown=node:node .npmrc .npmrc
 
 RUN corepack enable && \
     corepack prepare pnpm@6.32.11 --activate
-RUN cat .npmrc | grep _authToken > .npmrc && \
+RUN cp .npmrc .npmrc.tmp && \
+    cat .npmrc.tmp | grep _authToken > .npmrc && \
     pnpm install --production && \
-    rm -f .npmrc
+    rm -f .npmrc .npmrc.tmp
 RUN apk update && \
     apk add -q -f dumb-init && \
     rm -rf /var/cache/apk/*
