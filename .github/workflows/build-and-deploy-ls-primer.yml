@@ -99,3 +99,5 @@ jobs:
         uses: WyriHaximus/github-action-helm3@v3
         with:
           exec: helm s3 push --force ./logosphere-*.tgz private-s3
+        env:
+          HELM_S3_MODE: 3
