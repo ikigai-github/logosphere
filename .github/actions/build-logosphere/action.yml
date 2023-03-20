@@ -1,6 +1,6 @@
 ---
-name: 'Build The Logosphere SDK'
-description: 'Builds the SDK'
+name: 'Build The Logosphere Projects'
+description: 'Builds all Logosphere Projects'
 runs:
   using: 'composite'
   steps:
