@@ -24,8 +24,7 @@ jobs:
 
       - uses: ./.github/actions/build-logosphere
 
-      - run: pnpm publish
-        working-directory: dist/libs/sdk
+      - run: pnpm publish dist/libs/sdk
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
