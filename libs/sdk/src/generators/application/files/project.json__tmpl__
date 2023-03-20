@@ -46,6 +46,18 @@
         "parallel": false
       }
     },
+    "docker-build-only": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "docker build -f <%= root %>/Dockerfile -t <%= name %> .",
+            "forwardAllArgs": false
+          }
+        ],
+        "parallel": false
+      }
+    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["dist/<%= root %>"],

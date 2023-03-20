@@ -1,0 +1,35 @@
+---
+name: 'Generate and Build An App'
+on:
+  workflow_dispatch:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Copy Built Repo For ls-primer
+        run: cp -R . /tmp/logosphere
+
+      - uses: ./.github/actions/setup-ls-primer
+        with:
+          NPM_CICD_TOKEN: ${{ secrets.NPM_CICD_TOKEN }}
+          working_dir: /tmp
+          use_local_logosphere: true
+
+      - uses: ./.github/actions/generate-module
+        with:
+          module_name: art
+          working_dir: /tmp/ls-primer
+
+      - name: Build The Art Docker Image
+        run: pnpm nx docker-build-only art --build-args NPM_TOKEN=${{ secrets.NPM_CICD_TOKEN }}
+        working-directory: /tmp/ls-primer
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_CICD_TOKEN }}

@@ -1,0 +1,100 @@
+name: 'LS Primer Build and Deploy'
+on:
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: read
+
+# This allows a subsequently queued workflow run to interrupt previous runs
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy-demo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Copy Built Repo For ls-primer
+        run: cp -R . /tmp/logosphere
+
+      - uses: ./.github/actions/setup-ls-primer
+        with:
+          NPM_CICD_TOKEN: ${{ secrets.NPM_CICD_TOKEN }}
+          working_dir: /tmp
+          use_local_logosphere: true
+
+      - uses: ./.github/actions/generate-module
+        with:
+          module_name: music
+          working_dir: /tmp/ls-primer
+
+      - uses: ./.github/actions/generate-module
+        with:
+          module_name: art
+          working_dir: /tmp/ls-primer
+
+      - uses: ./.github/actions/generate-helm-chart
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build The Art Docker Image
+        run: pnpm nx docker-build-only art --build-args NPM_TOKEN=${{ secrets.NPM_CICD_TOKEN }}
+        working-directory: /tmp/ls-primer
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_CICD_TOKEN }}
+
+      - name: Build The Music Docker Image
+        run: pnpm nx docker-build-only music --build-args NPM_TOKEN=${{ secrets.NPM_CICD_TOKEN }}
+        working-directory: /tmp/ls-primer
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_CICD_TOKEN }}
+
+      - name: Push The Docker Images
+        run: >-
+          docker tag music:latest ikigaitech/ls-primer-music:latest &&
+          docker tag art:latest ikigaitech/ls-primer-art:latest &&
+          docker push ikigaitech/ls-primer-music:latest &&
+          docker push ikigaitech/ls-primer-art:latest
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::190225837842:role/ikigai-github-actions-oidc-role
+          aws-region: us-east-1
+
+      - name: Install Helm S3 Plugin
+        uses: WyriHaximus/github-action-helm3@v3
+        with:
+          exec: helm plugin install https://github.com/hypnoglow/helm-s3.git
+
+      - name: Register S3 Helm Repo
+        uses: WyriHaximus/github-action-helm3@v3
+        with:
+          exec: helm repo add private-s3 s3://ikigai-shared-helm-charts-private/logosphere/ls-primer/
+
+      - name: Install Helm Dependencies
+        uses: WyriHaximus/github-action-helm3@v3
+        with:
+          exec: helm dependency build /tmp/ls-primer/helm
+
+      - name: Package The Generated Helm Chart
+        uses: WyriHaximus/github-action-helm3@v3
+        with:
+          exec: helm package /tmp/ls-primer/helm
+
+      - name: Push The Helm Package to The Remote
+        uses: WyriHaximus/github-action-helm3@v3
+        with:
+          exec: helm s3 push --force ./logosphere-*.tgz private-s3
+        env:
+          HELM_S3_MODE: 3

@@ -1,10 +1,20 @@
 ---
 name: 'Setup ls-primer Workspace'
 description: 'Installs Node and sets up a clean ls-primer workspace'
+
 inputs:
   NPM_CICD_TOKEN:
     description: 'A NPM token for logosphere'
     required: true
+  working_dir:
+    description: 'A NPM token for logosphere'
+    required: false
+    default: /tmp
+  use_local_logosphere:
+    description: 'If true, link the workspace to a local logosphere repo'
+    required: false
+    default: false
+
 runs:
   using: 'composite'
   steps:
@@ -33,26 +43,31 @@ runs:
         --preset empty --skipGit ||
         (find /tmp/tmp-* -name error.log -exec cat {} \; && exit 1)
       shell: bash
-      working-directory: /tmp
+      working-directory: ${{ inputs.working_dir }}
 
     - name: Authenticate with private NPM package
-      run: echo "//registry.npmjs.org/:_authToken=${{ inputs.NPM_CICD_TOKEN }}" > ~/.npmrc
-      shell: bash
-
-    - run: cat ~/.npmrc
+      run: echo "//registry.npmjs.org/:_authToken=${{ inputs.NPM_CICD_TOKEN }}" > .npmrc
+      working-directory: ${{ inputs.working_dir }}/ls-primer
       shell: bash
 
     - name: Install Latest SDK
       run: pnpm install @logosphere/sdk@latest
       shell: bash
-      working-directory: /tmp/ls-primer
+      working-directory: ${{ inputs.working_dir }}/ls-primer
 
     - name: Install NX Node Plugins
       run: pnpm install @nrwl/node@15.4.4 @types/node @babel/core
       shell: bash
-      working-directory: /tmp/ls-primer
+      working-directory: ${{ inputs.working_dir }}/ls-primer
 
     - name: Init NX Workspace
       run: pnpm nx g @logosphere/sdk:init
       shell: bash
-      working-directory: /tmp/ls-primer
+      working-directory: ${{ inputs.working_dir }}/ls-primer
+
+    - name: Link Local Checkout
+      shell: bash
+      run: >-
+        chmod +x link-workspace.sh && ./link-workspace.sh ls-primer
+      working-directory: ${{ inputs.working_dir }}/logosphere
+      if: ${{ inputs.use_local_logosphere }}
