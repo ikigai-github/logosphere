@@ -53,7 +53,6 @@ runs:
       run: pnpm install @logosphere/sdk@latest
       shell: bash
       working-directory: ${{ inputs.working_dir }}/ls-primer
-      if: ${{ ! inputs.use_local_logosphere }}
 
     - name: Install NX Node Plugins
       run: pnpm install @nrwl/node@15.4.4 @types/node @babel/core
