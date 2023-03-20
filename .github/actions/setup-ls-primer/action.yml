@@ -46,7 +46,8 @@ runs:
       working-directory: ${{ inputs.working_dir }}
 
     - name: Authenticate with private NPM package
-      run: echo "//registry.npmjs.org/:_authToken=${{ inputs.NPM_CICD_TOKEN }}" > ~/.npmrc
+      run: echo "//registry.npmjs.org/:_authToken=${{ inputs.NPM_CICD_TOKEN }}" > .npmrc
+      working-directory: ${{ inputs.working_dir }}/ls-primer
       shell: bash
 
     - name: Install Latest SDK
