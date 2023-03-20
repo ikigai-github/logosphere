@@ -13,6 +13,7 @@ runs:
       with:
         node-version: 16
         cache: pnpm
+        registry-url: 'https://registry.npmjs.org'
 
     - name: Config PNPM
       run: pnpm config set auto-install-peers true
