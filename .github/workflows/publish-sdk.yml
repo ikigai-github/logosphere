@@ -21,9 +21,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - uses: ./.github/actions/build-sdk
+      - uses: ./.github/actions/build-logosphere
 
       - run: pnpm publish
+        working-dir: dist/libs/sdk
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
