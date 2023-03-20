@@ -73,6 +73,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: arn:aws:iam::190225837842:role/ikigai-github-actions-oidc-role
+          aws-region: us-east-1
 
       - name: Install Helm S3 Plugin
         uses: WyriHaximus/github-action-helm3@v3
