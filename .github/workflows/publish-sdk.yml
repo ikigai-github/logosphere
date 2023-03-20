@@ -1,4 +1,4 @@
-name: 'LS Primer Build and Deploy'
+name: 'SDK Build and Deploy'
 on:
   workflow_dispatch:
   push:
@@ -27,6 +27,6 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-  call-build-and-deploy-ls-primer:
-    uses: ./.github/workflows/build-and-deploy-ls-primer.yml
+  call-publish-ls-primer:
+    uses: ./.github/workflows/publish-ls-primer.yml
     needs: build-and-publish-sdk
