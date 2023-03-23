@@ -96,7 +96,6 @@ export class GqlFederatedGenerator extends GqlGenerator {
     mutationString +=
       '\tcreateUser(username: String, password: String, role: String): UserAuth\n';
     mutationString += '\tsubmitTx(txCborHex: String): String\n';
-    mutationString += '\tsubmitTransaction(cbor: String): String\n';
     mutationString += '\tmintNft(nft: NftDto): String\n';
     mutationString += '\tmintAssets(asset: AssetDto): String\n';
     mutationString += '\ttransfer(transfer: TransferDto): String\n';
