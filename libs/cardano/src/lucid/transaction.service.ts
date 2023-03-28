@@ -153,7 +153,7 @@ export class TransactionService {
   private getMintingPolicy(lc: any, utxo: UTxO, collectionSize: number): MintingPolicy {
     const txId = new lc.Constr(0, [utxo.txHash]);
     const txOutRef = new lc.Constr(0, [txId, BigInt(utxo.outputIndex)]);
-    const bulkParams = new lc.Constr(0, [txOutRef, collectionSize]);
+    const bulkParams = new lc.Constr(0, [txOutRef, BigInt(collectionSize)]);
 
     return {
       type: 'PlutusV2',
