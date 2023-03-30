@@ -1,0 +1,6 @@
+[
+  {
+    "collection": "<%= camelize(name) %>",
+    "count": 3
+  }
+]

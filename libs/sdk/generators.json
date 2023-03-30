@@ -10,6 +10,13 @@
       "x-type": "application",
       "description": "Create a Logosphere application."
     },
+    "auth-module": {
+      "factory": "./src/generators/auth-module/auth-module",
+      "schema": "./src/generators/auth-module/schema.json",
+      "aliases": ["auth"],
+      "x-type": "library",
+      "description": "Create a Logosphere auth module."
+    },
     "module": {
       "factory": "./src/generators/module/module",
       "schema": "./src/generators/module/schema.json",
@@ -93,6 +100,13 @@
       "aliases": ["app"],
       "x-type": "application",
       "description": "Create a Logosphere application."
+    },
+    "auth-module": {
+      "factory": "./src/generators/auth-module/auth-module",
+      "schema": "./src/generators/auth-module/schema.json",
+      "aliases": ["auth"],
+      "x-type": "library",
+      "description": "Create a Logosphere auth module."
     },
     "module": {
       "factory": "./src/generators/module/module",
