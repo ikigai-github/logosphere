@@ -41,8 +41,5 @@ describe('resolver generator', () => {
     expect(
       tree.exists(`${libName}/src/resolvers/listing.resolver.ts`)
     ).toBeTruthy();
-    expect(
-      tree.exists(`${libName}/src/resolvers/user-auth.resolver.ts`)
-    ).toBeTruthy();
   });
 });

@@ -36,7 +36,5 @@ describe('dto generator', () => {
     await generator(tree, options);
     expect(tree.exists(`${libName}/src/dto/index.ts`)).toBeTruthy();
     expect(tree.exists(`${libName}/src/dto/listing.dto.ts`)).toBeTruthy();
-    expect(tree.exists(`${libName}/src/dto/keys.dto.ts`)).toBeTruthy();
-    expect(tree.exists(`${libName}/src/dto/user-auth.dto.ts`)).toBeTruthy();
   });
 });

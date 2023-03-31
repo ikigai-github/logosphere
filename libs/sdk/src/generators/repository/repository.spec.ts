@@ -46,8 +46,5 @@ describe('repository generator', () => {
     expect(
       tree.exists(`${libName}/src/repositories/fluree/listing.fluree.repo.ts`)
     ).toBeTruthy();
-    expect(
-      tree.exists(`${libName}/src/repositories/fluree/user-auth.fluree.repo.ts`)
-    ).toBeTruthy();
   });
 });

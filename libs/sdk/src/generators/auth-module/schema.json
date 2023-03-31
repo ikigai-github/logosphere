@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "NxNodeLibrary",
+  "title": "Create a Logosphere auth module",
+  "description": "Create a Logosphere auth module in an Nx workspace.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Module name",
+      "$default": "auth",
+      "x-prompt": "What name would you like to use for the module?"
+    },
+    "tags": {
+      "type": "string",
+      "description": "Add tags to the module.",
+      "alias": "t"
+    }
+  },
+  "required": ["name"]
+}
