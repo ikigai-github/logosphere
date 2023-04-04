@@ -1,0 +1,16 @@
+import { Module } from '@nestjs/common';
+import { MulterModule } from '@nestjs/platform-express';
+import { IpfsModule } from '@logosphere/ipfs';
+import { IpfsController } from './ipfs.controller';
+
+@Module({
+  imports: [
+    IpfsModule,
+    MulterModule.register({
+      dest: './files',
+    })
+  ],
+  controllers: [IpfsController],
+})
+export class AppModule {}
+

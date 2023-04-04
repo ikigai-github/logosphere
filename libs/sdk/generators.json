@@ -31,6 +31,13 @@
       "aliases": ["ng-add"],
       "hidden": true
     },
+    "ipfs-app": {
+      "factory": "./src/generators/ipfs-app/ipfs-app/ipfsApplication#ipfsApplicationSchematic",
+      "schema": "./src/generators/ipfs-app/schema.json",
+      "aliases": ["ipfs"],
+      "x-type": "application",
+      "description": "Create IPFS endpoint"
+    },
     "dto": {
       "factory": "./src/generators/dto/dto",
       "schema": "./src/generators/dto/schema.json",
@@ -121,6 +128,13 @@
       "description": "Initialize the `@logosphere/sdk` plugin.",
       "aliases": ["ng-add"],
       "hidden": true
+    },
+    "ipfs-app": {
+      "factory": "./src/generators/ipfs-app/ipfs-app",
+      "schema": "./src/generators/ipfs-app/schema.json",
+      "aliases": ["ipfs"],
+      "x-type": "application",
+      "description": "Create an IPFS endpoint."
     },
     "dto": {
       "factory": "./src/generators/dto/dto",

@@ -42,6 +42,7 @@ export function addDependencies(tree: Tree): GeneratorCallback {
       graphql: '16.5.0',
       'js-sha3': '0.8.0',
       lodash: '4.17.21',
+      multer: '1.4.5-lts.1',
       randomstring: '1.2.2',
       'reflect-metadata': reflectMetadataVersion,
       rxjs: '7.8.0',
