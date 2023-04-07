@@ -28,7 +28,7 @@ export class IpfsController {
         ipfsCid: response.IpfsHash
       }
     } catch (err: any) {
-      console.log(JSON.stringify(err, null, 2));
+      console.error(JSON.stringify(err, null, 2));
     }
   }
 

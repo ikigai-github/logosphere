@@ -3,8 +3,6 @@ FROM node:lts-alpine
 WORKDIR /app
 
 COPY --chown=node:node /dist/<%= root %>  /app
-COPY --chown=node:node /libs/<%= libName %>/src/gql /app
-COPY --chown=node:node /libs/<%= libName %>/src/fluree /app
 COPY --chown=node:node .npmrc .npmrc
 
 RUN corepack enable && \
