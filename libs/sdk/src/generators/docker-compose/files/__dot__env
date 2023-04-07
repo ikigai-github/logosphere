@@ -58,3 +58,10 @@ DB_NAME=cexplorer
 DB_USER=postgres
 # Blockfrost and Cardano node db password
 DB_PASSWORD=<%= password %>
+
+# IPFS
+# -------
+# Pinata API credentials
+PINATA_API_KEY=
+PINATA_API_SECRET=
+PINATA_JWT=

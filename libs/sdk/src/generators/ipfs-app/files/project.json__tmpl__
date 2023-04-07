@@ -1,0 +1,78 @@
+{
+"root": "<%= root %>",
+  "sourceRoot": "<%= root %>/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:webpack",
+      "outputs": ["dist/<%= root %>"],
+      "options": {
+        "outputPath": "dist/<%= root %>",
+        "main": "<%= root %>/src/main.ts",
+        "tsConfig": "<%= root %>/tsconfig.app.json",
+        "assets": ["<%= root %>/src/assets"],
+        "generatePackageJson": true
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "<%= root %>/src/environments/environment.ts",
+              "with": "<%= root %>/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:node",
+      "options": {
+        "buildTarget": "<%= name %>:build"
+      }
+    },
+    "docker": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "docker build -f <%= root %>/Dockerfile -t <%= name %> .",
+            "forwardAllArgs": false
+          },
+          "docker run -dp {args.port}:2099 --name <%= name %> <%= name %>"
+        ],
+        "parallel": false
+      }
+    },
+    "docker-build-only": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "docker build -f <%= root %>/Dockerfile -t <%= name %> .",
+            "forwardAllArgs": false
+          }
+        ],
+        "parallel": false
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["dist/<%= root %>"],
+      "options": {
+        "lintFilePatterns": ["<%= root %>/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/<%= root %>"],
+      "options": {
+        "jestConfig": "<%= root %>/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["scope:client"]
+}
