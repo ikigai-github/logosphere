@@ -19,22 +19,27 @@ spec:
       labels:
         app: <%= application.name %>
     spec:
+      {{- if .Values.global.imagePullSecret }}
+      imagePullSecrets:
+        - name: {{ .Values.global.imagePullSecret }}
+      {{- end }}
       containers:
         - name: <%= application.name %>
           image: "{{ .Values.image.repo }}{{ .Values.image.name }}:{{ .Values.image.tag }}"
+          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
           ports:
             - containerPort: <%= application.port %>
           env:
             - name: FLUREE_URL
-              value: "{{ .Values.global.fluree.url }}"
+              value: "{{ .Values.global.flureeLedger.url }}"
             - name: FLUREE_LEDGER
-              value: "{{ .Values.global.fluree.ledgerPrefix }}/<%= application.name %>"
+              value: "{{ .Values.global.flureeLedger.ledgerPrefix }}/<%= application.name %>"
             - name: FLUREE_AUTO_UPDATE_SCHEMA
-              value: "{{ .Values.global.fluree.autoUpdateSchema }}"
+              value: "{{ .Values.global.flureeLedger.autoUpdateSchema }}"
             - name: FLUREE_ROOT_PRIVATE_KEY
-              value: "{{ .Values.global.fluree.rootPrivateKey }}"
+              value: "{{ .Values.global.flureeLedger.rootPrivateKey }}"
             - name: FLUREE_OPEN_API
-              value: "{{ .Values.global.fluree.openApi }}"
+              value: "{{ .Values.global.flureeLedger.openApi }}"
             - name: CARDANO_WALLET_URL
               value: "{{ .Values.global.cardanoWallet.url }}"
             - name: CARDANO_WALLET_ID

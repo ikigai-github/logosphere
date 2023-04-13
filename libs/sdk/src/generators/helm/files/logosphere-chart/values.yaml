@@ -2,7 +2,7 @@
 global:
   commonLabels: {}
   commonAnnotations: {}
-  fluree:
+  flureeLedger:
     url: http://fluree-ledger:8090
     ledgerPrefix: local
     autoUpdateSchema: true
@@ -19,7 +19,7 @@ global:
 blockfrost:
   deploy: <%= !excludeBlockfrost %>
 
-fluree:
+flureeLedger:
   deploy: <%= !excludeFluree %>
 
 cardano-wallet:
@@ -27,11 +27,14 @@ cardano-wallet:
 
 <% applications.forEach(function(application){ %>
 <%= application.name %>:
+  imagePullPolicy: Never
   image:
     repo: 'logosphere/'
     name: <%= application.name %>
     tag: latest
   localIngress:
     enabled: false
+    hostDomain: localhost
   serviceType: NodePort
+  imagePullSecret: ''
 <% }); %>

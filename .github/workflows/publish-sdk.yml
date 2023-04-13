@@ -28,7 +28,3 @@ jobs:
         shell: bash
 
       - run: pnpm publish --no-git-checks dist/libs/sdk
-
-  call-publish-ls-primer:
-    uses: ./.github/workflows/publish-ls-primer.yml
-    needs: build-and-publish-sdk

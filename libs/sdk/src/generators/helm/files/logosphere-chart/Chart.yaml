@@ -4,11 +4,11 @@ version: 1.0.0
 dependencies:
   - name: fluree-ledger
     version: 1.0.0
-    condition: fluree.deploy
+    condition: flureeLedger.deploy
   - name: cardano-wallet
     version: 1.0.0
     condition: cardano-wallet.deploy
   - name: blockfrost
-    version: 1.0.0
-    repository: https://ikigai-github.github.io/ikigai-blockfrost-config/helm
+    version: 1.1.1
+    repository: http://ikigai-shared-helm-charts-public.s3-website-us-east-1.amazonaws.com/blockfrost
     condition: blockfrost.deploy
