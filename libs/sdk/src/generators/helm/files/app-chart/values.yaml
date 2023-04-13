@@ -2,6 +2,7 @@
 localIngress:
   enabled: false
   annotations: {}
+  hostDomain: localhost
 
 serviceType: NodePort
 
@@ -9,3 +10,8 @@ image:
   repo: 'logosphere/'
   name: <%= application.name %>
   tag: latest
+
+global:
+  imagePullSecret: ''
+
+imagePullPolicy: Never

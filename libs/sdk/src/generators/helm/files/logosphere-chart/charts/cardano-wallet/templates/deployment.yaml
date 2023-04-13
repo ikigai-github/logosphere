@@ -29,11 +29,14 @@ spec:
               mountPath: /wallet-db
             - name: node-ipc
               mountPath: /ipc
-          command:
-            - cardano-wallet serve
-            - --node-socket /ipc/node.socket
-            - --database /wallet-db
-            - --listen-address 0.0.0.0
+          args:
+            - serve
+            - --node-socket
+            - /ipc/node.socket
+            - --database
+            - /wallet-db
+            - --listen-address
+            - 0.0.0.0
           env:
             - name: NETWORK
               value: "{{ .Values.global.cardanoNetwork }}"
@@ -53,7 +56,7 @@ spec:
       volumes:
         - name: wallet-data
           persistentVolumeClaim:
-            claimName: cardano-wallet-data-claim
+            claimName: wallet-data-claim
         - name: node-ipc
           emptyDir: {}
         - name: wallet-cardano-node-db

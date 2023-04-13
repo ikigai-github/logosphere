@@ -18,7 +18,7 @@
     "excludeWallet": {
       "type": "boolean",
       "description": "If set, a cardano wallet chart will not be included in the output",
-      "default": false
+      "default": true
     },
     "force": {
       "type": "boolean",
