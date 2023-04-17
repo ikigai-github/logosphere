@@ -112,10 +112,11 @@ export class TransactionService {
     const policy = this.getMintingPolicy(lct.lc, utxos[0], collectionSize);
     const policyId = lct.lucid.utils.mintingPolicyToId(policy);
     const mintAssets = this.getAssets(policyId, assets, lct.lc);
+    const redeemer = this.getRedeemer(lct.lc, assets);
     const transaction = lct.lucid
       .newTx()
       .collectFrom(utxos)
-      .mintAssets(mintAssets)
+      .mintAssets(mintAssets, redeemer)
       .attachMintingPolicy(policy);
 
     if (metaData) {
@@ -124,6 +125,13 @@ export class TransactionService {
       );
     }
     return await transaction.complete();
+  }
+
+  private getRedeemer(lc: any, assets: AssetData[]): string {
+    const process = assets.reduce((sum, asset) => sum + asset.amount, 0) > 0
+      ? 0 // mint
+      : 1 // burn
+    return lc.Data.to(new lc.Constr(process, []));
   }
 
   private async getTransferTransaction(lct: LucidTuple, recipients: TransferRecipient[]): Promise<TxComplete> {
