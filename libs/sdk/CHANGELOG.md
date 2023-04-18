@@ -2,10 +2,11 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
-## [0.8.0](https://github.com/ikigai-github/logosphere/compare/sdk-0.7.1...sdk-0.8.0) (2023-04-07)
+## [0.8.0](https://github.com/ikigai-github/logosphere/compare/sdk-0.7.1...sdk-0.8.0) (2023-04-18)
 
 ### Features
 
+- bugfixes after testing the deploy ([6a57adc](https://github.com/ikigai-github/logosphere/commit/6a57adc8c6411217b5184d2c87ddf6d12c6c424c))
 - **ipfs:** ipfs endpoint generator ([885c27c](https://github.com/ikigai-github/logosphere/commit/885c27c8486a47b9e9075fc8d96a5709049da5f9))
 
 ### [0.7.2](https://github.com/ikigai-github/logosphere/compare/sdk-0.7.1...sdk-0.7.2) (2023-03-31)
