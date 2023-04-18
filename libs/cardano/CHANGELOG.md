@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.5.6](https://github.com/ikigai-github/logosphere/compare/cardano-0.5.5...cardano-0.5.6) (2023-04-18)
+
+### Bug Fixes
+
+- **mint:** fix mint asset redeemer data ([5a8c899](https://github.com/ikigai-github/logosphere/commit/5a8c899b2dfafa6fb349f9e72857e5adb186ec6e))
+
 ### [0.5.5](https://github.com/ikigai-github/logosphere/compare/cardano-0.5.4...cardano-0.5.5) (2023-03-31)
 
 ### [0.5.4](https://github.com/ikigai-github/logosphere/compare/cardano-0.5.3...cardano-0.5.4) (2023-03-20)
