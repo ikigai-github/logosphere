@@ -30,7 +30,7 @@ FLUREE_OPEN_API=true
 # URL to Cardano Wallet instance
 CARDANO_WALLET_URL='http://cardano-wallet:8090/v2'
 # URL to cardano submit api
-CARDANO_SUBMIT_API_URL='http://cardano-submit-api:9090/api/submit/tx'
+CARDANO_SUBMIT_API_URL='http://cardano-submit-api:8090/api/submit/tx'
 # Cardano network: testnet, preview, preprod or mainnet
 CARDANO_NETWORK=preview
 # Wallet ID for custodial minting of NFT assets (used in mintNft API methods)
