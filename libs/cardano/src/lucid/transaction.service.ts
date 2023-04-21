@@ -130,7 +130,7 @@ export class TransactionService {
   private getRedeemer(lc: any, assets: AssetData[]): string {
     const process = assets.reduce((sum, asset) => sum + asset.amount, 0) > 0
       ? 0 // mint
-      : 1 // burn
+      : 1; // burn
     return lc.Data.to(new lc.Constr(process, []));
   }
 
@@ -203,7 +203,7 @@ export class TransactionService {
       lucid.selectWalletFromSeed(wc.value);
     }
     if (wc.type === ConstructorType.address) {
-      lucid.selectWalletFrom(wc.value);
+      lucid.selectWalletFrom({ address: wc.value });
     }
     return { lc, lucid };
   }

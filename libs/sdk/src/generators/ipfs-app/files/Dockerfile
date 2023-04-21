@@ -6,7 +6,7 @@ COPY --chown=node:node /dist/<%= root %>  /app
 COPY --chown=node:node .npmrc .npmrc
 
 RUN corepack enable && \
-    corepack prepare pnpm@6.32.11 --activate
+    corepack prepare pnpm@8.3.1 --activate
 RUN cp .npmrc .npmrc.tmp && \
     cat .npmrc.tmp | grep _authToken > .npmrc && \
     pnpm install --production && \
