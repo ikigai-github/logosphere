@@ -9,6 +9,6 @@ dependencies:
     version: 1.0.0
     condition: cardano-wallet.deploy
   - name: blockfrost
-    version: 1.1.1
+    version: 1.x
     repository: http://ikigai-shared-helm-charts-public.s3-website-us-east-1.amazonaws.com/blockfrost
     condition: blockfrost.deploy
