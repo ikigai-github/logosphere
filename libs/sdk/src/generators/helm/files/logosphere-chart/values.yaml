@@ -17,6 +17,7 @@ global:
   cardanoNetwork: preview
 
 blockfrost:
+  imageTag: v1.4.0
   deploy: <%= !excludeBlockfrost %>
 
 flureeLedger:
