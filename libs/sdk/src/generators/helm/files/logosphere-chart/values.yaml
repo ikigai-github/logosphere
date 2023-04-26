@@ -18,7 +18,7 @@ global:
   blockfrost:
     url: http://blockfrost:3000
   submitApi:
-    url: http://cardano-submit-api:8090
+    url: http://cardano-db-sync:8090
 
 blockfrost:
   imageTag: v1.4.0
