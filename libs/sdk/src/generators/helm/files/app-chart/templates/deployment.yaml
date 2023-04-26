@@ -48,3 +48,9 @@ spec:
               value: "{{ .Values.global.cardanoWallet.mnemonic }}"
             - name: CARDANO_WALLET_ADDRESS
               value: "{{ .Values.global.cardanoWallet.address }}"
+            - name: CARDANO_SUBMIT_API_URL
+              value: "{{ .Values.global.submitApi.url }}"
+            - name: CARDANO_NETWORK
+              value: "{{ .Values.global.cardanoNetwork }}"
+            - name: BLOCKFROST_URL
+              value: "{{ .Values.global.blockfrost.url }}"
