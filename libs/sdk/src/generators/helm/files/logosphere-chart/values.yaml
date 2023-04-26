@@ -15,8 +15,13 @@ global:
     mnemonic: ''
     address: ''
   cardanoNetwork: preview
+  blockfrost:
+    url: http://blockfrost:3000
+  submitApi:
+    url: http://cardano-submit-api:8090
 
 blockfrost:
+  imageTag: v1.4.0
   deploy: <%= !excludeBlockfrost %>
 
 flureeLedger:
