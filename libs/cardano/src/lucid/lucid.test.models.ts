@@ -84,6 +84,10 @@ export class MockLc {
     new: jest.fn(async () => this.lucid),
   };
 
+  Data = {
+    to: jest.fn()
+  }
+
   Constr = jest.fn();
   Blockfrost = jest.fn();
   applyParamsToScript = jest.fn();
