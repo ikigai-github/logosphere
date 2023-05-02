@@ -18,7 +18,7 @@ global:
   blockfrost:
     url: http://blockfrost:3000
   submitApi:
-    url: http://cardano-submit-api:8090
+    url: http://cardano-submit-api:8090/api/submit/tx
 
 blockfrost:
   imageTag: v1.4.0
@@ -43,3 +43,4 @@ cardano-wallet:
   serviceType: NodePort
   imagePullSecret: ''
 <% }); %>
+
