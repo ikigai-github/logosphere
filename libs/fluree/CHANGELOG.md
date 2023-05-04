@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.5.4](https://github.com/ikigai-github/logosphere/compare/fluree-0.5.3...fluree-0.5.4) (2023-05-04)
+
+### Bug Fixes
+
+- **fluree:** add @fluree/crypto-utils peerDependencies ([1d74db7](https://github.com/ikigai-github/logosphere/commit/1d74db7f57ab3788aa5eb3e5700ded73430b45aa))
+- **fluree:** version update 0.5.4 ([2a3a8cf](https://github.com/ikigai-github/logosphere/commit/2a3a8cf96e773f5e24cce527bf78b0208862ae8a))
+
 ### [0.5.3](https://github.com/ikigai-github/logosphere/compare/fluree-0.5.2...fluree-0.5.3) (2023-01-31)
 
 ### [0.5.2](https://github.com/ikigai-github/logosphere/compare/fluree-0.5.1...fluree-0.5.2) (2023-01-12)
