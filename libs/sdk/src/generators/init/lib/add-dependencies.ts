@@ -19,7 +19,7 @@ export function addDependencies(tree: Tree): GeneratorCallback {
       '@fluree/flureenjs': '1.0.4',
       '@fluree/crypto-base': '0.1.6',
       '@fluree/crypto-utils': '1.10.0',
-      '@logosphere/cardano': '0.5.6',
+      '@logosphere/cardano': '0.5.7',
       '@logosphere/ipfs': '0.1.1',
       '@logosphere/fluree': '0.5.3',
       '@logosphere/sdk': '0.8.1',
