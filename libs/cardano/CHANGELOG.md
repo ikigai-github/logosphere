@@ -2,6 +2,8 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.5.7](https://github.com/ikigai-github/logosphere/compare/cardano-0.5.6...cardano-0.5.7) (2023-10-13)
+
 ### [0.5.6](https://github.com/ikigai-github/logosphere/compare/cardano-0.5.5...cardano-0.5.6) (2023-04-18)
 
 ### Bug Fixes
