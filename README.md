@@ -15,7 +15,7 @@ Logosphere conforms to Data Mesh Architecture concepts and consists of the follo
 - Focus on quality of data persisted in the knowledge graph which should be distilled from operational data according to the rules defined by the domain team.
 
 ## Logosphere Conceptual Model
-![Logosphere Conceptual Model](docs/images/image.png)
+![Logosphere Conceptual Model](docs/images/logosphere-conceptual-model.png)
 
 - Business Analyst interviews Domain Expert
   - captures Ubiquitous Language
@@ -44,6 +44,10 @@ Logosphere conforms to Data Mesh Architecture concepts and consists of the follo
 - Researcher utilizes SPARQL to query Knowledge Graph DB to look for insights in areas of their interest
 - Game Developer uses Logosphere Plugins for Unreal Engine and Unity to generate in-game assets and have them minted and transacted on L1 with metadata persisted in Logosphere
 - Knowledge Graph DB guarantees metadata consistency, verifiability, provenance & security. For Logosphere we are using Fluree DB 
+
+# Logosphere Architecture
+## Phase 1
+![Logosphere Phase 1 Architecture](docs/images/logosphere-phase-1-architecture.png)
 
 # Trying Logosphere
 ## Pre-requisites
